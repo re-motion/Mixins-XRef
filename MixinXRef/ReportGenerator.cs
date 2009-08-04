@@ -30,8 +30,8 @@ namespace MixinXRef
       return new XElement (
           "Assembly",
           new XAttribute ("id", identifierGenerator.GetIdentifier (assembly)), 
-          new XAttribute ("fullName", assembly.FullName), 
-          new XAttribute ("codeBase", assembly.CodeBase));
+          new XAttribute ("full-name", assembly.FullName), 
+          new XAttribute ("code-base", assembly.CodeBase));
     }
   }
 }

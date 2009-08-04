@@ -43,8 +43,8 @@ namespace MixinXRef.UnitTests
           new XElement ("Assemblies",
               new XElement ("Assembly",
                   new XAttribute ("id", "0"),
-                  new XAttribute ("fullName", _assembly1.FullName),
-                  new XAttribute ("codeBase", _assembly1.CodeBase))));
+                  new XAttribute ("full-name", _assembly1.FullName),
+                  new XAttribute ("code-base", _assembly1.CodeBase))));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
@@ -60,12 +60,12 @@ namespace MixinXRef.UnitTests
           new XElement ("Assemblies",
               new XElement ("Assembly",
                   new XAttribute ("id", "0"),
-                  new XAttribute ("fullName", _assembly1.FullName),
-                  new XAttribute ("codeBase", _assembly1.CodeBase)),
+                  new XAttribute ("full-name", _assembly1.FullName),
+                  new XAttribute ("code-base", _assembly1.CodeBase)),
               new XElement ("Assembly",
                   new XAttribute ("id", "1"),
-                  new XAttribute ("fullName", _assembly2.FullName),
-                  new XAttribute ("codeBase", _assembly2.CodeBase))));
+                  new XAttribute ("full-name", _assembly2.FullName),
+                  new XAttribute ("code-base", _assembly2.CodeBase))));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }

@@ -11,7 +11,10 @@ namespace MixinXRef
     private readonly IdentifierGenerator<Type> _typeIdentifierGenerator;
     private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
 
-    public TargetClassReportGenerator (ITargetClassFinder targetClassFinder, IdentifierGenerator<Type> typeIdentifierGenerator, IdentifierGenerator<Assembly> assemblyIdentifierGenerator)
+    public TargetClassReportGenerator (
+        ITargetClassFinder targetClassFinder, 
+        IdentifierGenerator<Type> typeIdentifierGenerator, 
+        IdentifierGenerator<Assembly> assemblyIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("targetClassFinder", targetClassFinder);
       ArgumentUtility.CheckNotNull ("typeIdentifierGenerator", typeIdentifierGenerator);
