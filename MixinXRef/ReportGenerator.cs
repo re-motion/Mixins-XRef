@@ -11,11 +11,11 @@ namespace MixinXRef
     public XElement GenerateXml (HashSet<Assembly> assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-      var identifierGenerator = new IdentifierGenerator();
+      var identifierGenerator = new IdentifierGenerator<Assembly>();
       return new XElement ("MixinXRefReport", GenerateAssembliesElement (assemblies, identifierGenerator));
     }
 
-    private XElement GenerateAssembliesElement (IEnumerable<Assembly> assemblies, IdentifierGenerator identifierGenerator)
+    private XElement GenerateAssembliesElement (IEnumerable<Assembly> assemblies, IdentifierGenerator<Assembly> identifierGenerator)
     {
       var element = new XElement ("Assemblies");
 
@@ -25,7 +25,7 @@ namespace MixinXRef
       return element;
     }
 
-    private XElement GenerateAssemblyElement (Assembly assembly, IdentifierGenerator identifierGenerator)
+    private XElement GenerateAssemblyElement (Assembly assembly, IdentifierGenerator<Assembly> identifierGenerator)
     {
       return new XElement (
           "Assembly",

@@ -6,24 +6,23 @@ using Remotion.Utilities;
 namespace MixinXRef
 {
   /// <summary>
-  /// Generates a identifier for a given <see cref="Assembly"/> object. When the same <see cref="Assembly"/> is given twice,
-  /// the same identifier will be returned.
+  /// Generates a identifier for a given item. When the same item is given twice, the same identifier will be returned.
   /// </summary>
-  public class IdentifierGenerator
+  public class IdentifierGenerator<T>
   {
-    private readonly Dictionary<Assembly, string> _identifiers = new Dictionary<Assembly, string>();
+    private readonly Dictionary<T, string> _identifiers = new Dictionary<T, string>();
     
-    public string GetIdentifier (Assembly assembly)
+    public string GetIdentifier (T item)
     {
-      ArgumentUtility.CheckNotNull ("assembly", assembly);
+      ArgumentUtility.CheckNotNull ("item", item);
 
-      if (!_identifiers.ContainsKey (assembly))
+      if (!_identifiers.ContainsKey (item))
       {
         var newIdentifier = _identifiers.Count.ToString();
-        _identifiers.Add (assembly, newIdentifier);
+        _identifiers.Add (item, newIdentifier);
       }
 
-      return _identifiers[assembly];
+      return _identifiers[item];
     }
   }
 }
