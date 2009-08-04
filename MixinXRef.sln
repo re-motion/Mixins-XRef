@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef", "MixinXRef\MixinXRef.csproj", "{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests", "MixinXRef.UnitTests\MixinXRef.UnitTests.csproj", "{D9D6A235-C449-46F8-80DE-0315A7226ECF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9D6A235-C449-46F8-80DE-0315A7226ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D6A235-C449-46F8-80DE-0315A7226ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D6A235-C449-46F8-80DE-0315A7226ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D6A235-C449-46F8-80DE-0315A7226ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
