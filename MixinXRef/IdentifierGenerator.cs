@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -14,6 +15,8 @@ namespace MixinXRef
     
     public string GetIdentifier (Assembly assembly)
     {
+      ArgumentUtility.CheckNotNull ("assembly", assembly);
+
       if (!_identifiers.ContainsKey (assembly))
       {
         var newIdentifier = _identifiers.Count.ToString();

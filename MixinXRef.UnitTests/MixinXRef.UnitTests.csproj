@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="IdentifierGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
