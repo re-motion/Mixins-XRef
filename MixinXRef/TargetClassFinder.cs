@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MixinXRef
 {
-  public class TargetClassFinder
+  public class TargetClassFinder : ITargetClassFinder
   {
     private readonly MixinConfiguration _mixinConfiguration;
 

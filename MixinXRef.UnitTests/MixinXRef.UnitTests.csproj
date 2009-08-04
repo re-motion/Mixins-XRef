@@ -58,9 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentifierGeneratorTest.cs" />
+    <Compile Include="TargetClassFinderStub.cs" />
     <Compile Include="TargetClassFinderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportGeneratorTest.cs" />
+    <Compile Include="TargetClassReportGeneratorTest.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
