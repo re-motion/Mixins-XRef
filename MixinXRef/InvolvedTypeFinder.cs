@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace MixinXRef
 {
-  public class TargetClassFinder : ITargetClassFinder
+  public class InvolvedTypeFinder : ITargetClassFinder
   {
     private readonly MixinConfiguration _mixinConfiguration;
 
-    public TargetClassFinder (MixinConfiguration mixinConfiguration)
+    public InvolvedTypeFinder (MixinConfiguration mixinConfiguration)
     {
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       _mixinConfiguration = mixinConfiguration;

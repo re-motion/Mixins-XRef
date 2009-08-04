@@ -8,13 +8,13 @@ using Remotion.Mixins.Context;
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
-  public class TargetClassFinderTest
+  public class InvolvedTypeFinderTest
   {
     [Test]
     public void FindInvolvedTypes_EmptyConfiguration ()
     {
       var mixinConfiguration = new MixinConfiguration();
-      var targetClassFinder = new TargetClassFinder (mixinConfiguration);
+      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
 
       var targetClasses = targetClassFinder.FindTargetClasses();
 
@@ -25,7 +25,7 @@ namespace MixinXRef.UnitTests
     public void FindInvolvedTypes_WithOneTarget ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      var targetClassFinder = new TargetClassFinder (mixinConfiguration);
+      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
 
       var targetClasses = targetClassFinder.FindTargetClasses();
 
@@ -39,7 +39,7 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
           .ForClass<TargetClass2>().AddMixin<Mixin2> ()
           .BuildConfiguration ();
-      var targetClassFinder = new TargetClassFinder (mixinConfiguration);
+      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
 
       var targetClasses = targetClassFinder.FindTargetClasses ();
 

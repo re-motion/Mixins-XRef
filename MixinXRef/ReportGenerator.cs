@@ -15,12 +15,12 @@ namespace MixinXRef
       
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (null, assemblies);
 
-      var targetClassFinder = new TargetClassFinder (mixinConfiguration);
+      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
       var typeIdentifierGenerator = new IdentifierGenerator<Type> ();
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       var assemblyReportGenerator = new AssemblyReportGenerator (assemblies, assemblyIdentifierGenerator);
-      var targetClassReportGenerator = new TargetClassReportGenerator (targetClassFinder, typeIdentifierGenerator, assemblyIdentifierGenerator);
+      var targetClassReportGenerator = new InvolvedTypeReportGenerator (targetClassFinder, typeIdentifierGenerator, assemblyIdentifierGenerator);
       
       return new XElement (
           "MixinXRefReport",

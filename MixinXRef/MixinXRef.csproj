@@ -59,8 +59,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportGenerator.cs" />
-    <Compile Include="TargetClassFinder.cs" />
-    <Compile Include="TargetClassReportGenerator.cs" />
+    <Compile Include="InvolvedTypeFinder.cs" />
+    <Compile Include="InvolvedTypeReportGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

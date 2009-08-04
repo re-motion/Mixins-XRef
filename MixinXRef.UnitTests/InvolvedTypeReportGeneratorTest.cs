@@ -8,7 +8,7 @@ using MixinXRef.UnitTests.TestDomain;
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
-  public class TargetClassReportGeneratorTest
+  public class InvolvedTypeReportGeneratorTest
   {
     private IdentifierGenerator<Type> _typeIdentifierGenerator;
     private IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
@@ -23,8 +23,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_NoTargetClasses ()
     {
-      var finder = new TargetClassFinderStub ();
-      var reportGenerator = new TargetClassReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      var finder = new InvolvedTypeFinderStub ();
+      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
       
       XElement output = reportGenerator.GenerateXml();
 
@@ -36,8 +36,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_TargetClasses ()
     {
-      var finder = new TargetClassFinderStub (typeof (TargetClass1), typeof (TargetClass2));
-      var reportGenerator = new TargetClassReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      var finder = new InvolvedTypeFinderStub (typeof (TargetClass1), typeof (TargetClass2));
+      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
 
       XElement output = reportGenerator.GenerateXml ();
 
@@ -62,11 +62,11 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_DifferentAssemblies ()
     {
-      var finder = new TargetClassFinderStub (typeof (TargetClass1), typeof (object));
-      var reportGenerator = new TargetClassReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      var finder = new InvolvedTypeFinderStub (typeof (TargetClass1), typeof (object));
+      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
 
       _assemblyIdentifierGenerator.GetIdentifier (typeof (IdentifierGenerator<>).Assembly); // 0
-      _assemblyIdentifierGenerator.GetIdentifier (typeof (TargetClassReportGeneratorTest).Assembly); // 1
+      _assemblyIdentifierGenerator.GetIdentifier (typeof (InvolvedTypeReportGeneratorTest).Assembly); // 1
       _assemblyIdentifierGenerator.GetIdentifier (typeof (object).Assembly); // 2
 
       XElement output = reportGenerator.GenerateXml ();

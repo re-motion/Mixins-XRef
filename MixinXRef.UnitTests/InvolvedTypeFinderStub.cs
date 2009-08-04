@@ -2,11 +2,11 @@ using System;
 
 namespace MixinXRef.UnitTests
 {
-  public class TargetClassFinderStub : ITargetClassFinder
+  public class InvolvedTypeFinderStub : ITargetClassFinder
   {
     private readonly Type[] _types;
 
-    public TargetClassFinderStub (params Type[] types)
+    public InvolvedTypeFinderStub (params Type[] types)
     {
       _types = types;
     }

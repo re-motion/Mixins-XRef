@@ -5,13 +5,13 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class TargetClassReportGenerator
+  public class InvolvedTypeReportGenerator
   {
     private readonly ITargetClassFinder _targetClassFinder;
     private readonly IdentifierGenerator<Type> _typeIdentifierGenerator;
     private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
 
-    public TargetClassReportGenerator (
+    public InvolvedTypeReportGenerator (
         ITargetClassFinder targetClassFinder, 
         IdentifierGenerator<Type> typeIdentifierGenerator, 
         IdentifierGenerator<Assembly> assemblyIdentifierGenerator)
