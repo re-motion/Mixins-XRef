@@ -8,10 +8,30 @@ namespace MixinXRef
 {
   public class ReportGenerator
   {
-    public XElement GenerateXml (IEnumerable<Assembly> assemblies)
+    public XElement GenerateXml (HashSet<Assembly> assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-      return new XElement ("MixinXRefReport", new XElement ("Assemblies"));
+      var identifierGenerator = new IdentifierGenerator();
+      return new XElement ("MixinXRefReport", GenerateAssembliesElement (assemblies, identifierGenerator));
+    }
+
+    private XElement GenerateAssembliesElement (IEnumerable<Assembly> assemblies, IdentifierGenerator identifierGenerator)
+    {
+      var element = new XElement ("Assemblies");
+
+      foreach (var assembly in assemblies)
+        element.Add (GenerateAssemblyElement (assembly, identifierGenerator));
+
+      return element;
+    }
+
+    private XElement GenerateAssemblyElement (Assembly assembly, IdentifierGenerator identifierGenerator)
+    {
+      return new XElement (
+          "Assembly",
+          new XAttribute ("id", identifierGenerator.GetIdentifier (assembly)), 
+          new XAttribute ("fullName", assembly.FullName), 
+          new XAttribute ("codeBase", assembly.CodeBase));
     }
   }
 }
