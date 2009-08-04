@@ -13,11 +13,13 @@ namespace MixinXRef.UnitTests
     private AssemblyReportGenerator _reportGenerator;
     private Assembly _assembly1;
     private Assembly _assembly2;
+    private IdentifierGenerator<Assembly> _identifierGenerator;
 
     [SetUp]
     public void SetUp ()
     {
-      _reportGenerator = new AssemblyReportGenerator ();
+      _identifierGenerator = new IdentifierGenerator<Assembly>();
+      _reportGenerator = new AssemblyReportGenerator (_identifierGenerator);
       _assembly1 = typeof (ReportGeneratorTest).Assembly;
       _assembly2 = typeof (object).Assembly;
     }
@@ -25,7 +27,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_EmptyAssemblies ()
     {
-      var assemblies = CreateAssemblySet ();
+      var assemblies = new Assembly[0];
       XElement output = _reportGenerator.GenerateXml (assemblies);
 
       var expectedOutput = new XElement ("Assemblies");
@@ -35,7 +37,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_OneAssembly ()
     {
-      var assemblies = CreateAssemblySet (_assembly1);
+      var assemblies = new[] { _assembly1};
       XElement output = _reportGenerator.GenerateXml (assemblies);
 
       var expectedOutput = new XElement (
@@ -52,7 +54,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_MoreAssemblies ()
     {
-      var assemblies = CreateAssemblySet (_assembly1, _assembly2);
+      var assemblies =  new[] { _assembly1, _assembly2 };
       XElement output = _reportGenerator.GenerateXml (assemblies);
 
       var expectedOutput = new XElement (
@@ -69,11 +71,6 @@ namespace MixinXRef.UnitTests
               new XAttribute ("code-base", _assembly2.CodeBase)));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
-    }
-
-    private HashSet<Assembly> CreateAssemblySet (params Assembly[] assemblies)
-    {
-      return new HashSet<Assembly> (assemblies);
     }
   }
 }
