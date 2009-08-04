@@ -19,12 +19,12 @@ namespace MixinXRef
       var typeIdentifierGenerator = new IdentifierGenerator<Type> ();
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
-      var assemblyReportGenerator = new AssemblyReportGenerator (assemblyIdentifierGenerator);
+      var assemblyReportGenerator = new AssemblyReportGenerator (assemblies, assemblyIdentifierGenerator);
       var targetClassReportGenerator = new TargetClassReportGenerator (targetClassFinder, typeIdentifierGenerator, assemblyIdentifierGenerator);
       
       return new XElement (
           "MixinXRefReport",
-          assemblyReportGenerator.GenerateXml (assemblies),
+          assemblyReportGenerator.GenerateXml (),
           targetClassReportGenerator.GenerateXml ());
     }
   }
