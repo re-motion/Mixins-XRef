@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="ITargetClassFinder.cs" />
     <Compile Include="Program.cs" />

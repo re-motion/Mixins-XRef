@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />
     <Compile Include="TargetClassFinderStub.cs" />
     <Compile Include="TargetClassFinderTest.cs" />

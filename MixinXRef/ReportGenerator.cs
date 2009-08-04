@@ -11,27 +11,11 @@ namespace MixinXRef
     public XElement GenerateXml (HashSet<Assembly> assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-      var identifierGenerator = new IdentifierGenerator<Assembly>();
-      return new XElement ("MixinXRefReport", GenerateAssembliesElement (assemblies, identifierGenerator));
-    }
 
-    private XElement GenerateAssembliesElement (IEnumerable<Assembly> assemblies, IdentifierGenerator<Assembly> identifierGenerator)
-    {
-      var element = new XElement ("Assemblies");
-
-      foreach (var assembly in assemblies)
-        element.Add (GenerateAssemblyElement (assembly, identifierGenerator));
-
-      return element;
-    }
-
-    private XElement GenerateAssemblyElement (Assembly assembly, IdentifierGenerator<Assembly> identifierGenerator)
-    {
+      var assemblyReportGenerator = new AssemblyReportGenerator();
       return new XElement (
-          "Assembly",
-          new XAttribute ("id", identifierGenerator.GetIdentifier (assembly)), 
-          new XAttribute ("full-name", assembly.FullName), 
-          new XAttribute ("code-base", assembly.CodeBase));
+          "MixinXRefReport",
+          assemblyReportGenerator.GenerateXml (assemblies));
     }
   }
 }
