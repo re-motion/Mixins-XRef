@@ -4,6 +4,10 @@ using System.Reflection;
 
 namespace MixinXRef
 {
+  /// <summary>
+  /// Generates a identifier for a given <see cref="Assembly"/> object. When the same <see cref="Assembly"/> is given twice,
+  /// the same identifier will be returned.
+  /// </summary>
   public class IdentifierGenerator
   {
     private readonly Dictionary<Assembly, string> _identifiers = new Dictionary<Assembly, string>();

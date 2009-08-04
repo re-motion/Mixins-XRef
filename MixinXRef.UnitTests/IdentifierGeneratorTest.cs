@@ -7,11 +7,18 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class IdentifierGeneratorTest
   {
+    private IdentifierGenerator _identifierGenerator;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _identifierGenerator = new IdentifierGenerator();
+    }
+
     [Test]
     public void GetIdentifier ()
     {
-      var identifierGenerator = new IdentifierGenerator();
-      var identifier = identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
+      var identifier = _identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
 
       Assert.That (identifier, Is.EqualTo ("0"));
     }
@@ -19,10 +26,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetIdentifier_Twice ()
     {
-      var identifierGenerator = new IdentifierGenerator ();
-      
-      identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
-      var identifier = identifierGenerator.GetIdentifier (typeof (object).Assembly);
+      _identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
+      var identifier = _identifierGenerator.GetIdentifier (typeof (object).Assembly);
 
       Assert.That (identifier, Is.EqualTo ("1"));
     }
@@ -30,10 +35,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetIdentifier_TwiceOnSameAssembly ()
     {
-      var identifierGenerator = new IdentifierGenerator ();
-
-      var identifier1 = identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
-      var identifier2 = identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
+      var identifier1 = _identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
+      var identifier2 = _identifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest).Assembly);
 
       Assert.That (identifier1, Is.EqualTo (identifier2));
     }
