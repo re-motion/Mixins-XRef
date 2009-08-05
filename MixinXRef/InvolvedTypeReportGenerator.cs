@@ -7,28 +7,19 @@ namespace MixinXRef
 {
   public class InvolvedTypeReportGenerator : IReportGenerator
   {
-    private readonly IInvolvedTypeFinder _involvedTypeFinder;
-    private readonly IdentifierGenerator<Type> _typeIdentifierGenerator;
-    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly ReportContext _context;
 
-    public InvolvedTypeReportGenerator (
-        IInvolvedTypeFinder involvedTypeFinder, 
-        IdentifierGenerator<Type> typeIdentifierGenerator, 
-        IdentifierGenerator<Assembly> assemblyIdentifierGenerator)
+    public InvolvedTypeReportGenerator (ReportContext context)
     {
-      ArgumentUtility.CheckNotNull ("involvedTypeFinder", involvedTypeFinder);
-      ArgumentUtility.CheckNotNull ("typeIdentifierGenerator", typeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("context", context);
 
-      _involvedTypeFinder = involvedTypeFinder;
-      _typeIdentifierGenerator = typeIdentifierGenerator;
-      _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
+      _context = context;
     }
 
     public XElement GenerateXml ()
     {
       var involvedTypesElement = new XElement ("InvolvedTypes");
-      foreach (var involvedType in _involvedTypeFinder.FindInvolvedTypes ())
+      foreach (var involvedType in _context.InvolvedTypeFinder.FindInvolvedTypes ())
         involvedTypesElement.Add (CreateInvolvedTypeElement(involvedType));
 
       return involvedTypesElement;
@@ -39,8 +30,8 @@ namespace MixinXRef
       var realType = involvedType.Type;
       return new XElement (
           "InvolvedType",
-          new XAttribute ("id", _typeIdentifierGenerator.GetIdentifier (realType)),
-          new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
+          new XAttribute ("id", _context.InvolvedTypeIdentifierGenerator.GetIdentifier (realType)),
+          new XAttribute ("assembly-ref", _context.AssemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", realType.Name),
           new XAttribute ("is-target", involvedType.IsTarget),

@@ -12,27 +12,27 @@ namespace MixinXRef.UnitTests
   {
     private Assembly _assembly1;
     private Assembly _assembly2;
-    private IdentifierGenerator<Assembly> _identifierGenerator;
-    private IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private ReportContext _context;
 
     [SetUp]
     public void SetUp ()
     {
-      _identifierGenerator = new IdentifierGenerator<Assembly>();
       _assembly1 = typeof (CompositeReportGeneratorTest).Assembly;
       _assembly2 = typeof (object).Assembly;
 
-      _involvedTypeIdentifierGenerator = new IdentifierGenerator<Type>();
+      _context = new ReportContext (
+          new Assembly[0],
+          new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
+          new InvolvedTypeFinderStub()
+          );
     }
 
     [Test]
     public void GenerateXml_EmptyAssemblies ()
     {
-      var assemblies = new Assembly[0];
-      var finder = new InvolvedTypeFinderStub();
-
-      var reportGenerator = new AssemblyReportGenerator (assemblies, finder, _identifierGenerator, _involvedTypeIdentifierGenerator);
-      XElement output = reportGenerator.GenerateXml ();
+      var reportGenerator = new AssemblyReportGenerator (_context);
+      XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("Assemblies");
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -41,16 +41,16 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_OneAssembly ()
     {
-      var assemblies = new[] { _assembly1};
-
       var involvedType1 = new InvolvedType (typeof (TargetClass1), true, false);
       var involvedType2 = new InvolvedType (typeof (TargetClass2), true, false);
       var involvedType3 = new InvolvedType (typeof (Mixin1), false, true);
       var involvedType4 = new InvolvedType (typeof (Mixin2), false, true);
-      var finder = new InvolvedTypeFinderStub (involvedType1, involvedType2, involvedType3, involvedType4);
 
-      var reportGenerator = new AssemblyReportGenerator (assemblies, finder, _identifierGenerator, _involvedTypeIdentifierGenerator);
-      XElement output = reportGenerator.GenerateXml ();
+      _context.Assemblies = new[] { _assembly1 };
+      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType1, involvedType2, involvedType3, involvedType4);
+
+      var reportGenerator = new AssemblyReportGenerator (_context);
+      XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Assemblies",
@@ -65,17 +65,17 @@ namespace MixinXRef.UnitTests
               new XElement ("InvolvedType", new XAttribute ("ref", "3"))
               ));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
     public void GenerateXml_MoreAssemblies ()
     {
-      var finder = new InvolvedTypeFinderStub ();
-
-      var assemblies =  new[] { _assembly1, _assembly2 };
-      var reportGenerator = new AssemblyReportGenerator (assemblies, finder, _identifierGenerator, _involvedTypeIdentifierGenerator);
-      XElement output = reportGenerator.GenerateXml ();
+      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub();
+      _context.Assemblies= new[] { _assembly1, _assembly2 };
+      var reportGenerator = new AssemblyReportGenerator (_context);
+      
+      XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Assemblies",
@@ -90,7 +90,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("full-name", _assembly2.FullName),
               new XAttribute ("code-base", _assembly2.CodeBase)));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
 }

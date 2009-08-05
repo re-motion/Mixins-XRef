@@ -4,27 +4,30 @@ using System.Xml.Linq;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using MixinXRef.UnitTests.TestDomain;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private IdentifierGenerator<Type> _typeIdentifierGenerator;
-    private IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private ReportContext _context;
 
     [SetUp]
     public void SetUp ()
     {
-      _typeIdentifierGenerator = new IdentifierGenerator<Type>();
-      _assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
+      _context = new ReportContext (
+          new Assembly[0],
+          new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
+          new InvolvedTypeFinderStub()
+          );
     }
 
     [Test]
     public void GenerateXml_NoInvolvedTypes ()
     {
-      var finder = new InvolvedTypeFinderStub ();
-      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      var reportGenerator = new InvolvedTypeReportGenerator (_context);
       
       XElement output = reportGenerator.GenerateXml();
 
@@ -36,11 +39,11 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InvolvedTypes ()
     {
-      var iType1 = new InvolvedType (typeof (TargetClass1), true, false);
-      var iType2 = new InvolvedType (typeof (TargetClass2), true, false);
-      var iType3 = new InvolvedType (typeof (Mixin1), false, true);
-      var finder = new InvolvedTypeFinderStub ( iType1, iType2, iType3 );
-      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      var involvedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      var involvedType2 = new InvolvedType (typeof (TargetClass2), true, false);
+      var involvedType3 = new InvolvedType (typeof (Mixin1), false, true);
+      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub ( involvedType1, involvedType2, involvedType3 );
+      var reportGenerator = new InvolvedTypeReportGenerator (_context);
 
       XElement output = reportGenerator.GenerateXml ();
 
@@ -80,12 +83,13 @@ namespace MixinXRef.UnitTests
     {
       var involvedType1 = new InvolvedType (typeof (TargetClass1), true, false);
       var involvedType2 = new InvolvedType (typeof (object), false, false);
-      var finder = new InvolvedTypeFinderStub ( involvedType1, involvedType2 );
-      var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
+      
+      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub ( involvedType1, involvedType2 );
+      var reportGenerator = new InvolvedTypeReportGenerator (_context);
 
-      _assemblyIdentifierGenerator.GetIdentifier (typeof (IdentifierGenerator<>).Assembly); // 0
-      _assemblyIdentifierGenerator.GetIdentifier (typeof (InvolvedTypeReportGeneratorTest).Assembly); // 1
-      _assemblyIdentifierGenerator.GetIdentifier (typeof (object).Assembly); // 2
+      _context.AssemblyIdentifierGenerator.GetIdentifier (typeof (IdentifierGenerator<>).Assembly); // 0
+      _context.AssemblyIdentifierGenerator.GetIdentifier (typeof (InvolvedTypeReportGeneratorTest).Assembly); // 1
+      _context.AssemblyIdentifierGenerator.GetIdentifier (typeof (object).Assembly); // 2
 
       XElement output = reportGenerator.GenerateXml ();
 
