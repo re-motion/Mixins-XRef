@@ -52,5 +52,23 @@ namespace MixinXRef.UnitTests
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
     }
+
+    [Test]
+    public void FindInvolvedTypes_WithMixedMixin ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
+          .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
+          .ForClass<Mixin1> ().AddMixin<Mixin2> ()
+          .BuildConfiguration ();
+      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration);
+
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes ();
+
+      var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      var expectedType2 = new InvolvedType (typeof (Mixin1), true, true);
+      var expectedType3 = new InvolvedType (typeof (Mixin2), false, true);
+      
+      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3}));
+    }
   }
 }

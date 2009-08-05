@@ -5,13 +5,14 @@ namespace MixinXRef
 {
   public class InvolvedType : IInvolvedType
   {
-
     private readonly Type _realType;
-    private readonly bool _isTarget;
-    private readonly bool _isMixin;
+    private bool _isTarget;
+    private bool _isMixin;
 
     public InvolvedType (Type realType, bool isTarget, bool isMixin)
     {
+      ArgumentUtility.CheckNotNull ("realType", realType);
+
       _realType = realType;
       _isTarget = isTarget;
       _isMixin = isMixin;
@@ -25,11 +26,13 @@ namespace MixinXRef
     public bool IsTarget
     {
       get { return _isTarget; }
+      set { _isTarget = value; }
     }
 
     public bool IsMixin
     {
       get { return _isMixin; }
+      set { _isMixin = value; }
     }
 
 
