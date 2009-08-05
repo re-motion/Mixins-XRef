@@ -39,6 +39,20 @@ namespace MixinXRef.UnitTests
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
 
+    [Test]
+    public void ToArray_EmptyStore ()
+    {
+      Assert.That (_involvedTypeStore.ToArray (), Is.EqualTo (new InvolvedType[0]));
+    }
 
+    [Test]
+    public void ToArray_NonEmptyStore ()
+    {
+      var involvedType1 = _involvedTypeStore.GetOrCreateValue (typeof (object));
+      var involvedType2 = _involvedTypeStore.GetOrCreateValue (typeof (string));
+      var expectedType = new[] { involvedType1, involvedType2 };
+
+      Assert.That (_involvedTypeStore.ToArray (), Is.EqualTo (expectedType));
+    }
   }
 }

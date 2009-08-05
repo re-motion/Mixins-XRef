@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MixinXRef
 {
@@ -15,6 +16,11 @@ namespace MixinXRef
       }
 
       return _involvedTypes[key];
+    }
+
+    public InvolvedType[] ToArray ()
+    {
+      return _involvedTypes.Values.ToArray();
     }
   }
 }
