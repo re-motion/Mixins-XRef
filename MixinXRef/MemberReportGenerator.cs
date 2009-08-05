@@ -22,6 +22,7 @@ namespace MixinXRef
       return new XElement (
         "PublicMembers",
         from memberInfo in _type.GetMembers()
+        where memberInfo.DeclaringType == _type
         select 
             new XElement(
               "Member",

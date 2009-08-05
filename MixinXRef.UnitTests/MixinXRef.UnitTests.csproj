@@ -74,6 +74,7 @@
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
+    <Compile Include="TestDomain\UselessObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
