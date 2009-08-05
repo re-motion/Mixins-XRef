@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InterfaceReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeStoreTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
