@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace MixinXRef
 {
-  public interface IInvolvedTypeReportGenerator
+  public interface IReportGenerator
   {
     XElement GenerateXml ();
   }

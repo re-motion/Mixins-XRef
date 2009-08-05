@@ -5,7 +5,7 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class InvolvedTypeReportGenerator : IInvolvedTypeReportGenerator
+  public class InvolvedTypeReportGenerator : IReportGenerator
   {
     private readonly IInvolvedTypeFinder _involvedTypeFinder;
     private readonly IdentifierGenerator<Type> _typeIdentifierGenerator;

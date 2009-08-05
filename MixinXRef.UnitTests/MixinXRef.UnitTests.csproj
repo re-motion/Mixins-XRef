@@ -57,15 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyReportGeneratorStub.cs" />
+    <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
-    <Compile Include="InvolvedTypeReportGeneratorStub.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />
     <Compile Include="InvolvedTypeFinderStub.cs" />
     <Compile Include="InvolvedTypeFinderTest.cs" />
     <Compile Include="InvolvedTypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportGeneratorTest.cs" />
+    <Compile Include="CompositeReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />

@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests
     public void SetUp ()
     {
       _identifierGenerator = new IdentifierGenerator<Assembly>();
-      _assembly1 = typeof (ReportGeneratorTest).Assembly;
+      _assembly1 = typeof (CompositeReportGeneratorTest).Assembly;
       _assembly2 = typeof (object).Assembly;
     }
 

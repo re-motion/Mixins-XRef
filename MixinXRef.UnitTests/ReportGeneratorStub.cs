@@ -3,11 +3,11 @@ using System.Xml.Linq;
 
 namespace MixinXRef.UnitTests
 {
-  public class AssemblyReportGeneratorStub : IAssemblyReportGenerator
+  public class ReportGeneratorStub : IReportGenerator
   {
     private readonly string _stubXml;
 
-    public AssemblyReportGeneratorStub (string stubXml)
+    public ReportGeneratorStub (string stubXml)
     {
       _stubXml = stubXml;
     }

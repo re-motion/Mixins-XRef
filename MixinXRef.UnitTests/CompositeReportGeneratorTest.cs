@@ -6,14 +6,14 @@ using NUnit.Framework.SyntaxHelpers;
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
-  public class ReportGeneratorTest
+  public class CompositeReportGeneratorTest
   {
-    private ReportGenerator _reportGenerator;
+    private CompositeReportGenerator _reportGenerator;
 
     [SetUp]
     public void SetUp ()
     {
-      _reportGenerator = new ReportGenerator (new AssemblyReportGeneratorStub("Assemblies"), new InvolvedTypeReportGeneratorStub ("InvolvedTypes"));
+      _reportGenerator = new CompositeReportGenerator (new ReportGeneratorStub ("Assemblies"), new ReportGeneratorStub ("InvolvedTypes"));
     }
 
     [Test]
