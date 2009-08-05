@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InvolvedTypes ()
     {
-      var finder = new InvolvedTypeFinderStub (typeof (TargetClass1), typeof (TargetClass2));
+      var finder = new InvolvedTypeFinderStub (typeof (TargetClass1), typeof (TargetClass2), typeof(Mixin1));
       var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
 
       XElement output = reportGenerator.GenerateXml ();
@@ -54,7 +54,14 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "1"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "TargetClass2")));
+              new XAttribute ("name", "TargetClass2")),
+         new XElement(
+              "InvolvedType",
+              new XAttribute("id", "2"),
+              new XAttribute("assembly-ref", "0"),
+              new XAttribute("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute("name", "Mixin1"))
+        );
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
