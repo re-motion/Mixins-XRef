@@ -4,6 +4,6 @@ namespace MixinXRef
 {
   public interface IInvolvedTypeFinder
   {
-    IInvolvedType[] FindInvolvedTypes ();
+    InvolvedType[] FindInvolvedTypes ();
   }
 }

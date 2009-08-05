@@ -58,7 +58,6 @@
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
-    <Compile Include="IInvolvedType.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
     <Compile Include="InvolvedType.cs" />
     <Compile Include="MemberReportGenerator.cs" />

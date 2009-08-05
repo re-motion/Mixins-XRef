@@ -25,7 +25,7 @@ namespace MixinXRef
       return involvedTypesElement;
     }
 
-    private XElement CreateInvolvedTypeElement (IInvolvedType involvedType)
+    private XElement CreateInvolvedTypeElement (InvolvedType involvedType)
     {
       var realType = involvedType.Type;
       return new XElement (

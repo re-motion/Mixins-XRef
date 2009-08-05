@@ -3,7 +3,7 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class InvolvedType : IInvolvedType
+  public class InvolvedType
   {
     private readonly Type _realType;
     private bool _isTarget;

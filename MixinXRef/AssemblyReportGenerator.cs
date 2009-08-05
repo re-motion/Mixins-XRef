@@ -24,13 +24,13 @@ namespace MixinXRef
 
       foreach (var assembly in _context.Assemblies)
       {
-        IInvolvedType[] involvedTypesForAssembly = Array.FindAll (allInvolvedTypes, involvedType => involvedType.Type.Assembly == assembly);
+        InvolvedType[] involvedTypesForAssembly = Array.FindAll (allInvolvedTypes, involvedType => involvedType.Type.Assembly == assembly);
         assembliesElement.Add (GenerateAssemblyElement (assembly, involvedTypesForAssembly));
       }
       return assembliesElement;
     }
 
-    private XElement GenerateAssemblyElement (Assembly assembly, IInvolvedType[] involvedTypesForAssembly)
+    private XElement GenerateAssemblyElement (Assembly assembly, InvolvedType[] involvedTypesForAssembly)
     {
       return new XElement (
           "Assembly",

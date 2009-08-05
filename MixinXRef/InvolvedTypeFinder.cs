@@ -15,7 +15,7 @@ namespace MixinXRef
       _mixinConfiguration = mixinConfiguration;
     }
 
-    public IInvolvedType[] FindInvolvedTypes ()
+    public InvolvedType[] FindInvolvedTypes ()
     {
       //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
       InvolvedTypeStore involvedTypes = new InvolvedTypeStore();

@@ -4,14 +4,14 @@ namespace MixinXRef.UnitTests
 {
   public class InvolvedTypeFinderStub : IInvolvedTypeFinder
   {
-    private readonly IInvolvedType[] _types;
+    private readonly InvolvedType[] _types;
 
-    public InvolvedTypeFinderStub (params IInvolvedType[] types)
+    public InvolvedTypeFinderStub (params InvolvedType[] types)
     {
       _types = types;
     }
 
-    public IInvolvedType[] FindInvolvedTypes ()
+    public InvolvedType[] FindInvolvedTypes ()
     {
       return _types;
     }
