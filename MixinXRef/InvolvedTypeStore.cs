@@ -12,7 +12,7 @@ namespace MixinXRef
     {
       if (!_involvedTypes.ContainsKey (key))
       {
-        _involvedTypes.Add (key, new InvolvedType (key, false, false));
+        _involvedTypes.Add (key, new InvolvedType (key));
       }
 
       return _involvedTypes[key];

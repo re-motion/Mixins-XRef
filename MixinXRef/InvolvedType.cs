@@ -9,6 +9,13 @@ namespace MixinXRef
     private bool _isTarget;
     private bool _isMixin;
 
+    public InvolvedType (Type realType)
+    {
+      ArgumentUtility.CheckNotNull ("realType", realType);
+
+      _realType = realType;
+    }
+
     public InvolvedType (Type realType, bool isTarget, bool isMixin)
     {
       ArgumentUtility.CheckNotNull ("realType", realType);
