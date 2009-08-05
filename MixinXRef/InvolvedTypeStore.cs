@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -10,6 +11,8 @@ namespace MixinXRef
 
     public InvolvedType GetOrCreateValue (Type key)
     {
+      ArgumentUtility.CheckNotNull ("key", key);
+
       if (!_involvedTypes.ContainsKey (key))
       {
         _involvedTypes.Add (key, new InvolvedType (key));
