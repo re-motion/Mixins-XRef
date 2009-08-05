@@ -54,8 +54,8 @@ namespace MixinXRef
           from involvedType in involvedTypesForAssembly
           select 
               new XElement(
-                  "InvolvedTypeRef",
-                  new XAttribute("id", _involvedTypeIdentifierGenerator.GetIdentifier(involvedType.Type))
+                  "InvolvedType",
+                  new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(involvedType.Type))
               )
           );
     }

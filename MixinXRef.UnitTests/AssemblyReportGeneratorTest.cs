@@ -59,10 +59,10 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("full-name", _assembly1.FullName),
               new XAttribute ("code-base", _assembly1.CodeBase),
-              new XElement("InvolvedTypeRef", new XAttribute("id", "0")),
-              new XElement("InvolvedTypeRef", new XAttribute("id", "1")),
-              new XElement("InvolvedTypeRef", new XAttribute("id", "2")),
-              new XElement("InvolvedTypeRef", new XAttribute("id", "3"))
+              new XElement ("InvolvedType", new XAttribute ("ref", "0")),
+              new XElement ("InvolvedType", new XAttribute ("ref", "1")),
+              new XElement ("InvolvedType", new XAttribute ("ref", "2")),
+              new XElement ("InvolvedType", new XAttribute ("ref", "3"))
               ));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
