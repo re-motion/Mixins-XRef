@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Remotion.Utilities;
 
@@ -7,18 +8,27 @@ namespace MixinXRef
 {
   public class MemberReportGenerator : IReportGenerator
   {
-    private readonly IEnumerable<Type> _types;
+    private readonly Type _type;
 
-    public MemberReportGenerator (IEnumerable<Type> types)
+    public MemberReportGenerator (Type type)
     {
-      ArgumentUtility.CheckNotNull ("types", types);
-      _types = types;
+      ArgumentUtility.CheckNotNull ("type", type);
+      _type = type;
     }
 
 
     public XElement GenerateXml ()
     {
-      return new XElement("Members");
+      return new XElement (
+        "PublicMembers",
+        from memberInfo in _type.GetMembers()
+        select 
+            new XElement(
+              "Member",
+              new XAttribute("type", memberInfo.MemberType),
+              new XAttribute("name", memberInfo.Name)
+              )
+        );
     }
   }
 }

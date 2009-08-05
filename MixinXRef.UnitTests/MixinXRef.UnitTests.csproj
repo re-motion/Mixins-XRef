@@ -69,6 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CompositeReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
+    <Compile Include="TestDomain\IUseless.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
