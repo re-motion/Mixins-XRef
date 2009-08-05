@@ -2,7 +2,7 @@ using System;
 
 namespace MixinXRef.UnitTests
 {
-  public class InvolvedTypeFinderStub : ITargetClassFinder
+  public class InvolvedTypeFinderStub : IInvolvedTypeFinder
   {
     private readonly Type[] _types;
 
@@ -11,7 +11,7 @@ namespace MixinXRef.UnitTests
       _types = types;
     }
 
-    public Type[] FindTargetClasses ()
+    public Type[] FindInvolvedTypes ()
     {
       return _types;
     }

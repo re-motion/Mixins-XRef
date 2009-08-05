@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="AssemblyReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
-    <Compile Include="ITargetClassFinder.cs" />
+    <Compile Include="IInvolvedTypeFinder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportGenerator.cs" />

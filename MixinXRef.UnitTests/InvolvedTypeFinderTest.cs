@@ -14,22 +14,22 @@ namespace MixinXRef.UnitTests
     public void FindInvolvedTypes_EmptyConfiguration ()
     {
       var mixinConfiguration = new MixinConfiguration();
-      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
+      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration);
 
-      var targetClasses = targetClassFinder.FindTargetClasses();
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      Assert.That (targetClasses, Is.Empty);
+      Assert.That(involvedTypes, Is.Empty);
     }
 
     [Test]
     public void FindInvolvedTypes_WithOneTarget ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
+      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration);
 
-      var targetClasses = targetClassFinder.FindTargetClasses();
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      Assert.That (targetClasses, Is.EqualTo (new[] { typeof (TargetClass1), typeof(Mixin1) } ));
+      Assert.That(involvedTypes, Is.EqualTo(new[] { typeof(TargetClass1), typeof(Mixin1) }));
     }
 
     [Test]
@@ -39,11 +39,11 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
           .ForClass<TargetClass2>().AddMixin<Mixin2> ()
           .BuildConfiguration ();
-      var targetClassFinder = new InvolvedTypeFinder (mixinConfiguration);
+      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration);
 
-      var targetClasses = targetClassFinder.FindTargetClasses ();
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      Assert.That (targetClasses, Is.EquivalentTo (new[] { typeof (TargetClass1), typeof(Mixin1), typeof (TargetClass2), typeof(Mixin2) }));
+      Assert.That(involvedTypes, Is.EquivalentTo(new[] { typeof(TargetClass1), typeof(Mixin1), typeof(TargetClass2), typeof(Mixin2) }));
     }
   }
 }

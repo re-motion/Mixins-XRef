@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MixinXRef
 {
-  public class InvolvedTypeFinder : ITargetClassFinder
+  public class InvolvedTypeFinder : IInvolvedTypeFinder
   {
     private readonly MixinConfiguration _mixinConfiguration;
 
@@ -16,7 +16,7 @@ namespace MixinXRef
       _mixinConfiguration = mixinConfiguration;
     }
 
-    public Type[] FindTargetClasses ()
+    public Type[] FindInvolvedTypes ()
     {
       //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
       List<Type> involvedTypes = new List<Type>();

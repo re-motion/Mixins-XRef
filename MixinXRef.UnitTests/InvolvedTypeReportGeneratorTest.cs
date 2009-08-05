@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GenerateXml_NoTargetClasses ()
+    public void GenerateXml_NoInvolvedTypes ()
     {
       var finder = new InvolvedTypeFinderStub ();
       var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
@@ -34,7 +34,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GenerateXml_TargetClasses ()
+    public void GenerateXml_InvolvedTypes ()
     {
       var finder = new InvolvedTypeFinderStub (typeof (TargetClass1), typeof (TargetClass2));
       var reportGenerator = new InvolvedTypeReportGenerator (finder, _typeIdentifierGenerator, _assemblyIdentifierGenerator);
