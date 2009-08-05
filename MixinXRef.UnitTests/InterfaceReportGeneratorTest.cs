@@ -19,6 +19,7 @@ namespace MixinXRef.UnitTests
           new Assembly[0],
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type> (),
           new InvolvedTypeFinderStub()
           );
     }
