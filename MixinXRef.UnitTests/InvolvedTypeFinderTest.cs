@@ -29,7 +29,7 @@ namespace MixinXRef.UnitTests
 
       var targetClasses = targetClassFinder.FindTargetClasses();
 
-      Assert.That (targetClasses, Is.EqualTo (new[] { typeof (TargetClass1) } ));
+      Assert.That (targetClasses, Is.EqualTo (new[] { typeof (TargetClass1), typeof(Mixin1) } ));
     }
 
     [Test]
@@ -43,7 +43,7 @@ namespace MixinXRef.UnitTests
 
       var targetClasses = targetClassFinder.FindTargetClasses ();
 
-      Assert.That (targetClasses, Is.EquivalentTo (new[] { typeof (TargetClass1), typeof (TargetClass2) }));
+      Assert.That (targetClasses, Is.EquivalentTo (new[] { typeof (TargetClass1), typeof(Mixin1), typeof (TargetClass2), typeof(Mixin2) }));
     }
   }
 }

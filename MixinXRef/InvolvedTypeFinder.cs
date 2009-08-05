@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Remotion.Mixins;
 using Remotion.Utilities;
 using System.Linq;
@@ -17,7 +18,14 @@ namespace MixinXRef
 
     public Type[] FindTargetClasses ()
     {
-      return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
+      //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
+      List<Type> involvedTypes = new List<Type>();
+      foreach (var context in _mixinConfiguration.ClassContexts)
+      {
+        involvedTypes.Add (context.Type);
+        involvedTypes.AddRange (context.Mixins.Select(mixin => mixin.MixinType));
+      }
+      return involvedTypes.Distinct().ToArray();
     }
   }
 }

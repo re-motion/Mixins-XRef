@@ -63,7 +63,20 @@ namespace MixinXRef.UnitTests
                   new XAttribute ("id", "1"),
                   new XAttribute ("assembly-ref", "1"),
                   new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-                  new XAttribute ("name", "TargetClass2"))));
+                  new XAttribute ("name", "Mixin1")),
+              new XElement(
+                  "InvolvedType",
+                  new XAttribute("id", "2"),
+                  new XAttribute("assembly-ref", "1"),
+                  new XAttribute("namespace", "MixinXRef.UnitTests.TestDomain"),
+                  new XAttribute("name", "TargetClass2")),
+              new XElement (
+                  "InvolvedType",
+                  new XAttribute ("id", "3"),
+                  new XAttribute ("assembly-ref", "1"),
+                  new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+                  new XAttribute ("name", "Mixin2"))
+      ));
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
   }
