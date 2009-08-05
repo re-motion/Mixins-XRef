@@ -1,4 +1,5 @@
 using System;
+using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -43,7 +44,7 @@ namespace MixinXRef
 
     public override int GetHashCode ()
     {
-      return 0;
+      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin);
     }
 
     public override string ToString ()
