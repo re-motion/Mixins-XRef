@@ -42,6 +42,7 @@ namespace MixinXRef.UnitTests
       var involvedType = new InvolvedType (typeof (TargetClass1));
       _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType);
       var reportGenerator = new InterfaceReportGenerator (_context);
+      var memberReportGenerator = new MemberReportGenerator (typeof(IDisposable));
 
       XElement output = reportGenerator.GenerateXml ();
 
@@ -52,7 +53,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "System"),
-              new XAttribute ("name", "IDisposable")
+              new XAttribute ("name", "IDisposable"),
+              memberReportGenerator.GenerateXml()
               ));
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }

@@ -49,7 +49,8 @@ namespace MixinXRef
           new XAttribute ("id", _context.InterfaceIdentifierGenerator.GetIdentifier (usedInterface)),
           new XAttribute ("assembly-ref", _context.AssemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
-          new XAttribute ("name", usedInterface.Name)
+          new XAttribute ("name", usedInterface.Name),
+          new MemberReportGenerator(usedInterface).GenerateXml()
           );
     }
   }
