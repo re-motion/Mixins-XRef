@@ -54,8 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyReportGenerator.cs" />
+    <Compile Include="IAssemblyReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
+    <Compile Include="IInvolvedType.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
+    <Compile Include="IInvolvedTypeReportGenerator.cs" />
+    <Compile Include="InvolvedType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportGenerator.cs" />

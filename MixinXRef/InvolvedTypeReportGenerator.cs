@@ -5,7 +5,7 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class InvolvedTypeReportGenerator
+  public class InvolvedTypeReportGenerator : IInvolvedTypeReportGenerator
   {
     private readonly IInvolvedTypeFinder _involvedTypeFinder;
     private readonly IdentifierGenerator<Type> _typeIdentifierGenerator;
@@ -34,14 +34,17 @@ namespace MixinXRef
       return involvedTypesElement;
     }
 
-    private XElement CreateInvolvedTypeElement (Type involvedType)
+    private XElement CreateInvolvedTypeElement (IInvolvedType involvedType)
     {
+      var realType = involvedType.Type;
       return new XElement (
           "InvolvedType",
-          new XAttribute ("id", _typeIdentifierGenerator.GetIdentifier (involvedType)),
-          new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (involvedType.Assembly)),
-          new XAttribute ("namespace", involvedType.Namespace),
-          new XAttribute ("name", involvedType.Name));
+          new XAttribute ("id", _typeIdentifierGenerator.GetIdentifier (realType)),
+          new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
+          new XAttribute ("namespace", realType.Namespace),
+          new XAttribute ("name", realType.Name),
+          new XAttribute ("is-target", involvedType.IsTarget),
+          new XAttribute ("is-mixin", involvedType.IsMixin));
     }
   }
 }

@@ -6,7 +6,7 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class AssemblyReportGenerator
+  public class AssemblyReportGenerator : IAssemblyReportGenerator
   {
     private readonly IEnumerable<Assembly> _assemblies;
     private readonly IdentifierGenerator<Assembly> _identifierGenerator;

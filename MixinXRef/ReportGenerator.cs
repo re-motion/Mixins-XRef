@@ -1,31 +1,29 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Xml.Linq;
-using Remotion.Mixins.Context;
 using Remotion.Utilities;
 
 namespace MixinXRef
 {
   public class ReportGenerator
   {
-    public XElement GenerateXml (IEnumerable<Assembly> assemblies)
+    private readonly IAssemblyReportGenerator _assemblyReportGenerator;
+    private readonly IInvolvedTypeReportGenerator _involvedTypeReportGenerator;
+
+    public ReportGenerator (IAssemblyReportGenerator assemblyReportGenerator, IInvolvedTypeReportGenerator involvedTypeReportGenerator)
     {
-      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-      
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (null, assemblies);
+      ArgumentUtility.CheckNotNull ("assemblyReportGenerator", assemblyReportGenerator);
+      ArgumentUtility.CheckNotNull ("involvedTypeReportGenerator", involvedTypeReportGenerator);
 
-      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration);
-      var typeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
+      _assemblyReportGenerator = assemblyReportGenerator;
+      _involvedTypeReportGenerator = involvedTypeReportGenerator;
+    }
 
-      var assemblyReportGenerator = new AssemblyReportGenerator (assemblies, assemblyIdentifierGenerator);
-      var involvedTypeReportGenerator = new InvolvedTypeReportGenerator(involvedTypeFinder, typeIdentifierGenerator, assemblyIdentifierGenerator);
-      
+    public XElement GenerateXml ()
+    {
       return new XElement (
           "MixinXRefReport",
-          assemblyReportGenerator.GenerateXml (),
-          involvedTypeReportGenerator.GenerateXml());
+          _assemblyReportGenerator.GenerateXml (),
+          _involvedTypeReportGenerator.GenerateXml());
     }
   }
 }

@@ -29,7 +29,9 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      Assert.That(involvedTypes, Is.EqualTo(new[] { typeof(TargetClass1), typeof(Mixin1) }));
+      var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      var expectedType2 = new InvolvedType (typeof (Mixin1), false, true);
+      Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
     }
 
     [Test]
@@ -43,7 +45,12 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      Assert.That(involvedTypes, Is.EquivalentTo(new[] { typeof(TargetClass1), typeof(Mixin1), typeof(TargetClass2), typeof(Mixin2) }));
+      var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      var expectedType2 = new InvolvedType (typeof (Mixin1), false, true);
+      var expectedType3 = new InvolvedType (typeof (TargetClass2), true, false);
+      var expectedType4 = new InvolvedType (typeof (Mixin2), false, true);
+      
+      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
     }
   }
 }

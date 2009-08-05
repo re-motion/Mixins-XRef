@@ -16,14 +16,14 @@ namespace MixinXRef
       _mixinConfiguration = mixinConfiguration;
     }
 
-    public Type[] FindInvolvedTypes ()
+    public IInvolvedType[] FindInvolvedTypes ()
     {
       //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
-      List<Type> involvedTypes = new List<Type>();
+      List<InvolvedType> involvedTypes = new List<InvolvedType>();
       foreach (var context in _mixinConfiguration.ClassContexts)
       {
-        involvedTypes.Add (context.Type);
-        involvedTypes.AddRange (context.Mixins.Select(mixin => mixin.MixinType));
+        involvedTypes.Add (new InvolvedType(context.Type, true, false));
+        involvedTypes.AddRange (context.Mixins.Select(mixin => new InvolvedType(mixin.MixinType, false, true)));
       }
       return involvedTypes.Distinct().ToArray();
     }
