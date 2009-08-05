@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="InterfaceReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeStoreTest.cs" />
+    <Compile Include="MemberReportGeneratorTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />
