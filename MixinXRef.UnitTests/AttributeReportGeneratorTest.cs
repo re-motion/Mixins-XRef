@@ -47,16 +47,10 @@ namespace MixinXRef.UnitTests
 
     private AttributeReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
     {
-      var context = new ReportContext (
-          new Assembly[0],
+      return new AttributeReportGenerator (
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>()
-          );
-
-      return new AttributeReportGenerator (context);
+          new IdentifierGenerator<Type>());
     }
   }
 }

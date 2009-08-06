@@ -45,14 +45,11 @@ namespace MixinXRef.UnitTests
 
     private InterfaceReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
     {
-      var context = new ReportContext (
-          new Assembly[0],
+      return new InterfaceReportGenerator (
           involvedTypes,
-          new IdentifierGenerator<Assembly> (),
-          new IdentifierGenerator<Type> (),
-          new IdentifierGenerator<Type> (),
-          new IdentifierGenerator<Type> ());
-      return new InterfaceReportGenerator (context);
+          new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>()
+          );
     }
   }
 }

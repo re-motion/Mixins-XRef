@@ -8,23 +8,34 @@ namespace MixinXRef
 {
   public class AssemblyReportGenerator : IReportGenerator
   {
-    private readonly ReportContext _context;
+    private readonly Assembly[] _assemblies;
+    private readonly InvolvedType[] _involvedTypes;
+    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
 
-    public AssemblyReportGenerator (ReportContext context)
+    public AssemblyReportGenerator (
+      Assembly[] assemblies,
+        InvolvedType[] involvedTypes,
+        IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IdentifierGenerator<Type> involvedTypeIdentifierGenerator)
     {
-      ArgumentUtility.CheckNotNull ("context", context);
+      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
+      ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
+      ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
 
-      _context = context;
+      _assemblies = assemblies;
+      _involvedTypes = involvedTypes;
+      _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
+      _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
     }
-
     public XElement GenerateXml ()
     {
       var assembliesElement = new XElement ("Assemblies");
-      var allInvolvedTypes = _context.InvolvedTypes;
-
-      foreach (var assembly in _context.Assemblies)
+      
+      foreach (var assembly in _assemblies)
       {
-        InvolvedType[] involvedTypesForAssembly = Array.FindAll (allInvolvedTypes, involvedType => involvedType.Type.Assembly == assembly);
+        InvolvedType[] involvedTypesForAssembly = Array.FindAll (_involvedTypes, involvedType => involvedType.Type.Assembly == assembly);
         assembliesElement.Add (GenerateAssemblyElement (assembly, involvedTypesForAssembly));
       }
       return assembliesElement;
@@ -34,14 +45,14 @@ namespace MixinXRef
     {
       return new XElement (
           "Assembly",
-          new XAttribute ("id", _context.AssemblyIdentifierGenerator.GetIdentifier (assembly)),
+          new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
           new XAttribute ("full-name", assembly.FullName),
           new XAttribute ("code-base", assembly.CodeBase),
           from involvedType in involvedTypesForAssembly
           select
               new XElement (
               "InvolvedType",
-              new XAttribute ("ref", _context.InvolvedTypeIdentifierGenerator.GetIdentifier (involvedType.Type))
+              new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (involvedType.Type))
               )
           );
     }

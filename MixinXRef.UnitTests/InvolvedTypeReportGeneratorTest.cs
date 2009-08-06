@@ -99,18 +99,15 @@ namespace MixinXRef.UnitTests
 
     private InvolvedTypeReportGenerator CreateReportGenerator (Assembly[] referencedAssemblies, params InvolvedType[] involvedTypes)
     {
-      var context = new ReportContext (
-          new Assembly[0],
-          involvedTypes,
-          new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>());
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
 
       foreach (var referencedAssembly in referencedAssemblies)
-        context.AssemblyIdentifierGenerator.GetIdentifier (referencedAssembly);
+        assemblyIdentifierGenerator.GetIdentifier (referencedAssembly);
 
-      return new InvolvedTypeReportGenerator (context);
+      return new InvolvedTypeReportGenerator (
+          involvedTypes,
+          assemblyIdentifierGenerator,
+          new IdentifierGenerator<Type>());
     }
   }
 }

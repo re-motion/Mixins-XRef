@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Utilities;
@@ -9,18 +10,28 @@ namespace MixinXRef
 {
   public class InterfaceReportGenerator : IReportGenerator
   {
-    private readonly ReportContext _context;
+    private readonly InvolvedType[] _involvedTypes;
+    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
-    public InterfaceReportGenerator (ReportContext context)
+    public InterfaceReportGenerator (
+        InvolvedType[] involvedTypes,
+        IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
-      ArgumentUtility.CheckNotNull ("context", context);
-      _context = context;
+      ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
+      ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
+
+      _involvedTypes = involvedTypes;
+      _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
+      _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
     }
+
 
     public XElement GenerateXml ()
     {
       var allInterfaces = GetAllInterfaces();
-
 
       return new XElement (
           "Interfaces",
@@ -35,7 +46,7 @@ namespace MixinXRef
     {
       var allInterfaces = new HashSet<Type>();
 
-      foreach (var involvedType in _context.InvolvedTypes)
+      foreach (var involvedType in _involvedTypes)
       {
         foreach (var usedInterface in involvedType.Type.GetInterfaces())
           allInterfaces.Add (usedInterface);
@@ -48,11 +59,11 @@ namespace MixinXRef
     {
       return new XElement (
           "Interface",
-          new XAttribute ("id", _context.InterfaceIdentifierGenerator.GetIdentifier (usedInterface)),
-          new XAttribute ("assembly-ref", _context.AssemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
+          new XAttribute ("id", _interfaceIdentifierGenerator.GetIdentifier (usedInterface)),
+          new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute ("name", usedInterface.Name),
-          new MemberReportGenerator(usedInterface).GenerateXml()
+          new MemberReportGenerator (usedInterface).GenerateXml()
           );
     }
   }

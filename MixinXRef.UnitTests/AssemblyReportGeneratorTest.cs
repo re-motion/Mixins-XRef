@@ -81,15 +81,11 @@ namespace MixinXRef.UnitTests
 
     private AssemblyReportGenerator CreateReportGenerator (Assembly[] assemblies, params InvolvedType[] involvedTypes)
     {
-      var context = new ReportContext (
+      return new AssemblyReportGenerator (
           assemblies,
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>());
-
-      return new AssemblyReportGenerator (context);
     }
   }
 }
