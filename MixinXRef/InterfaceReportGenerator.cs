@@ -37,8 +37,7 @@ namespace MixinXRef
           "Interfaces",
           from usedInterface in allInterfaces
           where usedInterface.Assembly != typeof (IInitializableMixin).Assembly
-          select
-              GenerateInterfaceElement (usedInterface)
+          select GenerateInterfaceElement (usedInterface)
           );
     }
 
@@ -63,7 +62,13 @@ namespace MixinXRef
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute ("name", usedInterface.Name),
-          new MemberReportGenerator (usedInterface).GenerateXml()
+          new MemberReportGenerator (usedInterface).GenerateXml(),
+          new XElement (
+              "ImplementedBy",
+              new XElement (
+                  "InvolvedType",
+                  new XAttribute ("ref", "0"))
+              )
           );
     }
   }

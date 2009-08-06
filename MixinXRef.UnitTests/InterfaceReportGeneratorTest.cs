@@ -38,7 +38,13 @@ namespace MixinXRef.UnitTests
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "System"),
               new XAttribute ("name", "IDisposable"),
-              memberReportGenerator.GenerateXml()
+              memberReportGenerator.GenerateXml(),
+              new XElement (
+                  "ImplementedBy",
+                  new XElement(
+                    "InvolvedType",
+                    new XAttribute("ref", "0"))
+                )
               ));
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
