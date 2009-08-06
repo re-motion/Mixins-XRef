@@ -39,7 +39,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass1"),
               new XAttribute ("is-target", true),
-              new XAttribute ("is-mixin", false)),
+              new XAttribute ("is-mixin", false),
+              new MemberReportGenerator(involvedType1.Type).GenerateXml()
+              ),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "1"),
@@ -47,7 +49,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass2"),
               new XAttribute ("is-target", true),
-              new XAttribute ("is-mixin", false)),
+              new XAttribute ("is-mixin", false),
+              new MemberReportGenerator (involvedType2.Type).GenerateXml ()
+              ),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "2"),
@@ -55,7 +59,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "Mixin1"),
               new XAttribute ("is-target", false),
-              new XAttribute ("is-mixin", true))
+              new XAttribute ("is-mixin", true),
+              new MemberReportGenerator (involvedType3.Type).GenerateXml ()
+              )
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -84,7 +90,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass1"),
               new XAttribute ("is-target", true),
-              new XAttribute ("is-mixin", false)),
+              new XAttribute ("is-mixin", false),
+              new MemberReportGenerator (involvedType1.Type).GenerateXml ()
+              ),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "1"),
@@ -92,7 +100,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "System"),
               new XAttribute ("name", "Object"),
               new XAttribute ("is-target", false),
-              new XAttribute ("is-mixin", false)));
+              new XAttribute ("is-mixin", false),
+              new MemberReportGenerator (involvedType2.Type).GenerateXml ()
+              ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }

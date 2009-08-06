@@ -44,7 +44,9 @@ namespace MixinXRef
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", realType.Name),
           new XAttribute ("is-target", involvedType.IsTarget),
-          new XAttribute ("is-mixin", involvedType.IsMixin));
+          new XAttribute ("is-mixin", involvedType.IsMixin),
+          new MemberReportGenerator(involvedType.Type).GenerateXml()
+          );
     }
   }
 }
