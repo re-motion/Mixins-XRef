@@ -1,4 +1,5 @@
 using System;
+using Remotion.Mixins.Context;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -8,6 +9,7 @@ namespace MixinXRef
     private readonly Type _realType;
     private bool _isTarget;
     private bool _isMixin;
+    private ClassContext _classContext;
 
     public InvolvedType (Type realType)
     {
@@ -40,6 +42,12 @@ namespace MixinXRef
     {
       get { return _isMixin; }
       set { _isMixin = value; }
+    }
+
+    public ClassContext ClassContext
+    {
+      get { return _classContext; }
+      set { _classContext = value; }
     }
 
 

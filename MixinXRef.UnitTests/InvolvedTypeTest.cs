@@ -1,6 +1,3 @@
-// Copyright (C) 2005 - 2009 rubicon informationstechnologie gmbh
-// All rights reserved.
-//
 using System;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -53,7 +50,7 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetClass1), true, false);
       var type2 = new InvolvedType (typeof (TargetClass1), true, false);
 
-      Assert.That (type1.GetHashCode (), Is.EqualTo (type2.GetHashCode ()));
+      Assert.That (type1.GetHashCode(), Is.EqualTo (type2.GetHashCode()));
     }
   }
 }
