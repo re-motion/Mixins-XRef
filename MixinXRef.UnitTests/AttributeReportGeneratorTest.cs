@@ -39,7 +39,14 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "System"),
-              new XAttribute ("name", "SerializableAttribute")
+              new XAttribute ("name", "SerializableAttribute"),
+              new XElement (
+                  "AppliedTo",
+                  new XElement(
+                      "InvolvedType",
+                      new XAttribute ("ref", "0")
+                      )
+                  )
               )
           );
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -50,6 +57,7 @@ namespace MixinXRef.UnitTests
       return new AttributeReportGenerator (
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>());
     }
   }
