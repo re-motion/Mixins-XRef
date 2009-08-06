@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyReportGenerator.cs" />
+    <Compile Include="AttributeReportGenerator.cs" />
     <Compile Include="InterfaceReportGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="IReportGenerator.cs" />
