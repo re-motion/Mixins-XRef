@@ -54,6 +54,7 @@ namespace MixinXRef.UnitTests
       return new InterfaceReportGenerator (
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>()
           );
     }

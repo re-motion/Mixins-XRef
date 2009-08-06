@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Remotion.Collections;
 using Remotion.Mixins;
 using Remotion.Utilities;
 
@@ -12,19 +13,23 @@ namespace MixinXRef
   {
     private readonly InvolvedType[] _involvedTypes;
     private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
     public InterfaceReportGenerator (
         InvolvedType[] involvedTypes,
         IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
+      _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
     }
 
@@ -35,26 +40,26 @@ namespace MixinXRef
 
       return new XElement (
           "Interfaces",
-          from usedInterface in allInterfaces
+          from usedInterface in allInterfaces.Keys
           where usedInterface.Assembly != typeof (IInitializableMixin).Assembly
-          select GenerateInterfaceElement (usedInterface)
+          select GenerateInterfaceElement (usedInterface, allInterfaces)
           );
     }
 
-    private HashSet<Type> GetAllInterfaces ()
+    private MultiDictionary<Type, Type> GetAllInterfaces ()
     {
-      var allInterfaces = new HashSet<Type>();
+      var allInterfaces = new MultiDictionary<Type, Type>();
 
       foreach (var involvedType in _involvedTypes)
       {
-        foreach (var usedInterface in involvedType.Type.GetInterfaces())
-          allInterfaces.Add (usedInterface);
+        foreach (var usedInterface in involvedType.Type.GetInterfaces ())
+          allInterfaces.Add (usedInterface, involvedType.Type);
       }
 
       return allInterfaces;
     }
 
-    private XElement GenerateInterfaceElement (Type usedInterface)
+    private XElement GenerateInterfaceElement (Type usedInterface, MultiDictionary<Type, Type> allInterfaces)
     {
       return new XElement (
           "Interface",
@@ -65,9 +70,11 @@ namespace MixinXRef
           new MemberReportGenerator (usedInterface).GenerateXml(),
           new XElement (
               "ImplementedBy",
-              new XElement (
-                  "InvolvedType",
-                  new XAttribute ("ref", "0"))
+              from implementingType in allInterfaces[usedInterface]
+              select
+                  new XElement (
+                      "InvolvedType",
+                      new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier(implementingType)))
               )
           );
     }
