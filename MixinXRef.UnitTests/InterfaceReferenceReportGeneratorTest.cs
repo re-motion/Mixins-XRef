@@ -1,6 +1,3 @@
-// Copyright (C) 2005 - 2009 rubicon informationstechnologie gmbh
-// All rights reserved.
-//
 using System;
 using System.Xml.Linq;
 using MixinXRef.UnitTests.TestDomain;
@@ -15,7 +12,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
-      var reportGenerator = new InterfaceReferenceReportGenerator(typeof( object ), new IdentifierGenerator<Type>());
+      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (object), new IdentifierGenerator<Type>());
 
       var output = reportGenerator.GenerateXml();
 
@@ -28,16 +25,16 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithInterfaces ()
     {
       // TargetClass1 implements IDisposealbe
-      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (TargetClass1), new IdentifierGenerator<Type> ());
+      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (TargetClass1), new IdentifierGenerator<Type>());
 
-      var output = reportGenerator.GenerateXml ();
+      var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Interfaces",
-          new XElement("Interface", new XAttribute("ref", "0"))
+          new XElement ("Interface", new XAttribute ("ref", "0"))
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
 }
