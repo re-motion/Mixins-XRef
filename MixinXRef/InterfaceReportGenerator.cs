@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Remotion.Mixins;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -24,6 +25,7 @@ namespace MixinXRef
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces
+          where usedInterface.Assembly != typeof (IInitializableMixin).Assembly
           select
               GenerateInterfaceElement (usedInterface)
           );
