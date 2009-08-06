@@ -19,7 +19,7 @@ namespace MixinXRef
     public XElement GenerateXml ()
     {
       var involvedTypesElement = new XElement ("InvolvedTypes");
-      foreach (var involvedType in _context.InvolvedTypeFinder.FindInvolvedTypes ())
+      foreach (var involvedType in _context.InvolvedTypes)
         involvedTypesElement.Add (CreateInvolvedTypeElement(involvedType));
 
       return involvedTypesElement;

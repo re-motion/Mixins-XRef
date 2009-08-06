@@ -20,7 +20,7 @@ namespace MixinXRef
     public XElement GenerateXml ()
     {
       var assembliesElement = new XElement ("Assemblies");
-      var allInvolvedTypes = _context.InvolvedTypeFinder.FindInvolvedTypes();
+      var allInvolvedTypes = _context.InvolvedTypes;
 
       foreach (var assembly in _context.Assemblies)
       {

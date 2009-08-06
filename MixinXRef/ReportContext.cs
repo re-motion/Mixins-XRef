@@ -8,34 +8,36 @@ namespace MixinXRef
   public class ReportContext
   {
     public ReportContext (
-      IEnumerable<Assembly> assemblies,
+      Assembly[] assemblies,
+      InvolvedType[] involvedTypes,
       IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
       IdentifierGenerator<Type> involvedTypeIdentifierGenerator,
       IdentifierGenerator<Type> interfaceIdentifierGenerator,
-      IdentifierGenerator<Type> attributeIdentifierGenerator,
-      IInvolvedTypeFinder involvedTypeFinder
-      )
+      IdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
+      ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
+
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("involvedTypeFinder", involvedTypeFinder);
       
       Assemblies = assemblies;
+      InvolvedTypes = involvedTypes;
+
       AssemblyIdentifierGenerator = assemblyIdentifierGenerator;
       InvolvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       InterfaceIdentifierGenerator = interfaceIdentifierGenerator;
       AttributeIdentifierGenerator = attributeIdentifierGenerator;
-      InvolvedTypeFinder = involvedTypeFinder;
     }
 
-    public IEnumerable<Assembly> Assemblies { get; set; }
-    public IdentifierGenerator<Assembly> AssemblyIdentifierGenerator { get; set; }
-    public IdentifierGenerator<Type> InvolvedTypeIdentifierGenerator { get; set; }
-    public IdentifierGenerator<Type> InterfaceIdentifierGenerator { get; set; }
-    public IdentifierGenerator<Type> AttributeIdentifierGenerator { get; set; }
-    public IInvolvedTypeFinder InvolvedTypeFinder { get; set; }
+    public Assembly[] Assemblies { get; private set; }
+    public InvolvedType[] InvolvedTypes { get; private set; }
+
+    public IdentifierGenerator<Assembly> AssemblyIdentifierGenerator { get; private set; }
+    public IdentifierGenerator<Type> InvolvedTypeIdentifierGenerator { get; private set; }
+    public IdentifierGenerator<Type> InterfaceIdentifierGenerator { get; private set; }
+    public IdentifierGenerator<Type> AttributeIdentifierGenerator { get; private set; }
   }
 }

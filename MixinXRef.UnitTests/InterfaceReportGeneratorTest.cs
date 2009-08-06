@@ -10,26 +10,10 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InterfaceReportGeneratorTest
   {
-    private ReportContext _context;
-
-    [SetUp]
-    public void SetUp ()
-    {
-      _context = new ReportContext (
-          new Assembly[0],
-          new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type> (),
-          new IdentifierGenerator<Type> (),
-          new InvolvedTypeFinderStub()
-          );
-    }
-
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
-      var reportGenerator = new InterfaceReportGenerator (_context);
-
+      var reportGenerator = CreateReportGenerator();
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("Interfaces");
@@ -41,8 +25,7 @@ namespace MixinXRef.UnitTests
     {
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
-      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType);
-      var reportGenerator = new InterfaceReportGenerator (_context);
+      var reportGenerator = CreateReportGenerator (involvedType);
       var memberReportGenerator = new MemberReportGenerator (typeof(IDisposable));
 
       XElement output = reportGenerator.GenerateXml ();
@@ -58,6 +41,18 @@ namespace MixinXRef.UnitTests
               memberReportGenerator.GenerateXml()
               ));
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
+
+    private InterfaceReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
+    {
+      var context = new ReportContext (
+          new Assembly[0],
+          involvedTypes,
+          new IdentifierGenerator<Assembly> (),
+          new IdentifierGenerator<Type> (),
+          new IdentifierGenerator<Type> (),
+          new IdentifierGenerator<Type> ());
+      return new InterfaceReportGenerator (context);
     }
   }
 }

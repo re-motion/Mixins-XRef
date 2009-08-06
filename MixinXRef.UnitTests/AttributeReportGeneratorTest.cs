@@ -10,28 +10,12 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class AttributeReportGeneratorTest
   {
-    private ReportContext _context;
-
-    [SetUp]
-    public void SetUp ()
-    {
-      _context = new ReportContext (
-          new Assembly[0],
-          new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
-          new InvolvedTypeFinderStub()
-          );
-    }
-
     [Test]
     public void GenerateXml_NoAttributes ()
     {
       // UselessObject has no attributes
       var involvedType = new InvolvedType (typeof (UselessObject));
-      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType);
-      var reportGenerator = new AttributeReportGenerator (_context);
+      AttributeReportGenerator reportGenerator = CreateReportGenerator (involvedType);
 
       XElement output = reportGenerator.GenerateXml();
 
@@ -44,9 +28,7 @@ namespace MixinXRef.UnitTests
     {
       // Mixin2 has Serializable attribute
       var involvedType = new InvolvedType (typeof (Mixin2));
-      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType);
-
-      var reportGenerator = new AttributeReportGenerator (_context);
+      var reportGenerator = CreateReportGenerator (involvedType);
 
       XElement output = reportGenerator.GenerateXml();
 
@@ -61,6 +43,20 @@ namespace MixinXRef.UnitTests
               )
           );
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private AttributeReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
+    {
+      var context = new ReportContext (
+          new Assembly[0],
+          involvedTypes,
+          new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>()
+          );
+
+      return new AttributeReportGenerator (context);
     }
   }
 }

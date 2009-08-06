@@ -12,28 +12,18 @@ namespace MixinXRef.UnitTests
   {
     private Assembly _assembly1;
     private Assembly _assembly2;
-    private ReportContext _context;
 
     [SetUp]
     public void SetUp ()
     {
       _assembly1 = typeof (CompositeReportGeneratorTest).Assembly;
       _assembly2 = typeof (object).Assembly;
-
-      _context = new ReportContext (
-          new Assembly[0],
-          new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type> (),
-          new IdentifierGenerator<Type> (),
-          new InvolvedTypeFinderStub()
-          );
     }
 
     [Test]
     public void GenerateXml_EmptyAssemblies ()
     {
-      var reportGenerator = new AssemblyReportGenerator (_context);
+      var reportGenerator = CreateReportGenerator (new Assembly[0]);
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("Assemblies");
@@ -48,10 +38,7 @@ namespace MixinXRef.UnitTests
       var involvedType3 = new InvolvedType (typeof (Mixin1), false, true);
       var involvedType4 = new InvolvedType (typeof (Mixin2), false, true);
 
-      _context.Assemblies = new[] { _assembly1 };
-      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub (involvedType1, involvedType2, involvedType3, involvedType4);
-
-      var reportGenerator = new AssemblyReportGenerator (_context);
+      var reportGenerator = CreateReportGenerator (new[] { _assembly1 }, involvedType1, involvedType2, involvedType3, involvedType4);
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
@@ -73,10 +60,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_MoreAssemblies ()
     {
-      _context.InvolvedTypeFinder = new InvolvedTypeFinderStub();
-      _context.Assemblies= new[] { _assembly1, _assembly2 };
-      var reportGenerator = new AssemblyReportGenerator (_context);
-      
+      var reportGenerator = CreateReportGenerator (new[] { _assembly1, _assembly2 });
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
@@ -93,6 +77,19 @@ namespace MixinXRef.UnitTests
               new XAttribute ("code-base", _assembly2.CodeBase)));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private AssemblyReportGenerator CreateReportGenerator (Assembly[] assemblies, params InvolvedType[] involvedTypes)
+    {
+      var context = new ReportContext (
+          assemblies,
+          involvedTypes,
+          new IdentifierGenerator<Assembly>(),
+          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>());
+
+      return new AssemblyReportGenerator (context);
     }
   }
 }

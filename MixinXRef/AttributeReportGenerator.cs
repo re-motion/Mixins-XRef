@@ -35,7 +35,7 @@ namespace MixinXRef
     {
       var allAttributes = new HashSet<Type>();
 
-      foreach (var involvedType in _context.InvolvedTypeFinder.FindInvolvedTypes())
+      foreach (var involvedType in _context.InvolvedTypes)
       {
         foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
           allAttributes.Add (attribute.GetType());

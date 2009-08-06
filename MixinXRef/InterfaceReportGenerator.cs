@@ -35,7 +35,7 @@ namespace MixinXRef
     {
       var allInterfaces = new HashSet<Type>();
 
-      foreach (var involvedType in _context.InvolvedTypeFinder.FindInvolvedTypes())
+      foreach (var involvedType in _context.InvolvedTypes)
       {
         foreach (var usedInterface in involvedType.Type.GetInterfaces())
           allInterfaces.Add (usedInterface);
