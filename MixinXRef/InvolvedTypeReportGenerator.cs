@@ -58,6 +58,7 @@ namespace MixinXRef
           new XAttribute ("name", realType.Name),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
+          new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
           new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator).GenerateXml (),
           new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator).GenerateXml (),
