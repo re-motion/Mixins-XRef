@@ -64,7 +64,7 @@ namespace MixinXRef
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin, _classContext);
+      return EqualityUtility.GetRotatedHashCode (Type, IsMixin, _classContext);
     }
 
     public override string ToString ()
