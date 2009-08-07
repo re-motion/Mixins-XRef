@@ -62,7 +62,7 @@ namespace MixinXRef
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
           new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator).GenerateXml (),
           new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator).GenerateXml (),
-          new MixinReferenceReportGenerator (involvedType, _mixinConfiguration, _involvedTypeIdentifierGenerator, _interfaceIdentifierGenerator).GenerateXml()
+          new MixinReferenceReportGenerator (involvedType, _mixinConfiguration, _involvedTypeIdentifierGenerator, _interfaceIdentifierGenerator, _attributeIdentifierGenerator).GenerateXml()
           );
     }
   }

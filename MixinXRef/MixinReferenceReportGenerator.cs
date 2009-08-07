@@ -13,23 +13,26 @@ namespace MixinXRef
     private readonly MixinConfiguration _mixinConfiguration;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
 
     public MixinReferenceReportGenerator (InvolvedType involvedType, 
       MixinConfiguration mixinConfiguration, 
       IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-      IIdentifierGenerator<Type> interfaceIdentifierGenerator
+      IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+      IIdentifierGenerator<Type> attributeIdentifierGenerator
       )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
-
+      ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
 
       _involvedType = involvedType;
       _mixinConfiguration = mixinConfiguration;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
+      _attributeIdentifierGenerator = attributeIdentifierGenerator;
     }
 
     public XElement GenerateXml ()
@@ -48,7 +51,8 @@ namespace MixinXRef
       return new XElement (
           "Mixin",
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
-          new InterfaceIntroductionReportGenerator (_involvedType.Type, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml ()
+          new InterfaceIntroductionReportGenerator (_involvedType.Type, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
+          new AttributeIntroductionReportGenerator (_involvedType.Type, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml ()
           );
 
     }

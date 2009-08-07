@@ -11,10 +11,10 @@ namespace MixinXRef
     private readonly Type _targetType;
     private readonly Type _mixinType;
     private readonly MixinConfiguration _mixinConfiguration;
-    private readonly IdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
 
     public AttributeIntroductionReportGenerator (
-        Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IdentifierGenerator<Type> attributeIdentifierGenerator)
+        Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IIdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinType", mixinType);
