@@ -20,13 +20,14 @@ namespace MixinXRef
 
       var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
 
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
+      ReadonlyIdentifierGenerator<Assembly> assemblyIdentifierGenerator = CreateAssemblyIdentifierGenerator(assemblies);
       var involvedTypeIdentiferGenerator = new IdentifierGenerator<Type>();
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
 
       var assemblyReport = new AssemblyReportGenerator (
-          assemblies, involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);
+          assemblies, involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);     
+      
       var involvedReport = new InvolvedTypeReportGenerator (
           involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator, attributeIdentiferGenerator);
       var interfaceReport = new InterfaceReportGenerator (
@@ -39,6 +40,16 @@ namespace MixinXRef
       XElement report = compositeReportGenerator.GenerateXml();
 
       new XDocument (report).Save (@"C:\Users\patrick.groess\Desktop\MixinReport.xml");
+    }
+
+    private static ReadonlyIdentifierGenerator<Assembly> CreateAssemblyIdentifierGenerator (Assembly[] assemblies)
+    {
+      var identifierGenerator =new IdentifierGenerator<Assembly>();
+      foreach (var assembly in assemblies)
+      {
+        identifierGenerator.GetIdentifier (assembly);
+      }
+      return identifierGenerator.GetReadonlyIdentiferGenerator ("dummy-value");
     }
 
 
