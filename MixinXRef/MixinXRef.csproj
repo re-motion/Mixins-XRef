@@ -59,7 +59,7 @@
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="InterfaceReferenceReportGenerator.cs" />
     <Compile Include="InterfaceReportGenerator.cs" />
-    <Compile Include="IntroducedInterfaceGenerator.cs" />
+    <Compile Include="InterfaceIntroductionGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />
