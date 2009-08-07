@@ -76,6 +76,7 @@
     <Compile Include="CompositeReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
+    <Compile Include="TestDomain\GenericTarget.cs" />
     <Compile Include="TestDomain\IUseless.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />

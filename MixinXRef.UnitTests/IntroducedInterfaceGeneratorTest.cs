@@ -12,7 +12,7 @@ namespace MixinXRef.UnitTests
   public class IntroducedInterfaceGeneratorTest
   {
     [Test]
-    public void GenerateXml_NoInterfaces ()
+    public void GenerateXm_NoIntroducedInterfaces ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
@@ -26,7 +26,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GenerateXml_WithInterfaces ()
+    public void GenerateXml_WithIntroducedInterfaces ()
     {
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var mixinConfiguration = MixinConfiguration.BuildNew()
@@ -48,5 +48,19 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
+
+    [Test]
+    public void GenerateXml_ForGenericTargetClass ()
+    {
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
+
+      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+
+      var reportGenerator = new IntroducedInterfaceGenerator (typeof (GenericTarget<>), typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+      
+      var output = reportGenerator.GenerateXml ();
+
+      Assert.That (output, Is.Null);
+    } 
   }
 }
