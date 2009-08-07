@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
@@ -40,6 +42,23 @@ namespace MixinXRef.UnitTests
     {
       var type1 = new InvolvedType (typeof (TargetClass1), true, false);
       var type2 = new InvolvedType (typeof (TargetClass1), true, true);
+      
+      Assert.That (type1, Is.Not.EqualTo (type2));
+    }
+
+    [Test]
+    public void Equals_False_ClassContextDoesntMatch ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
+          .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
+          .ForClass<TargetClass2> ().AddMixin<Mixin2> ()
+          .BuildConfiguration ();
+
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (TargetClass1));
+
+      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+      type2.ClassContext = mixinConfiguration.ClassContexts.Last ();
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -30,6 +31,7 @@ namespace MixinXRef.UnitTests
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1), false, true);
       Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
     }
@@ -46,8 +48,10 @@ namespace MixinXRef.UnitTests
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1), false, true);
       var expectedType3 = new InvolvedType (typeof (TargetClass2), true, false);
+      expectedType3.ClassContext = mixinConfiguration.ClassContexts.Last ();    
       var expectedType4 = new InvolvedType (typeof (Mixin2), false, true);
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
@@ -65,7 +69,9 @@ namespace MixinXRef.UnitTests
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes ();
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1), true, true);
+      expectedType2.ClassContext = mixinConfiguration.ClassContexts.Last ();
       var expectedType3 = new InvolvedType (typeof (Mixin2), false, true);
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3}));

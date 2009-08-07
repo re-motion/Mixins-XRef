@@ -57,12 +57,13 @@ namespace MixinXRef
       return other != null 
           && other.Type == Type 
           && other.IsTarget == IsTarget 
-          && other.IsMixin == IsMixin;
+          && other.IsMixin == IsMixin
+          && other.ClassContext == ClassContext;
     }
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin);
+      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin, ClassContext);
     }
 
     public override string ToString ()

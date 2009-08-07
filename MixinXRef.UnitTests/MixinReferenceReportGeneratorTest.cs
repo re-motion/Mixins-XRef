@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Context;
 
 namespace MixinXRef.UnitTests
 {
@@ -17,7 +15,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_NoMixins ()
     {
       var involvedTypeDummy = new InvolvedType (typeof (object));
-      var reportGenerator = new MixinReferenceReportGenerator(involvedTypeDummy, new IdentifierGenerator<Type>());
+      var reportGenerator = new MixinReferenceReportGenerator (involvedTypeDummy, new IdentifierGenerator<Type>());
 
       var output = reportGenerator.GenerateXml();
 
@@ -30,7 +28,7 @@ namespace MixinXRef.UnitTests
       var targetType = new InvolvedType (typeof (TargetClass1));
       targetType.IsTarget = true;
       targetType.ClassContext = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration().ClassContexts.First();
-      var reportGenerator = new MixinReferenceReportGenerator(targetType, new IdentifierGenerator<Type>());
+      var reportGenerator = new MixinReferenceReportGenerator (targetType, new IdentifierGenerator<Type>());
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
