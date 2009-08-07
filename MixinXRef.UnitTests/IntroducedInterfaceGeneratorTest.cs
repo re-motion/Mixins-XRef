@@ -1,7 +1,10 @@
 using System;
+using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
@@ -11,12 +14,39 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_NoInterfaces ()
     {
-      var reportGenerator = new IntroducedInterfaceGenerator();
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .BuildConfiguration();
+      var reportGenerator = new IntroducedInterfaceGenerator (typeof (TargetClass2), typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("IntroducedInterfaces");
 
-      Assert.That (output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GenerateXml_WithInterfaces ()
+    {
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass2>().AddMixin<Mixin3>()
+          .BuildConfiguration();
+
+      // TargetClass2 does not implement any interface
+      // Mixin3 introduces interface IDisposable
+      var reportGenerator = new IntroducedInterfaceGenerator (typeof (TargetClass2), typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+
+      var output = reportGenerator.GenerateXml();
+
+      var expectedOutput = new XElement (
+          "IntroducedInterfaces",
+          new XElement (
+              "Interface",
+              new XAttribute ("ref", "0")
+              ));
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
 }
