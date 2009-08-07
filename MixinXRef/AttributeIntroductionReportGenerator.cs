@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Utilities;
@@ -12,7 +13,8 @@ namespace MixinXRef
     private readonly MixinConfiguration _mixinConfiguration;
     private readonly IdentifierGenerator<Type> _attributeIdentifierGenerator;
 
-    public AttributeIntroductionReportGenerator (Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IdentifierGenerator<Type> attributeIdentifierGenerator)
+    public AttributeIntroductionReportGenerator (
+        Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinType", mixinType);
@@ -27,7 +29,23 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-      return new XElement ("AttributeIntroductions");
+      if (_targetType.IsGenericTypeDefinition)
+        return null;
+
+      var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_targetType, _mixinConfiguration);
+
+      return new XElement (
+          "AttributeIntroductions",
+          from introducedAttribute in targetClassDefinition.Mixins[_mixinType].AttributeIntroductions
+          select GenerateAttributeReferanceElement (introducedAttribute.AttributeType));
+    }
+
+    private XElement GenerateAttributeReferanceElement (Type introducedAttribute)
+    {
+      return new XElement (
+          "Attribute",
+          new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (introducedAttribute))
+          );
     }
   }
 }

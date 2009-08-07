@@ -24,5 +24,27 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
+
+    [Test]
+    public void GenerateXml_WithIntroducedAttributes ()
+    {
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
+          .ForClass<UselessObject> ().AddMixin<ObjectWithInheritableAttribute> ()
+          .BuildConfiguration ();
+
+      var reportGenerator = new AttributeIntroductionReportGenerator (typeof (UselessObject), typeof (ObjectWithInheritableAttribute), mixinConfiguration, attributeIdentifierGenerator);
+
+      var output = reportGenerator.GenerateXml ();
+
+      var expectedOutput = new XElement (
+          "AttributeIntroductions",
+          new XElement (
+              "Attribute",
+              new XAttribute ("ref", "0")
+              ));
+
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
   }
 }

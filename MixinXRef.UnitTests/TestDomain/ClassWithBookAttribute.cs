@@ -7,7 +7,7 @@ namespace MixinXRef.UnitTests.TestDomain
   {
   }
 
-  internal class BookAttribute : Attribute
+  public class BookAttribute : Attribute
   {
     private readonly int _id;
 

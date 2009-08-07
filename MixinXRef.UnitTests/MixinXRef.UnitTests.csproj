@@ -78,10 +78,12 @@
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />
+    <Compile Include="TestDomain\InheritableAttribute.cs" />
     <Compile Include="TestDomain\IUseless.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\Mixin3.cs" />
+    <Compile Include="TestDomain\ObjectWithInheritableAttribute.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
     <Compile Include="TestDomain\UselessObject.cs" />
