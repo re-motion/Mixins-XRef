@@ -11,15 +11,15 @@ namespace MixinXRef
   public class AttributeReportGenerator : IReportGenerator
   {
     private readonly InvolvedType[] _involvedTypes;
-    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
 
     public AttributeReportGenerator (
         InvolvedType[] involvedTypes,
-        IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
-        IdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-        IdentifierGenerator<Type> attributeIdentifierGenerator)
+        IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
+        IIdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);

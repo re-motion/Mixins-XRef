@@ -11,9 +11,9 @@ namespace MixinXRef
   public class AttributeReferenceReportGenerator : IReportGenerator
   {
     private readonly Type _type;
-    private readonly IdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
 
-    public AttributeReferenceReportGenerator (Type type, IdentifierGenerator<Type> attributeIdentifierGenerator)
+    public AttributeReferenceReportGenerator (Type type, IIdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);

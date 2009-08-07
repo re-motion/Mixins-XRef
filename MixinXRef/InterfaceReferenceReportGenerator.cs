@@ -9,9 +9,9 @@ namespace MixinXRef
   public class InterfaceReferenceReportGenerator : IReportGenerator
   {
     private readonly Type _type;
-    private readonly IdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
-    public InterfaceReferenceReportGenerator (Type type, IdentifierGenerator<Type> interfaceIdentifierGenerator)
+    public InterfaceReferenceReportGenerator (Type type, IIdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);

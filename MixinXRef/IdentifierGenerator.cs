@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -8,10 +7,10 @@ namespace MixinXRef
   /// <summary>
   /// Generates a identifier for a given item. When the same item is given twice, the same identifier will be returned.
   /// </summary>
-  public class IdentifierGenerator<T>
+  public class IdentifierGenerator<T> : IIdentifierGenerator<T>
   {
     private readonly Dictionary<T, string> _identifiers = new Dictionary<T, string>();
-    
+
     public string GetIdentifier (T item)
     {
       ArgumentUtility.CheckNotNull ("item", item);

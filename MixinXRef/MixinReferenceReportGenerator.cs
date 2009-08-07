@@ -9,9 +9,9 @@ namespace MixinXRef
   public class MixinReferenceReportGenerator : IReportGenerator
   {
     private readonly InvolvedType _involvedType;
-    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
 
-    public MixinReferenceReportGenerator (InvolvedType involvedType, IdentifierGenerator<Type> involvedTypeIdentifierGenerator)
+    public MixinReferenceReportGenerator (InvolvedType involvedType, IIdentifierGenerator<Type> involvedTypeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);

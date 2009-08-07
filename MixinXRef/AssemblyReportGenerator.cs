@@ -10,14 +10,14 @@ namespace MixinXRef
   {
     private readonly Assembly[] _assemblies;
     private readonly InvolvedType[] _involvedTypes;
-    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
 
     public AssemblyReportGenerator (
       Assembly[] assemblies,
         InvolvedType[] involvedTypes,
-        IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
-        IdentifierGenerator<Type> involvedTypeIdentifierGenerator)
+        IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IIdentifierGenerator<Type> involvedTypeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);

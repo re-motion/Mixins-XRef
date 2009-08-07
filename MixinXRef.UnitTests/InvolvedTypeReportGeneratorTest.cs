@@ -128,7 +128,7 @@ namespace MixinXRef.UnitTests
 
       InvolvedTypeReportGenerator reportGenerator =
           CreateReportGenerator (
-              new[] { typeof (IdentifierGenerator<>).Assembly, typeof (InvolvedTypeReportGeneratorTest).Assembly, typeof (object).Assembly },
+              new[] { typeof (InvolvedType).Assembly, typeof (InvolvedTypeReportGeneratorTest).Assembly, typeof (object).Assembly },
               involvedTypeIdentifierGenerator,
               interfaceIdentifierGenerator,
               attributeIdentifierGenerator,
@@ -171,9 +171,9 @@ namespace MixinXRef.UnitTests
 
     private InvolvedTypeReportGenerator CreateReportGenerator (
         Assembly[] referencedAssemblies,
-        IdentifierGenerator<Type> involvedTypeIdentifier,
-        IdentifierGenerator<Type> interfaceIdentifierGenerator,
-        IdentifierGenerator<Type> attributeIdentifierGenerator,
+        IIdentifierGenerator<Type> involvedTypeIdentifier,
+        IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+        IIdentifierGenerator<Type> attributeIdentifierGenerator,
         params InvolvedType[] involvedTypes)
     {
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();

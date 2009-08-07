@@ -8,7 +8,7 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class IdentifierGeneratorTest
   {
-    private IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
 
     [SetUp]
     public void SetUp ()

@@ -8,17 +8,17 @@ namespace MixinXRef
   public class InvolvedTypeReportGenerator : IReportGenerator
   {
     private readonly InvolvedType[] _involvedTypes;
-    private readonly IdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _interfaceIdentifierGenerator;
-    private readonly IdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
 
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
-        IdentifierGenerator<Assembly> assemblyIdentifierGenerator,
-        IdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-        IdentifierGenerator<Type> interfaceIdentifierGenerator,
-        IdentifierGenerator<Type> attributeIdentifierGenerator)
+        IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
+        IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
+        IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+        IIdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
