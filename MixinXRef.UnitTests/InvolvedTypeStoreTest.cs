@@ -23,7 +23,7 @@ namespace MixinXRef.UnitTests
     {
       var involvedType = _involvedTypeStore.GetOrCreateValue (typeof(object));
       
-      var expectedInvolvedType = new InvolvedType (typeof (object), false, false);
+      var expectedInvolvedType = new InvolvedType (typeof (object), false);
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
 
@@ -35,7 +35,7 @@ namespace MixinXRef.UnitTests
 
       var involvedType = _involvedTypeStore.GetOrCreateValue (typeof (object));
 
-      var expectedInvolvedType = new InvolvedType (typeof (object), false, true);
+      var expectedInvolvedType = new InvolvedType (typeof (object), true);
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
 

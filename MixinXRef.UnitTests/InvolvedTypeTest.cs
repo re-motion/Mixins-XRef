@@ -14,8 +14,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_True ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), true, false);
-      var type2 = new InvolvedType (typeof (TargetClass1), true, false);
+      var type1 = new InvolvedType (typeof (TargetClass1), false);
+      var type2 = new InvolvedType (typeof (TargetClass1), false);
 
       Assert.That (type1, Is.EqualTo (type2));
     }
@@ -23,8 +23,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_TypeDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), true, false);
-      var type2 = new InvolvedType (typeof (TargetClass2), true, false);
+      var type1 = new InvolvedType (typeof (TargetClass1), false);
+      var type2 = new InvolvedType (typeof (TargetClass2), false);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -32,9 +32,9 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_IsTargetDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), true, false);
+      var type1 = new InvolvedType (typeof (TargetClass1), false);
       type1.ClassContext = new ClassContext(typeof(TargetClass1));
-      var type2 = new InvolvedType (typeof (TargetClass1), false, false);
+      var type2 = new InvolvedType (typeof (TargetClass1), false);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -42,8 +42,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_IsMixinDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), true, false);
-      var type2 = new InvolvedType (typeof (TargetClass1), true, true);
+      var type1 = new InvolvedType (typeof (TargetClass1), false);
+      var type2 = new InvolvedType (typeof (TargetClass1), true);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -68,8 +68,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetHashCode_EqualObjects ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), true, false);
-      var type2 = new InvolvedType (typeof (TargetClass1), true, false);
+      var type1 = new InvolvedType (typeof (TargetClass1), false);
+      var type2 = new InvolvedType (typeof (TargetClass1), false);
 
       Assert.That (type1.GetHashCode(), Is.EqualTo (type2.GetHashCode()));
     }
