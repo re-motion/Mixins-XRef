@@ -54,9 +54,9 @@ namespace MixinXRef
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
-          new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator),
-          new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator),
-          new MixinReferenceReportGenerator (involvedType, _involvedTypeIdentifierGenerator)
+          new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator).GenerateXml (),
+          new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator).GenerateXml (),
+          new MixinReferenceReportGenerator (involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );
     }
   }
