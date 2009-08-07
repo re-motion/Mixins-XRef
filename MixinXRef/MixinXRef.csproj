@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyReportGenerator.cs" />
+    <Compile Include="AttributeIntroductionReportGenerator.cs" />
     <Compile Include="AttributeReferenceReportGenerator.cs" />
     <Compile Include="AttributeReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
