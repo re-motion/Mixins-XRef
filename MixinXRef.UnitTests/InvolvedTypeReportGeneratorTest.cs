@@ -6,6 +6,7 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Context;
 
 namespace MixinXRef.UnitTests
 {
@@ -95,6 +96,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_DifferentAssemblies ()
     {
       var involvedType1 = new InvolvedType (typeof (TargetClass1), true, false);
+      involvedType1.ClassContext = new ClassContext (typeof (TargetClass1));
       var involvedType2 = new InvolvedType (typeof (object), false, false);
 
       var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type>();

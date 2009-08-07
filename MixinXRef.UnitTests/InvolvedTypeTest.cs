@@ -4,6 +4,7 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Context;
 
 namespace MixinXRef.UnitTests
 {
@@ -32,6 +33,7 @@ namespace MixinXRef.UnitTests
     public void Equals_False_IsTargetDoesntMatch ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1), true, false);
+      type1.ClassContext = new ClassContext(typeof(TargetClass1));
       var type2 = new InvolvedType (typeof (TargetClass1), false, false);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
@@ -42,23 +44,23 @@ namespace MixinXRef.UnitTests
     {
       var type1 = new InvolvedType (typeof (TargetClass1), true, false);
       var type2 = new InvolvedType (typeof (TargetClass1), true, true);
-      
+
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
 
     [Test]
     public void Equals_False_ClassContextDoesntMatch ()
     {
-      var mixinConfiguration = MixinConfiguration.BuildNew ()
-          .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
-          .ForClass<TargetClass2> ().AddMixin<Mixin2> ()
-          .BuildConfiguration ();
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (TargetClass1));
 
-      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
-      type2.ClassContext = mixinConfiguration.ClassContexts.Last ();
+      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type2.ClassContext = mixinConfiguration.ClassContexts.Last();
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -71,5 +73,37 @@ namespace MixinXRef.UnitTests
 
       Assert.That (type1.GetHashCode(), Is.EqualTo (type2.GetHashCode()));
     }
+
+    [Test]
+    public void ClassContextProperty_ForTargetClass ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .BuildConfiguration();
+
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+
+      Assert.That (type1.IsTarget, Is.True);
+      Assert.That (type1.ClassContext, Is.Not.Null);
+    }
+
+    [Test]
+    public void ClassContextProperty_ForNonTargetClass ()
+    {
+      var type1 = new InvolvedType (typeof (object));
+
+      Assert.That (type1.IsTarget, Is.False);
+      try
+      {
+        var result = type1.ClassContext;
+        Assert.Fail ("Expected exception was not thrown");
+      }
+      catch (InvalidOperationException ex)
+      {
+        Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class"));
+      }
+    }
+
   }
 }

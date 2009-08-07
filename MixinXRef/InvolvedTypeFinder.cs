@@ -23,7 +23,6 @@ namespace MixinXRef
       foreach (var context in _mixinConfiguration.ClassContexts)
       {
         var targetType = involvedTypes.GetOrCreateValue (context.Type);
-        targetType.IsTarget = true;
         targetType.ClassContext = context;
 
         foreach (var mixin in context.Mixins)

@@ -7,7 +7,6 @@ namespace MixinXRef
   public class InvolvedType
   {
     private readonly Type _realType;
-    private bool _isTarget;
     private bool _isMixin;
     private ClassContext _classContext;
 
@@ -23,7 +22,6 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("realType", realType);
 
       _realType = realType;
-      _isTarget = isTarget;
       _isMixin = isMixin;
     }
 
@@ -34,8 +32,7 @@ namespace MixinXRef
 
     public bool IsTarget
     {
-      get { return _isTarget; }
-      set { _isTarget = value; }
+      get { return _classContext != null; }
     }
 
     public bool IsMixin
@@ -46,24 +43,28 @@ namespace MixinXRef
 
     public ClassContext ClassContext
     {
-      get { return _classContext; }
+      get
+      {
+        if (!IsTarget)
+          throw new InvalidOperationException ("Involved type is not a target class");
+        return _classContext;
+      }
       set { _classContext = value; }
     }
 
 
-    override public bool Equals (object obj)
+    public override bool Equals (object obj)
     {
       var other = obj as InvolvedType;
-      return other != null 
-          && other.Type == Type 
-          && other.IsTarget == IsTarget 
-          && other.IsMixin == IsMixin
-          && other.ClassContext == ClassContext;
+      return other != null
+             && other._realType == _realType
+             && other._isMixin == _isMixin
+             && other._classContext == _classContext;
     }
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin, ClassContext);
+      return EqualityUtility.GetRotatedHashCode (Type, IsTarget, IsMixin, _classContext);
     }
 
     public override string ToString ()
