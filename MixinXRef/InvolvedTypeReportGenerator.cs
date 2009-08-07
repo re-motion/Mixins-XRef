@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using Remotion.Mixins;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -8,6 +9,7 @@ namespace MixinXRef
   public class InvolvedTypeReportGenerator : IReportGenerator
   {
     private readonly InvolvedType[] _involvedTypes;
+    private readonly MixinConfiguration _mixinConfiguration;
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
@@ -15,18 +17,21 @@ namespace MixinXRef
 
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
+        MixinConfiguration mixinConfiguration,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
+      ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
 
       _involvedTypes = involvedTypes;
+      _mixinConfiguration = mixinConfiguration;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
@@ -56,7 +61,7 @@ namespace MixinXRef
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
           new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator).GenerateXml (),
           new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator).GenerateXml (),
-          new MixinReferenceReportGenerator (involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
+          new MixinReferenceReportGenerator (involvedType, _mixinConfiguration, _involvedTypeIdentifierGenerator, _interfaceIdentifierGenerator).GenerateXml()
           );
     }
   }

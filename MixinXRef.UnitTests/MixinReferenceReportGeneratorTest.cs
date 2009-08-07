@@ -15,7 +15,12 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_NoMixins ()
     {
       var involvedTypeDummy = new InvolvedType (typeof (object));
-      var reportGenerator = new MixinReferenceReportGenerator (involvedTypeDummy, new IdentifierGenerator<Type>());
+
+      var reportGenerator = new MixinReferenceReportGenerator (
+          involvedTypeDummy,
+          new MixinConfiguration(),
+          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>());
 
       var output = reportGenerator.GenerateXml();
 
@@ -26,16 +31,22 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithMixins ()
     {
       var targetType = new InvolvedType (typeof (TargetClass1));
-      
-      targetType.ClassContext = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration().ClassContexts.First();
-      var reportGenerator = new MixinReferenceReportGenerator (targetType, new IdentifierGenerator<Type>());
+
+
+      var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
+      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
+
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+
+      var reportGenerator = new MixinReferenceReportGenerator (targetType, mixinConfiguration, new IdentifierGenerator<Type>(), interfaceIdentifierGenerator);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
           "Mixins",
           new XElement (
               "Mixin",
-              new XAttribute ("ref", "0")
+              new XAttribute ("ref", "0"),
+              new InterfaceIntroductionGenerator (targetType.Type, typeof (Mixin1), mixinConfiguration, interfaceIdentifierGenerator).GenerateXml()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

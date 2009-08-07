@@ -13,7 +13,7 @@ namespace MixinXRef
     {
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
 
-      const string assemblyDir = @"C:\Users\patrick.groess\Desktop\temp\";
+      const string assemblyDir = @"C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef.UnitTests\bin\Debug\";
       Assembly[] assemblies = GetAssemblies (assemblyDir);
 
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
@@ -29,7 +29,7 @@ namespace MixinXRef
           assemblies, involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);     
       
       var involvedReport = new InvolvedTypeReportGenerator (
-          involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator, attributeIdentiferGenerator);
+          involvedTypes, mixinConfiguration, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator, attributeIdentiferGenerator);
       var interfaceReport = new InterfaceReportGenerator (
           involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (

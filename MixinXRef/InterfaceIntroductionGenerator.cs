@@ -13,9 +13,9 @@ namespace MixinXRef
     private readonly Type _targetType;
     private readonly Type _mixinType;
     private readonly MixinConfiguration _mixinConfiguration;
-    private readonly IdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
-    public InterfaceIntroductionGenerator (Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IdentifierGenerator<Type> interfaceIdentifierGenerator)
+    public InterfaceIntroductionGenerator (Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IIdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinType", mixinType);
