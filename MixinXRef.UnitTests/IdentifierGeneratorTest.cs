@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Text;
 
 namespace MixinXRef.UnitTests
 {
@@ -49,6 +51,20 @@ namespace MixinXRef.UnitTests
       var identifier = typeIdentifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest));
 
       Assert.That (identifier, Is.EqualTo ("0"));
+    }
+
+    [Test]
+    public void GetReadonlyIdentfierGenerator ()
+    {
+      var identifierGenerator = new IdentifierGenerator<string>();
+      identifierGenerator.GetIdentifier ("key-1");
+      var readonlyIdentifierGenerator = identifierGenerator.GetReadonlyIdentiferGenerator ("dummy-value");
+
+      var expectedIdentifiers = new Dictionary<string, string>();
+      expectedIdentifiers.Add ("key-1", "0");
+      var expectedReadonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string> (expectedIdentifiers, "dummy-value");
+
+      Assert.That (readonlyIdentifierGenerator.GetIdentifier ("key-1"), Is.EqualTo (expectedReadonlyIdentifierGenerator.GetIdentifier ("key-1")));
     }
   }
 }

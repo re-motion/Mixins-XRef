@@ -64,6 +64,7 @@
     <Compile Include="InvolvedTypeStoreTest.cs" />
     <Compile Include="MemberReportGeneratorTest.cs" />
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
+    <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />

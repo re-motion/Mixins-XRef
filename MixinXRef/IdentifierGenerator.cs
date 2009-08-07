@@ -23,5 +23,10 @@ namespace MixinXRef
 
       return _identifiers[item];
     }
+
+    public ReadonlyIdentifierGenerator<T> GetReadonlyIdentiferGenerator (string defaultValue)
+    {
+      return new ReadonlyIdentifierGenerator<T> (_identifiers, defaultValue);
+    }
   }
 }
