@@ -46,7 +46,7 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new InterfaceIntroductionGenerator (targetType.Type, typeof (Mixin1), mixinConfiguration, interfaceIdentifierGenerator).GenerateXml()
+              new InterfaceIntroductionReportGenerator (targetType.Type, typeof (Mixin1), mixinConfiguration, interfaceIdentifierGenerator).GenerateXml()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

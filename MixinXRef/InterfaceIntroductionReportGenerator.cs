@@ -8,14 +8,14 @@ using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class InterfaceIntroductionGenerator : IReportGenerator
+  public class InterfaceIntroductionReportGenerator : IReportGenerator
   {
     private readonly Type _targetType;
     private readonly Type _mixinType;
     private readonly MixinConfiguration _mixinConfiguration;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
-    public InterfaceIntroductionGenerator (Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IIdentifierGenerator<Type> interfaceIdentifierGenerator)
+    public InterfaceIntroductionReportGenerator (Type targetType, Type mixinType, MixinConfiguration mixinConfiguration, IIdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinType", mixinType);

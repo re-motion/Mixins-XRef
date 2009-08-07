@@ -9,7 +9,7 @@ using Remotion.Mixins;
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
-  public class InterfaceIntroductionGeneratorTest
+  public class InterfaceIntroductionReportGeneratorTest
   {
     [Test]
     public void GenerateXm_NoIntroducedInterfaces ()
@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
-      var reportGenerator = new InterfaceIntroductionGenerator (typeof (TargetClass2), typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
+      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (TargetClass2), typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("InterfaceIntroductions");
@@ -35,7 +35,7 @@ namespace MixinXRef.UnitTests
 
       // TargetClass2 does not implement any interface
       // Mixin3 introduces interface IDisposable
-      var reportGenerator = new InterfaceIntroductionGenerator (typeof (TargetClass2), typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (TargetClass2), typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
 
       var output = reportGenerator.GenerateXml();
 
@@ -56,7 +56,7 @@ namespace MixinXRef.UnitTests
 
       var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
 
-      var reportGenerator = new InterfaceIntroductionGenerator (typeof (GenericTarget<>), typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (GenericTarget<>), typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
       
       var output = reportGenerator.GenerateXml ();
 
