@@ -13,7 +13,8 @@ namespace MixinXRef
     {
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
 
-      const string assemblyDir = @"C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef.UnitTests\bin\Debug\";
+      //const string assemblyDir = @"C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef.UnitTests\bin\Debug\";
+      const string assemblyDir = @"C:\Users\patrick.groess\Desktop\ActaNovaClientWebBin\ActaNovaClientWebBin\bin\";
       Assembly[] assemblies = GetAssemblies (assemblyDir);
 
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
@@ -49,7 +50,7 @@ namespace MixinXRef
       {
         identifierGenerator.GetIdentifier (assembly);
       }
-      return identifierGenerator.GetReadonlyIdentiferGenerator ("dummy-value");
+      return identifierGenerator.GetReadonlyIdentiferGenerator ("none");
     }
 
 

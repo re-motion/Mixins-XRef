@@ -29,7 +29,7 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-      if (_targetType.IsGenericTypeDefinition)
+      if (_targetType.IsGenericTypeDefinition || _mixinType.IsGenericTypeDefinition)
         return null;
 
       var targetClassDefinition = _targetType.GetTargetClassDefinition (_mixinConfiguration);
