@@ -66,6 +66,7 @@
     <Compile Include="IIdentifierGenerator.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
     <Compile Include="InvolvedType.cs" />
+    <Compile Include="MemberOverrideReportGenerator.cs" />
     <Compile Include="MemberReportGenerator.cs" />
     <Compile Include="MixinReferenceReportGenerator.cs" />
     <Compile Include="Program.cs" />

@@ -64,6 +64,7 @@
     <Compile Include="InterfaceIntroductionReportGeneratorTest.cs" />
     <Compile Include="AttributeIntroductionReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeStoreTest.cs" />
+    <Compile Include="MemberOverrideReportGeneratorTest.cs" />
     <Compile Include="MemberReportGeneratorTest.cs" />
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
     <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
@@ -78,14 +79,17 @@
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />
+    <Compile Include="TestDomain\IDoSomething.cs" />
     <Compile Include="TestDomain\InheritableAttribute.cs" />
     <Compile Include="TestDomain\IUseless.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\Mixin3.cs" />
+    <Compile Include="TestDomain\MixinDoSomething.cs" />
     <Compile Include="TestDomain\ObjectWithInheritableAttribute.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
+    <Compile Include="TestDomain\TargetDoSomething.cs" />
     <Compile Include="TestDomain\UselessObject.cs" />
   </ItemGroup>
   <ItemGroup>

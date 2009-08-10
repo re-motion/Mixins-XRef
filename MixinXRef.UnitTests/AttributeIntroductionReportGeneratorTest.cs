@@ -54,5 +54,19 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
+
+    [Test]
+    public void GenerateXml_ForGenericTargetClass ()
+    {
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+      var type1 = new InvolvedType (typeof (GenericTarget<>));
+
+      var reportGenerator = new AttributeIntroductionReportGenerator (type1, typeof (ClassWithBookAttribute), mixinConfiguration, attributeIdentifierGenerator);
+
+      var output = reportGenerator.GenerateXml ();
+
+      Assert.That (output, Is.Null);
+    } 
   }
 }
