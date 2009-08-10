@@ -49,6 +49,7 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
+              new XAttribute ("relation", "extends"),
               new InterfaceIntroductionReportGenerator (targetType, typeof (Mixin1), mixinConfiguration, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeIntroductionReportGenerator (targetType, typeof (Mixin1), mixinConfiguration, attributeIdentifierGenerator).GenerateXml()
               ));

@@ -51,10 +51,19 @@ namespace MixinXRef
       return new XElement (
           "Mixin",
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
+          new XAttribute ("relation", GetMixinKind(mixinContext)),
           new InterfaceIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
           new AttributeIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml ()
           );
 
+    }
+
+    private String GetMixinKind (MixinContext mixinContext)
+    {
+      if (mixinContext.MixinKind == MixinKind.Extending)
+        return "extends";
+      // else: mixinContext.MixinKind == MixinKind.Used
+      return "used by";
     }
   }
 }
