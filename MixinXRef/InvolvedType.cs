@@ -1,5 +1,7 @@
 using System;
+using Remotion.Mixins;
 using Remotion.Mixins.Context;
+using Remotion.Mixins.Definitions;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -53,6 +55,8 @@ namespace MixinXRef
     }
 
 
+
+
     public override bool Equals (object obj)
     {
       var other = obj as InvolvedType;
@@ -70,6 +74,17 @@ namespace MixinXRef
     public override string ToString ()
     {
       return String.Format ("{0}, isTarget: {1}, isMixin: {2}", _realType, IsTarget, IsMixin);
+    }
+
+    public TargetClassDefinition GetTargetClassDefinition (MixinConfiguration mixinConfiguration)
+    {
+      if(!IsTarget)
+        throw new InvalidOperationException ("Involved type is not a target class");
+
+      if (_realType.IsGenericTypeDefinition)
+        throw new InvalidOperationException ("Involved type is a generic type definition");
+      
+      return TargetClassDefinitionUtility.GetConfiguration (_realType, mixinConfiguration);
     }
   }
 }
