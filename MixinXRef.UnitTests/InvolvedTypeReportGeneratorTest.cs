@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests
 
       var mixinConfiguration = new MixinConfiguration();
 
-      var involvedType1 = new InvolvedType (typeof (GenericTarget<>), false);
+      var involvedType1 = new InvolvedType (typeof (GenericTarget<>));
 
       var reportGenerator = CreateReportGenerator (
           new Assembly[0],
@@ -75,12 +75,14 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
 
-      var involvedType1 = new InvolvedType (typeof (TargetClass1), false);
+      var involvedType1 = new InvolvedType (typeof (TargetClass1));
       involvedType1.ClassContext = mixinConfiguration.ClassContexts.First();
-      var involvedType2 = new InvolvedType (typeof (TargetClass2), false);
+      var involvedType2 = new InvolvedType (typeof (TargetClass2));
       involvedType2.ClassContext = mixinConfiguration.ClassContexts.Last();
-      var involvedType3 = new InvolvedType (typeof (Mixin1), true);
-      var involvedType4 = new InvolvedType (typeof (Mixin2), true);
+      var involvedType3 = new InvolvedType (typeof (Mixin1));
+      involvedType3.MixinContexts.Add (mixinConfiguration.ClassContexts.First().Mixins.First());
+      var involvedType4 = new InvolvedType (typeof (Mixin2));
+      involvedType4.MixinContexts.Add (mixinConfiguration.ClassContexts.Last ().Mixins.First ());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -174,9 +176,9 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_DifferentAssemblies ()
     {
-      var involvedType1 = new InvolvedType (typeof (TargetClass1), false);
+      var involvedType1 = new InvolvedType (typeof (TargetClass1));
       involvedType1.ClassContext = new ClassContext (typeof (TargetClass1));
-      var involvedType2 = new InvolvedType (typeof (object), false);
+      var involvedType2 = new InvolvedType (typeof (object));
 
       var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type>();
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();

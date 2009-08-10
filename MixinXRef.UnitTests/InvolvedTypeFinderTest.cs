@@ -30,9 +30,11 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      var expectedType1 = new InvolvedType (typeof (TargetClass1), false);
+      var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
-      var expectedType2 = new InvolvedType (typeof (Mixin1), true);
+      var expectedType2 = new InvolvedType (typeof (Mixin1));
+      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First().Mixins.First());
+
       Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
     }
 
@@ -47,12 +49,14 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
-      var expectedType1 = new InvolvedType (typeof (TargetClass1), false);
+      var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
-      var expectedType2 = new InvolvedType (typeof (Mixin1), true);
-      var expectedType3 = new InvolvedType (typeof (TargetClass2), false);
+      var expectedType2 = new InvolvedType (typeof (Mixin1));
+      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First ().Mixins.First());
+      var expectedType3 = new InvolvedType (typeof (TargetClass2));
       expectedType3.ClassContext = mixinConfiguration.ClassContexts.Last ();    
-      var expectedType4 = new InvolvedType (typeof (Mixin2), true);
+      var expectedType4 = new InvolvedType (typeof (Mixin2));
+      expectedType4.MixinContexts.Add (mixinConfiguration.ClassContexts.Last ().Mixins.First ());
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
     }
@@ -68,11 +72,13 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes ();
 
-      var expectedType1 = new InvolvedType (typeof (TargetClass1), false);
+      var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
-      var expectedType2 = new InvolvedType (typeof (Mixin1), true);
+      var expectedType2 = new InvolvedType (typeof (Mixin1));
       expectedType2.ClassContext = mixinConfiguration.ClassContexts.Last ();
-      var expectedType3 = new InvolvedType (typeof (Mixin2), true);
+      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First().Mixins.First());
+      var expectedType3 = new InvolvedType (typeof (Mixin2));
+      expectedType3.MixinContexts.Add (mixinConfiguration.ClassContexts.Last ().Mixins.First ());
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3}));
     }

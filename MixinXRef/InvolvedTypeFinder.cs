@@ -20,12 +20,12 @@ namespace MixinXRef
       //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
       InvolvedTypeStore involvedTypes = new InvolvedTypeStore();
 
-      foreach (var context in _mixinConfiguration.ClassContexts)
+      foreach (var targetContext in _mixinConfiguration.ClassContexts)
       {
-        involvedTypes.GetOrCreateValue (context.Type).ClassContext = context;
+        involvedTypes.GetOrCreateValue (targetContext.Type).ClassContext = targetContext;
 
-        foreach (var mixin in context.Mixins)
-          involvedTypes.GetOrCreateValue (mixin.MixinType).IsMixin = true;
+        foreach (var mixinContext in targetContext.Mixins)
+          involvedTypes.GetOrCreateValue (mixinContext.MixinType).MixinContexts.Add (mixinContext);
       }
 
       return involvedTypes.ToArray();

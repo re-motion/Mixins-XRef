@@ -23,19 +23,18 @@ namespace MixinXRef.UnitTests
     {
       var involvedType = _involvedTypeStore.GetOrCreateValue (typeof(object));
       
-      var expectedInvolvedType = new InvolvedType (typeof (object), false);
+      var expectedInvolvedType = new InvolvedType (typeof (object));
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
 
     [Test]
     public void GetOrCreateValue_NonEmptyStore ()
     {
-      var involvedTypeSetup = _involvedTypeStore.GetOrCreateValue (typeof (object));
-      involvedTypeSetup.IsMixin = true;
+      _involvedTypeStore.GetOrCreateValue (typeof (object));
 
       var involvedType = _involvedTypeStore.GetOrCreateValue (typeof (object));
 
-      var expectedInvolvedType = new InvolvedType (typeof (object), true);
+      var expectedInvolvedType = new InvolvedType (typeof (object));
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
 

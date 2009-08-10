@@ -33,10 +33,10 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_OneAssembly ()
     {
-      var involvedType1 = new InvolvedType (typeof (TargetClass1), false);
-      var involvedType2 = new InvolvedType (typeof (TargetClass2), false);
-      var involvedType3 = new InvolvedType (typeof (Mixin1), true);
-      var involvedType4 = new InvolvedType (typeof (Mixin2), true);
+      var involvedType1 = new InvolvedType (typeof (TargetClass1));
+      var involvedType2 = new InvolvedType (typeof (TargetClass2));
+      var involvedType3 = new InvolvedType (typeof (Mixin1));
+      var involvedType4 = new InvolvedType (typeof (Mixin2));
 
       var reportGenerator = CreateReportGenerator (new[] { _assembly1 }, involvedType1, involvedType2, involvedType3, involvedType4);
       XElement output = reportGenerator.GenerateXml();

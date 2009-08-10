@@ -1,30 +1,22 @@
 using System;
-using Remotion.Mixins;
+using System.Collections.Generic;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 using Remotion.Utilities;
+using System.Linq;
 
 namespace MixinXRef
 {
   public class InvolvedType
   {
     private readonly Type _realType;
-    private bool _isMixin;
     private ClassContext _classContext;
+    private readonly IList<MixinContext> _mixinContexts = new List<MixinContext>();
 
     public InvolvedType (Type realType)
     {
       ArgumentUtility.CheckNotNull ("realType", realType);
 
       _realType = realType;
-    }
-
-    public InvolvedType (Type realType, bool isMixin)
-    {
-      ArgumentUtility.CheckNotNull ("realType", realType);
-
-      _realType = realType;
-      _isMixin = isMixin;
     }
 
     public Type Type
@@ -39,8 +31,7 @@ namespace MixinXRef
 
     public bool IsMixin
     {
-      get { return _isMixin; }
-      set { _isMixin = value; }
+      get { return _mixinContexts.Count > 0; }
     }
 
     public ClassContext ClassContext
@@ -54,19 +45,23 @@ namespace MixinXRef
       set { _classContext = value; }
     }
 
-    
+    public IList<MixinContext> MixinContexts
+    {
+      get { return _mixinContexts; }
+    }
+
     public override bool Equals (object obj)
     {
       var other = obj as InvolvedType;
       return other != null
              && other._realType == _realType
-             && other._isMixin == _isMixin
-             && other._classContext == _classContext;
+             && other._classContext == _classContext
+             && other._mixinContexts.SequenceEqual (_mixinContexts);
     }
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (Type, IsMixin, _classContext);
+      return EqualityUtility.GetRotatedHashCode (_realType, _classContext, _mixinContexts.Count);
     }
 
     public override string ToString ()

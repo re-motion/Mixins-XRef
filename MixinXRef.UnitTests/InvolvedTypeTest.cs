@@ -5,7 +5,6 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
@@ -15,8 +14,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_True ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), false);
-      var type2 = new InvolvedType (typeof (TargetClass1), false);
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (TargetClass1));
 
       Assert.That (type1, Is.EqualTo (type2));
     }
@@ -24,8 +23,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_TypeDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), false);
-      var type2 = new InvolvedType (typeof (TargetClass2), false);
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (TargetClass2));
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -33,9 +32,9 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_IsTargetDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), false);
-      type1.ClassContext = new ClassContext(typeof(TargetClass1));
-      var type2 = new InvolvedType (typeof (TargetClass1), false);
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      type1.ClassContext = new ClassContext (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (TargetClass1));
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -43,8 +42,13 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_IsMixinDoesntMatch ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), false);
-      var type2 = new InvolvedType (typeof (TargetClass1), true);
+      var mixinContext = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .BuildConfiguration().ClassContexts.First().Mixins.First();
+
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (Mixin1));
+      type2.MixinContexts.Add (mixinContext);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -69,8 +73,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetHashCode_EqualObjects ()
     {
-      var type1 = new InvolvedType (typeof (TargetClass1), false);
-      var type2 = new InvolvedType (typeof (TargetClass1), false);
+      var type1 = new InvolvedType (typeof (TargetClass1));
+      var type2 = new InvolvedType (typeof (TargetClass1));
 
       Assert.That (type1.GetHashCode(), Is.EqualTo (type2.GetHashCode()));
     }
@@ -104,6 +108,30 @@ namespace MixinXRef.UnitTests
       {
         Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class"));
       }
+    }
+
+    [Test]
+    public void MixinContextsProperty_ForNonMixin ()
+    {
+      var type1 = new InvolvedType (typeof (object));
+
+      Assert.That (type1.IsMixin, Is.False);
+      Assert.That (type1.MixinContexts.Count, Is.EqualTo (0));
+    }
+
+    [Test]
+    public void MixinContextsProperty_ForMixin ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .BuildConfiguration();
+      var mixinContext = mixinConfiguration.ClassContexts.First().Mixins.First();
+
+      var type1 = new InvolvedType (typeof (object));
+      type1.MixinContexts.Add (mixinContext);
+
+      Assert.That (type1.IsMixin, Is.True);
+      Assert.That (type1.MixinContexts.Count, Is.GreaterThan (0));
     }
   }
 }
