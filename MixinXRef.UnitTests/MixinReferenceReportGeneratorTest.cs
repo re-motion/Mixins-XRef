@@ -54,7 +54,7 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute ("relation", "extends"),
+              new XAttribute ("relation", "Extending"),
               new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, attributeIdentifierGenerator).GenerateXml(),
               new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml()
@@ -84,11 +84,11 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute ("relation", "used by")),
+              new XAttribute ("relation", "Used")),
           new XElement (
               "Mixin",
               new XAttribute ("ref", "1"),
-              new XAttribute ("relation", "used by"))
+              new XAttribute ("relation", "Used"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

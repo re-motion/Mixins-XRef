@@ -51,7 +51,7 @@ namespace MixinXRef
       var mixinElement = new XElement (
           "Mixin",
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
-          new XAttribute ("relation", GetMixinKind(mixinContext))
+          new XAttribute ("relation", mixinContext.MixinKind)
           );
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
@@ -64,14 +64,6 @@ namespace MixinXRef
       }
 
       return mixinElement;
-    }
-
-    private String GetMixinKind (MixinContext mixinContext)
-    {
-      if (mixinContext.MixinKind == MixinKind.Extending)
-        return "extends";
-      // else: mixinContext.MixinKind == MixinKind.Used
-      return "used by";
     }
   }
 }
