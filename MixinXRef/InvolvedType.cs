@@ -81,16 +81,5 @@ namespace MixinXRef
     {
       return String.Format ("{0}, isTarget: {1}, isMixin: {2}", _realType, IsTarget, IsMixin);
     }
-
-    public TargetClassDefinition GetTargetClassDefinition (MixinConfiguration mixinConfiguration)
-    {
-      if(!IsTarget)
-        throw new InvalidOperationException ("Involved type is not a target class");
-
-      if (_realType.IsGenericTypeDefinition)
-        throw new InvalidOperationException ("Involved type is a generic type definition");
-      
-      return TargetClassDefinitionUtility.GetConfiguration (_realType, mixinConfiguration);
-    }
   }
 }

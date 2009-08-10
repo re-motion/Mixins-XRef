@@ -56,7 +56,7 @@ namespace MixinXRef
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
       {
-        var targetClassDefinition = _involvedType.GetTargetClassDefinition (_mixinConfiguration);
+        var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
         var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
         mixinElement.Add (new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml ());
         mixinElement.Add (new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator).GenerateXml ());

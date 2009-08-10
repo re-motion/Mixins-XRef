@@ -63,7 +63,7 @@ namespace MixinXRef.UnitTests
 
     private UniqueDefinitionCollection<Type, InterfaceIntroductionDefinition> GetInterfaceIntroductions (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
-      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration);
       return targetClassDefinition.GetMixinByConfiguredType (mixinType).InterfaceIntroductions;
 
     }

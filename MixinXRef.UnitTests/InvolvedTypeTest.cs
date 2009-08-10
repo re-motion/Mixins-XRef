@@ -105,59 +105,5 @@ namespace MixinXRef.UnitTests
         Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class"));
       }
     }
-
-    [Test]
-    public void GetTargetClassDefinition_ForNonTargetClass ()
-    {
-      var type1 = new InvolvedType (typeof (object));
-
-      Assert.That (type1.IsTarget, Is.False);
-      try
-      {
-        type1.GetTargetClassDefinition(new MixinConfiguration());
-        Assert.Fail ("Expected exception was not thrown");
-      }
-      catch (InvalidOperationException ex)
-      {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class"));
-      }
-    }
-
-    [Test]
-    public void GetTargetClassDefinition_ForGenericTypeDefinition ()
-    {
-      var type1 = new InvolvedType (typeof (GenericTarget<>));
-      type1.ClassContext = MixinConfiguration.ActiveConfiguration.ClassContexts.First();
-
-      Assert.That (type1.IsTarget, Is.True);
-      try
-      {
-        type1.GetTargetClassDefinition (new MixinConfiguration ());
-        Assert.Fail ("Expected exception was not thrown");
-      }
-      catch (InvalidOperationException ex)
-      {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is a generic type definition"));
-      }
-    }
-
-    [Test]
-    public void GetTargetClassDefinition_ForNonGenenericTypeDefinition ()
-    {
-
-      var mixinConfiguration = MixinConfiguration.BuildNew ()
-          .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
-          .BuildConfiguration ();
-
-      var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
-     
-      Assert.That (type1.IsTarget, Is.True);
-
-      var output = type1.GetTargetClassDefinition (mixinConfiguration);
-      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (type1.Type, mixinConfiguration);
-
-      Assert.That (output, Is.EqualTo(expectedOutput));
-    }
   }
 }

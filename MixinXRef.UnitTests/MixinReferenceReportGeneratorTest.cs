@@ -46,7 +46,7 @@ namespace MixinXRef.UnitTests
 
       var output = reportGenerator.GenerateXml();
 
-      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration);
       var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (typeof (Mixin1));
 
       var expectedOutput = new XElement (

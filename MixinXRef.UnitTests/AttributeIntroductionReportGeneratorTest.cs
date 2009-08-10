@@ -60,7 +60,7 @@ namespace MixinXRef.UnitTests
     private MultiDefinitionCollection<Type, AttributeIntroductionDefinition> GetAttributeIntroductions (
         InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
-      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration);
       return targetClassDefinition.GetMixinByConfiguredType (mixinType).AttributeIntroductions;
     }
   }
