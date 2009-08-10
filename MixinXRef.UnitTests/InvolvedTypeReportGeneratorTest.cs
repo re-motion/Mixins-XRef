@@ -62,7 +62,8 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()
+                  GenerateXml(),
+              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml()
               ));
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
@@ -80,7 +81,7 @@ namespace MixinXRef.UnitTests
       var involvedType2 = new InvolvedType (typeof (TargetClass2));
       involvedType2.ClassContext = mixinConfiguration.ClassContexts.Last();
       var involvedType3 = new InvolvedType (typeof (Mixin1));
-      involvedType3.TargetTypes.Add (typeof(TargetClass1));
+      involvedType3.TargetTypes.Add (typeof (TargetClass1));
       var involvedType4 = new InvolvedType (typeof (Mixin2));
       involvedType4.TargetTypes.Add (typeof (TargetClass2));
 
@@ -118,7 +119,9 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()),
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml ()
+              ),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "2"),
@@ -134,7 +137,8 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()),
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml ()),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "1"),
@@ -150,7 +154,9 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType3, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()),
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType3, involvedTypeIdentifierGenerator).GenerateXml ()
+              ),
           new XElement (
               "InvolvedType",
               new XAttribute ("id", "3"),
@@ -166,7 +172,9 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType4, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml())
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType4, involvedTypeIdentifierGenerator).GenerateXml ()
+              )
           );
 
 
@@ -215,7 +223,8 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml ()
               ),
           new XElement (
               "InvolvedType",
@@ -232,7 +241,8 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2, mixinConfiguration, involvedTypeIdentifierGenerator, interfaceIdentifierGenerator, attributeIdentifierGenerator).
-                  GenerateXml()
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
