@@ -10,7 +10,7 @@ namespace MixinXRef
   {
     private readonly Type _realType;
     private ClassContext _classContext;
-    private readonly IList<MixinContext> _mixinContexts = new List<MixinContext>();
+    private readonly IList<Type> _targetTypes = new List<Type> ();
 
     public InvolvedType (Type realType)
     {
@@ -31,7 +31,7 @@ namespace MixinXRef
 
     public bool IsMixin
     {
-      get { return _mixinContexts.Count > 0; }
+      get { return _targetTypes.Count > 0; }
     }
 
     public ClassContext ClassContext
@@ -45,9 +45,9 @@ namespace MixinXRef
       set { _classContext = value; }
     }
 
-    public IList<MixinContext> MixinContexts
+    public IList<Type> TargetTypes
     {
-      get { return _mixinContexts; }
+      get { return _targetTypes; }
     }
 
     public override bool Equals (object obj)
@@ -56,12 +56,12 @@ namespace MixinXRef
       return other != null
              && other._realType == _realType
              && other._classContext == _classContext
-             && other._mixinContexts.SequenceEqual (_mixinContexts);
+             && other._targetTypes.SequenceEqual (_targetTypes);
     }
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (_realType, _classContext, _mixinContexts.Count);
+      return EqualityUtility.GetRotatedHashCode (_realType, _classContext, _targetTypes.Count);
     }
 
     public override string ToString ()

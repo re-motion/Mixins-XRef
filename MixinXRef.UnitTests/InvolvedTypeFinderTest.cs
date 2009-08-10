@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests
       var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First().Mixins.First());
+      expectedType2.TargetTypes.Add (typeof(TargetClass1));
 
       Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
     }
@@ -52,11 +52,11 @@ namespace MixinXRef.UnitTests
       var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First ().Mixins.First());
+      expectedType2.TargetTypes.Add (typeof (TargetClass1));
       var expectedType3 = new InvolvedType (typeof (TargetClass2));
       expectedType3.ClassContext = mixinConfiguration.ClassContexts.Last ();    
       var expectedType4 = new InvolvedType (typeof (Mixin2));
-      expectedType4.MixinContexts.Add (mixinConfiguration.ClassContexts.Last ().Mixins.First ());
+      expectedType4.TargetTypes.Add (typeof (TargetClass2));
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
     }
@@ -76,9 +76,9 @@ namespace MixinXRef.UnitTests
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First ();
       var expectedType2 = new InvolvedType (typeof (Mixin1));
       expectedType2.ClassContext = mixinConfiguration.ClassContexts.Last ();
-      expectedType2.MixinContexts.Add (mixinConfiguration.ClassContexts.First().Mixins.First());
+      expectedType2.TargetTypes.Add (typeof (TargetClass1));
       var expectedType3 = new InvolvedType (typeof (Mixin2));
-      expectedType3.MixinContexts.Add (mixinConfiguration.ClassContexts.Last ().Mixins.First ());
+      expectedType3.TargetTypes.Add (typeof (Mixin1));
       
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3}));
     }
