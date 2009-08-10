@@ -6,6 +6,7 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
@@ -22,7 +23,9 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetClass2));
       type1.ClassContext = mixinConfiguration.ClassContexts.First ();
 
-      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
+      var interfaceIntroductions = GetInterfaceIntroductions (type1, typeof (Mixin2), mixinConfiguration);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (interfaceIntroductions, new IdentifierGenerator<Type> ());
+      
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("InterfaceIntroductions");
@@ -43,8 +46,9 @@ namespace MixinXRef.UnitTests
 
       // TargetClass2 does not implement any interface
       // Mixin3 introduces interface IDisposable
-      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
-
+      var interfaceIntroductions = GetInterfaceIntroductions (type1, typeof (Mixin3), mixinConfiguration);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (interfaceIntroductions, interfaceIdentifierGenerator);
+      
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
@@ -57,18 +61,11 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    [Test]
-    public void GenerateXml_ForGenericTargetClass ()
+    private UniqueDefinitionCollection<Type, InterfaceIntroductionDefinition> GetInterfaceIntroductions (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
-      var type1 = new InvolvedType (typeof (GenericTarget<>));
+      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      return targetClassDefinition.GetMixinByConfiguredType (mixinType).InterfaceIntroductions;
 
-      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
-      
-      var output = reportGenerator.GenerateXml ();
-
-      Assert.That (output, Is.Null);
-    } 
+    }
   }
 }

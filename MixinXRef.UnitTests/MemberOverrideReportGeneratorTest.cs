@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
@@ -21,7 +23,9 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetClass1));
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
-      var reportGenerator = new MemberOverrideReportGenerator (type1, typeof (Mixin1), mixinConfiguration);
+      var memberOverrides = GetMemberOverrides (type1, typeof (Mixin1), mixinConfiguration);
+
+      var reportGenerator = new MemberOverrideReportGenerator (memberOverrides);
 
       var output = reportGenerator.GenerateXml();
 
@@ -29,6 +33,7 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
+
 
     [Test]
     public void GenerateXml_WithOverriddenMembers ()
@@ -40,8 +45,9 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetDoSomething));
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
+      var memberOverrides = GetMemberOverrides (type1, typeof (MixinDoSomething), mixinConfiguration);
 
-      var reportGenerator = new MemberOverrideReportGenerator (type1, typeof (MixinDoSomething), mixinConfiguration);
+      var reportGenerator = new MemberOverrideReportGenerator (memberOverrides);
 
       var output = reportGenerator.GenerateXml();
 
@@ -56,18 +62,11 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    [Test]
-    public void GenerateXml_ForGenericTargetClass ()
+    private IEnumerable<MemberDefinitionBase> GetMemberOverrides (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
-      
-      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
-      var type1 = new InvolvedType (typeof (GenericTarget<>));
+      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      return targetClassDefinition.GetMixinByConfiguredType (mixinType).GetAllOverrides ();
 
-      var reportGenerator = new MemberOverrideReportGenerator (type1, typeof (Mixin3), mixinConfiguration);
-
-      var output = reportGenerator.GenerateXml ();
-
-      Assert.That (output, Is.Null);
     }
   }
 }

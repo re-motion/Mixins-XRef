@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Remotion.Mixins;
@@ -9,31 +10,20 @@ namespace MixinXRef
 {
   public class MemberOverrideReportGenerator : IReportGenerator
   {
-    private readonly InvolvedType _targetType;
-    private readonly Type _mixinType;
-    private readonly MixinConfiguration _mixinConfiguration;
+    private readonly IEnumerable<MemberDefinitionBase> _memberDefinitions;
 
-    public MemberOverrideReportGenerator (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
+    public MemberOverrideReportGenerator (IEnumerable<MemberDefinitionBase> memberDefinitions)
     {
-      ArgumentUtility.CheckNotNull ("targetType", targetType);
-      ArgumentUtility.CheckNotNull ("mixinType", mixinType);
-      ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      ArgumentUtility.CheckNotNull ("memberDefinitions", memberDefinitions);
 
-      _targetType = targetType;
-      _mixinType = mixinType;
-      _mixinConfiguration = mixinConfiguration;
+      _memberDefinitions = memberDefinitions;
     }
 
     public XElement GenerateXml ()
     {
-      if (_targetType.IsGenericTypeDefinition)
-        return null;
-
-      var targetClassDefinition = _targetType.GetTargetClassDefinition (_mixinConfiguration);
-
         return new XElement (
           "MemberOverrides",
-          from overridenMember in targetClassDefinition.GetMixinByConfiguredType (_mixinType).GetAllOverrides()
+          from overridenMember in _memberDefinitions
           select GenerateOverridenMemberElement (overridenMember));
       }
 

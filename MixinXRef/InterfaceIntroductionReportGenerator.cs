@@ -1,42 +1,32 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using Remotion.Mixins;
+using Remotion.Mixins.Definitions;
 using Remotion.Utilities;
 
 namespace MixinXRef
 {
   public class InterfaceIntroductionReportGenerator : IReportGenerator
   {
-    private readonly InvolvedType _targetType;
-    private readonly Type _mixinType;
-    private readonly MixinConfiguration _mixinConfiguration;
+    private readonly UniqueDefinitionCollection<Type, InterfaceIntroductionDefinition> _interfaceIntroductionDefinitions;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
 
     public InterfaceIntroductionReportGenerator (
-        InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration, IIdentifierGenerator<Type> interfaceIdentifierGenerator)
+        UniqueDefinitionCollection<Type, InterfaceIntroductionDefinition> interfaceIntroductionDefinitions,
+        IIdentifierGenerator<Type> interfaceIdentifierGenerator)
     {
-      ArgumentUtility.CheckNotNull ("targetType", targetType);
-      ArgumentUtility.CheckNotNull ("mixinType", mixinType);
-      ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      ArgumentUtility.CheckNotNull ("interfaceIntroductionDefinitions", interfaceIntroductionDefinitions);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
 
-      _targetType = targetType;
-      _mixinType = mixinType;
-      _mixinConfiguration = mixinConfiguration;
+      _interfaceIntroductionDefinitions = interfaceIntroductionDefinitions;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
     }
 
     public XElement GenerateXml ()
     {
-      if (_targetType.IsGenericTypeDefinition)
-        return null;
-
-      var targetClassDefinition = _targetType.GetTargetClassDefinition (_mixinConfiguration);
-
       return new XElement (
           "InterfaceIntroductions",
-          from introducedInterface in targetClassDefinition.GetMixinByConfiguredType (_mixinType).InterfaceIntroductions
+          from introducedInterface in _interfaceIntroductionDefinitions
           select GenerateInterfaceReferanceElement (introducedInterface.InterfaceType));
     }
 

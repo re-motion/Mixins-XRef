@@ -48,15 +48,22 @@ namespace MixinXRef
 
     private XElement GenerateMixinElement (MixinContext mixinContext)
     {
-      return new XElement (
+      var mixinElement = new XElement (
           "Mixin",
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
-          new XAttribute ("relation", GetMixinKind(mixinContext)),
-          new InterfaceIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
-          new AttributeIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml (),
-          new MemberOverrideReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration).GenerateXml ()
+          new XAttribute ("relation", GetMixinKind(mixinContext))
           );
 
+      if (!_involvedType.Type.IsGenericTypeDefinition)
+      {
+        var targetClassDefinition = _involvedType.GetTargetClassDefinition (_mixinConfiguration);
+        var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
+        mixinElement.Add (new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml ());
+        mixinElement.Add (new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator).GenerateXml ());
+        mixinElement.Add (new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml ());
+      }
+
+      return mixinElement;
     }
 
     private String GetMixinKind (MixinContext mixinContext)
