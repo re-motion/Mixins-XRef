@@ -70,7 +70,7 @@ namespace MixinXRef.UnitTests
 
 
       var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
-      targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
+      targetType.ClassContext = mixinConfiguration.ClassContexts.Where (classContext => classContext.Type.IsGenericTypeDefinition).Single();
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
