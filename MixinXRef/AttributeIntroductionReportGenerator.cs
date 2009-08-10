@@ -29,14 +29,14 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-      if (_targetType.IsGenericTypeDefinition || _mixinType.IsGenericTypeDefinition)
+      if (_targetType.IsGenericTypeDefinition)
         return null;
 
       var targetClassDefinition = _targetType.GetTargetClassDefinition (_mixinConfiguration);
 
       return new XElement (
           "AttributeIntroductions",
-          from introducedAttribute in targetClassDefinition.Mixins[_mixinType].AttributeIntroductions
+          from introducedAttribute in targetClassDefinition.GetMixinByConfiguredType (_mixinType).AttributeIntroductions
           select GenerateAttributeReferanceElement (introducedAttribute.AttributeType));
     }
 

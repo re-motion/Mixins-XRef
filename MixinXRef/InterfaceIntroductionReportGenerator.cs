@@ -29,14 +29,14 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-      if (_targetType.IsGenericTypeDefinition || _mixinType.IsGenericTypeDefinition)
+      if (_targetType.IsGenericTypeDefinition)
         return null;
 
       var targetClassDefinition = _targetType.GetTargetClassDefinition (_mixinConfiguration);
 
       return new XElement (
           "InterfaceIntroductions",
-          from introducedInterface in targetClassDefinition.Mixins[_mixinType].InterfaceIntroductions
+          from introducedInterface in targetClassDefinition.GetMixinByConfiguredType (_mixinType).InterfaceIntroductions
           select GenerateInterfaceReferanceElement (introducedInterface.InterfaceType));
     }
 

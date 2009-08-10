@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Mixins.Context;
+using System.Diagnostics;
 
 namespace MixinXRef
 {
@@ -17,11 +18,17 @@ namespace MixinXRef
       const string assemblyDir = @"C:\Users\patrick.groess\Desktop\ActaNovaClientWebBin\ActaNovaClientWebBin\bin\";
       Assembly[] assemblies = GetAssemblies (assemblyDir);
 
+      var stopwatch = Stopwatch.StartNew();
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+      Console.WriteLine ("MixinConfiguration: " + stopwatch.Elapsed);
 
+      stopwatch.Reset();
+      stopwatch.Start();
       var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
+      Console.WriteLine ("FindInvolvedTypes: " + stopwatch.Elapsed);
 
-      ReadonlyIdentifierGenerator<Assembly> assemblyIdentifierGenerator = CreateAssemblyIdentifierGenerator(assemblies);
+      //ReadonlyIdentifierGenerator<Assembly> assemblyIdentifierGenerator = CreateAssemblyIdentifierGenerator(assemblies);
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
       var involvedTypeIdentiferGenerator = new IdentifierGenerator<Type>();
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
@@ -30,29 +37,27 @@ namespace MixinXRef
           assemblies, involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);     
       
       var involvedReport = new InvolvedTypeReportGenerator (
-          involvedTypes, mixinConfiguration, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator, attributeIdentiferGenerator);
+          involvedTypes, mixinConfiguration, assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator("none"), involvedTypeIdentiferGenerator, interfaceIdentiferGenerator, attributeIdentiferGenerator);
       var interfaceReport = new InterfaceReportGenerator (
-          involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
+          involvedTypes, assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none"), involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (
-          involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
+          involvedTypes, assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none"), involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
 
+      stopwatch.Reset ();
+      stopwatch.Start ();
       var compositeReportGenerator = new CompositeReportGenerator (assemblyReport, involvedReport, interfaceReport, attributeReport);
+      Console.WriteLine ("CompositeReportGenerator: " + stopwatch.Elapsed);
 
+      stopwatch.Reset ();
+      stopwatch.Start ();
       XElement report = compositeReportGenerator.GenerateXml();
+      Console.WriteLine ("GenerateXml: " + stopwatch.Elapsed);
 
+      stopwatch.Reset ();
+      stopwatch.Start ();
       new XDocument (report).Save (@"C:\Users\patrick.groess\Desktop\MixinReport.xml");
+      Console.WriteLine ("Save: " + stopwatch.Elapsed);
     }
-
-    private static ReadonlyIdentifierGenerator<Assembly> CreateAssemblyIdentifierGenerator (Assembly[] assemblies)
-    {
-      var identifierGenerator =new IdentifierGenerator<Assembly>();
-      foreach (var assembly in assemblies)
-      {
-        identifierGenerator.GetIdentifier (assembly);
-      }
-      return identifierGenerator.GetReadonlyIdentiferGenerator ("none");
-    }
-
 
     private static Assembly[] GetAssemblies (string assemblyDir)
     {
