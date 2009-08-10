@@ -43,6 +43,12 @@ namespace MixinXRef
       set { _isMixin = value; }
     }
 
+    public bool IsGenericTypeDefinition
+    {
+      get { return _realType.IsGenericTypeDefinition; }
+    }
+
+
     public ClassContext ClassContext
     {
       get

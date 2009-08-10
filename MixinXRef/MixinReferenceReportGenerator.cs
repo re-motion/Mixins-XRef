@@ -51,8 +51,8 @@ namespace MixinXRef
       return new XElement (
           "Mixin",
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
-          new InterfaceIntroductionReportGenerator (_involvedType.Type, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
-          new AttributeIntroductionReportGenerator (_involvedType.Type, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml ()
+          new InterfaceIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
+          new AttributeIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml ()
           );
 
     }

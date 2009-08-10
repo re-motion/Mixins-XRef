@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -17,7 +18,11 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew ()
           .ForClass<TargetClass2> ().AddMixin<Mixin1> ()
           .BuildConfiguration ();
-      var reportGenerator = new AttributeIntroductionReportGenerator (typeof (TargetClass2), typeof (Mixin1), mixinConfiguration, new IdentifierGenerator<Type> ());
+
+      var type1 = new InvolvedType (typeof (TargetClass2));
+      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+
+      var reportGenerator = new AttributeIntroductionReportGenerator (type1, typeof (Mixin1), mixinConfiguration, new IdentifierGenerator<Type> ());
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement ("AttributeIntroductions");
@@ -33,7 +38,10 @@ namespace MixinXRef.UnitTests
           .ForClass<UselessObject> ().AddMixin<ObjectWithInheritableAttribute> ()
           .BuildConfiguration ();
 
-      var reportGenerator = new AttributeIntroductionReportGenerator (typeof (UselessObject), typeof (ObjectWithInheritableAttribute), mixinConfiguration, attributeIdentifierGenerator);
+      var type1 = new InvolvedType (typeof (UselessObject));
+      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+
+      var reportGenerator = new AttributeIntroductionReportGenerator (type1, typeof (ObjectWithInheritableAttribute), mixinConfiguration, attributeIdentifierGenerator);
 
       var output = reportGenerator.GenerateXml ();
 

@@ -97,7 +97,7 @@ namespace MixinXRef.UnitTests
       Assert.That (type1.IsTarget, Is.False);
       try
       {
-        var result = type1.ClassContext;
+        var output = type1.ClassContext;
         Assert.Fail ("Expected exception was not thrown");
       }
       catch (InvalidOperationException ex)
@@ -141,7 +141,6 @@ namespace MixinXRef.UnitTests
       }
     }
 
-    //todo getTargetclassDef für targetclasse
     [Test]
     public void GetTargetClassDefinition_ForNonGenenericTypeDefinition ()
     {

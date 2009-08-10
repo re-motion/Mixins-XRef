@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.UnitTests.TestDomain;
@@ -17,7 +18,11 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
-      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (TargetClass2), typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
+
+      var type1 = new InvolvedType (typeof (TargetClass2));
+      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+
+      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof(Mixin2), mixinConfiguration, new IdentifierGenerator<Type>());
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("InterfaceIntroductions");
@@ -33,9 +38,12 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass2>().AddMixin<Mixin3>()
           .BuildConfiguration();
 
+      var type1 = new InvolvedType (typeof (TargetClass2));
+      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+
       // TargetClass2 does not implement any interface
       // Mixin3 introduces interface IDisposable
-      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (TargetClass2), typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof(Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
 
       var output = reportGenerator.GenerateXml();
 
@@ -53,10 +61,10 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_ForGenericTargetClass ()
     {
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-
       var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+      var type1 = new InvolvedType (typeof (GenericTarget<>));
 
-      var reportGenerator = new InterfaceIntroductionReportGenerator (typeof (GenericTarget<>), typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
+      var reportGenerator = new InterfaceIntroductionReportGenerator (type1, typeof (Mixin3), mixinConfiguration, interfaceIdentifierGenerator);
       
       var output = reportGenerator.GenerateXml ();
 
