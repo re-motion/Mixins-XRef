@@ -45,23 +45,52 @@ namespace MixinXRef.UnitTests
           targetType, mixinConfiguration, new IdentifierGenerator<Type>(), interfaceIdentifierGenerator, attributeIdentifierGenerator);
 
       var output = reportGenerator.GenerateXml();
+
+      var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
+      var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (typeof (Mixin1));
+
       var expectedOutput = new XElement (
           "Mixins",
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute ("relation", "extends")
+              new XAttribute ("relation", "extends"),
+              new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, interfaceIdentifierGenerator).GenerateXml(),
+              new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, attributeIdentifierGenerator).GenerateXml(),
+              new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml()
               ));
-      if (!targetType.Type.IsGenericTypeDefinition)
-      {
-        var targetClassDefinition = targetType.GetTargetClassDefinition (mixinConfiguration);
-        var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (typeof (Mixin1));
-        expectedOutput.Descendants().First().Add (
-            new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, interfaceIdentifierGenerator).GenerateXml());
-        expectedOutput.Descendants().First().Add (
-            new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, attributeIdentifierGenerator).GenerateXml());
-        expectedOutput.Descendants().First().Add (new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
-      }
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GenerateXml_ForGenericTypeDefinition ()
+    {
+      var targetType = new InvolvedType (typeof (GenericTarget<>));
+
+
+      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+      targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
+
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+
+      var reportGenerator = new MixinReferenceReportGenerator (
+          targetType, mixinConfiguration, new IdentifierGenerator<Type>(), interfaceIdentifierGenerator, attributeIdentifierGenerator);
+
+      var output = reportGenerator.GenerateXml();
+      var expectedOutput = new XElement (
+          "Mixins",
+          new XElement (
+              "Mixin",
+              new XAttribute ("ref", "0"),
+              new XAttribute ("relation", "used by")),
+          new XElement (
+              "Mixin",
+              new XAttribute ("ref", "1"),
+              new XAttribute ("relation", "used by"))
+          );
+
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
