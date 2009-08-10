@@ -43,12 +43,6 @@ namespace MixinXRef
       set { _isMixin = value; }
     }
 
-    public bool IsGenericTypeDefinition
-    {
-      get { return _realType.IsGenericTypeDefinition; }
-    }
-
-
     public ClassContext ClassContext
     {
       get
@@ -60,9 +54,7 @@ namespace MixinXRef
       set { _classContext = value; }
     }
 
-
-
-
+    
     public override bool Equals (object obj)
     {
       var other = obj as InvolvedType;
