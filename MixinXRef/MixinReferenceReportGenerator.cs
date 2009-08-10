@@ -53,7 +53,8 @@ namespace MixinXRef
           new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
           new XAttribute ("relation", GetMixinKind(mixinContext)),
           new InterfaceIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _interfaceIdentifierGenerator).GenerateXml (),
-          new AttributeIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml ()
+          new AttributeIntroductionReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration, _attributeIdentifierGenerator).GenerateXml (),
+          new MemberOverrideReportGenerator (_involvedType, mixinContext.MixinType, _mixinConfiguration).GenerateXml ()
           );
 
     }

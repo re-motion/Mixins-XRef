@@ -51,7 +51,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("ref", "0"),
               new XAttribute ("relation", "extends"),
               new InterfaceIntroductionReportGenerator (targetType, typeof (Mixin1), mixinConfiguration, interfaceIdentifierGenerator).GenerateXml(),
-              new AttributeIntroductionReportGenerator (targetType, typeof (Mixin1), mixinConfiguration, attributeIdentifierGenerator).GenerateXml()
+              new AttributeIntroductionReportGenerator (targetType, typeof (Mixin1), mixinConfiguration, attributeIdentifierGenerator).GenerateXml(),
+              new MemberOverrideReportGenerator(targetType, typeof(Mixin1), mixinConfiguration).GenerateXml()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
