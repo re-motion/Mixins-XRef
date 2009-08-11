@@ -23,7 +23,16 @@ namespace MixinXRef
       {
         var topLevelExceptionElement = new RecursiveExceptionReportGenerator (validationException).GenerateXml();
         // TODO: more info about validation log
-        topLevelExceptionElement.Add (new XElement ("ValidationLog"));
+        topLevelExceptionElement.Add (
+            new XElement (
+                "ValidationLog",
+                new XAttribute("number-of-rules-executed", validationException.ValidationLog.GetNumberOfRulesExecuted()),
+                new XAttribute("number-of-failures", validationException.ValidationLog.GetNumberOfFailures()),
+                new XAttribute("number-of-unexpected-exceptions", validationException.ValidationLog.GetNumberOfUnexpectedExceptions()),
+                new XAttribute("number-of-warnings", validationException.ValidationLog.GetNumberOfWarnings()),
+                new XAttribute("number-of-successes", validationException.ValidationLog.GetNumberOfSuccesses())
+                )
+            );
         validationErrors.Add (topLevelExceptionElement);
       }
 

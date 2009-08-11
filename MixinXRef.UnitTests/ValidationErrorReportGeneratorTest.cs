@@ -33,7 +33,14 @@ namespace MixinXRef.UnitTests
       var output = reportGenerator.GenerateXml();
 
       var validationExceptionElement = new RecursiveExceptionReportGenerator (validationException1).GenerateXml();
-      validationExceptionElement.Add (new XElement ("ValidationLog"));
+      validationExceptionElement.Add (
+        new XElement ("ValidationLog",
+          new XAttribute("number-of-rules-executed", validationException1.ValidationLog.GetNumberOfRulesExecuted()),
+          new XAttribute("number-of-failures", validationException1.ValidationLog.GetNumberOfFailures()),
+          new XAttribute("number-of-unexpected-exceptions", validationException1.ValidationLog.GetNumberOfUnexpectedExceptions()),
+          new XAttribute("number-of-warnings", validationException1.ValidationLog.GetNumberOfWarnings()),
+          new XAttribute("number-of-successes", validationException1.ValidationLog.GetNumberOfSuccesses())
+        ));
 
       var expectedOutput = new XElement ("ValidationErrors", validationExceptionElement);
 
