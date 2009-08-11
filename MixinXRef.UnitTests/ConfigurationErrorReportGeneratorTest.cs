@@ -25,26 +25,18 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithErrors ()
     {
       var errorAggregator = new ErrorAggregator<ConfigurationException>();
-      var configurationException1 = new ConfigurationException ("test configuration exception", new Exception ("inner exception"));
+      var configurationException1 = new ConfigurationException ("test configuration exception 1", new Exception ("inner exception"));
+      var configurationException2 = new ConfigurationException ("test configuration excpetion 2");
 
       errorAggregator.AddException (configurationException1);
+      errorAggregator.AddException (configurationException2);
       var reportGenerator = new ConfigurationErrorReportGenerator (errorAggregator);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
           "ConfigurationErrors",
-          new XElement (
-              "Exception",
-              new XAttribute ("type", configurationException1.GetType()),
-              new XElement ("Message", configurationException1.Message),
-              new XElement ("StackTrace", configurationException1.StackTrace),
-              new XElement (
-                  "Exception",
-                  new XAttribute ("type", configurationException1.InnerException.GetType()),
-                  new XElement ("Message", configurationException1.InnerException.Message),
-                  new XElement ("StackTrace", configurationException1.InnerException.StackTrace)
-                  )
-              )
+          new RecursiveExceptionReportGenerator (configurationException1).GenerateXml(),
+          new RecursiveExceptionReportGenerator (configurationException2).GenerateXml()
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

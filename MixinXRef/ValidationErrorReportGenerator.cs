@@ -1,12 +1,11 @@
 using System;
-using System.Linq;
 using System.Xml.Linq;
 using Remotion.Mixins.Validation;
 using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class ValidationErrorReportGenerator :IReportGenerator
+  public class ValidationErrorReportGenerator : IReportGenerator
   {
     private readonly ErrorAggregator<ValidationException> _errorAggregator;
 
@@ -22,26 +21,13 @@ namespace MixinXRef
 
       foreach (var validationException in _errorAggregator.Exceptions)
       {
-        var topLevelExceptionElement = GenerateExceptionElement (validationException);
-        topLevelExceptionElement.Add (new XElement("ValidationLog"));
+        var topLevelExceptionElement = new RecursiveExceptionReportGenerator (validationException).GenerateXml();
+        // TODO: more info about validation log
+        topLevelExceptionElement.Add (new XElement ("ValidationLog"));
         validationErrors.Add (topLevelExceptionElement);
       }
 
       return validationErrors;
-    }
-
-
-    private XElement GenerateExceptionElement (Exception exception)
-    {
-      if (exception == null)
-        return null;
-
-      return new XElement (
-          "Exception",
-          new XAttribute ("type", exception.GetType()),
-          new XElement ("Message", exception.Message),
-          new XElement ("StackTrace", exception.StackTrace),
-          GenerateExceptionElement (exception.InnerException));
     }
   }
 }

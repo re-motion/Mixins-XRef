@@ -31,16 +31,11 @@ namespace MixinXRef.UnitTests
       var reportGenerator = new ValidationErrorReportGenerator (errorAggregator);
 
       var output = reportGenerator.GenerateXml();
-      var expectedOutput = new XElement (
-          "ValidationErrors",
-          new XElement (
-              "Exception",
-              new XAttribute ("type", validationException1.GetType()),
-              new XElement ("Message", validationException1.Message),
-              new XElement ("StackTrace", validationException1.StackTrace),
-              new XElement ("ValidationLog")
-              )
-          );
+
+      var validationExceptionElement = new RecursiveExceptionReportGenerator (validationException1).GenerateXml();
+      validationExceptionElement.Add (new XElement ("ValidationLog"));
+
+      var expectedOutput = new XElement ("ValidationErrors", validationExceptionElement);
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
