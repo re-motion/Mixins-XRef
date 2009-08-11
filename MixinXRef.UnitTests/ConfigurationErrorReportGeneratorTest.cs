@@ -3,7 +3,6 @@ using System.Xml.Linq;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests
 {
@@ -26,8 +25,8 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithErrors ()
     {
       var errorAggregator = new ErrorAggregator<ConfigurationException>();
-      var configurationException1 = new ConfigurationException ("test exception", new Exception ("inner exception"));
-      
+      var configurationException1 = new ConfigurationException ("test configuration exception", new Exception ("inner exception"));
+
       errorAggregator.AddException (configurationException1);
       var reportGenerator = new ConfigurationErrorReportGenerator (errorAggregator);
 
@@ -36,12 +35,12 @@ namespace MixinXRef.UnitTests
           "ConfigurationErrors",
           new XElement (
               "Exception",
-              new XAttribute("type", configurationException1.GetType()),
+              new XAttribute ("type", configurationException1.GetType()),
               new XElement ("Message", configurationException1.Message),
               new XElement ("StackTrace", configurationException1.StackTrace),
               new XElement (
                   "Exception",
-                  new XAttribute("type", configurationException1.InnerException.GetType()),
+                  new XAttribute ("type", configurationException1.InnerException.GetType()),
                   new XElement ("Message", configurationException1.InnerException.Message),
                   new XElement ("StackTrace", configurationException1.InnerException.StackTrace)
                   )

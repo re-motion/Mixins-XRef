@@ -78,6 +78,7 @@
     <Compile Include="InvolvedTypeReportGenerator.cs" />
     <Compile Include="ReadonlyIdentifierGenerator.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
+    <Compile Include="ValidationErrorReportGenerator.cs" />
     <Compile Include="XRefTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
