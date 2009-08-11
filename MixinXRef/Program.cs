@@ -15,8 +15,10 @@ namespace MixinXRef
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
 
       //const string assemblyDir = @"C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef.UnitTests\bin\Debug\";
-      const string assemblyDir = @"C:\Users\patrick.groess\Desktop\ActaNovaClientWebBin\ActaNovaClientWebBin\bin\";
-      Assembly[] assemblies = GetAssemblies (assemblyDir);
+      const string assemblyDirectory = @"C:\Users\julian.lettner\Desktop\ActaNovaClientWebBin\bin";
+      const string outputFile = @"C:\Users\julian.lettner\Desktop\MixinReport.xml";
+      ;
+      Assembly[] assemblies = GetAssemblies (assemblyDirectory);
 
       var stopwatch = Stopwatch.StartNew();
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
@@ -51,11 +53,13 @@ namespace MixinXRef
       stopwatch.Reset ();
       stopwatch.Start ();
       XElement report = compositeReportGenerator.GenerateXml();
+      String creationTime = DateTime.Now.ToString ("yyyy-MM-dd HH:mm:ss");
+      report.Add(new XAttribute("creationTime", creationTime));
       Console.WriteLine ("GenerateXml: " + stopwatch.Elapsed);
 
       stopwatch.Reset ();
       stopwatch.Start ();
-      new XDocument (report).Save (@"C:\Users\patrick.groess\Desktop\MixinReport.xml");
+      new XDocument (report).Save (outputFile);
       Console.WriteLine ("Save: " + stopwatch.Elapsed);
     }
 
