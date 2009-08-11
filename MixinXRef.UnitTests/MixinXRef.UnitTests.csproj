@@ -91,7 +91,7 @@
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\Mixin3.cs" />
     <Compile Include="TestDomain\MixinDoSomething.cs" />
-    <Compile Include="TestDomain\MixinWithValidationError.cs" />
+    <Compile Include="TestDomain\MixinWithConfigurationError.cs" />
     <Compile Include="TestDomain\ObjectWithInheritableAttribute.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />

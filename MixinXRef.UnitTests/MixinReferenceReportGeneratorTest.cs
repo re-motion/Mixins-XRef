@@ -121,17 +121,18 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GenerateXml_MixinValidationError()
+    public void GenerateXml_MixinConfigurationError ()
     {
-      var targetType = new InvolvedType(typeof(MixinWithValidationError));
+      var targetType = new InvolvedType (typeof (UselessObject));
 
-      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+        .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
       targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
-      var reportGenerator = new MixinReferenceReportGenerator(
+      var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
           mixinConfiguration,
           new IdentifierGenerator<Type>(),
@@ -142,7 +143,33 @@ namespace MixinXRef.UnitTests
 
       reportGenerator.GenerateXml();
 
-      Assert.That(_validationErrors.Exceptions.Count(), Is.EqualTo(1));
+      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (1));
+    }
+
+    [Test]
+    public void GenerateXml_MixinValidationError ()
+    {
+      var targetType = new InvolvedType (typeof (UselessObject));
+
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+        .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
+      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
+
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+
+      var reportGenerator = new MixinReferenceReportGenerator (
+          targetType,
+          mixinConfiguration,
+          new IdentifierGenerator<Type>(),
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          _configurationErrors,
+          _validationErrors);
+
+      reportGenerator.GenerateXml();
+
+      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (1));
     }
   }
 }
