@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AttributeReferenceReportGeneratorTest.cs" />
     <Compile Include="AttributeReportGeneratorTest.cs" />
+    <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
     <Compile Include="InterfaceReferenceReportGeneratorTest.cs" />
     <Compile Include="InterfaceReportGeneratorTest.cs" />

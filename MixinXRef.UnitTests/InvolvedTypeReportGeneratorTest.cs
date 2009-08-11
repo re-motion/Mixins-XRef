@@ -14,13 +14,13 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private ErrorAggregator<ConfigurationException> _configerationErrors;
+    private ErrorAggregator<ConfigurationException> _configurationError;
     private ErrorAggregator<ValidationException> _validationErrors;
 
     [SetUp]
     public void SetUp ()
     {
-      _configerationErrors = new ErrorAggregator<ConfigurationException>();
+      _configurationError = new ErrorAggregator<ConfigurationException>();
       _validationErrors = new ErrorAggregator<ValidationException>();
     }
 
@@ -77,7 +77,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml()
@@ -140,7 +140,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml()
@@ -164,7 +164,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml()),
@@ -187,7 +187,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType3, involvedTypeIdentifierGenerator).GenerateXml()
@@ -211,7 +211,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType4, involvedTypeIdentifierGenerator).GenerateXml()
@@ -268,7 +268,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml()
@@ -292,7 +292,7 @@ namespace MixinXRef.UnitTests
                   involvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configerationErrors,
+                  _configurationError,
                   _validationErrors).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml()
@@ -321,7 +321,7 @@ namespace MixinXRef.UnitTests
           involvedTypeIdentifier,
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configerationErrors,
+          _configurationError,
           _validationErrors
           );
     }

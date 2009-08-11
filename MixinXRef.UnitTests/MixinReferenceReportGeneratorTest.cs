@@ -12,13 +12,13 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class MixinReferenceReportGeneratorTest
   {
-    private ErrorAggregator<ConfigurationException> _configerationErrors;
+    private ErrorAggregator<ConfigurationException> _configurationErrors;
     private ErrorAggregator<ValidationException> _validationErrors;
 
     [SetUp]
     public void SetUp ()
     {
-      _configerationErrors = new ErrorAggregator<ConfigurationException>();
+      _configurationErrors = new ErrorAggregator<ConfigurationException>();
       _validationErrors = new ErrorAggregator<ValidationException>();
     }
 
@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          _configerationErrors,
+          _configurationErrors,
           _validationErrors
           );
 
@@ -60,7 +60,7 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configerationErrors,
+          _configurationErrors,
           _validationErrors);
 
       var output = reportGenerator.GenerateXml();
@@ -101,7 +101,7 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configerationErrors,
+          _configurationErrors,
           _validationErrors);
 
       var output = reportGenerator.GenerateXml();

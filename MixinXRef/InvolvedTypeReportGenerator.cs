@@ -16,7 +16,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly ErrorAggregator<ConfigurationException> _configerationErrors;
+    private readonly ErrorAggregator<ConfigurationException> _configurationError;
     private readonly ErrorAggregator<ValidationException> _validationErrors;
 
     public InvolvedTypeReportGenerator (
@@ -26,7 +26,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        ErrorAggregator<ConfigurationException> configerationErrors,
+        ErrorAggregator<ConfigurationException> configurationError,
         ErrorAggregator<ValidationException> validationErrors)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
@@ -35,7 +35,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("configerationErrors", configerationErrors);
+      ArgumentUtility.CheckNotNull ("configurationError", configurationError);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
 
       _involvedTypes = involvedTypes;
@@ -44,7 +44,7 @@ namespace MixinXRef
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _configerationErrors = configerationErrors;
+      _configurationError = configurationError;
       _validationErrors = validationErrors;
     }
 
@@ -81,7 +81,7 @@ namespace MixinXRef
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
-              _configerationErrors,
+              _configurationError,
               _validationErrors).GenerateXml(),
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
