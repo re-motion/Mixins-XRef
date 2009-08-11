@@ -119,5 +119,30 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
+
+    [Test]
+    public void GenerateXml_MixinValidationError()
+    {
+      var targetType = new InvolvedType(typeof(MixinWithValidationError));
+
+      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
+      targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
+
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+
+      var reportGenerator = new MixinReferenceReportGenerator(
+          targetType,
+          mixinConfiguration,
+          new IdentifierGenerator<Type>(),
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          _configurationErrors,
+          _validationErrors);
+
+      reportGenerator.GenerateXml();
+
+      Assert.That(_validationErrors.Exceptions.Count(), Is.EqualTo(1));
+    }
   }
 }
