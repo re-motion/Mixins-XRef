@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests
 
       var mixinConfiguration = new MixinConfiguration();
 
-      var involvedType1 = new InvolvedType (typeof (GenericTarget<>));
+      var involvedType1 = new InvolvedType (typeof (GenericTarget<,>));
 
       var reportGenerator = CreateReportGenerator (
           new Assembly[0],
@@ -52,7 +52,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "GenericTarget`1"),
+              new XAttribute ("name", "GenericTarget<TParameter1, TParameter2>"),
               new XAttribute ("base", "System.Object"),
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),

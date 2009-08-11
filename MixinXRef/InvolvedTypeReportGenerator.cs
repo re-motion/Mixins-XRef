@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Utilities;
@@ -55,7 +56,7 @@ namespace MixinXRef
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
-          new XAttribute ("name", realType.Name),
+          new XAttribute ("name", GetCSharpLikeName(realType)),
           new XAttribute ("base", GetFullNameForBaseType(realType)),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
@@ -66,6 +67,24 @@ namespace MixinXRef
           new MixinReferenceReportGenerator (involvedType, _mixinConfiguration, _involvedTypeIdentifierGenerator, _interfaceIdentifierGenerator, _attributeIdentifierGenerator).GenerateXml(),
           new TargetReferenceReportGenerator (involvedType, _involvedTypeIdentifierGenerator).GenerateXml ()
           );
+    }
+
+    private string GetCSharpLikeName(Type type) {
+      if (!type.ContainsGenericParameters)
+        return type.Name;
+
+      var typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
+
+      StringBuilder result = new StringBuilder (typeName);
+      result.Append ("<");
+      foreach (Type genericArgument in type.GetGenericArguments())
+      {
+        result.Append (genericArgument.Name);
+        result.Append(", ");
+      }
+      result.Remove (result.Length - 2, 2);
+      result.Append (">");
+      return result.ToString();
     }
 
     private string GetFullNameForBaseType (Type type)

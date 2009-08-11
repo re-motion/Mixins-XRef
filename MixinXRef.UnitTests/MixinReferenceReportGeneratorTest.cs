@@ -66,10 +66,10 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ForGenericTypeDefinition ()
     {
-      var targetType = new InvolvedType (typeof (GenericTarget<>));
+      var targetType = new InvolvedType (typeof (GenericTarget<,>));
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass (typeof (GenericTarget<>)).AddMixin<ClassWithBookAttribute>().AddMixin<Mixin3>()
+          .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>().AddMixin<Mixin3>()
           .BuildConfiguration();
       targetType.ClassContext = mixinConfiguration.ClassContexts.First();
 
