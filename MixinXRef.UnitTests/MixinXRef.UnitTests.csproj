@@ -78,6 +78,7 @@
     <Compile Include="CompositeReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
+    <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />
     <Compile Include="TestDomain\IDoSomething.cs" />

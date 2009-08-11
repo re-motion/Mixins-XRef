@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Utilities;
@@ -53,12 +55,33 @@ namespace MixinXRef
 
     private XElement GenerateParameterElement (string kind, Type type, string name, object value)
     {
+      var demultiplexedValue = RecursiveToString(type, value);
+
       return new XElement (
-          "Parameter",
+          "Argument",
           new XAttribute ("kind", kind),
           new XAttribute ("type", type.Name),
           new XAttribute ("name", name),
-          new XAttribute ("value", value));
+          new XAttribute("value", demultiplexedValue));
+    }
+
+    private string RecursiveToString(Type argumentType, object argumentValue)
+    {
+      if (!argumentType.IsArray)
+        return argumentValue.ToString();
+
+      var valueCollection = (ReadOnlyCollection<CustomAttributeTypedArgument>) argumentValue;
+
+      StringBuilder concatenatedValues = new StringBuilder ("{");
+      for (int i = 0; i < valueCollection.Count; i++)
+      {
+        if(i != 0)
+          concatenatedValues.Append (", ");
+        concatenatedValues.Append(RecursiveToString(valueCollection[i].ArgumentType, valueCollection[i].Value));
+      }
+      concatenatedValues.Append ("}");
+
+      return concatenatedValues.ToString();
     }
   }
 }
