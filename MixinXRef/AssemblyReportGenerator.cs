@@ -46,7 +46,8 @@ namespace MixinXRef
       return new XElement (
           "Assembly",
           new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
-          new XAttribute ("full-name", assembly.FullName),
+          new XAttribute ("name", assembly.GetName().Name),
+          new XAttribute ("version", assembly.GetName().Version),
           new XAttribute ("code-base", assembly.CodeBase),
           from involvedType in involvedTypesForAssembly
           select
