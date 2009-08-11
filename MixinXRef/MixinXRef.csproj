@@ -59,6 +59,7 @@
     <Compile Include="AttributeReportGenerator.cs" />
     <Compile Include="ConfigurationErrorReportGenerator.cs" />
     <Compile Include="ErrorAggregator.cs" />
+    <Compile Include="FullReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="InterfaceReferenceReportGenerator.cs" />
     <Compile Include="InterfaceReportGenerator.cs" />

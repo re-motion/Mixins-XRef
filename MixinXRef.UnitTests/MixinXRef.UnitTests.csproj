@@ -61,6 +61,7 @@
     <Compile Include="AttributeReportGeneratorTest.cs" />
     <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
+    <Compile Include="FullReportGeneratorTest.cs" />
     <Compile Include="InterfaceReferenceReportGeneratorTest.cs" />
     <Compile Include="InterfaceReportGeneratorTest.cs" />
     <Compile Include="InterfaceIntroductionReportGeneratorTest.cs" />
