@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
+using Remotion.Mixins.Validation;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -14,12 +15,16 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly ErrorAggregator<ConfigurationException> _configerationErrors;
+    private readonly ErrorAggregator<ValidationException> _validationErrors;
 
     public MixinReferenceReportGenerator (InvolvedType involvedType, 
       MixinConfiguration mixinConfiguration, 
       IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
       IIdentifierGenerator<Type> interfaceIdentifierGenerator,
-      IIdentifierGenerator<Type> attributeIdentifierGenerator
+      IIdentifierGenerator<Type> attributeIdentifierGenerator,
+      ErrorAggregator<ConfigurationException> configerationErrors,
+      ErrorAggregator<ValidationException> validationErrors
       )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
@@ -27,12 +32,16 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("configerationErrors", configerationErrors);
+      ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
 
       _involvedType = involvedType;
       _mixinConfiguration = mixinConfiguration;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
+      _configerationErrors = configerationErrors;
+      _validationErrors = validationErrors;
     }
 
     public XElement GenerateXml ()
@@ -56,11 +65,27 @@ namespace MixinXRef
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
       {
-        var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
-        var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
-        mixinElement.Add (new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml ());
-        mixinElement.Add (new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator).GenerateXml ());
-        mixinElement.Add (new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml ());
+        try
+        {
+          // may throw ConfigurationException and ValidationException
+          var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
+          var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
+
+          mixinElement.Add (
+              new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml());
+          mixinElement.Add (
+              new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator).GenerateXml());
+          mixinElement.Add (
+              new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
+        }
+        catch (ConfigurationException configurationException)
+        {
+          _configerationErrors.AddException(configurationException);
+        }
+        catch (ValidationException validationException)
+        {
+          _validationErrors.AddException (validationException);
+        }
       }
 
       return mixinElement;

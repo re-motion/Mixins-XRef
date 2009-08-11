@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using Remotion.Mixins;
+using Remotion.Mixins.Validation;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -15,6 +16,8 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly ErrorAggregator<ConfigurationException> _configerationErrors;
+    private readonly ErrorAggregator<ValidationException> _validationErrors;
 
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
@@ -22,7 +25,9 @@ namespace MixinXRef
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
-        IIdentifierGenerator<Type> attributeIdentifierGenerator)
+        IIdentifierGenerator<Type> attributeIdentifierGenerator,
+        ErrorAggregator<ConfigurationException> configerationErrors,
+        ErrorAggregator<ValidationException> validationErrors)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -30,6 +35,8 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("configerationErrors", configerationErrors);
+      ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
 
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
@@ -37,6 +44,8 @@ namespace MixinXRef
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
+      _configerationErrors = configerationErrors;
+      _validationErrors = validationErrors;
     }
 
     public XElement GenerateXml ()
@@ -56,20 +65,31 @@ namespace MixinXRef
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
-          new XAttribute ("name", GetCSharpLikeName(realType)),
-          new XAttribute ("base", GetFullNameForBaseType(realType)),
+          new XAttribute ("name", GetCSharpLikeName (realType)),
+          new XAttribute ("base", GetFullNameForBaseType (realType)),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
-          new InterfaceReferenceReportGenerator (involvedType.Type, _interfaceIdentifierGenerator).GenerateXml (),
-          new AttributeReferenceReportGenerator (involvedType.Type, _attributeIdentifierGenerator).GenerateXml (),
-          new MixinReferenceReportGenerator (involvedType, _mixinConfiguration, _involvedTypeIdentifierGenerator, _interfaceIdentifierGenerator, _attributeIdentifierGenerator).GenerateXml(),
-          new TargetReferenceReportGenerator (involvedType, _involvedTypeIdentifierGenerator).GenerateXml ()
+          new InterfaceReferenceReportGenerator (
+              involvedType.Type, _interfaceIdentifierGenerator).GenerateXml(),
+          new AttributeReferenceReportGenerator (
+              involvedType.Type, _attributeIdentifierGenerator).GenerateXml(),
+          new MixinReferenceReportGenerator (
+              involvedType,
+              _mixinConfiguration,
+              _involvedTypeIdentifierGenerator,
+              _interfaceIdentifierGenerator,
+              _attributeIdentifierGenerator,
+              _configerationErrors,
+              _validationErrors).GenerateXml(),
+          new TargetReferenceReportGenerator (
+              involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );
     }
 
-    private string GetCSharpLikeName(Type type) {
+    private string GetCSharpLikeName (Type type)
+    {
       if (!type.ContainsGenericParameters)
         return type.Name;
 
@@ -80,7 +100,7 @@ namespace MixinXRef
       foreach (Type genericArgument in type.GetGenericArguments())
       {
         result.Append (genericArgument.Name);
-        result.Append(", ");
+        result.Append (", ");
       }
       result.Remove (result.Length - 2, 2);
       result.Append (">");
@@ -90,11 +110,11 @@ namespace MixinXRef
     private string GetFullNameForBaseType (Type type)
     {
       // for System.Object
-      if(type.BaseType == null)
+      if (type.BaseType == null)
         return "none";
 
       // for special generic types
-      if(type.BaseType.IsGenericType)
+      if (type.BaseType.IsGenericType)
         return type.BaseType.GetGenericTypeDefinition().FullName;
 
       // for standard types

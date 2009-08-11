@@ -5,12 +5,23 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class MixinReferenceReportGeneratorTest
   {
+    private ErrorAggregator<ConfigurationException> _configerationErrors;
+    private ErrorAggregator<ValidationException> _validationErrors;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _configerationErrors = new ErrorAggregator<ConfigurationException>();
+      _validationErrors = new ErrorAggregator<ValidationException>();
+    }
+
     [Test]
     public void GenerateXml_NoMixins ()
     {
@@ -21,7 +32,9 @@ namespace MixinXRef.UnitTests
           new MixinConfiguration(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>()
+          new IdentifierGenerator<Type>(),
+          _configerationErrors,
+          _validationErrors
           );
 
       var output = reportGenerator.GenerateXml();
@@ -42,7 +55,13 @@ namespace MixinXRef.UnitTests
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
       var reportGenerator = new MixinReferenceReportGenerator (
-          targetType, mixinConfiguration, new IdentifierGenerator<Type>(), interfaceIdentifierGenerator, attributeIdentifierGenerator);
+          targetType,
+          mixinConfiguration,
+          new IdentifierGenerator<Type>(),
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          _configerationErrors,
+          _validationErrors);
 
       var output = reportGenerator.GenerateXml();
 
@@ -77,7 +96,13 @@ namespace MixinXRef.UnitTests
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
       var reportGenerator = new MixinReferenceReportGenerator (
-          targetType, mixinConfiguration, new IdentifierGenerator<Type>(), interfaceIdentifierGenerator, attributeIdentifierGenerator);
+          targetType,
+          mixinConfiguration,
+          new IdentifierGenerator<Type>(),
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          _configerationErrors,
+          _validationErrors);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
