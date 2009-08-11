@@ -68,9 +68,10 @@ namespace MixinXRef.UnitTests
     {
       var targetType = new InvolvedType (typeof (GenericTarget<>));
 
-
-      var mixinConfiguration = MixinConfiguration.ActiveConfiguration;
-      targetType.ClassContext = mixinConfiguration.ClassContexts.Where (classContext => classContext.Type.IsGenericTypeDefinition).Single();
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass (typeof (GenericTarget<>)).AddMixin<ClassWithBookAttribute>().AddMixin<Mixin3>()
+          .BuildConfiguration();
+      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -84,11 +85,11 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute ("relation", "Used")),
+              new XAttribute ("relation", "Extending")),
           new XElement (
               "Mixin",
               new XAttribute ("ref", "1"),
-              new XAttribute ("relation", "Used"))
+              new XAttribute ("relation", "Extending"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
