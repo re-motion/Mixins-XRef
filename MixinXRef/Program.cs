@@ -81,18 +81,23 @@ namespace MixinXRef
       if (assemblies == null)
         System.Environment.Exit(-4);
 
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
-      var involvedTypes = new InvolvedTypeFinder(mixinConfiguration).FindInvolvedTypes();
-
-      var reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
-      var outputDocument = reportGenerator.GenerateXmlDocument();
-      outputDocument.Save(xmlFile);
+      SaveXmlDocument(assemblies, xmlFile);
 
       var transformerExitCode = new XRefTransformer(xmlFile, outputDirectory).GenerateHtmlFromXml();
       if (transformerExitCode == 0)
         Console.WriteLine("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
 
       return transformerExitCode;
+    }
+
+    private static void SaveXmlDocument (Assembly[] assemblies, string xmlFile)
+    {
+      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
+      var involvedTypes = new InvolvedTypeFinder(mixinConfiguration).FindInvolvedTypes();
+
+      var reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
+      var outputDocument = reportGenerator.GenerateXmlDocument();
+      outputDocument.Save(xmlFile);
     }
   }
 }
