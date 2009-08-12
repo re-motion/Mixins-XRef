@@ -45,43 +45,10 @@ namespace MixinXRef.UnitTests
       var reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
       var output = reportGenerator.GenerateXmlDocument();
 
-      // following code is required to generate expected output
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
-      var readonlyassemblyIdentifierGenerator = assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator("none");
-      var involvedTypeIdentiferGenerator = new IdentifierGenerator<Type>();
-      var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
-      var configurationErrors = new ErrorAggregator<ConfigurationException>();
-      var validationErrors = new ErrorAggregator<ValidationException>();
-
-      var assemblyReport = new AssemblyReportGenerator(
-          assemblies, involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);
-      var involvedReport = new InvolvedTypeReportGenerator(
-          involvedTypes,
-          mixinConfiguration,
-          readonlyassemblyIdentifierGenerator,
-          involvedTypeIdentiferGenerator,
-          interfaceIdentiferGenerator,
-          attributeIdentiferGenerator,
-          configurationErrors,
-          validationErrors);
-      var interfaceReport = new InterfaceReportGenerator(
-          involvedTypes, readonlyassemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
-      var attributeReport = new AttributeReportGenerator(
-          involvedTypes, readonlyassemblyIdentifierGenerator, involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
-      var configurationErrorReport = new ConfigurationErrorReportGenerator(configurationErrors);
-      var validationErrorReport = new ValidationErrorReportGenerator(validationErrors);
+      var expectedOutput = XDocument.Load(@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
       
-      var compositeReportGenerator = new CompositeReportGenerator(
-          assemblyReport,
-          involvedReport,
-          interfaceReport,
-          attributeReport,
-          configurationErrorReport,
-          validationErrorReport);
-      
-      var expectedOutput = compositeReportGenerator.GenerateXml();
-      expectedOutput.Add(new XAttribute("creation-time", reportGenerator.CreationTime));
+      // the creation time of the validiation file is different from the creation time of the generated report
+      expectedOutput.Root.FirstAttribute.Value = reportGenerator.CreationTime;
 
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
