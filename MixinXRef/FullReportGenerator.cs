@@ -20,7 +20,6 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
 
-
       _assemblies = assemblies;
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
