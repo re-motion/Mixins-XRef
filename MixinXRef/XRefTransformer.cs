@@ -11,10 +11,6 @@ namespace MixinXRef
     private const string _xsltStyleSheetPath = @"xml_utilities\main.xslt";
     // xslt processor path
     private const string xsltProcessorPath = @"xml_utilities\saxon\Transform.exe";
-    // schema for xml
-    //private const string _schema = @"xml_utilities\XrefMixin.xsd";
-    // css for html
-    //private const string _cssHtml = @"xml_utilities\style.css";
 
     private readonly string _xmlInputFile;
     private readonly string _outputDirectory;
@@ -28,11 +24,11 @@ namespace MixinXRef
       _outputDirectory = outputDirectory;
     }
 
-    public int GenerateHtmlFromXml()
+    public int GenerateHtmlFromXml ()
     {
       // dummy output file - will not be created, just to trick saxon
-      var mainOutputFile = Path.Combine(_outputDirectory, "dummy.html");
-      string arguments = String.Format("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, _xsltStyleSheetPath, mainOutputFile);
+      var mainOutputFile = Path.Combine (_outputDirectory, "dummy.html");
+      string arguments = String.Format ("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, _xsltStyleSheetPath, mainOutputFile);
 
       Process xsltProcessor = new Process();
       xsltProcessor.StartInfo.FileName = xsltProcessorPath;
@@ -42,8 +38,8 @@ namespace MixinXRef
       xsltProcessor.StartInfo.UseShellExecute = false;
 
       xsltProcessor.Start();
-      Console.Error.Write(xsltProcessor.StandardError.ReadToEnd());
-      Console.Out.Write(xsltProcessor.StandardOutput.ReadToEnd());
+      Console.Error.Write (xsltProcessor.StandardError.ReadToEnd());
+      Console.Out.Write (xsltProcessor.StandardOutput.ReadToEnd());
       xsltProcessor.WaitForExit();
 
       return xsltProcessor.ExitCode;
