@@ -38,6 +38,8 @@ namespace MixinXRef.UnitTests
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".").GetAssemblies();
+      
+      // TODO: order seems to be random?!
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
       var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
 

@@ -25,7 +25,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithErrors ()
     {
       var errorAggregator = new ErrorAggregator<ValidationException>();
-      var validationException1 = new ValidationException ("test validation exception", new DefaultValidationLog());
+      var validationException1 = SetUpExceptionWithDummyStackTrace("test validation exception", new DefaultValidationLog());
 
       errorAggregator.AddException (validationException1);
       var reportGenerator = new ValidationErrorReportGenerator (errorAggregator);
@@ -45,6 +45,18 @@ namespace MixinXRef.UnitTests
       var expectedOutput = new XElement ("ValidationErrors", validationExceptionElement);
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private ValidationException SetUpExceptionWithDummyStackTrace(string exceptionMessage, IValidationLog validationLog)
+    {
+      try
+      {
+        throw new ValidationException(exceptionMessage, validationLog);
+      }
+      catch (ValidationException caughtException)
+      {
+        return caughtException;
+      }
     }
   }
 }

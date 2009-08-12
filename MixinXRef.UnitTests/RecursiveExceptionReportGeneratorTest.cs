@@ -11,16 +11,16 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ForExceptionWithoutInnerException ()
     {
-      var exception1 = new Exception ("plain exception");
-      var reportGenerator = new RecursiveExceptionReportGenerator (exception1);
+      var exception = SetUpExceptionWithDummyStackTrace ("plain exception", null);
 
+      var reportGenerator = new RecursiveExceptionReportGenerator (exception);
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Exception",
-          new XAttribute ("type", exception1.GetType()),
-          new XElement ("Message", exception1.Message),
-          new XElement ("StackTrace", exception1.StackTrace)
+          new XAttribute ("type", exception.GetType()),
+          new XElement ("Message", new XCData (exception.Message)),
+          new XElement ("StackTrace", new XCData (exception.StackTrace))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -29,8 +29,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ForExceptionWithInnerException ()
     {
-      var innerException = new Exception ("inner exception");
-      var outerException = new Exception ("exception with inner exception", innerException);
+      var innerException = SetUpExceptionWithDummyStackTrace ("inner exception", null);
+      var outerException = SetUpExceptionWithDummyStackTrace ("exception with inner exception", innerException);
       var reportGenerator = new RecursiveExceptionReportGenerator (outerException);
 
       var output = reportGenerator.GenerateXml();
@@ -38,16 +38,28 @@ namespace MixinXRef.UnitTests
       var expectedOutput = new XElement (
           "Exception",
           new XAttribute ("type", outerException.GetType()),
-          new XElement ("Message", outerException.Message),
-          new XElement ("StackTrace", outerException.StackTrace),
+          new XElement ("Message", new XCData (outerException.Message)),
+          new XElement ("StackTrace", new XCData (outerException.StackTrace)),
           new XElement (
               "Exception",
               new XAttribute ("type", innerException.GetType()),
-              new XElement ("Message", innerException.Message),
-              new XElement ("StackTrace", innerException.StackTrace))
+              new XElement ("Message", new XCData (innerException.Message)),
+              new XElement ("StackTrace", new XCData (innerException.StackTrace)))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private Exception SetUpExceptionWithDummyStackTrace (string exceptionMessage, Exception innerException)
+    {
+      try
+      {
+        throw new Exception (exceptionMessage, innerException);
+      }
+      catch (Exception caughtException)
+      {
+        return caughtException;
+      }
     }
   }
 }

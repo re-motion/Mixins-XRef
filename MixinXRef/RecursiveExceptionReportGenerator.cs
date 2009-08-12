@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Xml.Linq;
 using Remotion.Utilities;
 
@@ -28,8 +29,8 @@ namespace MixinXRef
       return new XElement (
           "Exception",
           new XAttribute ("type", exception.GetType()),
-          new XElement ("Message", exception.Message),
-          new XElement ("StackTrace", exception.StackTrace),
+          new XElement ("Message", new XCData(exception.Message)),
+          new XElement("StackTrace", new XCData(exception.StackTrace)),
           GenerateExceptionElement (exception.InnerException));
     }
   }

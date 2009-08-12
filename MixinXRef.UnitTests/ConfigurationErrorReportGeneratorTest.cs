@@ -25,8 +25,10 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithErrors ()
     {
       var errorAggregator = new ErrorAggregator<ConfigurationException>();
-      var configurationException1 = new ConfigurationException ("test configuration exception 1", new Exception ("inner exception"));
-      var configurationException2 = new ConfigurationException ("test configuration excpetion 2");
+
+      var innerException1 = SetUpExceptionWithDummyStackTrace ("inner exception", null);
+      var configurationException1 = SetUpExceptionWithDummyStackTrace("test configuration exception 1", innerException1);
+      var configurationException2 = SetUpExceptionWithDummyStackTrace("test configuration excpetion 2", null);
 
       errorAggregator.AddException (configurationException1);
       errorAggregator.AddException (configurationException2);
@@ -40,6 +42,18 @@ namespace MixinXRef.UnitTests
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private ConfigurationException SetUpExceptionWithDummyStackTrace(string exceptionMessage, Exception innerException)
+    {
+      try
+      {
+        throw new ConfigurationException (exceptionMessage, innerException);
+      }
+      catch (ConfigurationException caughtException)
+      {
+        return caughtException;
+      }
     }
   }
 }
