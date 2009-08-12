@@ -33,8 +33,20 @@ namespace MixinXRef
 
     public XDocument GenerateXmlDocument ()
     {
+      CompositeReportGenerator compositeReportGenerator = CreateCompositeReportGenerator();
+
+      var result = compositeReportGenerator.GenerateXml();
+
+      _creationTime = DateTime.Now.ToString ("yyyy-MM-dd HH:mm:ss");
+      result.Add (new XAttribute ("creation-time", _creationTime));
+
+      return new XDocument(result);
+    }
+
+    private CompositeReportGenerator CreateCompositeReportGenerator ()
+    {
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
-      var readonlyassemblyIdentifierGenerator = assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
+      var readonlyAssemblyIdentifierGenerator = assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
       var involvedTypeIdentiferGenerator = new IdentifierGenerator<Type>();
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
@@ -47,33 +59,26 @@ namespace MixinXRef
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
           _mixinConfiguration,
-          readonlyassemblyIdentifierGenerator,
+          readonlyAssemblyIdentifierGenerator,
           involvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
           configurationErrors,
           validationErrors);
       var interfaceReport = new InterfaceReportGenerator (
-          _involvedTypes, readonlyassemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
+          _involvedTypes, readonlyAssemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (
-          _involvedTypes, readonlyassemblyIdentifierGenerator, involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
+          _involvedTypes, readonlyAssemblyIdentifierGenerator, involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (validationErrors);
-      
-      var compositeReportGenerator = new CompositeReportGenerator (
+
+      return new CompositeReportGenerator (
           assemblyReport,
           involvedReport,
           interfaceReport,
           attributeReport,
           configurationErrorReport,
           validationErrorReport);
-
-      var result = compositeReportGenerator.GenerateXml();
-
-      _creationTime = DateTime.Now.ToString ("yyyy-MM-dd HH:mm:ss");
-      result.Add (new XAttribute ("creation-time", _creationTime));
-
-      return new XDocument(result);
     }
   }
 }
