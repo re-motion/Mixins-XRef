@@ -83,6 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CompositeReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
+    <Compile Include="SummaryPickerTest.cs" />
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
