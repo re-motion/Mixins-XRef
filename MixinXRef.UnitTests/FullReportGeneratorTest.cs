@@ -5,7 +5,6 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests
 {
@@ -19,38 +18,38 @@ namespace MixinXRef.UnitTests
 
       var output = reportGenerator.GenerateXmlDocument();
 
-      var expectedOutput = 
-        new XDocument (
-          new XElement (
-              "MixinXRefReport",
-              new XAttribute("creation-time", reportGenerator.CreationTime),
-              new XElement ("Assemblies"),
-              new XElement ("InvolvedTypes"),
-              new XElement ("Interfaces"),
-              new XElement ("Attributes"),
-              new XElement ("ConfigurationErrors"),
-              new XElement ("ValidationErrors")
-              ));
+      var expectedOutput =
+          new XDocument (
+              new XElement (
+                  "MixinXRefReport",
+                  new XAttribute ("creation-time", reportGenerator.CreationTime),
+                  new XElement ("Assemblies"),
+                  new XElement ("InvolvedTypes"),
+                  new XElement ("Interfaces"),
+                  new XElement ("Attributes"),
+                  new XElement ("ConfigurationErrors"),
+                  new XElement ("ValidationErrors")
+                  ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void FullReportGenerator_NonEmpty()
+    public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".").GetAssemblies();
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
-      var involvedTypes = new InvolvedTypeFinder(mixinConfiguration).FindInvolvedTypes();
+      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
+      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var output = reportGenerator.GenerateXmlDocument();
 
-      var expectedOutput = XDocument.Load(@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
-      
+      var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
+
       // the creation time of the validiation file is different from the creation time of the generated report
       expectedOutput.Root.FirstAttribute.Value = reportGenerator.CreationTime;
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
 }

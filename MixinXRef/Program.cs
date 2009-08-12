@@ -33,7 +33,7 @@ namespace MixinXRef
       var outputDocument = reportGenerator.GenerateXmlDocument();
 
       outputDocument.Save (xmlFile);
-      var transformerExitCode = new XRefTransformer (xmlFile).GenerateHtmlFromXml();
+      var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
 
       if (transformerExitCode == 0)
         Console.WriteLine ("Mixin Documentation successfully generated to {0}", assemblyDirectory);

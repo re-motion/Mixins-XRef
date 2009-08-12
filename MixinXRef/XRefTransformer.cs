@@ -16,20 +16,22 @@ namespace MixinXRef
     // css for html
     //private const string _cssHtml = @"xml_utilities\style.css";
 
-    // main output file
-    private const string mainOutputFile = "index.html";
-
     private readonly string _xmlInputFile;
+    private readonly string _outputDirectory;
 
-    public XRefTransformer (string xmlInputFile)
+    public XRefTransformer (string xmlInputFile, string outputDirectory)
     {
       ArgumentUtility.CheckNotNull ("xmlInputFile", xmlInputFile);
+      ArgumentUtility.CheckNotNull ("outputDirectory", outputDirectory);
 
       _xmlInputFile = xmlInputFile;
+      _outputDirectory = outputDirectory;
     }
 
     public int GenerateHtmlFromXml()
     {
+      // dummy output file - will not be created, just to trick saxon
+      var mainOutputFile = Path.Combine(_outputDirectory, "dummy.html");
       string arguments = String.Format("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, _xsltStyleSheetPath, mainOutputFile);
 
       Process xsltProcessor = new Process();

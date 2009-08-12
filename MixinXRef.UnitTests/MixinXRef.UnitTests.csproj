@@ -100,6 +100,7 @@
     <Compile Include="TestDomain\TargetDoSomething.cs" />
     <Compile Include="TestDomain\UselessObject.cs" />
     <Compile Include="ValidationErrorReportGeneratorTest.cs" />
+    <Compile Include="XRefTransformerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
