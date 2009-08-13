@@ -2,8 +2,15 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns="http://www.w3.org/1999/xhtml" xmlns:ru="http://www.rubicon-it.com"
 	exclude-result-prefixes="xs fn ru">
 	
+<xsl:function name="ru:GetInvolvedTypesForAssembly">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="assemblyId" />
+	<xsl:copy-of select="$rootMCR//InvolvedTypes/InvolvedType[@assembly-ref = $assemblyId]" />
+</xsl:function>
+
 <xsl:template name="assembly">
 	<table>
+		<caption>Analyzed assemblies (<xsl:value-of select="ru:GetOverallAssemblyCountExclED(/)" />)</caption>
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -11,15 +18,17 @@
 				<th># of Targets</th>
 				<th># of Mixins</th>
 				<th># of InvolvedTypes</th>
+				<th>Location</th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td><xsl:value-of select="count( //Assemblies/Assembly ) - 1" /> (excl. External Dependencies)</td>
+				<td><xsl:value-of select="ru:GetOverallAssemblyCountExclED(/)" /></td>
 				<td>-</td>
 				<td><xsl:value-of select="ru:GetOverallTargetClassCount(/)" /></td>
 				<td><xsl:value-of select="ru:GetOverallMixinCount(/)" /></td>
 				<td><xsl:value-of select="count( //InvolvedTypes/InvolvedType )" /></td>
+				<td>-</td>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -27,11 +36,13 @@
 				<tr>
 					<td><a href="assemblies/{@id}.html"><xsl:value-of select="@name"/></a></td>
 					<td><xsl:value-of select="@version"/></td>
-					<td><xsl:value-of select="count( //InvolvedTypes/InvolvedType[@assembly-ref = current()/@id and @is-target = true()] )"/></td>
-					<td><xsl:value-of select="count( //InvolvedTypes/InvolvedType[@assembly-ref = current()/@id and @is-mixin = true()] )"/></td>
-					<td><xsl:value-of select="count( //InvolvedTypes/InvolvedType[@assembly-ref = current()/@id] )"/></td>
+					<td><xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id)[@is-target = true()] )"/></td>
+					<td><xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id)[@is-mixin = true()] )"/></td>
+					<td><xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id) )"/></td>
+					<td><xsl:value-of select="@location"/></td>
 				</tr>
 				
+				<!-- generate assembly detail site for current assembly -->
 				<xsl:call-template name="assemblyDetailSite" />
 			</xsl:for-each>
 		</tbody>
@@ -46,7 +57,12 @@
 	</xsl:call-template>
 </xsl:template>
 
+
 <xsl:template name="assemblyDetail">
+	<xsl:call-template name="involvedTypeList">
+		<xsl:with-param name="rootMCR" select="/" />		
+		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  
+	</xsl:call-template>
 </xsl:template>
 
 </xsl:stylesheet>

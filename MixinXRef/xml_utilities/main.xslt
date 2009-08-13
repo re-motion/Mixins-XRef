@@ -4,6 +4,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ru="http://www.rubicon-it.com"
 	exclude-result-prefixes="xs fn ru"
 	>
@@ -24,10 +25,13 @@
 <xsl:key name="interface" match="//Interfaces/Interface" use="@id" />
 <xsl:key name="attribute" match="//Attributes/Attribute" use="@id" />
 
-<!-- include sub stylesheets -->
+<!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/template.xslt" />
 <xsl:include href="stylesheets/index.xslt" />
 <xsl:include href="stylesheets/assembly.xslt" />
+
+<!-- component stylesheets -->
+<xsl:include href="stylesheets/involvedTypeList.xslt" />
 
 
 <!-- 'main' template -->
@@ -49,15 +53,32 @@
 </xsl:template>
 
 
-<!-- utility functions -->
+<!-- overall count functions -->
 <xsl:function name="ru:GetOverallTargetClassCount">
 	<xsl:param name="rootMCR" />
-	<xsl:value-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-target = true()] )" />
+	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-target = true()] )" />
 </xsl:function>
 
 <xsl:function name="ru:GetOverallMixinCount">
 	<xsl:param name="rootMCR" />
-	<xsl:value-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-mixin = true()] )" />
+	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-mixin = true()] )" />
 </xsl:function>
+
+<xsl:function name="ru:GetOverallAssemblyCountExclED">
+	<xsl:param name="rootMCR" />
+	<xsl:copy-of select="count( $rootMCR//Assemblies/Assembly )" />
+</xsl:function>
+
+
+<!-- link generation templates -->
+<xsl:template name="GenerateAssemblyLink">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="assemblyId"/>
+	<xsl:param name="fromIndexSite" select="false()"/>
+	
+	<xsl:variable name="dir" select="if($fromIndexSite) then 'assemblies/' else '' "/>
+	
+	<a href="{$dir}{$assemblyId}.html"><xsl:value-of select="$rootMCR/key('assembly', $assemblyId)/@name" /></a>
+</xsl:template>
 
 </xsl:stylesheet>

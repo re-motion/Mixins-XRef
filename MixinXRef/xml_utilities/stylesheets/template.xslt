@@ -20,11 +20,14 @@
 				<xsl:when test="$bodyContentTemplate eq 'index'"><xsl:call-template name="index"/></xsl:when>
 				<!-- assembly index + assembly sites -->
 				<xsl:when test="$bodyContentTemplate eq 'assembly'"><xsl:call-template name="assembly"/></xsl:when>
+				<!-- assembly detail site -->
+				<xsl:when test="$bodyContentTemplate eq 'assemblyDetail'"><xsl:call-template name="assemblyDetail"/></xsl:when>
+				
 			</xsl:choose>
 			
 			
 		<p>
-			<img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
+			<img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
 		 </p>
 		 
 		</body>
