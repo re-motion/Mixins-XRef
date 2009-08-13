@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-08-12 15:06:51">
+<MixinXRefReport creation-time="2009-08-13 10:01:09">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" code-base="file:///C:/Development/MixinRef/trunk/MixinXRef.UnitTests/bin/Debug/Castle.Core.DLL" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" code-base="file:///C:/Development/MixinRef/trunk/MixinXRef.UnitTests/bin/Debug/Castle.DynamicProxy.DLL" />
@@ -20,6 +20,7 @@
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="false">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Method" name="Dispose" />
         <Member type="Constructor" name=".ctor" />
@@ -37,6 +38,7 @@
       </Mixins>
     </InvolvedType>
     <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
@@ -47,6 +49,7 @@
       </Targets>
     </InvolvedType>
     <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="true">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
@@ -57,7 +60,23 @@
         <Mixin ref="4" relation="Used" />
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin3" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
+      <PublicMembers>
+        <Member type="Method" name="Dispose" />
+        <Member type="Constructor" name=".ctor" />
+      </PublicMembers>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Targets>
+        <Target ref="2" />
+        <Target ref="5" />
+      </Targets>
+    </InvolvedType>
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
@@ -72,28 +91,15 @@
         <Target ref="2" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin3" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
-      <PublicMembers>
-        <Member type="Method" name="Dispose" />
-        <Member type="Constructor" name=".ctor" />
-      </PublicMembers>
-      <Interfaces>
-        <Interface ref="0" />
-      </Interfaces>
-      <Attributes />
-      <Targets>
-        <Target ref="2" />
-        <Target ref="5" />
-      </Targets>
-    </InvolvedType>
     <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="false">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="4" relation="Extending">
+        <Mixin ref="3" relation="Extending">
           <InterfaceIntroductions>
             <Interface ref="0" />
           </InterfaceIntroductions>
@@ -108,6 +114,7 @@
       </Mixins>
     </InvolvedType>
     <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
@@ -127,14 +134,14 @@
       </PublicMembers>
       <ImplementedBy>
         <InvolvedType ref="0" />
-        <InvolvedType ref="4" />
+        <InvolvedType ref="3" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
     <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
-        <InvolvedType ref="3" />
+        <InvolvedType ref="4" />
       </AppliedTo>
     </Attribute>
     <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">

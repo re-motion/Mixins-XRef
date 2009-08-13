@@ -19,6 +19,8 @@ namespace MixinXRef
     private readonly ErrorAggregator<ConfigurationException> _configurationError;
     private readonly ErrorAggregator<ValidationException> _validationErrors;
 
+    private readonly SummaryPicker _summaryPicker = new SummaryPicker();
+
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
         MixinConfiguration mixinConfiguration,
@@ -70,6 +72,7 @@ namespace MixinXRef
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),
+          _summaryPicker.GetSummary(involvedType.Type),
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
           new InterfaceReferenceReportGenerator (
               involvedType.Type, _interfaceIdentifierGenerator).GenerateXml(),
