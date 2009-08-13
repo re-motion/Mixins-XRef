@@ -1,10 +1,10 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Context;
 
 namespace MixinXRef.UnitTests
 {
@@ -38,9 +38,13 @@ namespace MixinXRef.UnitTests
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".").GetAssemblies();
-      
-      // TODO: order seems to be random?!
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
+          .BuildConfiguration();
+
       var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
