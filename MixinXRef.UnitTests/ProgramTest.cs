@@ -162,5 +162,23 @@ namespace MixinXRef.UnitTests
       Assert.That (output, Is.EqualTo (expectedOutput));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
     }
+
+    [Test]
+    public void SaveXmlDocument_ForNonEmptyAssemblyArray ()
+    {
+      const string assemblyDirectory = ".";
+      const string xmlFile = "testOutputFile.xml";
+
+      Assert.That (File.Exists (xmlFile), Is.False);
+
+      // returns null or an array of assemblies with length > 0, never an empty array
+      var assemblies = _program.GetAssemblies (assemblyDirectory);
+
+      _program.SaveXmlDocument (assemblies, xmlFile);
+
+      Assert.That(File.Exists(xmlFile), Is.True);
+
+      File.Delete (xmlFile);
+    }
   }
 }

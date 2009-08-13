@@ -79,6 +79,9 @@ namespace MixinXRef
 
     public void SaveXmlDocument(Assembly[] assemblies, string xmlFile)
     {
+      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
+      ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
+
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
       var involvedTypes = new InvolvedTypeFinder(mixinConfiguration).FindInvolvedTypes();
 
