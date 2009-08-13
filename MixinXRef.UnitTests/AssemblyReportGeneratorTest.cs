@@ -48,7 +48,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute("name", _assembly1.GetName().Name),
               new XAttribute("version", _assembly1.GetName().Version),
-              new XAttribute ("code-base", _assembly1.CodeBase),
+              new XAttribute ("location", _assembly1.Location),
               new XElement ("InvolvedType", new XAttribute ("ref", "0")),
               new XElement ("InvolvedType", new XAttribute ("ref", "1")),
               new XElement ("InvolvedType", new XAttribute ("ref", "2")),
@@ -71,13 +71,13 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("name", _assembly1.GetName().Name),
               new XAttribute("version", _assembly1.GetName().Version),
-              new XAttribute ("code-base", _assembly1.CodeBase)),
+              new XAttribute ("location", _assembly1.Location)),
           new XElement (
               "Assembly",
               new XAttribute ("id", "1"),
               new XAttribute("name", _assembly2.GetName().Name),
               new XAttribute("version", _assembly2.GetName().Version),
-              new XAttribute ("code-base", _assembly2.CodeBase)));
+              new XAttribute ("location", _assembly2.Location)));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
