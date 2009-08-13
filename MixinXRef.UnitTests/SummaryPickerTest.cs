@@ -34,8 +34,6 @@ namespace MixinXRef.UnitTests
     {
       var output = _summaryPicker.GetSummary(typeof(MixinConfiguration));
 
-      Console.WriteLine (typeof (MixinConfiguration).Assembly);
-
       var expectedOutput = new XElement("summary", "Constitutes a mixin configuration (ie. a set of classes associated with mixins) and manages the mixin configuration for the current thread.");
 
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
@@ -44,11 +42,11 @@ namespace MixinXRef.UnitTests
     [Test]
     public void NormalizeAndTrim_PlainElement ()
     {
-      XElement output = new XElement ("Test-element", "   test1   \r\n test2 is     Test    ");
+      var element1 = new XElement ("TestElement", "   test1   \r\n test2 is     Test    ");
 
-      _summaryPicker.NormalizeAndTrim (output);
+      var output = _summaryPicker.NormalizeAndTrim (element1);
 
-      var expectedOutput = new XElement ("Test-element", "test1 test2 is Test");
+      var expectedOutput = new XElement ("TestElement", "test1 test2 is Test");
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
@@ -56,15 +54,15 @@ namespace MixinXRef.UnitTests
     [Test]
     public void NormalizeAndTrim_WithNestedElements ()
     {
-      XElement output = new XElement ("Test-element", 
+      var element1 = new XElement ("OuterElement", 
         "   test   ", 
         new XElement("innerElement", " test     of   \t inner   \r\nelement   "),
-        " end  "
+        "end  "
         );
 
-      _summaryPicker.NormalizeAndTrim (output);
+      var output = _summaryPicker.NormalizeAndTrim (element1);
 
-      var expectedOutput = new XElement ("Test-element", "test", new XElement("innerElement", " test of inner element "), " end");
+      var expectedOutput = new XElement("OuterElement", "test", new XElement("innerElement", "test of inner element"), "end");
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
