@@ -8,6 +8,19 @@
 	<xsl:copy-of select="$rootMCR//InvolvedTypes/InvolvedType[@assembly-ref = $assemblyId]" />
 </xsl:function>
 
+<xsl:function name="ru:GetInterfacesForAssembly">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="assemblyId" />
+	<xsl:copy-of select="$rootMCR//Interfaces/Interface[@assembly-ref = $assemblyId]" />
+</xsl:function>
+
+<xsl:function name="ru:GetAttributesForAssembly">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="assemblyId" />
+	<xsl:copy-of select="$rootMCR//Attributes/Attribute[@assembly-ref = $assemblyId]" />
+</xsl:function>
+
+
 <xsl:template name="assembly">
 	<table>
 		<caption>Analyzed assemblies (<xsl:value-of select="ru:GetOverallAssemblyCountExclED(/)" />)</caption>
@@ -62,6 +75,16 @@
 	<xsl:call-template name="involvedTypeList">
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  
+	</xsl:call-template>
+	
+	<xsl:call-template name="interfaceList">
+		<xsl:with-param name="rootMCR" select="/" />		
+		<xsl:with-param name="interfaces" select="ru:GetInterfacesForAssembly(/, @id)" />  
+	</xsl:call-template>
+	
+		<xsl:call-template name="attributeList">
+		<xsl:with-param name="rootMCR" select="/" />		
+		<xsl:with-param name="attributes" select="ru:GetAttributesForAssembly(/, @id)" />  
 	</xsl:call-template>
 </xsl:template>
 

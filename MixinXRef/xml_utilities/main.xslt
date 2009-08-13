@@ -32,6 +32,8 @@
 
 <!-- component stylesheets -->
 <xsl:include href="stylesheets/involvedTypeList.xslt" />
+<xsl:include href="stylesheets/interfaceList.xslt" />
+<xsl:include href="stylesheets/attributeList.xslt" />
 
 
 <!-- 'main' template -->
@@ -71,6 +73,15 @@
 
 
 <!-- link generation templates -->
+<xsl:template name="GenerateGenericLink">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="id"/>
+	<xsl:param name="keyName"/>
+	<xsl:param name="dir"/>
+	
+	<a href="{$dir}{$id}.html"><xsl:value-of select="$rootMCR/key($keyName, $id)/@name" /></a>
+</xsl:template>
+
 <xsl:template name="GenerateAssemblyLink">
 	<xsl:param name="rootMCR" />
 	<xsl:param name="assemblyId"/>
@@ -78,7 +89,28 @@
 	
 	<xsl:variable name="dir" select="if($fromIndexSite) then 'assemblies/' else '' "/>
 	
-	<a href="{$dir}{$assemblyId}.html"><xsl:value-of select="$rootMCR/key('assembly', $assemblyId)/@name" /></a>
+	<xsl:call-template name="GenerateGenericLink">
+		<xsl:with-param name="rootMCR" select="$rootMCR" />
+		<xsl:with-param name="id" select="$assemblyId"/>
+		<xsl:with-param name="keyName">assembly</xsl:with-param>		
+		<xsl:with-param name="dir" select="$dir"/>
+	</xsl:call-template>
 </xsl:template>
+
+<xsl:template name="GenerateInterfaceLink">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="interfaceId"/>
+	<xsl:param name="fromIndexSite" select="false()"/>
+	
+	<xsl:variable name="dir" select="if($fromIndexSite) then 'interfaces/' else '' "/>
+	
+	<xsl:call-template name="GenerateGenericLink">
+		<xsl:with-param name="rootMCR" select="$rootMCR" />
+		<xsl:with-param name="id" select="$interfaceId"/>
+		<xsl:with-param name="keyName">interface</xsl:with-param>		
+		<xsl:with-param name="dir" select="$dir"/>
+	</xsl:call-template>
+</xsl:template>
+
 
 </xsl:stylesheet>
