@@ -29,6 +29,7 @@
 <xsl:include href="stylesheets/template.xslt" />
 <xsl:include href="stylesheets/index.xslt" />
 <xsl:include href="stylesheets/assembly.xslt" />
+<xsl:include href="stylesheets/interface.xslt" />
 
 <!-- component stylesheets -->
 <xsl:include href="stylesheets/involvedTypeList.xslt" />
@@ -50,7 +51,12 @@
 		<xsl:with-param name="siteFileName">assembly_index.html</xsl:with-param>
 		<xsl:with-param name="bodyContentTemplate">assembly</xsl:with-param>
 	</xsl:call-template>
-	
+	<!-- interface index + interface sites -->
+	<xsl:call-template name="htmlSite">
+		<xsl:with-param name="siteTitle">Interface Index</xsl:with-param>
+		<xsl:with-param name="siteFileName">interface_index.html</xsl:with-param>
+		<xsl:with-param name="bodyContentTemplate">interface</xsl:with-param>
+	</xsl:call-template>
 	
 </xsl:template>
 
@@ -86,22 +92,25 @@
 	<xsl:param name="rootMCR" />
 	<xsl:param name="assemblyId"/>
 	<xsl:param name="fromIndexSite" select="false()"/>
-	
 	<xsl:variable name="dir" select="if($fromIndexSite) then 'assemblies/' else '' "/>
 	
-	<xsl:call-template name="GenerateGenericLink">
-		<xsl:with-param name="rootMCR" select="$rootMCR" />
-		<xsl:with-param name="id" select="$assemblyId"/>
-		<xsl:with-param name="keyName">assembly</xsl:with-param>		
-		<xsl:with-param name="dir" select="$dir"/>
-	</xsl:call-template>
+	<xsl:if test="$assemblyId = 'none'">
+		<xsl:text>external dependencies</xsl:text>
+	</xsl:if>
+	<xsl:if test="$assemblyId != 'none'">
+		<xsl:call-template name="GenerateGenericLink">
+			<xsl:with-param name="rootMCR" select="$rootMCR" />
+			<xsl:with-param name="id" select="$assemblyId"/>
+			<xsl:with-param name="keyName">assembly</xsl:with-param>		
+			<xsl:with-param name="dir" select="$dir"/>
+		</xsl:call-template>
+	</xsl:if>
 </xsl:template>
 
 <xsl:template name="GenerateInterfaceLink">
 	<xsl:param name="rootMCR" />
 	<xsl:param name="interfaceId"/>
 	<xsl:param name="fromIndexSite" select="false()"/>
-	
 	<xsl:variable name="dir" select="if($fromIndexSite) then 'interfaces/' else '' "/>
 	
 	<xsl:call-template name="GenerateGenericLink">

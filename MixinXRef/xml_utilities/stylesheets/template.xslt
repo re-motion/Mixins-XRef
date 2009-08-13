@@ -22,7 +22,8 @@
 				<xsl:when test="$bodyContentTemplate eq 'assembly'"><xsl:call-template name="assembly"/></xsl:when>
 				<!-- assembly detail site -->
 				<xsl:when test="$bodyContentTemplate eq 'assemblyDetail'"><xsl:call-template name="assemblyDetail"/></xsl:when>
-				
+				<!-- interface index + interface sites -->
+				<xsl:when test="$bodyContentTemplate eq 'interface'"><xsl:call-template name="interface"/></xsl:when>
 			</xsl:choose>
 			
 			
