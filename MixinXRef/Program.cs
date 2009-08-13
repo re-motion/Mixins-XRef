@@ -21,32 +21,32 @@ namespace MixinXRef
       _output = output;
     }
 
-    public int CheckArguments(string[] arguments)
+    public int CheckArguments (string[] arguments)
     {
-      ArgumentUtility.CheckNotNull("arguments", arguments);
+      ArgumentUtility.CheckNotNull ("arguments", arguments);
 
       if (arguments.Length != 2)
       {
-        _output.WriteLine("usage: mixinxref <assemblyDirectory> <outputDirectory>");
+        _output.WriteLine ("usage: mixinxref <assemblyDirectory> <outputDirectory>");
         return -1;
       }
 
-      if (!Directory.Exists(arguments[0]))
+      if (!Directory.Exists (arguments[0]))
       {
-        _output.WriteLine("Input directory '{0}' does not exist", arguments[0]);
+        _output.WriteLine ("Input directory '{0}' does not exist", arguments[0]);
         return -2;
       }
 
-      if (!Directory.Exists(arguments[1]))
+      if (!Directory.Exists (arguments[1]))
       {
-        _output.WriteLine("Output directory '{0}' does not exist", arguments[1]);
+        _output.WriteLine ("Output directory '{0}' does not exist", arguments[1]);
         return -3;
       }
 
       return 0;
     }
 
-    public int CreateOrOverrideOutputDirectory(string outputDirectory)
+    public int CreateOrOverrideOutputDirectory (string outputDirectory)
     {
       ArgumentUtility.CheckNotNull ("outputDirectory", outputDirectory);
 
@@ -64,58 +64,58 @@ namespace MixinXRef
       return 0;
     }
 
-    public Assembly[] GetAssemblies(string assemblyDirectory)
+    public Assembly[] GetAssemblies (string assemblyDirectory)
     {
-      ArgumentUtility.CheckNotNull("assemblyDirectory", assemblyDirectory);
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var assemblies = new AssemblyBuilder(assemblyDirectory).GetAssemblies();
+      var assemblies = new AssemblyBuilder (assemblyDirectory).GetAssemblies();
       if (assemblies.Length == 0)
       {
-        _output.WriteLine("'{0}' contains no assemblies", assemblyDirectory);
+        _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
         return null;
       }
       return assemblies;
     }
 
-    public void SaveXmlDocument(Assembly[] assemblies, string xmlFile)
+    public void SaveXmlDocument (Assembly[] assemblies, string xmlFile)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
-      var involvedTypes = new InvolvedTypeFinder(mixinConfiguration).FindInvolvedTypes();
+      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
+      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var outputDocument = reportGenerator.GenerateXmlDocument();
-      outputDocument.Save(xmlFile);
+      outputDocument.Save (xmlFile);
     }
 
-    static int Main(string[] args)
+    private static int Main (string[] args)
     {
       var program = new Program (Console.In, Console.Out);
 
-      var argumentCheckResult = program.CheckArguments(args);
+      var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
-        System.Environment.Exit(argumentCheckResult);
+        return (argumentCheckResult);
 
       var assemblyDirectory = args[0];
-      var outputDirectory = Path.Combine(args[1], "MixinDoc");
-      var xmlFile = Path.Combine(outputDirectory, "MixinReport.xml");
+      var outputDirectory = Path.Combine (args[1], "MixinDoc");
+      var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      if (program.CreateOrOverrideOutputDirectory(outputDirectory) != 0)
-        System.Environment.Exit(0);
+      if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
+        return (0);
 
-      var assemblies = program.GetAssemblies(assemblyDirectory);
+      var assemblies = program.GetAssemblies (assemblyDirectory);
       if (assemblies == null)
-        System.Environment.Exit(-4);
+        return (-4);
 
-      program.SaveXmlDocument(assemblies, xmlFile);
+      program.SaveXmlDocument (assemblies, xmlFile);
 
-      var transformerExitCode = new XRefTransformer(xmlFile, outputDirectory).GenerateHtmlFromXml();
+      var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
       if (transformerExitCode == 0)
-        Console.WriteLine("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
+        Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
 
-      return transformerExitCode;
+      return (transformerExitCode);
     }
   }
 }

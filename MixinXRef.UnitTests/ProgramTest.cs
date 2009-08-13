@@ -123,7 +123,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "YES" for Yes
-      _program = new Program(new StringReader("YES"), _standardOutput);
+      _program = new Program (new StringReader ("YES"), _standardOutput);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
@@ -176,7 +176,7 @@ namespace MixinXRef.UnitTests
 
       _program.SaveXmlDocument (assemblies, xmlFile);
 
-      Assert.That(File.Exists(xmlFile), Is.True);
+      Assert.That (File.Exists (xmlFile), Is.True);
 
       File.Delete (xmlFile);
     }
