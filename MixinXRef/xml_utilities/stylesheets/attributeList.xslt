@@ -29,7 +29,13 @@
 			<xsl:for-each select="$attributes">
 				<tr>
 					<td><xsl:value-of select="@namespace"/></td>
-					<td><xsl:value-of select="@name"/></td>
+					<td>
+						<xsl:call-template name="GenerateAttributeLink">
+							<xsl:with-param name="rootMCR" select="$rootMCR" />
+							<xsl:with-param name="attributeId" select="@id" />
+							<xsl:with-param name="dir" select="$dir" />
+						</xsl:call-template>
+					</td>
 					<td><xsl:value-of select="count( AppliedTo/InvolvedType )" /></td>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">

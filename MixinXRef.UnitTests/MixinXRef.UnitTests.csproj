@@ -73,6 +73,7 @@
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
     <Compile Include="ProgramTest.cs" />
     <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
+    <Compile Include="RecursiveDirectoryCopyTest.cs" />
     <Compile Include="RecursiveExceptionReportGeneratorTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />

@@ -13,7 +13,7 @@
 	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-mixin = true()] )" />
 </xsl:function>
 
-<xsl:function name="ru:GetOverallAssemblyCountExclED">
+<xsl:function name="ru:GetOverallAssemblyCount">
 	<xsl:param name="rootMCR" />
 	<xsl:copy-of select="count( $rootMCR//Assemblies/Assembly )" />
 </xsl:function>
@@ -35,7 +35,7 @@
 	<xsl:param name="dir"/>
 		
 	<xsl:if test="$assemblyId = 'none'">
-		<xsl:text>external dependencies</xsl:text>
+		<xsl:text>external</xsl:text>
 	</xsl:if>
 	<xsl:if test="$assemblyId != 'none'">
 		<xsl:call-template name="GenerateGenericLink">
@@ -70,6 +70,19 @@
 		<xsl:with-param name="id" select="$interfaceId"/>
 		<xsl:with-param name="keyName">interface</xsl:with-param>		
 		<xsl:with-param name="dir" select="concat($dir, '/interfaces/')"/>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template name="GenerateAttributeLink">
+	<xsl:param name="rootMCR" />
+	<xsl:param name="attributeId"/>
+	<xsl:param name="dir"/>
+	
+	<xsl:call-template name="GenerateGenericLink">
+		<xsl:with-param name="rootMCR" select="$rootMCR" />
+		<xsl:with-param name="id" select="$attributeId"/>
+		<xsl:with-param name="keyName">attribute</xsl:with-param>		
+		<xsl:with-param name="dir" select="concat($dir, '/attributes/')"/>
 	</xsl:call-template>
 </xsl:template>
 

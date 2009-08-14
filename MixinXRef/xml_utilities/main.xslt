@@ -32,14 +32,16 @@
 <!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/index.xslt" />
 <xsl:include href="stylesheets/assembly.xslt" />
+<xsl:include href="stylesheets/involvedType.xslt" />
 <xsl:include href="stylesheets/interface.xslt" />
+<xsl:include href="stylesheets/attribute.xslt" />
 
 <!-- component stylesheets -->
 <xsl:include href="stylesheets/involvedTypeList.xslt" />
 <xsl:include href="stylesheets/publicMemberList.xslt" />
 <xsl:include href="stylesheets/interfaceList.xslt" />
 <xsl:include href="stylesheets/attributeList.xslt" />
-
+<xsl:include href="stylesheets/errorList.xslt" />
 
 <!-- 'main' template -->
 <xsl:template match="/">
@@ -55,11 +57,23 @@
 		<xsl:with-param name="siteFileName">assembly_index.html</xsl:with-param>
 		<xsl:with-param name="bodyContentTemplate">assembly</xsl:with-param>
 	</xsl:call-template>
+	<!-- involved type index + involved type sites -->
+	<xsl:call-template name="htmlSite">
+		<xsl:with-param name="siteTitle">Involved Type Index</xsl:with-param>
+		<xsl:with-param name="siteFileName">involvedType_index.html</xsl:with-param>
+		<xsl:with-param name="bodyContentTemplate">involvedType</xsl:with-param>
+	</xsl:call-template>
 	<!-- interface index + interface sites -->
 	<xsl:call-template name="htmlSite">
 		<xsl:with-param name="siteTitle">Interface Index</xsl:with-param>
 		<xsl:with-param name="siteFileName">interface_index.html</xsl:with-param>
 		<xsl:with-param name="bodyContentTemplate">interface</xsl:with-param>
+	</xsl:call-template>
+		<!-- attribute index + attribute sites -->
+	<xsl:call-template name="htmlSite">
+		<xsl:with-param name="siteTitle">Attribute Index</xsl:with-param>
+		<xsl:with-param name="siteFileName">attribute_index.html</xsl:with-param>
+		<xsl:with-param name="bodyContentTemplate">attribute</xsl:with-param>
 	</xsl:call-template>
 	
 </xsl:template>

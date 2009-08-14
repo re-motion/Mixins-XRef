@@ -4,37 +4,13 @@
 	
 	
 <xsl:template name="index">
-	<h1>Mixin Documentation Summary @<xsl:value-of select="/MixinXRefReport/@creationTime" /></h1>
+	<h1>Mixin Documentation Summary @<xsl:value-of select="/MixinXRefReport/@creation-time" /></h1>
 	
-	<p><xsl:value-of select="count( //Assemblies/Assembly )" /> assemblies have been examined.</p>
-	
-	<p><xsl:value-of  select="ru:GetOverallTargetClassCount(/)"/> TargetClasses and <xsl:value-of select="ru:GetOverallMixinCount(/)" /> Mixins have been reviewed. </p>
+	<p><xsl:value-of select="ru:GetOverallAssemblyCount(/)" /> assemblies with <xsl:value-of  select="ru:GetOverallTargetClassCount(/)"/> TargetClasses and <xsl:value-of select="ru:GetOverallMixinCount(/)" /> Mixins have been examined.</p>
 	
 	<p>Use one of the index sites to start browsing. Hold down [Shift] to sort on multiple columns.</p>
 	
-	<!--
-	<xsl:choose>
-					<xsl:when test="count(//Error) > 0">
-						<div class="warning">
-							<p>
-								<xsl:value-of select="count(//Error)" /> errors detected!
-							</p>
-							<h3>Configuration Errors</h3>
-							<xsl:for-each select="//ConfigurationErrors/Error" >
-								<p><xsl:value-of select="position()" />: <xsl:value-of select="." /></p>
-							</xsl:for-each>
-							<h3>Validation Errors</h3>
-							<xsl:for-each select="//ValidationErrors/Error" >
-								<p><xsl:value-of select="position()" />: <xsl:value-of select="." /></p>
-							</xsl:for-each>
-						</div>
-					</xsl:when>
-					<xsl:otherwise>
-						<p>No Errors were found. (Mixin Configuration Error, Validation Error)</p>
-					</xsl:otherwise>
-				</xsl:choose>
--->
-
+	<xsl:call-template name="errorList"/>
 
 </xsl:template>
 

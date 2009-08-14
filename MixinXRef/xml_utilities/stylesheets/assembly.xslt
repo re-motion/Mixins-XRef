@@ -24,7 +24,7 @@
 
 <xsl:template name="assembly">
 	<table>
-		<caption>Analyzed assemblies (<xsl:value-of select="ru:GetOverallAssemblyCountExclED(/)" />)</caption>
+		<caption>Analyzed assemblies (<xsl:value-of select="ru:GetOverallAssemblyCount(/)" />)</caption>
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -37,7 +37,7 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<td><xsl:value-of select="ru:GetOverallAssemblyCountExclED(/)" /></td>
+				<td><xsl:value-of select="ru:GetOverallAssemblyCount(/)" /></td>
 				<td>-</td>
 				<td><xsl:value-of select="ru:GetOverallTargetClassCount(/)" /></td>
 				<td><xsl:value-of select="ru:GetOverallMixinCount(/)" /></td>

@@ -79,6 +79,7 @@
     <Compile Include="InvolvedTypeFinder.cs" />
     <Compile Include="InvolvedTypeReportGenerator.cs" />
     <Compile Include="ReadonlyIdentifierGenerator.cs" />
+    <Compile Include="RecursiveDirectoryCopy.cs" />
     <Compile Include="RecursiveExceptionReportGenerator.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
@@ -107,7 +108,13 @@
     <Content Include="xml_utilities\stylesheets\assembly.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="xml_utilities\stylesheets\attribute.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xml_utilities\stylesheets\attributeList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xml_utilities\stylesheets\errorList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="xml_utilities\stylesheets\index.xslt">
@@ -119,14 +126,21 @@
     <Content Include="xml_utilities\stylesheets\interfaceList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="xml_utilities\stylesheets\involvedType.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xml_utilities\stylesheets\involvedTypeList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="xml_utilities\stylesheets\publicMemberList.xslt" />
+    <Content Include="xml_utilities\stylesheets\publicMemberList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xml_utilities\stylesheets\template.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="xml_utilities\stylesheets\utility.xslt" />
+    <Content Include="xml_utilities\stylesheets\utility.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
