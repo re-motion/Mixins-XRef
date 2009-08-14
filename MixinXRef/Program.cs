@@ -8,6 +8,35 @@ namespace MixinXRef
 {
   public class Program
   {
+    static int Main(string[] args)
+    {
+      var program = new Program(Console.In, Console.Out);
+
+      var argumentCheckResult = program.CheckArguments(args);
+      if (argumentCheckResult != 0)
+        return (argumentCheckResult);
+
+      var assemblyDirectory = args[0];
+      var outputDirectory = Path.Combine(args[1], "MixinDoc");
+      var xmlFile = Path.Combine(outputDirectory, "MixinReport.xml");
+
+      if (program.CreateOrOverrideOutputDirectory(outputDirectory) != 0)
+        return (0);
+
+      var assemblies = program.GetAssemblies(assemblyDirectory);
+      if (assemblies == null)
+        return (-4);
+
+      program.SaveXmlDocument(assemblies, xmlFile);
+
+      var transformerExitCode = new XRefTransformer(xmlFile, outputDirectory).GenerateHtmlFromXml();
+      if (transformerExitCode == 0)
+        Console.WriteLine("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
+
+      return (transformerExitCode);
+    }
+
+
     private readonly TextReader _input;
     private readonly TextWriter _output;
 
@@ -88,34 +117,6 @@ namespace MixinXRef
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var outputDocument = reportGenerator.GenerateXmlDocument();
       outputDocument.Save (xmlFile);
-    }
-
-    private static int Main (string[] args)
-    {
-      var program = new Program (Console.In, Console.Out);
-
-      var argumentCheckResult = program.CheckArguments (args);
-      if (argumentCheckResult != 0)
-        return (argumentCheckResult);
-
-      var assemblyDirectory = args[0];
-      var outputDirectory = Path.Combine (args[1], "MixinDoc");
-      var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
-
-      if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
-        return (0);
-
-      var assemblies = program.GetAssemblies (assemblyDirectory);
-      if (assemblies == null)
-        return (-4);
-
-      program.SaveXmlDocument (assemblies, xmlFile);
-
-      var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
-      if (transformerExitCode == 0)
-        Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
-
-      return (transformerExitCode);
     }
   }
 }

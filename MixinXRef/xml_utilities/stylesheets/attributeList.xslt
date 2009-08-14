@@ -5,6 +5,7 @@
 <xsl:template name="attributeList">
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="attributes" />
+	<xsl:param name="dir" />
 	
 	<table>
 		<caption>Attributes (<xsl:value-of select="count( $attributes )" />)</caption>
@@ -34,6 +35,7 @@
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />
 							<xsl:with-param name="assemblyId" select="@assembly-ref" />
+							<xsl:with-param name="dir" select="$dir" />
 						</xsl:call-template>
 					</td>
 				</tr>

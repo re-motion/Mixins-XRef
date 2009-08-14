@@ -5,6 +5,7 @@
 <xsl:template name="interfaceList">
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="interfaces" />
+	<xsl:param name="dir" />
 	
 	<table>
 		<caption>Interfaces (<xsl:value-of select="count( $interfaces )" />)</caption>
@@ -28,12 +29,19 @@
 			<xsl:for-each select="$interfaces">
 				<tr>
 					<td><xsl:value-of select="@namespace"/></td>
-					<td><xsl:value-of select="@name"/></td>
+					<td>
+						<xsl:call-template name="GenerateInterfaceLink">
+							<xsl:with-param name="rootMCR" select="$rootMCR" />
+							<xsl:with-param name="interfaceId" select="@id" />
+							<xsl:with-param name="dir" select="$dir" />
+						</xsl:call-template>					
+					</td>
 					<td><xsl:value-of select="count( ImplementedBy/InvolvedType )" /></td>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />
 							<xsl:with-param name="assemblyId" select="@assembly-ref" />
+							<xsl:with-param name="dir" select="$dir" />
 						</xsl:call-template>
 					</td>
 				</tr>

@@ -5,9 +5,11 @@
 <xsl:template name="involvedTypeList">
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="involvedTypes" />
+	<xsl:param name="dir" />
+	<xsl:param name="caption" />
 	
 	<table>
-		<caption>Involved Types (<xsl:value-of select="count( $involvedTypes )" />)</caption>
+		<caption><xsl:value-of select="$caption" /> (<xsl:value-of select="count( $involvedTypes )" />)</caption>
 		<thead>
 			<tr>
 				<th>Namespace</th>
@@ -30,13 +32,20 @@
 			<xsl:for-each select="$involvedTypes">
 				<tr>
 					<td><xsl:value-of select="@namespace"/></td>
-					<td><xsl:value-of select="@name"/></td>
+					<td>
+						<xsl:call-template name="GenerateInvolvedTypeLink">
+							<xsl:with-param name="rootMCR" select="$rootMCR" />
+							<xsl:with-param name="involvedTypeId" select="@id" />
+							<xsl:with-param name="dir" select="$dir" />
+						</xsl:call-template>					
+					</td>
 					<td><xsl:value-of select="count( Mixins/Mixin )"/></td>
 					<td><xsl:value-of select="count( Targets/Target )"/></td>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />
 							<xsl:with-param name="assemblyId" select="@assembly-ref" />
+							<xsl:with-param name="dir" select="$dir" />
 						</xsl:call-template>
 					</td>
 				</tr>

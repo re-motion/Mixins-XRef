@@ -21,18 +21,22 @@
     
  <!-- keys -->
 <xsl:key name="assembly" match="//Assemblies/Assembly" use="@id" />
-<xsl:key name="type" match="//InvolvedTypes/InvolvedType" use="@id" />
+<xsl:key name="involvedType" match="//InvolvedTypes/InvolvedType" use="@id" />
 <xsl:key name="interface" match="//Interfaces/Interface" use="@id" />
 <xsl:key name="attribute" match="//Attributes/Attribute" use="@id" />
 
-<!-- include sub stylesheets for sites -->
+<!-- include utilities -->
 <xsl:include href="stylesheets/template.xslt" />
+<xsl:include href="stylesheets/utility.xslt"/>
+
+<!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/index.xslt" />
 <xsl:include href="stylesheets/assembly.xslt" />
 <xsl:include href="stylesheets/interface.xslt" />
 
 <!-- component stylesheets -->
 <xsl:include href="stylesheets/involvedTypeList.xslt" />
+<xsl:include href="stylesheets/publicMemberList.xslt" />
 <xsl:include href="stylesheets/interfaceList.xslt" />
 <xsl:include href="stylesheets/attributeList.xslt" />
 
@@ -61,65 +65,7 @@
 </xsl:template>
 
 
-<!-- overall count functions -->
-<xsl:function name="ru:GetOverallTargetClassCount">
-	<xsl:param name="rootMCR" />
-	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-target = true()] )" />
-</xsl:function>
 
-<xsl:function name="ru:GetOverallMixinCount">
-	<xsl:param name="rootMCR" />
-	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[@is-mixin = true()] )" />
-</xsl:function>
-
-<xsl:function name="ru:GetOverallAssemblyCountExclED">
-	<xsl:param name="rootMCR" />
-	<xsl:copy-of select="count( $rootMCR//Assemblies/Assembly )" />
-</xsl:function>
-
-
-<!-- link generation templates -->
-<xsl:template name="GenerateGenericLink">
-	<xsl:param name="rootMCR" />
-	<xsl:param name="id"/>
-	<xsl:param name="keyName"/>
-	<xsl:param name="dir"/>
-	
-	<a href="{$dir}{$id}.html"><xsl:value-of select="$rootMCR/key($keyName, $id)/@name" /></a>
-</xsl:template>
-
-<xsl:template name="GenerateAssemblyLink">
-	<xsl:param name="rootMCR" />
-	<xsl:param name="assemblyId"/>
-	<xsl:param name="fromIndexSite" select="false()"/>
-	<xsl:variable name="dir" select="if($fromIndexSite) then 'assemblies/' else '' "/>
-	
-	<xsl:if test="$assemblyId = 'none'">
-		<xsl:text>external dependencies</xsl:text>
-	</xsl:if>
-	<xsl:if test="$assemblyId != 'none'">
-		<xsl:call-template name="GenerateGenericLink">
-			<xsl:with-param name="rootMCR" select="$rootMCR" />
-			<xsl:with-param name="id" select="$assemblyId"/>
-			<xsl:with-param name="keyName">assembly</xsl:with-param>		
-			<xsl:with-param name="dir" select="$dir"/>
-		</xsl:call-template>
-	</xsl:if>
-</xsl:template>
-
-<xsl:template name="GenerateInterfaceLink">
-	<xsl:param name="rootMCR" />
-	<xsl:param name="interfaceId"/>
-	<xsl:param name="fromIndexSite" select="false()"/>
-	<xsl:variable name="dir" select="if($fromIndexSite) then 'interfaces/' else '' "/>
-	
-	<xsl:call-template name="GenerateGenericLink">
-		<xsl:with-param name="rootMCR" select="$rootMCR" />
-		<xsl:with-param name="id" select="$interfaceId"/>
-		<xsl:with-param name="keyName">interface</xsl:with-param>		
-		<xsl:with-param name="dir" select="$dir"/>
-	</xsl:call-template>
-</xsl:template>
 
 
 </xsl:stylesheet>
