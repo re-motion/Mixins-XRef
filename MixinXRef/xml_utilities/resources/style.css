@@ -1,0 +1,83 @@
+/* general style */
+html {
+	font-family: Calibri;
+}
+
+
+/* colors for errorList on index site */
+.errorList-errorsFound {
+	background-color: #FFACAC;
+}
+
+.errorList-noErrors {
+	background-color: #CBE6C6;
+}
+
+
+/* make links in tables non-underlined */
+table a {
+	text-decoration: none;
+}
+
+
+/* caption of tables */
+table caption {
+	text-align: left;
+	font-size: large;
+	font-weight: bold;
+	font-style: italic;	
+}
+
+
+/* tables */
+table {
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	text-align:left;	
+	font-size: 16px;
+	
+	margin-bottom: 30px;
+	min-width: 600px;
+	max-width: 100%;
+}
+
+tfoot {
+	font-weight: bold;
+}
+
+table thead tr th {
+	background-color: #E6EEEE;
+	border: 1px solid #FFF;
+	padding: 4px;
+}
+
+table thead tr .header {
+	background-image: url(images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+	padding-right: 20px;
+}
+
+table tbody td {
+	color: #3D3D3D;
+	padding: 3px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+
+table tbody tr.odd td {
+	background-color: #F0F0F6;
+}
+
+table thead tr .headerSortUp {
+	background-image: url(images/asc.gif);
+}
+
+table thead tr .headerSortDown {
+	background-image: url(images/desc.gif);
+}
+
+table thead tr .headerSortDown, table thead tr .headerSortUp {
+	background-color: #8dbdd8;
+}

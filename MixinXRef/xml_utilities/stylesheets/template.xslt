@@ -13,7 +13,9 @@
 				<title><xsl:value-of select="$siteTitle" /></title>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<!-- include resources -->
-				<xsl:call-template name="includeResources"/>
+				<xsl:call-template name="includeResources">
+					<xsl:with-param name="siteFileName" select="$siteFileName"/>
+				</xsl:call-template>
 			</head>
 			<body>
 			
@@ -54,8 +56,11 @@
 </xsl:template>
 
 <xsl:template name="includeResources">
+	<xsl:param name="siteFileName" />
+	<!-- if sitename contains a path seperator then this is a index file -->
+	<xsl:variable name="dir" select=" if( contains($siteFileName, '/') ) then '..' else '.' " />
 	
-	<link rel="stylesheet" type="text/css" href="resources/style.css" />
+	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
 	<!--
 	<script type="text/javascript" src="{$dir}/jquery.tablesorter.cookie.js"></script>
 	-->

@@ -52,7 +52,6 @@
 			</xsl:for-each>
 		</tbody>
 	</table>
-	
 </xsl:template>
 
 </xsl:stylesheet>
