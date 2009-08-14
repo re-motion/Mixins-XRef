@@ -31,7 +31,11 @@ namespace MixinXRef
 
       var transformerExitCode = new XRefTransformer(xmlFile, outputDirectory).GenerateHtmlFromXml();
       if (transformerExitCode == 0)
-        Console.WriteLine("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
+      {
+        // copy resources folder
+        new DirectoryInfo("resources").CopyTo(outputDirectory);
+        Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
+      }
 
       return (transformerExitCode);
     }
@@ -39,7 +43,6 @@ namespace MixinXRef
 
     private readonly TextReader _input;
     private readonly TextWriter _output;
-
 
     public Program (TextReader input, TextWriter output)
     {
