@@ -99,7 +99,7 @@
     <Content Include="xml_utilities\resources\images\desc.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="xml_utilities\resources\init-tablesorter.js">
+    <Content Include="xml_utilities\resources\init.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="xml_utilities\resources\javascript\jquery-1.3.2.js">
