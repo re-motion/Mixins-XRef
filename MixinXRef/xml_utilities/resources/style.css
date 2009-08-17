@@ -35,6 +35,7 @@ h1 {
 h2 {
 	display: inline;
 	font-size: medium;
+	vertical-align: top;
 }
 
 .involvedType-summary {
@@ -63,7 +64,24 @@ table caption {
 	text-align: left;
 	font-size: large;
 	font-weight: bold;
-	font-style: italic;	
+	font-style: italic;
+}
+
+
+/* collapsing of tables via caption */
+table caption.visible, table caption.hidden {
+	cursor: pointer;
+	padding-left: 15px;
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+
+table caption.visible {
+	background-image: url(images/minus.gif);
+}
+
+table caption.hidden {
+	background-image: url(images/plus.gif);
 }
 
 
@@ -74,7 +92,7 @@ table {
 	text-align:left;	
 	font-size: 16px;
 	
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	min-width: 600px;
 	max-width: 100%;
 }
