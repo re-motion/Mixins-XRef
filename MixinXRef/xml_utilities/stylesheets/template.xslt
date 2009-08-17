@@ -50,7 +50,7 @@
 					
 					<!-- fail fast -->
 					<xsl:otherwise>
-						<xsl:message terminate="yes" >template rule '<xsl:value-of select="$bodyContentTemplate" />' could not be found</xsl:message>
+						<xsl:message terminate="yes" >site template rule '<xsl:value-of select="$bodyContentTemplate" />' could not be found</xsl:message>
 					</xsl:otherwise>
 				</xsl:choose>
 				

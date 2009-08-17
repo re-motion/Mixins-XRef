@@ -5,6 +5,19 @@
 <xsl:template name="publicMemberList">
 	<xsl:param name="members"/>
 	
+	<xsl:call-template name="tableTemplate">
+		<xsl:with-param name="rootMCR"></xsl:with-param>
+		<xsl:with-param name="items" select="$members"/>
+		<xsl:with-param name="dir"></xsl:with-param>
+		<xsl:with-param name="tableName">publicMemberListTable</xsl:with-param>
+		<xsl:with-param name="emptyText">No public members found</xsl:with-param>
+	</xsl:call-template>
+	
+</xsl:template>
+
+<xsl:template name="publicMemberListTable">
+<xsl:param name="members"/>
+
 	<table>
 		<caption>Public Members (<xsl:value-of select="count( $members )"/>)</caption>
 		<thead>
@@ -27,8 +40,7 @@
 				</tr>
 			</xsl:for-each>
 		</tbody>
-	</table>	
-	
+	</table>
 </xsl:template>
 	
 </xsl:stylesheet>

@@ -8,6 +8,23 @@
 	<xsl:param name="dir" />
 	<xsl:param name="caption" />
 	
+	<xsl:call-template name="tableTemplate">
+		<xsl:with-param name="rootMCR" select="$rootMCR"/>
+		<xsl:with-param name="items" select="$involvedTypes"/>
+		<xsl:with-param name="dir" select="$dir"/>
+		<xsl:with-param name="tableName">involvedTypeListTable</xsl:with-param>
+		<xsl:with-param name="emptyText">No involved types found</xsl:with-param>
+		<xsl:with-param name="caption" select="$caption"/>
+	</xsl:call-template>		
+	
+</xsl:template>
+
+<xsl:template name="involvedTypeListTable">
+	<xsl:param name="rootMCR" />	
+	<xsl:param name="involvedTypes" />
+	<xsl:param name="dir" />
+	<xsl:param name="caption" />
+
 	<table>
 		<caption><xsl:value-of select="$caption" /> (<xsl:value-of select="count( $involvedTypes )" />)</caption>
 		<thead>

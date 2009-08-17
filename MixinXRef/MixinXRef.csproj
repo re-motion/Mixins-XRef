@@ -168,6 +168,9 @@
     <Content Include="xml_utilities\stylesheets\publicMemberList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="xml_utilities\stylesheets\tableTemplate.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xml_utilities\stylesheets\template.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

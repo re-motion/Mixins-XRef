@@ -4,16 +4,17 @@
 
 <xsl:template name="errorList">
 
+	<xsl:if test="count(//Exception) = 0">
+		<p class="errorList-noErrors">No Errors were found. (Mixin Configuration Errors, Validation Errors)</p>
+	</xsl:if>
+	
 	<xsl:if test="count(//Exception) > 0">
 		<p class="errorList-errorsFound"><xsl:value-of select="count(//Error)" /> errors detected!</p>
 		
 		
 		
 	</xsl:if>
-	<xsl:if test="count(//Exception) = 0">
-		<p class="errorList-noErrors">No Errors were found. (Mixin Configuration Errors, Validation Errors)</p>
-	</xsl:if>
-	
+		
 	
 <!-- TODO
 	<xsl:choose>

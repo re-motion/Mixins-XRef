@@ -27,6 +27,7 @@
 
 <!-- include utilities -->
 <xsl:include href="stylesheets/template.xslt" />
+<xsl:include href="stylesheets/tableTemplate.xslt" />
 <xsl:include href="stylesheets/utility.xslt"/>
 
 <!-- include sub stylesheets for sites -->

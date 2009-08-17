@@ -7,6 +7,21 @@
 	<xsl:param name="interfaces" />
 	<xsl:param name="dir" />
 	
+	<xsl:call-template name="tableTemplate">
+		<xsl:with-param name="rootMCR" select="$rootMCR"/>
+		<xsl:with-param name="items" select="$interfaces"/>
+		<xsl:with-param name="dir" select="$dir"/>
+		<xsl:with-param name="tableName">interfaceListTable</xsl:with-param>
+		<xsl:with-param name="emptyText">No interfaces found</xsl:with-param>
+	</xsl:call-template>	
+	
+</xsl:template>
+
+<xsl:template name="interfaceListTable">
+	<xsl:param name="rootMCR" />	
+	<xsl:param name="interfaces" />
+	<xsl:param name="dir" />
+	
 	<table>
 		<caption>Interfaces (<xsl:value-of select="count( $interfaces )" />)</caption>
 		<thead>
@@ -48,6 +63,6 @@
 			</xsl:for-each>
 		</tbody>
 	</table>
-</xsl:template>	
+</xsl:template>
 	
 </xsl:stylesheet>
