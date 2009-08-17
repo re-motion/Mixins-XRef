@@ -2,6 +2,7 @@
  * 
  * TableSorter 2.0 - Client-side table sorting with ease!
  * Version 2.0.3
+ * adapted Version: 2.0.3.1 (some minor changes by yln, search for 'yln')
  * @requires jQuery v1.2.3
  * 
  * Copyright (c) 2007 Christian Bach
@@ -351,9 +352,6 @@
 				var c = table.config.widgets;
 				var l = c.length;
 				for(var i=0; i < l; i++) {
-					
-					//if(getWidgetById(c[i]) == undefined)
-					//	alert ("why is this null?");
 					getWidgetById(c[i]).format(table);
 				}
 				

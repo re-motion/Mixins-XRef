@@ -43,6 +43,7 @@
 <xsl:include href="stylesheets/attributeList.xslt" />
 <xsl:include href="stylesheets/errorList.xslt" />
 
+
 <!-- 'main' template -->
 <xsl:template match="/">
 	<!-- main index (summary) -->
@@ -75,11 +76,6 @@
 		<xsl:with-param name="siteFileName">attribute_index.html</xsl:with-param>
 		<xsl:with-param name="bodyContentTemplate">attribute</xsl:with-param>
 	</xsl:call-template>
-	
 </xsl:template>
-
-
-
-
 
 </xsl:stylesheet>

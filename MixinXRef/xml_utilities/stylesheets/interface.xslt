@@ -26,6 +26,8 @@
 </xsl:template>
 
 <xsl:template name="interfaceDetail">
+	<h1><xsl:value-of select="@name" /></h1><h2>[<a href="../interface_index.html">Interface</a>]</h2>
+
 	<xsl:call-template name="publicMemberList">
 			<xsl:with-param name="members" select="PublicMembers/Member"/>
 	</xsl:call-template>

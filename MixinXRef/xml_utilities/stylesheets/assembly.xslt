@@ -79,6 +79,8 @@
 
 
 <xsl:template name="assemblyDetail">
+	<h1><xsl:value-of select="@name" /></h1><h2>[<a href="../assembly_index.html">Assembly</a>]</h2>
+
 	<xsl:call-template name="involvedTypeList">
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  

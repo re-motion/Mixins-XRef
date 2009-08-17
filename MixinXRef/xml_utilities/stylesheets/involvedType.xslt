@@ -26,6 +26,12 @@
 </xsl:template>
 
 <xsl:template name="involvedTypeDetail">
+	<h1><xsl:value-of select="@name" /></h1><h2>[<a href="../involvedType_index.html">Involved Type</a>]</h2>
+
+	<div class="involvedType-summary">
+		<xsl:value-of select="summary" />
+	</div>
+	
 	<xsl:call-template name="publicMemberList">
 			<xsl:with-param name="members" select="PublicMembers/Member"/>
 	</xsl:call-template>

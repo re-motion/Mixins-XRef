@@ -4,6 +4,44 @@ html {
 }
 
 
+/* horizontal navigation bar */
+#navigation {
+	margin-top:0;
+	padding:0;
+	list-style:none;
+}
+
+#navigation li {
+	margin:0;
+	padding:0;
+	padding-right: 8px;
+	display: inline;
+}
+
+#navigation a {
+	text-decoration: none;
+}
+
+#navigation a.currentIndex {
+	text-decoration: underline;
+}
+
+
+/* headings and sub-headings */
+h1 {
+	display: inline;
+}
+
+h2 {
+	display: inline;
+	font-size: medium;
+}
+
+.involvedType-summary {
+	border: gray 1px dashed;
+	background-color: #E7E7E7;
+}
+
 /* colors for errorList on index site */
 .errorList-errorsFound {
 	background-color: #FFACAC;
@@ -46,7 +84,7 @@ tfoot {
 }
 
 table thead tr th {
-	background-color: #E6EEEE;
+	background-color: #BBD5D6;
 	border: 1px solid #FFF;
 	padding: 4px;
 }

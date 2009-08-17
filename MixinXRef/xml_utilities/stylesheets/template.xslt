@@ -6,6 +6,9 @@
 	<xsl:param name="siteTitle" />
 	<xsl:param name="siteFileName" />
 	<xsl:param name="bodyContentTemplate" />
+	<!-- if sitename contains a path seperator then this is a index file -->
+	<xsl:variable name="dir" select=" if( contains($siteFileName, '/') ) then '..' else '.' " />	
+	
 	
 	<xsl:result-document format="standardHtmlOutputFormat" href="{$siteFileName}">
 		<html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,10 +17,15 @@
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<!-- include resources -->
 				<xsl:call-template name="includeResources">
-					<xsl:with-param name="siteFileName" select="$siteFileName"/>
+					<xsl:with-param name="dir" select="$dir"/>
 				</xsl:call-template>
 			</head>
 			<body>
+			
+				<!-- navigation bar -->
+				<xsl:call-template name="navigation">
+					<xsl:with-param name="dir" select="$dir" />
+				</xsl:call-template>
 			
 				<!-- list of all callable templates -->
 				<xsl:choose>
@@ -56,10 +64,8 @@
 </xsl:template>
 
 <xsl:template name="includeResources">
-	<xsl:param name="siteFileName" />
-	<!-- if sitename contains a path seperator then this is a index file -->
-	<xsl:variable name="dir" select=" if( contains($siteFileName, '/') ) then '..' else '.' " />
-
+	<xsl:param name="dir" />
+	
 	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
 	
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.3.2.js"></script>
@@ -70,6 +76,18 @@
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
 
 	<script type="text/javascript" src="{$dir}/resources/init-tablesorter.js"></script>
+</xsl:template>
+
+<xsl:template name="navigation">
+	<xsl:param name="dir" />
+
+	<ul id="navigation">
+		<li><a href="{$dir}/index.html">Summary</a></li>
+		<li><a href="{$dir}/assembly_index.html">Assemblies</a></li>
+		<li><a href="{$dir}/involvedType_index.html">Involved Types</a></li>
+		<li><a href="{$dir}/interface_index.html">Interfaces</a></li>
+		<li><a href="{$dir}/attribute_index.html">Attributes</a></li>
+	</ul>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -25,6 +25,8 @@
 </xsl:template>
 
 <xsl:template name="attributeDetail">
+	<h1><xsl:value-of select="@name" /></h1><h2>[<a href="../attribute_index.html">Attribute</a>]</h2>
+
 	<xsl:call-template name="publicMemberList">
 			<xsl:with-param name="members" select="PublicMembers/Member"/>
 	</xsl:call-template>
