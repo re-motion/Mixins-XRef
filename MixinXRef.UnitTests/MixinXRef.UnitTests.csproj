@@ -88,6 +88,7 @@
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
+    <Compile Include="TestDomain\ClassWithProperty.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />
     <Compile Include="TestDomain\IDoSomething.cs" />
     <Compile Include="TestDomain\InheritableAttribute.cs" />

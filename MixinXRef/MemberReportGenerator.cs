@@ -21,14 +21,22 @@ namespace MixinXRef
       return new XElement (
           "PublicMembers",
           from memberInfo in _type.GetMembers()
-          where memberInfo.DeclaringType == _type
-          select
-              new XElement (
+          where memberInfo.DeclaringType == _type && !IsSpecialName (memberInfo.Name)
+          select new XElement (
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
-              new XAttribute ("name", memberInfo.Name)
-              )
+              new XAttribute ("name", memberInfo.Name))
           );
+    }
+
+    private bool IsSpecialName (string memberName)
+    {
+      return (
+                 memberName.StartsWith ("add_") ||
+                 memberName.StartsWith ("remove_") ||
+                 memberName.StartsWith ("get_") ||
+                 memberName.StartsWith ("set_")
+             );
     }
   }
 }
