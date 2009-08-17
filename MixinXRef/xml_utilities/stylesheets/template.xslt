@@ -59,12 +59,17 @@
 	<xsl:param name="siteFileName" />
 	<!-- if sitename contains a path seperator then this is a index file -->
 	<xsl:variable name="dir" select=" if( contains($siteFileName, '/') ) then '..' else '.' " />
-	
+
 	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
-	<!--
-	<script type="text/javascript" src="{$dir}/jquery.tablesorter.cookie.js"></script>
-	-->
 	
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
+
+	<script type="text/javascript" src="{$dir}/resources/init-tablesorter.js"></script>
 </xsl:template>
 
 </xsl:stylesheet>
