@@ -11,9 +11,9 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetIdentifier_NonExistingItem ()
     {
-      Dictionary<string, string> identifierDictionary = new Dictionary<string, string> ();
+      var identifierGenerator = new IdentifierGenerator<string>();
 
-      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string> (identifierDictionary, "dummy-value");
+      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string>(identifierGenerator, "dummy-value");
 
       var output = readonlyIdentifierGenerator.GetIdentifier ("key-1");
 
@@ -23,14 +23,41 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetIdentifier_ForExistingItem ()
     {
-      Dictionary<string, string> identifierDictionary = new Dictionary<string, string> ();
-      identifierDictionary.Add ("key-1", "value-1");
+      var identifierGenerator = new IdentifierGenerator<string>();
 
-      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string> (identifierDictionary, "dummy-value");
+      var expectedOutput = identifierGenerator.GetIdentifier("value-1");
 
-      var output = readonlyIdentifierGenerator.GetIdentifier ("key-1");
+      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string>(identifierGenerator, "does not matter");
 
-      Assert.That (output, Is.EqualTo ("value-1"));
+      var output = readonlyIdentifierGenerator.GetIdentifier ("value-1");
+
+      Assert.That (output, Is.EqualTo (expectedOutput));
+    }
+
+    [Test]
+    public void GetIdentifier2_NonExistingItem()
+    {
+      var identifierGenerator = new IdentifierGenerator<string>();
+
+      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string>(identifierGenerator, "does not matter EITHER");
+
+      var output = readonlyIdentifierGenerator.GetIdentifier("key-1", "default value");
+
+      Assert.That(output, Is.EqualTo("default value"));
+    }
+
+    [Test]
+    public void GetIdentifier2_ForExistingItem()
+    {
+      var identifierGenerator = new IdentifierGenerator<string>();
+
+      var expectedOutput = identifierGenerator.GetIdentifier("value-1");
+
+      var readonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string>(identifierGenerator, "does not matter");
+
+      var output = readonlyIdentifierGenerator.GetIdentifier("value-1", "does not matter EITHER");
+
+      Assert.That(output, Is.EqualTo(expectedOutput));
     }
   }
 }

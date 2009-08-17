@@ -9,22 +9,28 @@ namespace MixinXRef
 {
   public class ReadonlyIdentifierGenerator<T> : IIdentifierGenerator<T>
   {
-    private readonly Dictionary<T, string> _readonlyIdentifiers;
+    private readonly IIdentifierGenerator<T> _identifierGenerator;
+    
     private readonly string _defaultValue;
 
 
-    public ReadonlyIdentifierGenerator (Dictionary<T, string> idintifierDictionary, string defaultValue)
+    public ReadonlyIdentifierGenerator(IIdentifierGenerator<T> identifierGenerator, string defaultValue)
     {
-      ArgumentUtility.CheckNotNull ("idintifierDictionary", idintifierDictionary);
+      ArgumentUtility.CheckNotNull ("identifierGenerator", identifierGenerator);
       ArgumentUtility.CheckNotNull ("defaultValue", defaultValue);
-
-      _readonlyIdentifiers = idintifierDictionary;
+      
+      _identifierGenerator = identifierGenerator;
       _defaultValue = defaultValue;
     }
 
     public string GetIdentifier (T item)
     {
-      return _readonlyIdentifiers.ContainsKey (item) ? _readonlyIdentifiers[item] : _defaultValue;
+      return _identifierGenerator.GetIdentifier (item, _defaultValue);
+    }
+
+    public string GetIdentifier (T item, string defaultIfNotPresent)
+    {
+      return _identifierGenerator.GetIdentifier (item, defaultIfNotPresent);
     }
   }
 }

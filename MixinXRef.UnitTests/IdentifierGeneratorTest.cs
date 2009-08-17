@@ -45,26 +45,25 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetIdentifier_OnType ()
+    public void GetIdentifier2_ForExistingValue()
     {
-      var typeIdentifierGenerator = new IdentifierGenerator<Type>();
-      var identifier = typeIdentifierGenerator.GetIdentifier (typeof (IdentifierGeneratorTest));
+      var identifierGenerator = new IdentifierGenerator<string>();
 
-      Assert.That (identifier, Is.EqualTo ("0"));
+      var expectedOuput = identifierGenerator.GetIdentifier ("test-value");
+
+      var output = identifierGenerator.GetIdentifier ("test-value", "does not matter");
+
+      Assert.That(output, Is.EqualTo(expectedOuput));
     }
 
     [Test]
-    public void GetReadonlyIdentfierGenerator ()
+    public void GetIdentifier2_ForNonExistingValue()
     {
       var identifierGenerator = new IdentifierGenerator<string>();
-      identifierGenerator.GetIdentifier ("key-1");
-      var readonlyIdentifierGenerator = identifierGenerator.GetReadonlyIdentiferGenerator ("dummy-value");
 
-      var expectedIdentifiers = new Dictionary<string, string>();
-      expectedIdentifiers.Add ("key-1", "0");
-      var expectedReadonlyIdentifierGenerator = new ReadonlyIdentifierGenerator<string> (expectedIdentifiers, "dummy-value");
+      var output = identifierGenerator.GetIdentifier("test-value", "default value if not present");
 
-      Assert.That (readonlyIdentifierGenerator.GetIdentifier ("key-1"), Is.EqualTo (expectedReadonlyIdentifierGenerator.GetIdentifier ("key-1")));
+      Assert.That(output, Is.EqualTo("default value if not present"));
     }
   }
 }
