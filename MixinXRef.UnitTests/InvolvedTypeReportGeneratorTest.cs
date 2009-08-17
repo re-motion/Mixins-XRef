@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests
     private ErrorAggregator<ConfigurationException> _configurationError;
     private ErrorAggregator<ValidationException> _validationErrors;
 
-    private SummaryPicker _summaryPicker = new SummaryPicker();
+    private readonly SummaryPicker _summaryPicker = new SummaryPicker();
 
     [SetUp]
     public void SetUp ()
@@ -34,6 +34,67 @@ namespace MixinXRef.UnitTests
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("InvolvedTypes");
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GenerateXml_ForInvolvedTypesWithInheritance ()
+    {
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type>();
+
+      var mixinConfiguration = new MixinConfiguration();
+
+      // targetclass inherits from useless object
+      var involvedType1 = new InvolvedType (typeof (UselessObject));
+      var involvedType2 = new InvolvedType (typeof (TargetClass1));
+
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0],
+          mixinConfiguration,
+          involvedTypeIdentifierGenerator,
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          involvedType1,
+          involvedType2);
+
+      XElement output = reportGenerator.GenerateXml();
+
+      var expectedOutput = new XElement (
+          "InvolvedTypes",
+          new XElement (
+              "InvolvedType",
+              new XAttribute ("id", "0"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "UselessObject"),
+              new XAttribute ("base", "System.Object"),
+              new XAttribute ("base-ref", "none"),
+              new XAttribute ("is-target", false),
+              new XAttribute ("is-mixin", false),
+              new XAttribute ("is-generic-definition", false),
+              _summaryPicker.GetSummary (involvedType1.Type),
+              new MemberReportGenerator (involvedType1.Type).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator).GenerateXml(),
+              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml()),
+          new XElement (
+              "InvolvedType",
+              new XAttribute ("id", "1"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "TargetClass1"),
+              new XAttribute ("base", "MixinXRef.UnitTests.TestDomain.UselessObject"),
+              new XAttribute ("base-ref", "0"),
+              new XAttribute ("is-target", false),
+              new XAttribute ("is-mixin", false),
+              new XAttribute ("is-generic-definition", false),
+              _summaryPicker.GetSummary (involvedType2.Type),
+              new MemberReportGenerator (involvedType2.Type).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator).GenerateXml(),
+              new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator).GenerateXml())
+          );
+
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
@@ -67,24 +128,15 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "GenericTarget<TParameter1, TParameter2>"),
               new XAttribute ("base", "System.Object"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", true),
-              _summaryPicker.GetSummary(involvedType1.Type),
+              _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator).GenerateXml(),
-              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
-              new MixinReferenceReportGenerator (
-                  involvedType1,
-                  mixinConfiguration,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
-                  _configurationError,
-                  _validationErrors).
-                  GenerateXml(),
-              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml()
-              ));
+              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml())
+          );
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
@@ -130,11 +182,12 @@ namespace MixinXRef.UnitTests
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass1"),
-              new XAttribute ("base", "System.Object"),
+              new XAttribute ("base", "MixinXRef.UnitTests.TestDomain.UselessObject"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType1.Type),
+              _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
@@ -156,10 +209,11 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass2"),
               new XAttribute ("base", "System.Object"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType2.Type),
+              _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator).GenerateXml(),
@@ -180,10 +234,11 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "Mixin1"),
               new XAttribute ("base", "System.Object"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType3.Type),
+              _summaryPicker.GetSummary (involvedType3.Type),
               new MemberReportGenerator (involvedType3.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType3.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator).GenerateXml(),
@@ -205,10 +260,11 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "Mixin2"),
               new XAttribute ("base", "System.Object"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType4.Type),
+              _summaryPicker.GetSummary (involvedType4.Type),
               new MemberReportGenerator (involvedType4.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType4.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator).GenerateXml(),
@@ -262,11 +318,12 @@ namespace MixinXRef.UnitTests
               new XAttribute ("assembly-ref", "1"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
               new XAttribute ("name", "TargetClass1"),
-              new XAttribute ("base", "System.Object"),
+              new XAttribute ("base", "MixinXRef.UnitTests.TestDomain.UselessObject"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType1.Type),
+              _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator).GenerateXml(),
@@ -288,10 +345,11 @@ namespace MixinXRef.UnitTests
               new XAttribute ("namespace", "System"),
               new XAttribute ("name", "Object"),
               new XAttribute ("base", "none"),
+              new XAttribute ("base-ref", "none"),
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
-              _summaryPicker.GetSummary(involvedType2.Type),
+              _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator).GenerateXml(),

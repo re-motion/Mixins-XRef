@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-08-13 11:29:06">
+<MixinXRefReport creation-time="2009-08-17 16:51:54">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.DynamicProxy.dll" />
@@ -18,7 +18,7 @@
     <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
-    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="MixinXRef.UnitTests.TestDomain.UselessObject" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Method" name="Dispose" />
@@ -36,7 +36,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
@@ -47,7 +47,7 @@
         <Target ref="0" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
@@ -62,7 +62,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
@@ -75,7 +75,7 @@
         <Target ref="2" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" is-target="true" is-mixin="false" is-generic-definition="true">
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
@@ -86,7 +86,7 @@
         <Mixin ref="5" relation="Extending" />
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />

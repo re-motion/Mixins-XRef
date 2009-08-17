@@ -69,6 +69,7 @@ namespace MixinXRef
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", GetCSharpLikeName (realType)),
           new XAttribute ("base", GetFullNameForBaseType (realType)),
+          new XAttribute ("base-ref", (realType.BaseType != null ? _involvedTypeIdentifierGenerator.GetIdentifier(realType.BaseType, "none") : "none")),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),

@@ -50,6 +50,9 @@ namespace MixinXRef.UnitTests
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var output = reportGenerator.GenerateXmlDocument();
 
+      // TODO: remove
+      //output.Save(@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
+
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       // the creation time of the validiation file is different from the creation time of the generated report
