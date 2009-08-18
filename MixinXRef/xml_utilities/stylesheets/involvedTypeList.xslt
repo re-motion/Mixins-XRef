@@ -13,7 +13,7 @@
 		<xsl:with-param name="items" select="$involvedTypes"/>
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">involvedTypeListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No involved types found</xsl:with-param>
+		<xsl:with-param name="emptyText">No Involved Types</xsl:with-param>
 		<xsl:with-param name="caption" select="$caption"/>
 	</xsl:call-template>		
 	

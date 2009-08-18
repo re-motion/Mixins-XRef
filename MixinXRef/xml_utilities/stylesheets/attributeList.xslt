@@ -12,7 +12,7 @@
 		<xsl:with-param name="items" select="$attributes"/>
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">attributeListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No attributes found</xsl:with-param>
+		<xsl:with-param name="emptyText">No Attributes</xsl:with-param>
 	</xsl:call-template>
 	
 </xsl:template>

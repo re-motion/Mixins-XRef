@@ -29,6 +29,7 @@
 <xsl:include href="stylesheets/template.xslt" />
 <xsl:include href="stylesheets/tableTemplate.xslt" />
 <xsl:include href="stylesheets/utility.xslt"/>
+<xsl:include href="stylesheets/treeBuilder.xslt"/>
 
 <!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/index.xslt" />

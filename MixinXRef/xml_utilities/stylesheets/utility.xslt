@@ -2,6 +2,14 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns="http://www.w3.org/1999/xhtml" xmlns:ru="http://www.rubicon-it.com"
 	exclude-result-prefixes="xs fn ru">
 
+<!-- general utility functions -->
+<xsl:function name="ru:contains">
+	<xsl:param name="sequence" />
+	<xsl:param name="searchItem" />
+	
+	<xsl:copy-of select=" exists( index-of( $sequence, $searchItem ) )" />
+</xsl:function>
+
 <!-- overall count functions -->
 <xsl:function name="ru:GetOverallTargetClassCount">
 	<xsl:param name="rootMCR" />

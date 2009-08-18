@@ -43,9 +43,13 @@
 	</xsl:call-template>
 	
 	<xsl:call-template name="attributeList">
-		<xsl:with-param name="rootMCR" select="/" />		
+		<xsl:with-param name="rootMCR" select="/" />
 		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[ImplementedBy/InvolvedType/@ref = current()/@id]" />
 		<xsl:with-param name="dir">..</xsl:with-param>
+	</xsl:call-template>
+	
+	<xsl:call-template name="treeBuilder">
+		<xsl:with-param name="involvedType" select="." />
 	</xsl:call-template>
 
 </xsl:template>	

@@ -74,6 +74,7 @@
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.treeview.js"></script>
 
 	<script type="text/javascript" src="{$dir}/resources/init.js"></script>
 </xsl:template>

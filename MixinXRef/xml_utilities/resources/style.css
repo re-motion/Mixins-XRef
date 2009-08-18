@@ -3,6 +3,9 @@ html {
 	font-family: Calibri;
 }
 
+body {
+	margin-left: 10px;
+}
 
 /* horizontal navigation bar */
 #navigation {
@@ -38,9 +41,13 @@ h2 {
 	vertical-align: top;
 }
 
+
 .involvedType-summary {
 	border: gray 1px dashed;
 	background-color: #E7E7E7;
+	margin: 10px;
+	margin-left: 0px;
+	padding: 2px;
 }
 
 /* colors for errorList on index site */
@@ -53,34 +60,98 @@ h2 {
 }
 
 
+/* treeview styles */
+.treeview {	
+	font-family: Verdana, helvetica, arial, sans-serif;
+	font-size: 68.75%;
+	background: #fff;
+	color: #333;
+}
+
+.treeview, .treeview ul { 
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.treeview ul {
+	margin-top: 4px;
+}
+
+.treeview .hitarea {
+	background: url(images/treeview-default.gif) -64px -25px no-repeat;
+	height: 16px;
+	width: 16px;
+	margin-left: -16px;
+	float: left;
+	cursor: pointer;
+}
+
+.treeview li { 
+	margin: 0;
+	padding: 3px 0pt 3px 16px;
+}
+
+.treeview a.selected {
+	background-color: #eee;
+}
+
+.treeview .hover { color: red; cursor: pointer; }
+
+.treeview li { background: url(images/treeview-default-line.gif) 0 0 no-repeat; }
+.treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
+
+.treeview .expandable-hitarea { background-position: -80px -3px; }
+
+.treeview li.last { background-position: 0 -1766px }
+.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(images/treeview-default.gif); }  
+.treeview li.lastCollapsable { background-position: 0 -111px }
+.treeview li.lastExpandable { background-position: -32px -67px }
+
+.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
+
+
+/* make links in trees non-underlined */
+.treeview a {
+	text-decoration: none;
+}
+
 /* make links in tables non-underlined */
 table a {
 	text-decoration: none;
 }
 
 
-/* caption of tables */
-table caption {
+/* caption of tables and target-trees (via class) */
+table caption, .treeHeader, .emptyText {
 	text-align: left;
 	font-size: large;
 	font-weight: bold;
 	font-style: italic;
+	
+	margin: 5px;
+	margin-left: 0px;
+}
+
+.emptyText {
+	padding-left: 15px;
+	color: #777;
 }
 
 
 /* collapsing of tables via caption */
-table caption.visible, table caption.hidden {
+table caption.visible, table caption.hidden, div.visible, div.hidden {
 	cursor: pointer;
 	padding-left: 15px;
 	background-repeat: no-repeat;
 	background-position: center left;
 }
 
-table caption.visible {
+table caption.visible, div.visible {
 	background-image: url(images/minus.gif);
 }
 
-table caption.hidden {
+table caption.hidden, div.hidden {
 	background-image: url(images/plus.gif);
 }
 
@@ -92,7 +163,6 @@ table {
 	text-align:left;	
 	font-size: 16px;
 	
-	margin-bottom: 20px;
 	min-width: 600px;
 	max-width: 100%;
 }

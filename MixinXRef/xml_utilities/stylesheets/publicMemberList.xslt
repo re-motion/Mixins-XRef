@@ -10,7 +10,7 @@
 		<xsl:with-param name="items" select="$members"/>
 		<xsl:with-param name="dir"></xsl:with-param>
 		<xsl:with-param name="tableName">publicMemberListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No public members found</xsl:with-param>
+		<xsl:with-param name="emptyText">No Public Members</xsl:with-param>
 	</xsl:call-template>
 	
 </xsl:template>
