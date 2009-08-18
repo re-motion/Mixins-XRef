@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Utilities;
 
@@ -21,7 +22,7 @@ namespace MixinXRef
       return new XElement (
           "PublicMembers",
           from memberInfo in _type.GetMembers()
-          where memberInfo.DeclaringType == _type && !IsSpecialName (memberInfo.Name)
+          where memberInfo.DeclaringType == _type && !IsSpecialName (memberInfo)
           select new XElement (
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
@@ -29,14 +30,26 @@ namespace MixinXRef
           );
     }
 
-    private bool IsSpecialName (string memberName)
+    private bool IsSpecialName (MemberInfo memberInfo)
     {
-      return (
-                 memberName.StartsWith ("add_") ||
-                 memberName.StartsWith ("remove_") ||
-                 memberName.StartsWith ("get_") ||
-                 memberName.StartsWith ("set_")
-             );
+      if (memberInfo.MemberType == MemberTypes.Method)
+      {
+        var methodName = memberInfo.Name;
+        var methodInfo = memberInfo as MethodInfo;
+        if (methodInfo == null)
+          return false;
+
+        return (
+                   methodInfo.IsSpecialName &&
+                   (
+                       methodName.StartsWith ("add_") ||
+                       methodName.StartsWith ("remove_") ||
+                       methodName.StartsWith ("get_") ||
+                       methodName.StartsWith ("set_")
+                   )
+               );
+      }
+      return false;
     }
   }
 }
