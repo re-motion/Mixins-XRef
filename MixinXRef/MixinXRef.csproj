@@ -62,6 +62,7 @@
     <Compile Include="ErrorAggregator.cs" />
     <Compile Include="FullReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
+    <Compile Include="IdentifierPopulator.cs" />
     <Compile Include="InterfaceReferenceReportGenerator.cs" />
     <Compile Include="InterfaceReportGenerator.cs" />
     <Compile Include="InterfaceIntroductionReportGenerator.cs" />

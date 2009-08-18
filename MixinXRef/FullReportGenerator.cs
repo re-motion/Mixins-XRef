@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Mixins;
@@ -40,35 +41,37 @@ namespace MixinXRef
       _creationTime = DateTime.Now.ToString ("yyyy-MM-dd HH:mm:ss");
       result.Add (new XAttribute ("creation-time", _creationTime));
 
-      return new XDocument(result);
+      return new XDocument (result);
     }
 
     private CompositeReportGenerator CreateCompositeReportGenerator ()
     {
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
-      var readonlyAssemblyIdentifierGenerator = assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
-      var involvedTypeIdentiferGenerator = new IdentifierGenerator<Type>();
+      var readonlyAssemblyIdentifierGenerator =
+          assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
+      var readonlyInvolvedTypeIdentiferGenerator =
+          new IdentifierPopulator<Type> (_involvedTypes.Select (it => it.Type)).GetReadonlyIdentifierGenerator ("none");
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
       var configurationErrors = new ErrorAggregator<ConfigurationException>();
       var validationErrors = new ErrorAggregator<ValidationException>();
 
       var assemblyReport = new AssemblyReportGenerator (
-          _assemblies, _involvedTypes, assemblyIdentifierGenerator, involvedTypeIdentiferGenerator);
+          _assemblies, _involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
 
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
           _mixinConfiguration,
           readonlyAssemblyIdentifierGenerator,
-          involvedTypeIdentiferGenerator,
+          readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
           configurationErrors,
           validationErrors);
       var interfaceReport = new InterfaceReportGenerator (
-          _involvedTypes, readonlyAssemblyIdentifierGenerator, involvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
+          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (
-          _involvedTypes, readonlyAssemblyIdentifierGenerator, involvedTypeIdentiferGenerator, attributeIdentiferGenerator);
+          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, attributeIdentiferGenerator);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (validationErrors);
 

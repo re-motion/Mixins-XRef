@@ -63,6 +63,7 @@
     <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
     <Compile Include="FullReportGeneratorTest.cs" />
+    <Compile Include="IdentifierPopulatorTest.cs" />
     <Compile Include="InterfaceReferenceReportGeneratorTest.cs" />
     <Compile Include="InterfaceReportGeneratorTest.cs" />
     <Compile Include="InterfaceIntroductionReportGeneratorTest.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="SummaryPickerTest.cs" />
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
+    <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\ClassWithProperty.cs" />
