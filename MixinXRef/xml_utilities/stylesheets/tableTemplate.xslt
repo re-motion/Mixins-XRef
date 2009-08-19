@@ -52,7 +52,7 @@
 				<xsl:when test="$tableName = 'mixinListTable'">
 					<xsl:call-template name="mixinListTable">
 						<xsl:with-param name="rootMCR" select="$rootMCR" />
-						<xsl:with-param name="involvedType" select="$items" />
+						<xsl:with-param name="mixinRefs" select="$items" />
 						<xsl:with-param name="dir" select="$dir" />
 					</xsl:call-template>
 				</xsl:when>

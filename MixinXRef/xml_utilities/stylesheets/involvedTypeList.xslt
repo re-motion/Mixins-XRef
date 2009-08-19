@@ -32,7 +32,7 @@
 				<th>Namespace</th>
 				<th>Name</th>
 				<th># of Mixins applied</th>
-				<th># of TargetClasses</th>
+				<th>applied to # Targets</th>
 				<th>Assembly</th>
 			</tr>
 		</thead>
@@ -47,7 +47,7 @@
 		</tfoot>
 		<tbody>
 			<xsl:for-each select="$involvedTypes">
-				<tr class="{ if ( @is-generic-definition = true() ) then 'dubiosInvolvedType' else '' }">
+				<tr class="{ ru:getDubiosInvolvedTypeClass(.) }">
 					<td><xsl:value-of select="@namespace"/></td>
 					<td>
 						<xsl:call-template name="GenerateInvolvedTypeLink">

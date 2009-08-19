@@ -30,6 +30,7 @@
 <xsl:include href="stylesheets/tableTemplate.xslt" />
 <xsl:include href="stylesheets/utility.xslt"/>
 <xsl:include href="stylesheets/treeBuilder.xslt"/>
+<xsl:include href="stylesheets/mixinList.xslt"/>
 
 <!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/index.xslt" />

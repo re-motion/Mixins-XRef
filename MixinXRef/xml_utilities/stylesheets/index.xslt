@@ -4,7 +4,7 @@
 	
 	
 <xsl:template name="index">
-	<h1>Mixin Documentation Summary @<xsl:value-of select="/MixinXRefReport/@creation-time" /></h1>
+	<h1>Mixin Documentation Summary </h1> <h2> @<xsl:value-of select="/MixinXRefReport/@creation-time" /></h2>
 	
 	<p><xsl:value-of select="ru:GetOverallAssemblyCount(/)" /> assemblies with <xsl:value-of  select="ru:GetOverallTargetClassCount(/)"/> TargetClasses and <xsl:value-of select="ru:GetOverallMixinCount(/)" /> Mixins have been examined.</p>
 	

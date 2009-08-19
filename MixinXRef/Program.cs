@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
+using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Utilities;
 
@@ -29,7 +31,11 @@ namespace MixinXRef
 
       program.SaveXmlDocument(assemblies, xmlFile);
 
-      var transformerExitCode = new XRefTransformer(xmlFile, outputDirectory).GenerateHtmlFromXml();
+      int transformerExitCode;
+      using (new TimingScope("GenerateHtmlFromXml"))
+      {
+        transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
+      }
       if (transformerExitCode == 0)
       {
         // copy resources folder
@@ -114,12 +120,33 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
-      var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
+      using (new TimingScope("Complete SaveXmlDocument"))
+      {
+        MixinConfiguration mixinConfiguration;
+        using (new TimingScope ("BuildConfigurationFromAssemblies"))
+        {
+          mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+        }
 
-      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
-      var outputDocument = reportGenerator.GenerateXmlDocument();
-      outputDocument.Save (xmlFile);
+        InvolvedType[] involvedTypes;
+        using (new TimingScope ("FindInvolvedTypes"))
+        {
+          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
+        }
+
+        FullReportGenerator reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
+
+        XDocument outputDocument;
+        using (new TimingScope("GenerateXmlDocument"))
+        {
+          outputDocument = reportGenerator.GenerateXmlDocument();
+        }
+
+        using (new TimingScope("Save"))
+        {
+          outputDocument.Save (xmlFile);
+        }
+      }
     }
   }
 }

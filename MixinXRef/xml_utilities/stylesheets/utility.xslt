@@ -10,6 +10,12 @@
 	<xsl:copy-of select=" exists( index-of( $sequence, $searchItem ) )" />
 </xsl:function>
 
+<xsl:function name="ru:getDubiosInvolvedTypeClass">
+	<xsl:param name="it"/>
+	
+	<xsl:copy-of select="if ( $it/@is-generic-definition = true() or ( $it/@is-target = true() and $it/@is-mixin = true() ) ) then 'dubiosInvolvedType' else '' "/>
+</xsl:function>
+
 <!-- overall count functions -->
 <xsl:function name="ru:GetOverallTargetClassCount">
 	<xsl:param name="rootMCR" />
