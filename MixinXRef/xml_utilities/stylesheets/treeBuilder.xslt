@@ -6,10 +6,10 @@
 	<xsl:param name="involvedType" />
 	
 	<xsl:if test="$involvedType/@is-mixin = true()">
-		<div class="treeHeader">Targets (<xsl:value-of select="count( $involvedType/Targets/Target )" />)</div>
+		<div><span class="treeHeader">Targets (<xsl:value-of select="count( $involvedType/Targets/Target )" />)</span></div>
 		
 		<xsl:call-template name="inOrderTreeWalk">
-			<!-- starting point for recursion: get all targets for this mixin and get rid of targets which base-ref points to another target ==> only get root targets -->
+			<!-- starting point for recursion: get all targets for this mixin and get rid of targets which base-ref points to another target of the same ==> only get root targets -->
 			<xsl:with-param name="targets" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains($involvedType/Targets/Target/@ref, @id)) and not(ru:contains($involvedType/Targets/Target/@ref, @base-ref)) ]" /> 
 		</xsl:call-template>
 	</xsl:if>
@@ -23,7 +23,7 @@
 			<xsl:variable name="subTargets" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id]" />
 			<li>
 				<xsl:if test="exists($subTargets)">
-					<span><xsl:value-of select="@name"/></span><a href="{@id}.html"> [link]</a>
+					<span><xsl:value-of select="@name"/></span><a href="{@id}.html" class="tree-link"> [link]</a>
 					
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
@@ -31,7 +31,7 @@
 					</xsl:call-template>
 				</xsl:if>
 				<xsl:if test="empty( $subTargets )">
-					<xsl:value-of select="@name"/><a href="{@id}.html"> [link]</a>
+					<xsl:value-of select="@name"/><a href="{@id}.html" class="tree-link"> [link]</a>
 				</xsl:if>
 			</li>		
 		</xsl:for-each>	

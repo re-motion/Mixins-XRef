@@ -25,7 +25,16 @@
 </xsl:template>
 
 <xsl:template name="attributeDetail">
-	<h1><xsl:value-of select="@name" /></h1><h2>[<a href="../attribute_index.html">Attribute</a>]</h2>
+	<h1><xsl:value-of select="@name" /></h1><h2><a href="../attribute_index.html">[Attribute]</a></h2>
+	
+	<div>
+		from assembly 
+		<xsl:call-template name="GenerateAssemblyLink">
+			<xsl:with-param name="rootMCR" select="/" />
+			<xsl:with-param name="assemblyId" select="@assembly-ref"/>
+			<xsl:with-param name="dir">..</xsl:with-param>
+		</xsl:call-template>
+	</div>
 
 	<xsl:call-template name="publicMemberList">
 			<xsl:with-param name="members" select="PublicMembers/Member"/>

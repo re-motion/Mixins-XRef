@@ -47,7 +47,7 @@
 		</tfoot>
 		<tbody>
 			<xsl:for-each select="$involvedTypes">
-				<tr>
+				<tr class="{ if ( @is-generic-definition = true() ) then 'dubiosInvolvedType' else '' }">
 					<td><xsl:value-of select="@namespace"/></td>
 					<td>
 						<xsl:call-template name="GenerateInvolvedTypeLink">

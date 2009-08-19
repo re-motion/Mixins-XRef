@@ -7,6 +7,10 @@ body {
 	margin-left: 10px;
 }
 
+a {
+	text-decoration: none;
+}
+
 /* horizontal navigation bar */
 #navigation {
 	margin-top:0;
@@ -19,10 +23,6 @@ body {
 	padding:0;
 	padding-right: 8px;
 	display: inline;
-}
-
-#navigation a {
-	text-decoration: none;
 }
 
 #navigation a.currentIndex {
@@ -41,13 +41,32 @@ h2 {
 	vertical-align: top;
 }
 
+fieldset {
+	padding: 3px;
+	padding-top: 0px;
+	margin: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+fieldset legend {
+	font-size: 85%;
+}
 
 .involvedType-summary {
+	margin-top: 6px;
+	padding: 1px;
+	padding-left: 3px;
+	
 	border: gray 1px dashed;
 	background-color: #E7E7E7;
-	margin: 10px;
-	margin-left: 0px;
-	padding: 2px;
+}
+
+/* warning for generic target classes and "mixed mixins" */
+/* so much specifier for "tr.dubiosInvolvedType td" to gain higher priority */
+.dubiosInvolvedType, body table tbody tr.dubiosInvolvedType td 
+{
+	background-color:#E3D1A2;
 }
 
 /* colors for errorList on index site */
@@ -61,6 +80,11 @@ h2 {
 
 
 /* treeview styles */
+.tree-link {
+	font-size: 80%;
+	vertical-align: top;
+}
+
 .treeview {	
 	font-family: Verdana, helvetica, arial, sans-serif;
 	font-size: 68.75%;
@@ -110,18 +134,6 @@ h2 {
 
 .treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
 
-
-/* make links in trees non-underlined */
-.treeview a {
-	text-decoration: none;
-}
-
-/* make links in tables non-underlined */
-table a {
-	text-decoration: none;
-}
-
-
 /* caption of tables and target-trees (via class) */
 table caption, .treeHeader, .emptyText {
 	text-align: left;
@@ -139,19 +151,19 @@ table caption, .treeHeader, .emptyText {
 }
 
 
-/* collapsing of tables via caption */
-table caption.visible, table caption.hidden, div.visible, div.hidden {
+/* collapsing */
+.visible, .hidden {
 	cursor: pointer;
 	padding-left: 15px;
 	background-repeat: no-repeat;
 	background-position: center left;
 }
 
-table caption.visible, div.visible {
+.visible {
 	background-image: url(images/minus.gif);
 }
 
-table caption.hidden, div.hidden {
+.hidden {
 	background-image: url(images/plus.gif);
 }
 
