@@ -1,5 +1,7 @@
 using System;
+using System.Reflection;
 using Remotion.Mixins;
+using Remotion.Mixins.Context;
 using Remotion.Utilities;
 
 
@@ -8,24 +10,34 @@ namespace MixinXRef
   public class InvolvedTypeFinder : IInvolvedTypeFinder
   {
     private readonly MixinConfiguration _mixinConfiguration;
+    private readonly Assembly[] _assemblies;
 
-    public InvolvedTypeFinder (MixinConfiguration mixinConfiguration)
+    public InvolvedTypeFinder (MixinConfiguration mixinConfiguration, Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
+
       _mixinConfiguration = mixinConfiguration;
+      _assemblies = assemblies;
     }
 
     public InvolvedType[] FindInvolvedTypes ()
     {
-      //return _mixinConfiguration.ClassContexts.Select (classContext => classContext.Type).ToArray ();
-      InvolvedTypeStore involvedTypes = new InvolvedTypeStore();
+      var involvedTypes = new InvolvedTypeStore();
 
-      foreach (var targetContext in _mixinConfiguration.ClassContexts)
+      foreach (var assembly in _assemblies)
       {
-        involvedTypes.GetOrCreateValue (targetContext.Type).ClassContext = targetContext;
+        foreach (var type in assembly.GetTypes())
+        {
+          ClassContext classContext = _mixinConfiguration.ClassContexts.GetWithInheritance (type);
+          if (classContext != null)
+          {
+            involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
 
-        foreach (var mixinContext in targetContext.Mixins)
-          involvedTypes.GetOrCreateValue (mixinContext.MixinType).TargetTypes.Add (targetContext.Type);
+            foreach (var mixinContext in classContext.Mixins)
+              involvedTypes.GetOrCreateValue (mixinContext.MixinType).TargetTypes.Add (classContext.Type);
+          }
+        }
       }
 
       return involvedTypes.ToArray();

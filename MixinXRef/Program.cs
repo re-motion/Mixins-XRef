@@ -115,7 +115,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
       var mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
+      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var outputDocument = reportGenerator.GenerateXmlDocument();

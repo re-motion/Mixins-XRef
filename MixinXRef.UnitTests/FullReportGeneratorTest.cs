@@ -45,13 +45,10 @@ namespace MixinXRef.UnitTests
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration).FindInvolvedTypes();
+      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, new[] { typeof(Mixin1).Assembly }).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
       var output = reportGenerator.GenerateXmlDocument();
-
-      // TODO: remove
-      //output.Save(@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 

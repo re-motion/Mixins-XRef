@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-08-18 10:22:57">
+<MixinXRefReport creation-time="2009-08-19 12:52:59">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.DynamicProxy.dll" />
@@ -18,31 +18,29 @@
     <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
-    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Method" name="Dispose" />
-        <Member type="Constructor" name=".ctor" />
-      </PublicMembers>
-      <Interfaces>
-        <Interface ref="0" />
-      </Interfaces>
-      <Attributes />
-      <Mixins>
-        <Mixin ref="1" relation="Extending">
-          <InterfaceIntroductions />
-          <AttributeIntroductions />
-          <MemberOverrides />
-        </Mixin>
-      </Mixins>
-    </InvolvedType>
-    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
+      <Mixins>
+        <Mixin ref="1" relation="Extending" />
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
+      <PublicMembers>
+        <Member type="Constructor" name=".ctor" />
+      </PublicMembers>
+      <Interfaces />
+      <Attributes>
+        <Attribute ref="0">
+          <Argument kind="constructor" type="Int32" name="id" value="1337" />
+          <Argument kind="named" type="String" name="Title" value="C# in depth" />
+        </Attribute>
+      </Attributes>
       <Targets>
         <Target ref="0" />
       </Targets>
@@ -69,35 +67,37 @@
       </PublicMembers>
       <Interfaces />
       <Attributes>
-        <Attribute ref="0" />
+        <Attribute ref="1" />
       </Attributes>
       <Targets>
         <Target ref="2" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <summary>No summary found.</summary>
+      <PublicMembers>
+        <Member type="Method" name="Dispose" />
+        <Member type="Constructor" name=".ctor" />
+      </PublicMembers>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Mixins>
+        <Mixin ref="5" relation="Extending">
+          <InterfaceIntroductions />
+          <AttributeIntroductions />
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
-      <Mixins>
-        <Mixin ref="5" relation="Extending" />
-      </Mixins>
-    </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
-      </PublicMembers>
-      <Interfaces />
-      <Attributes>
-        <Attribute ref="1">
-          <Argument kind="constructor" type="Int32" name="id" value="1337" />
-          <Argument kind="named" type="String" name="Title" value="C# in depth" />
-        </Attribute>
-      </Attributes>
       <Targets>
         <Target ref="4" />
       </Targets>
@@ -109,19 +109,19 @@
         <Member type="Method" name="Dispose" />
       </PublicMembers>
       <ImplementedBy>
-        <InvolvedType ref="0" />
+        <InvolvedType ref="4" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute id="0" assembly-ref="none" namespace="System" name="SerializableAttribute">
+    <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
-        <InvolvedType ref="3" />
+        <InvolvedType ref="1" />
       </AppliedTo>
     </Attribute>
-    <Attribute id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
+    <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType ref="5" />
+        <InvolvedType ref="3" />
       </AppliedTo>
     </Attribute>
   </Attributes>
