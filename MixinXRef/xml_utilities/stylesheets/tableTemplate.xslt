@@ -48,6 +48,14 @@
 						<xsl:with-param name="members" select="$items" />
 					</xsl:call-template>
 				</xsl:when>
+				<!-- mixin list at involved type site -->
+				<xsl:when test="$tableName = 'mixinListTable'">
+					<xsl:call-template name="mixinListTable">
+						<xsl:with-param name="rootMCR" select="$rootMCR" />
+						<xsl:with-param name="involvedType" select="$items" />
+						<xsl:with-param name="dir" select="$dir" />
+					</xsl:call-template>
+				</xsl:when>
 			
 				<!-- fail fast -->
 				<xsl:otherwise>
