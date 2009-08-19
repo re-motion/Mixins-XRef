@@ -31,8 +31,19 @@ function initTableSorter() {
         }
     });
 
-    ts.tablesorter({
-        widgets: ['zebra', 'cookie']
+    ts.each(function() {
+        var rowCount = $(this).find("tr").length;
+        
+        /* do not use zebra widget on tables with more than 500 rows (performance issue) */
+        if (rowCount > 500) {
+            $(this).tablesorter({
+                widgets: ['cookie']
+            });
+        } else {
+            $(this).tablesorter({
+                widgets: ['zebra', 'cookie']
+            });    
+        }
     });
 }
 
