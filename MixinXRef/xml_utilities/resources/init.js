@@ -12,18 +12,27 @@ function getCookieName(){
     return file_name.substring(mixinDoc + 9, firstQuestionMark).replace("/", "_");
 }
 
-function initTableSorter(){
+function initTableSorter() {
     /* get all tables */
     var ts = $("table");
-    
-    /* set unique id for each table */
-    ts.each(function(n){
-        this.id = getCookieName() + "_table_" + n;
+    var tablesorterCookieJar = $.cookieJar('tablesorter', {
+        cookie: { path: '/' }
     });
-    
-    /* tablesorter magic */
+
+    /* set unique id for each table */
+    ts.each(function(n) {
+        this.id = getCookieName() + "_table_" + n;
+
+        var sortList = tablesorterCookieJar.get(this.id);
+        
+        if (sortList == undefined) {
+            var sortList = [[0, 0], [1, 0]];
+            tablesorterCookieJar.set(this.id, sortList);
+        }
+    });
+
     ts.tablesorter({
-        widgets: [ 'zebra', 'cookie' ]
+        widgets: ['zebra', 'cookie']
     });
 }
 
