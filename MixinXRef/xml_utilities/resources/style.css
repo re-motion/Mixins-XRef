@@ -219,3 +219,16 @@ table thead tr .headerSortDown {
 table thead tr .headerSortDown, table thead tr .headerSortUp {
 	background-color: #8dbdd8;
 }
+
+#overlay {
+	top: 60px;
+	left: 300px;
+	position: absolute;
+	margin-left: -100px;
+	width: 200px;
+	text-align: center;
+	display: none;
+	margin-top: -10px;
+	background: #000;
+	color: #FFF;
+}

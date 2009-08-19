@@ -16,6 +16,7 @@
 		</xsl:if>
 		
 		<xsl:if test="count ( $items ) > 0">
+			<div id="overlay">Please wait...</div>
 			<xsl:choose>
 				<!-- involved type table -->
 				<xsl:when test="$tableName = 'involvedTypeListTable'">
