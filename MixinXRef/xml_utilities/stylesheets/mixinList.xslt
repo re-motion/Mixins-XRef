@@ -70,10 +70,7 @@
 						</td>
 						<td><xsl:value-of select="@relation" /></td>
 						
-						<xsl:call-template name="mixinSpecificData">
-							<xsl:with-param name="mixinRef" select="."/>
-							<xsl:with-param name="mixin" select="mixin"/>
-						</xsl:call-template>
+						<xsl:call-template name="mixinSpecificData"/>
 					</tr>
 				</xsl:for-each>
 			</tbody>
@@ -82,8 +79,33 @@
 </xsl:template>
 
 <xsl:template name="mixinSpecificData">
-	<xsl:param name="mixinRef"/>
-	<xsl:param name="mixin"/>
+
+	<!-- Interface Introductions -->
+	<td>
+		<xsl:for-each select="InterfaceIntroductions/Interface">
+			<xsl:call-template name="GenerateInterfaceLink">
+				<xsl:with-param name="rootMCR" select="/" />
+				<xsl:with-param name="interfaceId" select="@ref" />
+				<xsl:with-param name="dir">..</xsl:with-param>
+			</xsl:call-template>
+		</xsl:for-each>
+	</td>
+	<!-- Attribute Introductions -->
+	<td>
+		<xsl:for-each select="AttributeIntroductions/Attribute">
+			<xsl:call-template name="GenerateAttributeLink">
+				<xsl:with-param name="rootMCR" select="/" />
+				<xsl:with-param name="attributeId" select="@ref" />
+				<xsl:with-param name="dir">..</xsl:with-param>
+			</xsl:call-template>
+		</xsl:for-each>
+	</td>
+	<!-- Member Overrides -->
+	<td>
+		<xsl:for-each select="OverridenMembers/Member">
+			<xsl:value-of select="@name" /><span class="small-method-type">[<xsl:value-of select="@type" />]</span>
+		</xsl:for-each>
+	</td>
 	
 </xsl:template>
 

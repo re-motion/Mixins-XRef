@@ -79,6 +79,12 @@ fieldset legend {
 }
 
 
+/* method type in mixin table -> member overrides */
+.small-method-type {
+	font-size: 80%;
+	vertical-align: top;
+}
+
 /* treeview styles */
 .tree-link {
 	font-size: 80%;
