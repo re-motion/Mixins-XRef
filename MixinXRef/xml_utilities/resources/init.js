@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	initTableSorter();
-    //setSelectedIndexClass();
-    //initTreeView();
-    //prepareCollapsing();
+    setSelectedIndexClass();
+    initTreeView();
+    prepareCollapsing();
 });
 
 function getCookieName(){
@@ -23,8 +23,7 @@ function initTableSorter(){
     
     /* tablesorter magic */
     ts.tablesorter({
-        widgets: ['cookie', 'zebra'],
-        sortList: [[0, 0], [1, 0]]
+        widgets: [ 'zebra', 'cookie' ]
     });
 }
 
@@ -34,7 +33,6 @@ function setSelectedIndexClass(){
         return this.href == location.href;
     }).addClass("currentIndex");
 }
-
 
 function prepareCollapsing(){
 	/* make only non index site collapse-able */
@@ -53,8 +51,7 @@ function prepareCollapsing(){
     
     $("caption, .treeHeader").each(function(n){
 		$(this).addClass(classArray[n]);
-		alert(this.tagName);
-		if (this.tagName == "CAPTION") {
+		if (this.tagName.toUpperCase() == "CAPTION") {
 			if (classArray[n] == "hidden") {
 				$(this).nextAll("thead, tfoot, tbody").hide();
 			}
