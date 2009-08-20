@@ -119,7 +119,7 @@ namespace MixinXRef
 
       // for special generic types
       if (type.BaseType.IsGenericType)
-        return type.BaseType.GetGenericTypeDefinition().FullName;
+        return GetCSharpLikeName(type.BaseType.GetGenericTypeDefinition ());
 
       // for standard types
       return type.BaseType.FullName;
