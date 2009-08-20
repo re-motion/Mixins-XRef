@@ -42,7 +42,7 @@ namespace MixinXRef
         new DirectoryInfo(@"xml_utilities\resources").CopyTo(Path.Combine(outputDirectory, "resources"));
         Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
       }
-      Console.ReadLine();
+      //Console.ReadLine();
       return (transformerExitCode);
     }
 

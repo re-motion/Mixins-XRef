@@ -1,14 +1,9 @@
 $(document).ready(function() {
-    //assign the sortStart event 
-    $("table").bind("sortStart", function() {
-        $("#overlay").show();
-    }).bind("sortEnd", function() {
-        $("#overlay").hide();
-    });
     initTableSorter();
     setSelectedIndexClass();
     initTreeView();
-    prepareCollapsing();
+    // internet explorer doesn't like collapsing
+    if (!jQuery.browser.msie) prepareCollapsing();
 });
 
 function getCookieName() {
@@ -19,6 +14,13 @@ function getCookieName() {
 }
 
 function initTableSorter() {
+    //assign the sortStart event 
+    $("table").bind("sortStart", function() {
+        $("#overlay").show();
+    }).bind("sortEnd", function() {
+        $("#overlay").hide();
+    });
+
     /* get all tables */
     var ts = $("table");
     var tablesorterCookieJar = $.cookieJar('tablesorter', {
