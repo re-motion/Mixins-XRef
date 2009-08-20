@@ -43,8 +43,10 @@ function initTableSorter() {
         /* do not use zebra widget on tables with more than 500 rows (performance issue) */
         if (rowCount > 500) {
             $(this).tablesorter({
+			    widthFixed: true,
                 widgets: ['cookie']
-            });
+            })
+		.tablesorterPager({container: $("#pager")});
         } else {
             $(this).tablesorter({
                 widgets: ['zebra', 'cookie']

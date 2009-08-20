@@ -75,8 +75,9 @@
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.treeview.js"></script>
+  <script type="text/javascript" src="./resources/javascript/jquery.tablesorter.pager.js"></script>
 
-	<script type="text/javascript" src="{$dir}/resources/init.js"></script>
+  <script type="text/javascript" src="{$dir}/resources/init.js"></script>
 </xsl:template>
 
 <xsl:template name="navigation">
