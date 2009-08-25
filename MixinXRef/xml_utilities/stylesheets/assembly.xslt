@@ -24,6 +24,7 @@
 
 <xsl:template name="assembly">
   <xsl:call-template name="tableTemplate">
+    <xsl:with-param name="dir">.</xsl:with-param>
     <xsl:with-param name="tableName">assemblyTable</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
