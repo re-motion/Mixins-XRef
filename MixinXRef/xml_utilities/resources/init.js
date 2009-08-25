@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
-    /* changing default settings for tablesorterPager */
-    $.tablesorterPager.defaults.size = 30;
-    // fixed position created issues in different browsers
-    $.tablesorterPager.defaults.positionFixed = false;
-
     initTableSorter();
     setSelectedIndexClass();
     initTreeView();
@@ -49,13 +44,20 @@ function initTableSorter() {
     ts.each(function() {
         var rowCount = $(this).find("tbody tr").length;
 
-        /* use tablesorter widghet for tables with more than 100 rows */
+        /* use tablesorter widget for tables with more than 100 rows */
         if (rowCount > 100) {
+            
+            /* changing default settings for tablesorterPager */
+            $.tablesorterPager.defaults.size = 30;
+            // fixed position created issues in different browsers
+            $.tablesorterPager.defaults.positionFixed = false;
+            
             $(this).tablesorter({
 			    widthFixed: true,
                 widgets: ['cookie']
             })
-			.tablesorterPager({container: $("#pager")});
+			.tablesorterPager({ container: $("#pager") });
+			
         } else {
             $(this).tablesorter({
                 widgets: ['cookie']
