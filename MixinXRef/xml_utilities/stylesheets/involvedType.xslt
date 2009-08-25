@@ -90,7 +90,7 @@
 	
 	<xsl:call-template name="attributeList">
 		<xsl:with-param name="rootMCR" select="/" />
-		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[ImplementedBy/InvolvedType/@ref = current()/@id]" />
+		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[AppliedTo/InvolvedType/@ref = current()/@id]" />
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
 	
