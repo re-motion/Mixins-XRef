@@ -43,24 +43,27 @@ function initTableSorter() {
 
     ts.each(function() {
         var rowCount = $(this).find("tbody tr").length;
+        var widgetSetting = ['cookie'];
 
         /* use tablesorter widget for tables with more than 100 rows */
         if (rowCount > 100) {
-            
+
             /* changing default settings for tablesorterPager */
             $.tablesorterPager.defaults.size = 30;
             // fixed position created issues in different browsers
             $.tablesorterPager.defaults.positionFixed = false;
-            
+
             $(this).tablesorter({
-			    widthFixed: true,
-                widgets: ['cookie']
+                widthFixed: true,
+                widgets: widgetSetting
             })
-			.tablesorterPager({ container: $("#pager") });
-			
+			      .tablesorterPager({ container: $("#pager") });
+
         } else {
+            if (jQuery.browser.msie) widgetSetting = ['cookie', 'zebra'];
+
             $(this).tablesorter({
-                widgets: ['cookie']
+                widgets: widgetSetting
             });
         }
     });
