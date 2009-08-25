@@ -40,18 +40,18 @@ function initTableSorter() {
     });
 
     ts.each(function() {
-        var rowCount = $(this).find("tr").length;
+        var rowCount = $(this).find("tbody tr").length;
 
-        /* do not use zebra widget on tables with more than 500 rows (performance issue) */
-        if (rowCount > 500) {
+        /* use tablesorter widghet for tables with more than 100 rows */
+        if (rowCount > 100) {
             $(this).tablesorter({
 			    widthFixed: true,
                 widgets: ['cookie']
             })
-		.tablesorterPager({container: $("#pager")});
+			.tablesorterPager({container: $("#pager")});
         } else {
             $(this).tablesorter({
-                widgets: ['zebra', 'cookie']
+                widgets: ['cookie']
             });
         }
     });

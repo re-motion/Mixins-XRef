@@ -210,7 +210,8 @@ table tbody td {
 	vertical-align: top;
 }
 
-table tbody tr.odd td {
+/* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */
+tbody tr:nth-child(2n) td {
 	background-color: #F0F0F6;
 }
 
