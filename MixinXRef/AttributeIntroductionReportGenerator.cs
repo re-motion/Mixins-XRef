@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using Remotion.Mixins;
 using Remotion.Mixins.Definitions;
 using Remotion.Utilities;
 
@@ -27,6 +28,7 @@ namespace MixinXRef
       return new XElement (
           "AttributeIntroductions",
           from introducedAttribute in _attributeIntroductionDefinitions
+          where introducedAttribute.AttributeType.Assembly != typeof (IInitializableMixin).Assembly
           select GenerateAttributeReferanceElement (introducedAttribute.AttributeType));
     }
 

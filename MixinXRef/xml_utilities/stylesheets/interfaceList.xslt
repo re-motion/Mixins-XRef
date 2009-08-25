@@ -23,7 +23,7 @@
 	<xsl:param name="dir" />
 	
 	<table>
-		<caption>Interfaces (<xsl:value-of select="count( $interfaces )" />)</caption>
+		<caption>Interfaces&#160;(<xsl:value-of select="count( $interfaces )" />)</caption>
 		<thead>
 			<tr>
 				<th>Namespace</th>

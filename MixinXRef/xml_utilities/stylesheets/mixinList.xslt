@@ -24,7 +24,7 @@
 	<xsl:variable name="mixins" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains($mixinRefs/@ref, @id) ]" />
 	
 		<table>
-			<caption>Mixins (<xsl:value-of select="count( $mixins )" />)</caption>
+			<caption>Mixins&#160;(<xsl:value-of select="count( $mixins )" />)</caption>
 			<thead>
 				<tr>
 					<th>Namespace</th>
@@ -119,7 +119,7 @@
     </td>
     <!-- Member Overrides -->
     <td>
-      <xsl:for-each select="OverridenMembers/Member">
+      <xsl:for-each select="MemberOverrides/Member">
         <xsl:if test="position() != 1">, </xsl:if>
         <xsl:value-of select="@name" />
         <span class="small-method-type">

@@ -3,9 +3,8 @@ $(document).ready(function() {
     initTableSorter();
     setSelectedIndexClass();
     initTreeView();
-    
-    // internet explorer doesn't like collapsing
-    if (!jQuery.browser.msie) prepareCollapsing();
+
+    prepareCollapsing();
 });
 
 function getCookieName() {
@@ -43,17 +42,17 @@ function initTableSorter() {
 
     ts.each(function() {
         var widgetSetting = ['cookie'];
-		/* css3 selector 'nth-child()' with IE? - no way */
-		if (jQuery.browser.msie)
-			widgetSetting = ['cookie', 'zebra'];
+        /* css3 selector 'nth-child()' with IE? - no way */
+        if (jQuery.browser.msie)
+            widgetSetting = ['cookie', 'zebra'];
 
-		/* init tablesorter */
-		$(this).tablesorter({
-			widthFixed: true,
+        /* init tablesorter */
+        $(this).tablesorter({
+            widthFixed: true,
             widgets: widgetSetting
-		});
+        });
 
-		var rowCount = $(this).find("tbody tr").length;
+        var rowCount = $(this).find("tbody tr").length;
         /* pager: only on index sites with a table with more than 30 rows */
         if (rowCount > 30 && onIndexSite()) {
 			$(this).tablesorterPager({
@@ -62,8 +61,8 @@ function initTableSorter() {
 				 positionFixed: false
 			});
         } else {
-			$(".pager").hide();
-		}
+            $(".pager").hide();
+        }
     });
 }
 
@@ -75,7 +74,7 @@ function setSelectedIndexClass() {
 }
 
 function onIndexSite() {
-	return location.href.indexOf("index.html") != -1;
+    return location.href.indexOf("index.html") != -1;
 }
 
 function prepareCollapsing() {
@@ -94,25 +93,40 @@ function prepareCollapsing() {
     var classArray = cookieValue.split(",");
 
     $("caption, .treeHeader").each(function(n) {
-        $(this).addClass(classArray[n]);
+
         if (this.tagName.toUpperCase() == "CAPTION") {
+            $(this).addClass(classArray[n]);
+
             if (classArray[n] == "hidden") {
                 $(this).nextAll("thead, tfoot, tbody").hide();
             }
+
             $(this).click(function() {
                 $(this).toggleClass("visible").toggleClass("hidden");
-                $(this).nextAll("thead, tfoot, tbody").toggle();
+
+                if ($(this).hasClass("hidden"))
+                    $(this).nextAll("thead, tfoot, tbody").hide();
+                else
+                    $(this).nextAll("thead, tfoot, tbody").show();
                 saveCookie();
             });
-        } else { // tagname = DIV
-            if (classArray[n] == "hidden") {
-                $(".treeview").hide();
+        } else { // tagname = DIV           
+
+            // internet explorer doesn't like collapsing of trees
+            if (!jQuery.browser.msie) {
+                
+                $(this).addClass(classArray[n]);
+
+                if (classArray[n] == "hidden") {
+                    $(".treeview").hide();
+                }
+
+                $(".treeHeader").click(function() {
+                    $(".treeHeader").toggleClass("visible").toggleClass("hidden");
+                    $(".treeview").toggle();
+                    saveCookie();
+                });
             }
-            $(".treeHeader").click(function() {
-                $(".treeview").toggle();
-                $(".treeHeader").toggleClass("visible").toggleClass("hidden");
-                saveCookie();
-            });
         }
     });
 }

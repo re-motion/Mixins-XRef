@@ -23,7 +23,7 @@
 	<xsl:param name="dir" />
 	
 		<table>
-			<caption>Attributes (<xsl:value-of select="count( $attributes )" />)</caption>
+			<caption>Attributes&#160;(<xsl:value-of select="count( $attributes )" />)</caption>
 			<thead>
 				<tr>
 					<th>Namespace</th>

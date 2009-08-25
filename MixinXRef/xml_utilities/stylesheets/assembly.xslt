@@ -32,7 +32,7 @@
 <xsl:template name="assemblyTable">
   <table>
     <caption>
-      Analyzed assemblies (<xsl:value-of select="ru:GetOverallAssemblyCount(/)" />)
+      Analyzed&#160;assemblies&#160;(<xsl:value-of select="ru:GetOverallAssemblyCount(/)" />)
     </caption>
     <thead>
       <tr>
@@ -112,7 +112,7 @@
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  
 		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Involved Types</xsl:with-param>
+		<xsl:with-param name="caption">Involved&#160;Types</xsl:with-param>
 	</xsl:call-template>
 	
 	<xsl:call-template name="interfaceList">

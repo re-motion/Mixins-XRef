@@ -44,7 +44,7 @@
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="//InvolvedTypes/InvolvedType[Attributes/Attribute/@ref = current()/@id]"/>
 		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Used on</xsl:with-param>
+		<xsl:with-param name="caption">Used&#160;on</xsl:with-param>
 	</xsl:call-template>
 
 </xsl:template>

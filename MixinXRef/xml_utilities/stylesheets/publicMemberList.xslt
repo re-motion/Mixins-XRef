@@ -19,7 +19,7 @@
 <xsl:param name="members"/>
 
 	<table>
-		<caption>Public Members (<xsl:value-of select="count( $members )"/>)</caption>
+		<caption>Public&#160;Members&#160;(<xsl:value-of select="count( $members )"/>)</caption>
 		<thead>
 			<tr>
 				<th>Name</th>

@@ -26,7 +26,7 @@
 	<xsl:param name="caption" />
 
 	<table>
-		<caption><xsl:value-of select="$caption" /> (<xsl:value-of select="count( $involvedTypes )" />)</caption>
+		<caption><xsl:value-of select="$caption" />&#160;(<xsl:value-of select="count( $involvedTypes )" />)</caption>
 		<thead>
 			<tr>
 				<th>Namespace</th>

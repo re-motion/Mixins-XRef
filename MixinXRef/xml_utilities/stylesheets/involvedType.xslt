@@ -8,7 +8,7 @@
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType" />  
 		<xsl:with-param name="dir">.</xsl:with-param>
-		<xsl:with-param name="caption">Involved Types</xsl:with-param>
+		<xsl:with-param name="caption">Involved&#160;Types</xsl:with-param>
 	</xsl:call-template>
 
   <xsl:for-each select="/MixinXRefReport/InvolvedTypes/InvolvedType" >
