@@ -11,22 +11,6 @@
 		<xsl:with-param name="caption">Involved Types</xsl:with-param>
 	</xsl:call-template>
 
-  <div id="pager" class="pager">
-    <form>
-      <img src="./resources/images/first.png" class="first"/>
-      <img src="./resources/images/prev.png" class="prev"/>
-      <input type="text" class="pagedisplay"/>
-      <img src="./resources/images/next.png" class="next"/>
-      <img src="./resources/images/last.png" class="last"/>
-      <select class="pagesize">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option selected="selected"  value="30">30</option>
-        <option  value="40">40</option>
-      </select>
-    </form>
-  </div>
-
   <xsl:for-each select="/MixinXRefReport/InvolvedTypes/InvolvedType" >
 		<!-- generate interface detail site for each interface -->
 		<xsl:call-template name="involvedTypeDetailSite" />	

@@ -65,6 +65,26 @@
 					<xsl:message terminate="yes" >table template rule '<xsl:value-of select="$tableName" />' could not be found</xsl:message>
 				</xsl:otherwise>
 			</xsl:choose>
+
+      <xsl:if test="$dir = '.'">
+        <div class="pager">
+          <form>
+            <img src="{$dir}/resources/images/first.png" class="first"/> 
+            <img src="{$dir}/resources/images/prev.png" class="prev"/> 
+            <input type="text" class="pagedisplay"/> 
+            <img src="{$dir}/resources/images/next.png" class="next"/> 
+            <img src="{$dir}/resources/images/last.png" class="last"/> 
+            <select class="pagesize">
+              <option value="10">10</option>
+              <option selected="selected"  value="30">30</option>
+              <option  value="50">50</option>
+              <option  value="100">100</option>
+              <option  value="32000">all</option>
+            </select>
+          </form>
+        </div>
+      </xsl:if>
+      
 		</xsl:if>
 		
 </xsl:template>

@@ -42,30 +42,27 @@ function initTableSorter() {
     });
 
     ts.each(function() {
-        var rowCount = $(this).find("tbody tr").length;
         var widgetSetting = ['cookie'];
+		/* css3 selector 'nth-child()' with IE? - no way */
+		if (jQuery.browser.msie)
+			widgetSetting = ['cookie', 'zebra'];
 
-        /* use tablesorter widget for tables with more than 100 rows */
-        if (rowCount > 100) {
+		/* init tablesorter */
+		$(this).tablesorter({
+			widthFixed: true,
+            widgets: widgetSetting
+		});
 
-            /* changing default settings for tablesorterPager */
-            $.tablesorterPager.defaults.size = 30;
-            // fixed position created issues in different browsers
-            $.tablesorterPager.defaults.positionFixed = false;
-
-            $(this).tablesorter({
-                widthFixed: true,
-                widgets: widgetSetting
-            })
-			      .tablesorterPager({ container: $("#pager") });
-
+		var rowCount = $(this).find("tbody tr").length;
+        /* pager: only on index sites with a table with more than 30 rows */
+        if (rowCount > 30 && onIndexSite()) {
+			$(this).tablesorterPager({
+				 container: $(".pager"),
+				 positionFixed: false
+			});
         } else {
-            if (jQuery.browser.msie) widgetSetting = ['cookie', 'zebra'];
-
-            $(this).tablesorter({
-                widgets: widgetSetting
-            });
-        }
+			$(".pager").hide();
+		}
     });
 }
 
@@ -76,9 +73,13 @@ function setSelectedIndexClass() {
     }).addClass("currentIndex");
 }
 
+function onIndexSite() {
+	return location.href.indexOf("index.html") != -1;
+}
+
 function prepareCollapsing() {
     /* make only non index site collapse-able */
-    if (location.href.indexOf("index.html") != -1)
+    if (onIndexSite())
         return;
 
     var cookieName = getCookieName();
