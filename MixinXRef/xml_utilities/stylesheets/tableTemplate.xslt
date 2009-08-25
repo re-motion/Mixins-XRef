@@ -75,7 +75,7 @@
           <form>
             <img src="{$dir}/resources/images/first.png" class="first"/> 
             <img src="{$dir}/resources/images/prev.png" class="prev"/> 
-            <input type="text" class="pagedisplay"/> 
+            <input type="text" class="pagedisplay" disabled="disabled" size="8"/> 
             <img src="{$dir}/resources/images/next.png" class="next"/> 
             <img src="{$dir}/resources/images/last.png" class="last"/> 
             <select class="pagesize">
