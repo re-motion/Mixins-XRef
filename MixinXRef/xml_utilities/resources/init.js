@@ -58,6 +58,7 @@ function initTableSorter() {
         if (rowCount > 30 && onIndexSite()) {
 			$(this).tablesorterPager({
 				 container: $(".pager"),
+				 size: 30,
 				 positionFixed: false
 			});
         } else {

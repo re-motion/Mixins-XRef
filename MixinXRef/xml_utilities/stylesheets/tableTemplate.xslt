@@ -19,6 +19,10 @@
 		<xsl:if test="count ( $items ) > 0">
 			<div id="overlay">Please wait...</div>
 			<xsl:choose>
+        <!-- assembly table (only on index site) -->
+        <xsl:when test="$tableName = 'assemblyTable'">
+          <xsl:call-template name="assemblyTable"/>
+        </xsl:when>
 				<!-- involved type table -->
 				<xsl:when test="$tableName = 'involvedTypeListTable'">
 					<xsl:call-template name="involvedTypeListTable">
