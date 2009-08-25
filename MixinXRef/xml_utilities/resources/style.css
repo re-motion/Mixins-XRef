@@ -21,7 +21,7 @@ a {
 #navigation li {
 	margin:0;
 	padding:0;
-	padding-right: 8px;
+	padding-right: 10px;
 	display: inline;
 }
 
@@ -62,11 +62,17 @@ fieldset legend {
 	background-color: #E7E7E7;
 }
 
+/* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */ 
+tbody tr:nth-child(2n) td {
+	background-color: #F0F0F6;
+}
+
 /* warning for generic target classes and "mixed mixins" */
-/* so much specifier for "tr.dubiosInvolvedType td" to gain higher priority */
-.dubiosInvolvedType, body table tbody tr.dubiosInvolvedType td 
+/* so much specifier for "tr.dubiosInvolvedType td" to gain higher priority, still does not work */
+/* use !IMPORTANT to do the trick */
+.dubiosInvolvedType, table tbody tr.dubiosInvolvedType td 
 {
-	background-color:#E3D1A2;
+	background-color: #E3D1A2 !IMPORTANT;
 }
 
 /* colors for errorList on index site */
@@ -208,11 +214,6 @@ table tbody td {
 	padding: 3px;
 	background-color: #FFF;
 	vertical-align: top;
-}
-
-/* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */
-tbody tr:nth-child(2n) td {
-	background-color: #F0F0F6;
 }
 
 table thead tr .headerSortUp {

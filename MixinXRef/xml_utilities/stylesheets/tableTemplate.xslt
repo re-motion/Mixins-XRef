@@ -9,6 +9,7 @@
 		<xsl:param name="tableName"/>
 		<xsl:param name="emptyText"/>
 		<xsl:param name="caption">call 'tableTemplate' with-param 'caption'</xsl:param>
+    <xsl:param name="target"/>
 		
 		
 		<xsl:if test="count ( $items ) = 0">
@@ -55,6 +56,7 @@
 						<xsl:with-param name="rootMCR" select="$rootMCR" />
 						<xsl:with-param name="mixinRefs" select="$items" />
 						<xsl:with-param name="dir" select="$dir" />
+            <xsl:with-param name="target" select="$target" />
 					</xsl:call-template>
 				</xsl:when>
 			

@@ -11,6 +11,7 @@
 		<xsl:with-param name="dir">..</xsl:with-param>
 		<xsl:with-param name="tableName">mixinListTable</xsl:with-param>
 		<xsl:with-param name="emptyText">No Mixins</xsl:with-param>
+    <xsl:with-param name="target" select="$involvedType"/>
 	</xsl:call-template>
 </xsl:template>
 
@@ -18,6 +19,7 @@
 	<xsl:param name="rootMCR" />
 	<xsl:param name="mixinRefs" />
 	<xsl:param name="dir" />
+  <xsl:param name="target" />
 	
 	<xsl:variable name="mixins" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains($mixinRefs/@ref, @id) ]" />
 	
@@ -42,9 +44,17 @@
 					<td>-</td>
 					<td><xsl:value-of select="count( distinct-values( $mixins/@assembly-ref ) )" /></td>
 					<td>-</td>
-					<td><xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/Interface/@ref) )" /></td>
-					<td><xsl:value-of select="count( distinct-values( $mixinRefs/AttributeIntroductions/Attribute/@ref) )" /></td>
-					<td><xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/Member/@name) )" /></td>
+
+          <xsl:if test="$target/@is-generic-definition = false()">
+					  <td><xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/Interface/@ref) )" /></td>
+					  <td><xsl:value-of select="count( distinct-values( $mixinRefs/AttributeIntroductions/Attribute/@ref) )" /></td>
+					  <td><xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/Member/@name) )" /></td>
+          </xsl:if>
+          <xsl:if test="$target/@is-generic-definition = true()">
+            <td>n/a</td>
+            <td>n/a</td>
+            <td>n/a</td>
+          </xsl:if>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -69,8 +79,10 @@
 							</xsl:call-template>
 						</td>
 						<td><xsl:value-of select="@relation" /></td>
-						
-						<xsl:call-template name="mixinSpecificData"/>
+
+            <xsl:call-template name="mixinSpecificData">
+              <xsl:with-param name="target" select="$target" />
+            </xsl:call-template>
 					</tr>
 				</xsl:for-each>
 			</tbody>
@@ -79,34 +91,50 @@
 </xsl:template>
 
 <xsl:template name="mixinSpecificData">
+  <xsl:param name="target" />
 
-	<!-- Interface Introductions -->
-	<td>
-		<xsl:for-each select="InterfaceIntroductions/Interface">
-			<xsl:call-template name="GenerateInterfaceLink">
-				<xsl:with-param name="rootMCR" select="/" />
-				<xsl:with-param name="interfaceId" select="@ref" />
-				<xsl:with-param name="dir">..</xsl:with-param>
-			</xsl:call-template>
-		</xsl:for-each>
-	</td>
-	<!-- Attribute Introductions -->
-	<td>
-		<xsl:for-each select="AttributeIntroductions/Attribute">
-			<xsl:call-template name="GenerateAttributeLink">
-				<xsl:with-param name="rootMCR" select="/" />
-				<xsl:with-param name="attributeId" select="@ref" />
-				<xsl:with-param name="dir">..</xsl:with-param>
-			</xsl:call-template>
-		</xsl:for-each>
-	</td>
-	<!-- Member Overrides -->
-	<td>
-		<xsl:for-each select="OverridenMembers/Member">
-			<xsl:value-of select="@name" /><span class="small-method-type">[<xsl:value-of select="@type" />]</span>
-		</xsl:for-each>
-	</td>
-	
+  <!-- output mixin specific data if target is not a generic type definition -->
+  <xsl:if test="$target/@is-generic-definition = false()">
+    <!-- Interface Introductions -->
+    <td>
+      <xsl:for-each select="InterfaceIntroductions/Interface">
+        <xsl:if test="position() != 1">, </xsl:if>
+        <xsl:call-template name="GenerateInterfaceLink">
+          <xsl:with-param name="rootMCR" select="/" />
+          <xsl:with-param name="interfaceId" select="@ref" />
+          <xsl:with-param name="dir">..</xsl:with-param>
+        </xsl:call-template>
+      </xsl:for-each>
+    </td>
+    <!-- Attribute Introductions -->
+    <td>
+      <xsl:for-each select="AttributeIntroductions/Attribute">
+        <xsl:if test="position() != 1">, </xsl:if>
+        <xsl:call-template name="GenerateAttributeLink">
+          <xsl:with-param name="rootMCR" select="/" />
+          <xsl:with-param name="attributeId" select="@ref" />
+          <xsl:with-param name="dir">..</xsl:with-param>
+        </xsl:call-template>
+      </xsl:for-each>
+    </td>
+    <!-- Member Overrides -->
+    <td>
+      <xsl:for-each select="OverridenMembers/Member">
+        <xsl:if test="position() != 1">, </xsl:if>
+        <xsl:value-of select="@name" />
+        <span class="small-method-type">
+          [<xsl:value-of select="@type" />]
+        </span>
+      </xsl:for-each>
+    </td>
+  </xsl:if>
+
+  <xsl:if test="$target/@is-generic-definition = true()">
+    <td class="dubiosInvolvedType">n/a</td>
+    <td class="dubiosInvolvedType">n/a</td>
+    <td class="dubiosInvolvedType">n/a</td>
+  </xsl:if>
+  
 </xsl:template>
 
 </xsl:stylesheet>
