@@ -14,7 +14,7 @@ namespace MixinXRef.UnitTests
     public void GetAssemblies_WithoutNonApplicationAssemblyAttribute ()
     {
       const string assemblyDirectory = "assemblyTestDirectory";
-      string[] assemblyFiles = { "nunit.framework.dll", "Remotion.dll", "Remotion.Mixins.Persistent.Signed.dll", "MixinXRef.exe" };
+      string[] assemblyFiles = { "nunit.framework.dll", "Remotion.dll", "MixinXRef.exe" };
 
       // delete whole test directory if present
       if (Directory.Exists (assemblyDirectory))
@@ -26,6 +26,9 @@ namespace MixinXRef.UnitTests
       // copy assembly files
       foreach (var file in assemblyFiles)
         File.Copy (file, Path.Combine (assemblyDirectory, file));
+
+      // add a NonApplicationAssembly manually from bin\Debug\TestDomain
+      File.Copy (@"TestDomain\Remotion.Mixins.Persistent.Signed.dll", Path.Combine (assemblyDirectory, "Remotion.Mixins.Persistent.Signed.dll"));
 
       // load assemblies from directory
       var assemblyBuilder = new AssemblyBuilder (assemblyDirectory);

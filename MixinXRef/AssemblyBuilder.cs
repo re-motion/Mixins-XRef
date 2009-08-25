@@ -32,11 +32,10 @@ namespace MixinXRef
       dlls.CopyTo (assemblyFiles, 0);
       exes.CopyTo (assemblyFiles, dlls.Length);
 
-      var assemblies = new List<Assembly>();
+      var assemblies = new Assembly[assemblyFiles.Length];
       for (int i = 0; i < assemblyFiles.Length; i++)
       {
-        var assembly = Assembly.LoadFile (assemblyFiles[i]);
-        assemblies.Add(assembly);
+        assemblies[i] = Assembly.LoadFile(assemblyFiles[i]);
       }
 
       return assemblies.Where(a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute),false)).ToArray();
