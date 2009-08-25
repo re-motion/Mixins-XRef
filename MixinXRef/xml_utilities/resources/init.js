@@ -1,7 +1,14 @@
 $(document).ready(function() {
+
+    /* changing default settings for tablesorterPager */
+    $.tablesorterPager.defaults.size = 30;
+    // fixed position created issues in different browsers
+    $.tablesorterPager.defaults.positionFixed = false;
+
     initTableSorter();
     setSelectedIndexClass();
     initTreeView();
+    
     // internet explorer doesn't like collapsing
     if (!jQuery.browser.msie) prepareCollapsing();
 });
