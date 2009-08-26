@@ -18,7 +18,10 @@
 		</xsl:if>
 		
 		<xsl:if test="count ( $items ) > 0">
-			<div id="overlay">Please wait...</div>
+      <!-- do not output "overlay" on non-index sites -->
+      <xsl:if test="$dir = '.'">
+			  <div id="overlay">Please wait...</div>
+      </xsl:if>
 			<xsl:choose>
         <!-- assembly table (only on index site) -->
         <xsl:when test="$tableName = 'assemblyTable'">
@@ -80,19 +83,21 @@
 
       <xsl:if test="$dir = '.'">
         <div class="pager">
-          <form>
-            <img src="{$dir}/resources/images/first.png" class="first"/> 
-            <img src="{$dir}/resources/images/prev.png" class="prev"/> 
-            <input type="text" class="pagedisplay" disabled="disabled" size="8"/> 
-            <img src="{$dir}/resources/images/next.png" class="next"/> 
-            <img src="{$dir}/resources/images/last.png" class="last"/> 
-            <select class="pagesize">
-              <option value="10">10</option>
-              <option value="30">30</option>
-              <option  value="50">50</option>
-              <option  value="100">100</option>
-              <option  value="32000">all</option>
-            </select>
+          <form action=".">
+            <div> <!-- w3c conform! -->
+              <img src="{$dir}/resources/images/first.png" class="first" alt="First"/> 
+              <img src="{$dir}/resources/images/prev.png" class="prev" alt="Previous"/> 
+              <input type="text" class="pagedisplay" size="8"/> 
+              <img src="{$dir}/resources/images/next.png" class="next" alt="Next"/> 
+              <img src="{$dir}/resources/images/last.png" class="last" alt="Last"/> 
+              <select class="pagesize">
+                <option value="10">10</option>
+                <option value="30">30</option>
+                <option  value="50">50</option>
+                <option  value="100">100</option>
+                <option  value="32000">all</option>
+              </select>
+            </div>
           </form>
         </div>
       </xsl:if>
