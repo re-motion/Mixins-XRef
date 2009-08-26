@@ -83,7 +83,7 @@
 
       <xsl:if test="$dir = '.'">
         <div class="pager">
-          <form action=".">
+          <form action="">
             <div> <!-- w3c conform! -->
               <img src="{$dir}/resources/images/first.png" class="first" alt="First"/> 
               <img src="{$dir}/resources/images/prev.png" class="prev" alt="Previous"/> 
