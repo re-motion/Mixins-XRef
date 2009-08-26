@@ -59,11 +59,23 @@ function initTableSorter() {
         var rowCount = $(this).find("tbody tr").length;
         /* pager: only on index sites with a table with more than 30 rows */
         if (rowCount > 30 && onIndexSite()) {
+
+            $("div.pager select.pagesize").bind("change", function() {
+                tablesorterCookieJar.set(getCookieName() + '_pagesize', $(this).attr("value"));
+            });
+
+            var pageSize = tablesorterCookieJar.get(getCookieName() + '_pagesize');
+
+            if (pageSize == undefined) pageSize = 30;
+            $("div.pager select.pagesize").attr("value", pageSize);
+
             $(this).tablesorterPager({
                 container: $(".pager"),
-                size: 30,
+                size: pageSize,
                 positionFixed: false
             });
+
+
         } else {
             $(".pager").hide();
         }

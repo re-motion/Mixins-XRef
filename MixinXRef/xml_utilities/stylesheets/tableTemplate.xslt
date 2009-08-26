@@ -88,7 +88,7 @@
             <img src="{$dir}/resources/images/last.png" class="last"/> 
             <select class="pagesize">
               <option value="10">10</option>
-              <option selected="selected"  value="30">30</option>
+              <option value="30">30</option>
               <option  value="50">50</option>
               <option  value="100">100</option>
               <option  value="32000">all</option>
