@@ -67,6 +67,12 @@ function initTableSorter() {
             var pageSize = tablesorterCookieJar.get(getCookieName() + '_pagesize');
             if (pageSize == undefined) pageSize = 30;
             $("div.pager select.pagesize").attr("value", pageSize);
+            /* allow the user to enter the page side by hand */
+            $("form").bind("submit", function() {
+                var newPageNr = parseInt($("div.pager input.pagedisplay").attr("value")) - 1;
+                var tableId = ($("table").attr("id"));
+                tablesorterCookieJar.set(tableId + "_currentPage", newPageNr);
+            });
 			
 			/* current page */
 			var currentPage = tablesorterCookieJar.get(this.id + "_currentPage");
