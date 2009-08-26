@@ -5,6 +5,7 @@
 <xsl:template name="tableTemplate">
 		<xsl:param name="rootMCR"/>
 		<xsl:param name="items"/>
+    <xsl:param name="additionalItems"/>
 		<xsl:param name="dir"/>
 		<xsl:param name="tableName"/>
 		<xsl:param name="emptyText"/>
@@ -45,6 +46,7 @@
 					<xsl:call-template name="attributeListTable">
 						<xsl:with-param name="rootMCR" select="$rootMCR" />
 						<xsl:with-param name="attributes" select="$items" />
+						<xsl:with-param name="attributeRefs" select="$additionalItems" />
 						<xsl:with-param name="dir" select="$dir" />
 					</xsl:call-template>
 				</xsl:when>
@@ -60,10 +62,16 @@
 						<xsl:with-param name="rootMCR" select="$rootMCR" />
 						<xsl:with-param name="mixinRefs" select="$items" />
 						<xsl:with-param name="dir" select="$dir" />
-            <xsl:with-param name="target" select="$target" />
+						<xsl:with-param name="target" select="$target" />
 					</xsl:call-template>
 				</xsl:when>
-			
+			<xsl:when test="$tableName = 'attributeArgumentListTable'">
+				<xsl:call-template name="attributeArgumentListTable">
+					<xsl:with-param name="rootMCR" select="$rootMCR"/>
+					<xsl:with-param name="arguments" select="$items"/>
+				</xsl:call-template>
+			</xsl:when>
+						
 				<!-- fail fast -->
 				<xsl:otherwise>
 					<xsl:message terminate="yes" >table template rule '<xsl:value-of select="$tableName" />' could not be found</xsl:message>
