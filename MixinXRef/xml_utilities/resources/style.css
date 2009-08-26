@@ -199,6 +199,15 @@ table table {
 	min-width: 10px;
 }
 
+/* subtables cause problems;
+  they produce an unnecessary amount of cols
+  which destroy the formating
+  setting the width to 0 solves the problem
+*/
+table colgroup col{
+  width: 0 !IMPORTANT;
+}
+
 tfoot {
 	font-weight: bold;
 }
@@ -218,6 +227,14 @@ table thead tr .header {
 	background-position: center right;
 	cursor: pointer;
 	padding-right: 20px;
+}
+
+table .noSorting thead tr th {
+	background-color: #BBD5D6;
+	border: 1px solid #FFF;
+	padding: 4px;
+	cursor: default;
+  background-image: url(); 
 }
 
 table tbody td {

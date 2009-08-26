@@ -90,7 +90,7 @@
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="arguments" />
 
-	<table>
+	<table class="noSorting">
 		<caption>Arguments&#160;(<xsl:value-of select="count( $arguments )" />)</caption>
 		<thead>
 			<tr>

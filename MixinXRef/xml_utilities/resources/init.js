@@ -41,6 +41,10 @@ function initTableSorter() {
     });
 
     ts.each(function() {
+
+        if ($(this).hasClass("noSorting"))
+            return;
+
         var widgetSetting = ['cookie'];
         /* css3 selector 'nth-child()' with IE? - no way */
         if (jQuery.browser.msie)
@@ -55,11 +59,11 @@ function initTableSorter() {
         var rowCount = $(this).find("tbody tr").length;
         /* pager: only on index sites with a table with more than 30 rows */
         if (rowCount > 30 && onIndexSite()) {
-			$(this).tablesorterPager({
-				 container: $(".pager"),
-				 size: 30,
-				 positionFixed: false
-			});
+            $(this).tablesorterPager({
+                container: $(".pager"),
+                size: 30,
+                positionFixed: false
+            });
         } else {
             $(".pager").hide();
         }
@@ -114,7 +118,7 @@ function prepareCollapsing() {
 
             // internet explorer doesn't like collapsing of trees
             if (!jQuery.browser.msie) {
-                
+
                 $(this).addClass(classArray[n]);
 
                 if (classArray[n] == "hidden") {
