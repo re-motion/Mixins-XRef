@@ -66,6 +66,10 @@ fieldset legend {
 tbody tr:nth-child(2n) td {
 	background-color: #F0F0F6;
 }
+/* tr.odd -> zebra for IE, do not define in same rule (',') */ 
+tbody tr.odd td {
+	background-color: #F0F0F6;
+}
 
 /* warning for generic target classes and "mixed mixins" */
 /* so much specifier for "tr.dubiosInvolvedType td" to gain higher priority, still does not work */
@@ -87,7 +91,7 @@ tbody tr:nth-child(2n) td {
 
 /* method type in mixin table -> member overrides */
 .small-method-type {
-	font-size: 80%;
+	font-size: 70%;
 	vertical-align: top;
 }
 

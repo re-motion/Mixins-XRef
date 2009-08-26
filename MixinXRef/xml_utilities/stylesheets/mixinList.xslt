@@ -98,6 +98,7 @@
     <!-- Interface Introductions -->
     <td>
       <xsl:for-each select="InterfaceIntroductions/Interface">
+        <xsl:sort select="/MixinXRefReport/Interfaces/Interface[@id = current()/@ref]/@name"/>
         <xsl:if test="position() != 1">, </xsl:if>
         <xsl:call-template name="GenerateInterfaceLink">
           <xsl:with-param name="rootMCR" select="/" />
@@ -109,6 +110,7 @@
     <!-- Attribute Introductions -->
     <td>
       <xsl:for-each select="AttributeIntroductions/Attribute">
+        <xsl:sort select="/MixinXRefReport/Attributes/Attribute[@id = current()/@ref]/@name"/>
         <xsl:if test="position() != 1">, </xsl:if>
         <xsl:call-template name="GenerateAttributeLink">
           <xsl:with-param name="rootMCR" select="/" />
@@ -120,6 +122,7 @@
     <!-- Member Overrides -->
     <td>
       <xsl:for-each select="MemberOverrides/Member">
+        <xsl:sort select="@name" />
         <xsl:if test="position() != 1">, </xsl:if>
         <xsl:value-of select="@name" />
         <span class="small-method-type">

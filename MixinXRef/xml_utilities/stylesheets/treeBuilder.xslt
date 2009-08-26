@@ -20,6 +20,7 @@
 	
 	<ul>	
 		<xsl:for-each select="$targets">
+      <xsl:sort select="@name"/>
 			<xsl:variable name="subTargets" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id]" />
 			<li>
 				<xsl:if test="exists($subTargets)">
