@@ -1,3 +1,5 @@
+// some ugly hacks included, search for 'yln' to find them
+
 (function($) {
     $.extend({
         tablesorterPager: new function() {
@@ -65,6 +67,13 @@
                 if (c.page < 0 || c.page > (c.totalPages - 1)) {
                     c.page = 0;
                 }
+				
+				// hack 'yln'
+				var tablesorterCookieJar = $.cookieJar('tablesorter', {
+        			cookie: { path: '/' }
+    			});
+				tablesorterCookieJar.set(table.id + "_currentPage", c.page);
+				// end: yln
 
                 renderTable(table, c.rowsCopy);
             }
@@ -150,6 +159,10 @@
                     $(this).trigger("appendCache");
 
                     config.size = parseInt($(".pagesize", pager).val());
+					
+					// hack 'yln'
+					renderTable(table, table.config.rowsCopy);
+					// end yln
 
                     $(config.cssFirst, pager).click(function() {
                         moveToFirstPage(table);
