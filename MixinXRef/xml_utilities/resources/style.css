@@ -190,13 +190,20 @@ table {
 	margin:10px 0pt 15px;
 	text-align:left;	
 	font-size: 16px;
-	
-	min-width: 800px;
+
+	min-width: 800px;	
 	max-width: 100%;
+}
+/* tables in tables (attribute arguments) */
+table table {
+	min-width: 10px;
 }
 
 tfoot {
 	font-weight: bold;
+}
+tfoot td {
+	background-color: #CDCDCD !IMPORTANT;
 }
 
 table thead tr th {

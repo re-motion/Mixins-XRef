@@ -80,6 +80,7 @@
 							</td>
 					</xsl:if>
 					</tr>
+          
 				</xsl:for-each>
 			</tbody>
 		</table>
@@ -109,6 +110,8 @@
 		</tfoot>
 		<tbody>
 			<xsl:for-each select="$arguments">
+        <xsl:sort select="@kind"/>
+        <xsl:sort select="@name"/>
 				<tr>
 					<td><xsl:value-of select="@kind"/></td>
 					<td><xsl:value-of select="@name"/></td>
