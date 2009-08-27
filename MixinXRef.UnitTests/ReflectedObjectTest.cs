@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
@@ -88,5 +89,35 @@ namespace MixinXRef.UnitTests
       }
     }
 
+    [Test]
+    public void IEnumerableFunctionality_OnEnumerableWrappedObject ()
+    {
+      var reflectedObject = new ReflectedObject("string");
+
+      var output = new StringBuilder (6);
+      
+      foreach (var reflectedCharacter in reflectedObject)
+      {
+        output.Append (reflectedCharacter.To<char>());
+      }
+      Assert.That(output.ToString(), Is.EqualTo("string"));
+    }
+
+    [Test]
+    public void IEnumerableFunctionality_OnNonEnumerableWrappedObject()
+    {
+      var reflectedObject = new ReflectedObject(42);
+
+      try
+      {
+        reflectedObject.GetEnumerator().MoveNext();
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (NotSupportedException notSupportedException)
+      {
+        Assert.That(notSupportedException.Message, Is.EqualTo("The reflected object 'System.Int32' is not enumerable."));
+      }
+      
+    }
   }
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Remotion.Utilities;
 
 namespace MixinXRef
 {
-  public class ReflectedObject
+  public class ReflectedObject : IEnumerable<ReflectedObject>
   {
     private readonly object _wrappedObject;
 
@@ -48,6 +50,28 @@ namespace MixinXRef
           parameters[i] = parameter.To<object>();
       }
       return parameters;
+    }
+
+    public IEnumerator<ReflectedObject> GetEnumerator ()
+    {
+      var wrappedObjectAsEnumerable = _wrappedObject as IEnumerable;
+
+      if (wrappedObjectAsEnumerable != null)
+      {
+        foreach (var item in wrappedObjectAsEnumerable)
+        {
+          yield return new ReflectedObject(item);
+        }
+      }
+      else
+      {
+        throw new NotSupportedException(String.Format("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
+      }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator ()
+    {
+      return GetEnumerator();
     }
   }
 }
