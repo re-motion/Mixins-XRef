@@ -1,7 +1,6 @@
 using System;
 using System.Xml.Linq;
 using Remotion.Mixins.Validation;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -26,11 +25,11 @@ namespace MixinXRef
         topLevelExceptionElement.Add (
             new XElement (
                 "ValidationLog",
-                new XAttribute("number-of-rules-executed", validationException.ValidationLog.GetNumberOfRulesExecuted()),
-                new XAttribute("number-of-failures", validationException.ValidationLog.GetNumberOfFailures()),
-                new XAttribute("number-of-unexpected-exceptions", validationException.ValidationLog.GetNumberOfUnexpectedExceptions()),
-                new XAttribute("number-of-warnings", validationException.ValidationLog.GetNumberOfWarnings()),
-                new XAttribute("number-of-successes", validationException.ValidationLog.GetNumberOfSuccesses())
+                new XAttribute ("number-of-rules-executed", validationException.ValidationLog.GetNumberOfRulesExecuted()),
+                new XAttribute ("number-of-failures", validationException.ValidationLog.GetNumberOfFailures()),
+                new XAttribute ("number-of-unexpected-exceptions", validationException.ValidationLog.GetNumberOfUnexpectedExceptions()),
+                new XAttribute ("number-of-warnings", validationException.ValidationLog.GetNumberOfWarnings()),
+                new XAttribute ("number-of-successes", validationException.ValidationLog.GetNumberOfSuccesses())
                 )
             );
         validationErrors.Add (topLevelExceptionElement);

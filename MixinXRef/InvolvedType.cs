@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Remotion.Mixins.Context;
 using Remotion.Utilities;
-using System.Linq;
 
 namespace MixinXRef
 {
@@ -10,7 +10,7 @@ namespace MixinXRef
   {
     private readonly Type _realType;
     private ClassContext _classContext;
-    private readonly IList<Type> _targetTypes = new List<Type> ();
+    private readonly IList<Type> _targetTypes = new List<Type>();
 
     public InvolvedType (Type realType)
     {

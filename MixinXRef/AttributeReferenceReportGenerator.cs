@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using Remotion.Mixins;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -36,7 +34,8 @@ namespace MixinXRef
 
     private XElement GenerateAttributeReference (CustomAttributeData attribute)
     {
-      var attributeElement = new XElement ("Attribute", new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (attribute.Constructor.DeclaringType)));
+      var attributeElement = new XElement (
+          "Attribute", new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (attribute.Constructor.DeclaringType)));
 
       for (int i = 0; i < attribute.ConstructorArguments.Count; i++)
       {
@@ -47,7 +46,8 @@ namespace MixinXRef
 
       foreach (var namedArgument in attribute.NamedArguments)
       {
-        attributeElement.Add (GenerateParameterElement ("named", namedArgument.TypedValue.ArgumentType, namedArgument.MemberInfo.Name, namedArgument.TypedValue.Value));
+        attributeElement.Add (
+            GenerateParameterElement ("named", namedArgument.TypedValue.ArgumentType, namedArgument.MemberInfo.Name, namedArgument.TypedValue.Value));
       }
 
       return attributeElement;
@@ -55,17 +55,17 @@ namespace MixinXRef
 
     private XElement GenerateParameterElement (string kind, Type type, string name, object value)
     {
-      var demultiplexedValue = RecursiveToString(type, value);
+      var demultiplexedValue = RecursiveToString (type, value);
 
       return new XElement (
           "Argument",
           new XAttribute ("kind", kind),
           new XAttribute ("type", type.Name),
           new XAttribute ("name", name),
-          new XAttribute("value", demultiplexedValue));
+          new XAttribute ("value", demultiplexedValue));
     }
 
-    private string RecursiveToString(Type argumentType, object argumentValue)
+    private string RecursiveToString (Type argumentType, object argumentValue)
     {
       if (!argumentType.IsArray)
         return argumentValue.ToString();
@@ -75,9 +75,9 @@ namespace MixinXRef
       StringBuilder concatenatedValues = new StringBuilder ("{");
       for (int i = 0; i < valueCollection.Count; i++)
       {
-        if(i != 0)
+        if (i != 0)
           concatenatedValues.Append (", ");
-        concatenatedValues.Append(RecursiveToString(valueCollection[i].ArgumentType, valueCollection[i].Value));
+        concatenatedValues.Append (RecursiveToString (valueCollection[i].ArgumentType, valueCollection[i].Value));
       }
       concatenatedValues.Append ("}");
 

@@ -4,7 +4,6 @@ using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Mixins.Validation;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -18,14 +17,15 @@ namespace MixinXRef
     private readonly ErrorAggregator<ConfigurationException> _configurationError;
     private readonly ErrorAggregator<ValidationException> _validationErrors;
 
-    public MixinReferenceReportGenerator (InvolvedType involvedType, 
-      MixinConfiguration mixinConfiguration, 
-      IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-      IIdentifierGenerator<Type> interfaceIdentifierGenerator,
-      IIdentifierGenerator<Type> attributeIdentifierGenerator,
-      ErrorAggregator<ConfigurationException> configurationError,
-      ErrorAggregator<ValidationException> validationErrors
-      )
+    public MixinReferenceReportGenerator (
+        InvolvedType involvedType,
+        MixinConfiguration mixinConfiguration,
+        IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
+        IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+        IIdentifierGenerator<Type> attributeIdentifierGenerator,
+        ErrorAggregator<ConfigurationException> configurationError,
+        ErrorAggregator<ValidationException> validationErrors
+        )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -50,16 +50,16 @@ namespace MixinXRef
         return null;
 
       return new XElement (
-        "Mixins",
-        from mixin in _involvedType.ClassContext.Mixins
-        select GenerateMixinElement(mixin));
+          "Mixins",
+          from mixin in _involvedType.ClassContext.Mixins
+          select GenerateMixinElement (mixin));
     }
 
     private XElement GenerateMixinElement (MixinContext mixinContext)
     {
       var mixinElement = new XElement (
           "Mixin",
-          new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(mixinContext.MixinType)),
+          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.MixinType)),
           new XAttribute ("relation", mixinContext.MixinKind)
           );
 
@@ -80,7 +80,7 @@ namespace MixinXRef
         }
         catch (ConfigurationException configurationException)
         {
-          _configurationError.AddException(configurationException);
+          _configurationError.AddException (configurationException);
         }
         catch (ValidationException validationException)
         {

@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Collections;
 using Remotion.Mixins;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {

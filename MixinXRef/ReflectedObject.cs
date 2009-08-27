@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using Remotion.Utilities;
 using System.Linq;
+using System.Reflection;
 
 namespace MixinXRef
 {
@@ -20,7 +19,7 @@ namespace MixinXRef
 
     public T To<T> ()
     {
-      return (T)Convert.ChangeType(_wrappedObject, typeof(T));
+      return (T) Convert.ChangeType (_wrappedObject, typeof (T));
     }
 
 
@@ -29,25 +28,25 @@ namespace MixinXRef
       return InvokeMember (methodName, BindingFlags.InvokeMethod, parameters);
     }
 
-    public ReflectedObject GetProperty(string propertyName)
+    public ReflectedObject GetProperty (string propertyName)
     {
-      return InvokeMember(propertyName, BindingFlags.GetProperty, null);
+      return InvokeMember (propertyName, BindingFlags.GetProperty, null);
     }
 
-    private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
+    private ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object[] parameters)
     {
-      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, UnWrapParameters(parameters)));
+      return new ReflectedObject (_wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters)));
     }
 
-    private object[] UnWrapParameters(object[] parameters)
+    private object[] UnWrapParameters (object[] parameters)
     {
       if (parameters == null)
         return null;
 
-      for(int i = 0; i < parameters.Length; i++)
+      for (int i = 0; i < parameters.Length; i++)
       {
         var parameter = parameters[i] as ReflectedObject;
-        if(parameter != null)
+        if (parameter != null)
           parameters[i] = parameter.To<object>();
       }
       return parameters;
@@ -60,14 +59,10 @@ namespace MixinXRef
       if (wrappedObjectAsEnumerable != null)
       {
         foreach (var item in wrappedObjectAsEnumerable)
-        {
-          yield return new ReflectedObject(item);
-        }
+          yield return new ReflectedObject (item);
       }
       else
-      {
-        throw new NotSupportedException(String.Format("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
-      }
+        throw new NotSupportedException (String.Format ("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
     }
 
     IEnumerator IEnumerable.GetEnumerator ()
@@ -77,7 +72,7 @@ namespace MixinXRef
 
     public IEnumerable AsEnumerable<T> ()
     {
-      return this.Select(reflectedObject => reflectedObject.To<T>());
+      return this.Select (reflectedObject => reflectedObject.To<T>());
     }
   }
 }

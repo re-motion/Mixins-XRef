@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Utilities;
 
 
 namespace MixinXRef

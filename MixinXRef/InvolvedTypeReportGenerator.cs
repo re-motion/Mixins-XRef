@@ -4,7 +4,6 @@ using System.Text;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Mixins.Validation;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -69,7 +68,7 @@ namespace MixinXRef
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", GetCSharpLikeName (realType)),
           new XAttribute ("base", GetFullNameForBaseType (realType)),
-          new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier(realType.BaseType))),
+          new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),
@@ -119,7 +118,7 @@ namespace MixinXRef
 
       // for special generic types
       if (type.BaseType.IsGenericType)
-        return GetCSharpLikeName(type.BaseType.GetGenericTypeDefinition ());
+        return GetCSharpLikeName (type.BaseType.GetGenericTypeDefinition());
 
       // for standard types
       return type.BaseType.FullName;

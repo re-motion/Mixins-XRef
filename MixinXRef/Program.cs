@@ -4,42 +4,41 @@ using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
   public class Program
   {
-    static int Main(string[] args)
+    private static int Main (string[] args)
     {
-      var program = new Program(Console.In, Console.Out);
+      var program = new Program (Console.In, Console.Out);
 
-      var argumentCheckResult = program.CheckArguments(args);
+      var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
         return (argumentCheckResult);
 
       var assemblyDirectory = args[0];
-      var outputDirectory = Path.Combine(args[1], "MixinDoc");
-      var xmlFile = Path.Combine(outputDirectory, "MixinReport.xml");
+      var outputDirectory = Path.Combine (args[1], "MixinDoc");
+      var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      if (program.CreateOrOverrideOutputDirectory(outputDirectory) != 0)
+      if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
 
-      var assemblies = program.GetAssemblies(assemblyDirectory);
+      var assemblies = program.GetAssemblies (assemblyDirectory);
       if (assemblies == null)
         return (-4);
 
-      program.SaveXmlDocument(assemblies, xmlFile);
+      program.SaveXmlDocument (assemblies, xmlFile);
 
       int transformerExitCode;
-      using (new TimingScope("GenerateHtmlFromXml"))
+      using (new TimingScope ("GenerateHtmlFromXml"))
       {
         transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
       }
       if (transformerExitCode == 0)
       {
         // copy resources folder
-        new DirectoryInfo(@"xml_utilities\resources").CopyTo(Path.Combine(outputDirectory, "resources"));
+        new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
         Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
       }
       Console.ReadLine();
@@ -120,7 +119,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
-      using (new TimingScope("Complete SaveXmlDocument"))
+      using (new TimingScope ("Complete SaveXmlDocument"))
       {
         MixinConfiguration mixinConfiguration;
         using (new TimingScope ("BuildConfigurationFromAssemblies"))
@@ -134,15 +133,15 @@ namespace MixinXRef
           involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
         }
 
-        FullReportGenerator reportGenerator = new FullReportGenerator(assemblies, involvedTypes, mixinConfiguration);
+        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration);
 
         XDocument outputDocument;
-        using (new TimingScope("GenerateXmlDocument"))
+        using (new TimingScope ("GenerateXmlDocument"))
         {
           outputDocument = reportGenerator.GenerateXmlDocument();
         }
 
-        using (new TimingScope("Save"))
+        using (new TimingScope ("Save"))
         {
           outputDocument.Save (xmlFile);
         }

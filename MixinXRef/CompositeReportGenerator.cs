@@ -1,6 +1,5 @@
 using System;
 using System.Xml.Linq;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {

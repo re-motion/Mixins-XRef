@@ -3,7 +3,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -43,9 +42,9 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("element", element);
 
-      var normalizedElement = s_normalizeTrim.Replace (element.ToString(), " ").Replace(" <", "<").Replace("> ", ">");
+      var normalizedElement = s_normalizeTrim.Replace (element.ToString(), " ").Replace (" <", "<").Replace ("> ", ">");
 
-      return XElement.Parse(normalizedElement);
+      return XElement.Parse (normalizedElement);
     }
   }
 }

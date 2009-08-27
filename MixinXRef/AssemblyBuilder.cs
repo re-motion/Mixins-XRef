@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Remotion.Reflection;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -34,11 +32,9 @@ namespace MixinXRef
 
       var assemblies = new Assembly[assemblyFiles.Length];
       for (int i = 0; i < assemblyFiles.Length; i++)
-      {
-        assemblies[i] = Assembly.LoadFile(assemblyFiles[i]);
-      }
+        assemblies[i] = Assembly.LoadFile (assemblyFiles[i]);
 
-      return assemblies.Where(a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute),false)).ToArray();
+      return assemblies.Where (a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute), false)).ToArray();
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)

@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using Remotion.Collections;
 using Remotion.Mixins;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -52,7 +50,7 @@ namespace MixinXRef
 
       foreach (var involvedType in _involvedTypes)
       {
-        foreach (var usedInterface in involvedType.Type.GetInterfaces ())
+        foreach (var usedInterface in involvedType.Type.GetInterfaces())
           allInterfaces.Add (usedInterface, involvedType.Type);
       }
 
@@ -73,8 +71,8 @@ namespace MixinXRef
               from implementingType in allInterfaces[usedInterface]
               select
                   new XElement (
-                      "InvolvedType",
-                      new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier(implementingType)))
+                  "InvolvedType",
+                  new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (implementingType)))
               )
           );
     }

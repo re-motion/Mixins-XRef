@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -14,7 +13,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
 
     public AssemblyReportGenerator (
-      Assembly[] assemblies,
+        Assembly[] assemblies,
         InvolvedType[] involvedTypes,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator)
@@ -29,10 +28,11 @@ namespace MixinXRef
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
     }
+
     public XElement GenerateXml ()
     {
       var assembliesElement = new XElement ("Assemblies");
-      
+
       foreach (var assembly in _assemblies)
       {
         InvolvedType[] involvedTypesForAssembly = Array.FindAll (_involvedTypes, involvedType => involvedType.Type.Assembly == assembly);

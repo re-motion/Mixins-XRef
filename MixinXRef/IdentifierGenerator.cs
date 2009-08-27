@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -23,7 +22,7 @@ namespace MixinXRef
 
     public string GetIdentifier (T item, string defaultIfNotPresent)
     {
-      return _identifiers.ContainsKey(item) ? _identifiers[item] : defaultIfNotPresent;
+      return _identifiers.ContainsKey (item) ? _identifiers[item] : defaultIfNotPresent;
     }
 
     public ReadonlyIdentifierGenerator<T> GetReadonlyIdentiferGenerator (string defaultValue)

@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Remotion.Mixins;
 using Remotion.Mixins.Definitions;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -21,19 +19,18 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-        return new XElement (
+      return new XElement (
           "MemberOverrides",
           from overridenMember in _memberDefinitions
           select GenerateOverridenMemberElement (overridenMember));
-      }
+    }
 
     private XElement GenerateOverridenMemberElement (MemberDefinitionBase overriddenMember)
     {
-      
-      return new XElement(
+      return new XElement (
           "Member",
-          new XAttribute("type", overriddenMember.MemberType),
-          new XAttribute("name", overriddenMember.Name)
+          new XAttribute ("type", overriddenMember.MemberType),
+          new XAttribute ("name", overriddenMember.Name)
           );
     }
   }
