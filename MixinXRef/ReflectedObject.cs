@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Remotion.Utilities;
 
 namespace MixinXRef
@@ -16,15 +17,13 @@ namespace MixinXRef
 
     public T To<T> ()
     {
-      try
-      {
-        return (T)Convert.ChangeType(_wrappedObject, typeof(T));
-      }
-      catch (InvalidCastException invalidCastException)
-      {
-        var message = String.Format ("Cannot convert from {0} to {1}", _wrappedObject.GetType(), typeof(T));
-        throw new InvalidCastException(message, invalidCastException);
-      }
+      return (T)Convert.ChangeType(_wrappedObject, typeof(T));
+    }
+
+
+    public ReflectedObject CallMethod (string methodName, params object[] parameters)
+    {
+      return new ReflectedObject(_wrappedObject.GetType().InvokeMember (methodName, BindingFlags.InvokeMethod, null, _wrappedObject, parameters));
     }
   }
 }
