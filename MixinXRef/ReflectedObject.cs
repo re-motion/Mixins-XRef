@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Remotion.Utilities;
+using System.Linq;
 
 namespace MixinXRef
 {
@@ -72,6 +73,11 @@ namespace MixinXRef
     IEnumerator IEnumerable.GetEnumerator ()
     {
       return GetEnumerator();
+    }
+
+    public IEnumerable AsEnumerable<T> ()
+    {
+      return this.Select(reflectedObject => reflectedObject.To<T>());
     }
   }
 }

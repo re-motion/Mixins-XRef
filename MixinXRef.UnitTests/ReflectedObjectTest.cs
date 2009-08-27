@@ -93,7 +93,6 @@ namespace MixinXRef.UnitTests
     public void IEnumerableFunctionality_OnEnumerableWrappedObject ()
     {
       var reflectedObject = new ReflectedObject("string");
-
       var output = new StringBuilder (6);
       
       foreach (var reflectedCharacter in reflectedObject)
@@ -117,7 +116,53 @@ namespace MixinXRef.UnitTests
       {
         Assert.That(notSupportedException.Message, Is.EqualTo("The reflected object 'System.Int32' is not enumerable."));
       }
+    }
+
+    [Test]
+    public void AsEnumerable ()
+    {
+      var reflectedObject = new ReflectedObject("string");
+      var output = new StringBuilder (6);
+
+      foreach(var character in reflectedObject.AsEnumerable<char>())
+      {
+        output.Append (character);
+      }
       
+      Assert.That(output.ToString(), Is.EqualTo("string"));
+    }
+
+    [Test]
+    public void AsEnumerable_NonEnumerable()
+    {
+      var reflectedObject = new ReflectedObject(42);
+      
+      try
+      {
+        reflectedObject.AsEnumerable<object>().GetEnumerator().MoveNext();
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (NotSupportedException notSupportedException)
+      {
+        Assert.That(notSupportedException.Message, Is.EqualTo("The reflected object 'System.Int32' is not enumerable."));
+      }
+    }
+
+    [Test]
+    public void AsEnumerable_EnumerableButWrongType()
+    {
+      var reflectedObject = new ReflectedObject("string");
+
+      try
+      {
+        // 'char' is convertible to 'int'!
+        reflectedObject.AsEnumerable<float>().GetEnumerator().MoveNext();
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (InvalidCastException notSupportedException)
+      {
+        Assert.That(notSupportedException.Message, Is.EqualTo("Invalid cast from 'Char' to 'Single'."));
+      }
     }
   }
 }
