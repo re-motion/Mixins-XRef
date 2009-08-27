@@ -74,5 +74,11 @@ namespace MixinXRef
     {
       return this.Select (reflectedObject => reflectedObject.To<T>());
     }
+
+    public static ReflectedObject Create (Assembly assembly, string fullName)
+    {
+      var wrappedObjectType = assembly.GetType (fullName, true);
+      return new ReflectedObject(Activator.CreateInstance (wrappedObjectType));
+    }
   }
 }

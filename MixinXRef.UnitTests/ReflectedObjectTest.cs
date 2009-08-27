@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
@@ -163,6 +164,13 @@ namespace MixinXRef.UnitTests
       {
         Assert.That(notSupportedException.Message, Is.EqualTo("Invalid cast from 'Char' to 'Single'."));
       }
+    }
+
+    [Test]
+    public void Create ()
+    {
+      var reflectedObject = ReflectedObject.Create (typeof (int).Assembly, "System.Int32");
+      Assert.That(reflectedObject.To<int>(), Is.EqualTo(0));
     }
   }
 }
