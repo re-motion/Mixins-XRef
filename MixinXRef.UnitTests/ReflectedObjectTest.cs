@@ -54,5 +54,30 @@ namespace MixinXRef.UnitTests
       }
     }
 
+    [Test]
+    public void GetProperty_ExistingProperty()
+    {
+      var reflectedObject = new ReflectedObject("string");
+      var output = reflectedObject.GetProperty("Length");
+
+      Assert.That(output.To<int>(), Is.EqualTo(6));
+    }
+
+    [Test]
+    public void GetProperty_NonExistingProperty()
+    {
+      var reflectedObject = new ReflectedObject("string");
+
+      try
+      {
+        reflectedObject.GetProperty("nonExistingProperty");
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (MissingMethodException missingMethodException)
+      {
+        Assert.That(missingMethodException.Message, Is.EqualTo("Method 'System.String.nonExistingProperty' not found."));
+      }
+    }
+
   }
 }

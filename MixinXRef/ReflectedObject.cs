@@ -25,5 +25,12 @@ namespace MixinXRef
     {
       return new ReflectedObject(_wrappedObject.GetType().InvokeMember (methodName, BindingFlags.InvokeMethod, null, _wrappedObject, parameters));
     }
+
+    public ReflectedObject GetProperty(string propertyName)
+    {
+      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(propertyName, BindingFlags.GetProperty, null, _wrappedObject, null));
+    }
+
+
   }
 }
