@@ -182,6 +182,20 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
+    public void Create_ConstructorWithInvalidArguments()
+    {
+      try
+      {
+        ReflectedObject.Create(typeof(string).Assembly, "System.String", "string constructor is not overloaded with string");
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (MissingMethodException missingMethodException)
+      {
+        Assert.That(missingMethodException.Message, Is.EqualTo("Constructor on type 'System.String' not found."));
+      }
+    }
+
+    [Test]
     public void Create_ConstructorWithWrappedArguments()
     {
       var reflectedObject = ReflectedObject.Create(typeof(string).Assembly, "System.String", 'x', new ReflectedObject(5));
@@ -194,6 +208,23 @@ namespace MixinXRef.UnitTests
     {
       var type = ReflectedObject.GetForeignType(typeof(IInitializableMixin).Assembly, "Remotion.Mixins.IInitializableMixin");
       Assert.That (type.GetMethod ("Initialize"), Is.Not.Null);
+    }
+
+    [Test]
+    public void GetForeignType_InvalidType()
+    {
+      try
+      {
+        ReflectedObject.GetForeignType(typeof(int).Assembly, "Does.Not.Exist");
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (TypeLoadException typeLoadException)
+      {
+        var message = typeLoadException.Message;
+        Assert.That(message.Substring(0, message.IndexOf(',')), Is.EqualTo("Could not load type 'Does.Not.Exist' from assembly 'mscorlib"));
+        // only check first part of the message because of full assembly name (includes version and other components, which could change)
+      }
+
     }
 
   }
