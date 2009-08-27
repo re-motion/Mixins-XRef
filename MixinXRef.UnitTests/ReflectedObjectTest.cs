@@ -189,5 +189,12 @@ namespace MixinXRef.UnitTests
       Assert.That(reflectedObject.To<string>(), Is.EqualTo(expectedOutput));
     }
 
+    [Test]
+    public void GetForeignType()
+    {
+      var type = ReflectedObject.GetForeignType(typeof(IInitializableMixin).Assembly, "Remotion.Mixins.IInitializableMixin");
+      Assert.That (type.GetMethod ("Initialize"), Is.Not.Null);
+    }
+
   }
 }

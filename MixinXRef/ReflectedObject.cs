@@ -61,6 +61,11 @@ namespace MixinXRef
       return new ReflectedObject(Activator.CreateInstance (wrappedObjectType, UnWrapParameters(parameters)));
     }
 
+    public static Type GetForeignType(Assembly assembly, string fullName)
+    {
+      return assembly.GetType (fullName, true);
+    }
+
 
 
     private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
@@ -81,5 +86,6 @@ namespace MixinXRef
       }
       return parameters;
     }
+
   }
 }
