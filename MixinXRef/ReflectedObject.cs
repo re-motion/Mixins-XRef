@@ -22,7 +22,6 @@ namespace MixinXRef
       return (T) Convert.ChangeType (_wrappedObject, typeof (T));
     }
 
-
     public ReflectedObject CallMethod (string methodName, params object[] parameters)
     {
       return InvokeMember (methodName, BindingFlags.InvokeMethod, parameters);
@@ -31,25 +30,6 @@ namespace MixinXRef
     public ReflectedObject GetProperty (string propertyName)
     {
       return InvokeMember (propertyName, BindingFlags.GetProperty, null);
-    }
-
-    private ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object[] parameters)
-    {
-      return new ReflectedObject (_wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters)));
-    }
-
-    private object[] UnWrapParameters (object[] parameters)
-    {
-      if (parameters == null)
-        return null;
-
-      for (int i = 0; i < parameters.Length; i++)
-      {
-        var parameter = parameters[i] as ReflectedObject;
-        if (parameter != null)
-          parameters[i] = parameter.To<object>();
-      }
-      return parameters;
     }
 
     public IEnumerator<ReflectedObject> GetEnumerator ()
@@ -75,10 +55,31 @@ namespace MixinXRef
       return this.Select (reflectedObject => reflectedObject.To<T>());
     }
 
-    public static ReflectedObject Create (Assembly assembly, string fullName)
+    public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
     {
       var wrappedObjectType = assembly.GetType (fullName, true);
-      return new ReflectedObject(Activator.CreateInstance (wrappedObjectType));
+      return new ReflectedObject(Activator.CreateInstance (wrappedObjectType, UnWrapParameters(parameters)));
+    }
+
+
+
+    private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
+    {
+      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, UnWrapParameters(parameters)));
+    }
+
+    private static object[] UnWrapParameters(object[] parameters)
+    {
+      if (parameters == null)
+        return null;
+
+      for (int i = 0; i < parameters.Length; i++)
+      {
+        var parameter = parameters[i] as ReflectedObject;
+        if (parameter != null)
+          parameters[i] = parameter.To<object>();
+      }
+      return parameters;
     }
   }
 }

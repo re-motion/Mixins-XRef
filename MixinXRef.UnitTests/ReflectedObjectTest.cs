@@ -167,10 +167,27 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void Create ()
+    public void Create_DefaultConstructor ()
     {
       var reflectedObject = ReflectedObject.Create (typeof (int).Assembly, "System.Int32");
       Assert.That(reflectedObject.To<int>(), Is.EqualTo(0));
     }
+
+    [Test]
+    public void Create_ConstructorWithArguments()
+    {
+      var reflectedObject = ReflectedObject.Create(typeof(string).Assembly, "System.String", 'x', 5);
+      var expectedOutput = new String('x', 5);
+      Assert.That(reflectedObject.To<string>(), Is.EqualTo(expectedOutput));
+    }
+
+    [Test]
+    public void Create_ConstructorWithWrappedArguments()
+    {
+      var reflectedObject = ReflectedObject.Create(typeof(string).Assembly, "System.String", 'x', new ReflectedObject(5));
+      var expectedOutput = new String('x', 5);
+      Assert.That(reflectedObject.To<string>(), Is.EqualTo(expectedOutput));
+    }
+
   }
 }
