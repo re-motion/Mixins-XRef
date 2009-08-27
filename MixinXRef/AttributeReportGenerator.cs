@@ -39,7 +39,6 @@ namespace MixinXRef
       return new XElement (
           "Attributes",
           from attribute in allAttributes.Keys
-          where attribute.Assembly != typeof (IInitializableMixin).Assembly
           select GenerateAttributeElement (attribute, allAttributes));
     }
 
@@ -50,7 +49,11 @@ namespace MixinXRef
       foreach (var involvedType in _involvedTypes)
       {
         foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
-          allAttributes.Add (attribute.GetType(), involvedType.Type);
+        {
+          if ((attribute.GetType().Assembly != typeof (IInitializableMixin).Assembly)
+              && !(allAttributes[attribute.GetType()].Contains (involvedType.Type)))
+            allAttributes.Add (attribute.GetType(), involvedType.Type);
+        }
       }
       return allAttributes;
     }
