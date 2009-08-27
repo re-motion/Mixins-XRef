@@ -13,8 +13,16 @@
 			<xsl:with-param name="targets" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains($involvedType/Targets/Target/@ref, @id)) and not(ru:contains($involvedType/Targets/Target/@ref, @base-ref)) ]" /> 
 		</xsl:call-template>
 	</xsl:if>
-</xsl:template>	
+</xsl:template>
 
+<xsl:function name="ru:GetRecursiveTreeCount">
+  <xsl:param name="rootMCR" />
+  <xsl:param name="target" />
+
+  <xsl:variable name="subTargets" select="$rootMCR/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = $target/@id]" />
+  <xsl:copy-of select="sum( for $subTarget in $subTargets return ru:GetRecursiveTreeCount($rootMCR, $subTarget) ) + 1" />
+</xsl:function>
+  
 <xsl:template name="inOrderTreeWalk">
 	<xsl:param name="targets" />
 	
@@ -24,7 +32,7 @@
 			<xsl:variable name="subTargets" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id]" />
 			<li>
 				<xsl:if test="exists($subTargets)">
-					<span><xsl:value-of select="@name"/></span><a href="{@id}.html" class="tree-link"> [link]</a>
+					<span><xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, .) - 1"/>)</span><a href="{@id}.html" class="tree-link"> [link]</a>
 					
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
