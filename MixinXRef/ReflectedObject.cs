@@ -23,12 +23,17 @@ namespace MixinXRef
 
     public ReflectedObject CallMethod (string methodName, params object[] parameters)
     {
-      return new ReflectedObject(_wrappedObject.GetType().InvokeMember (methodName, BindingFlags.InvokeMethod, null, _wrappedObject, parameters));
+      return InvokeMember (methodName, BindingFlags.InvokeMethod, parameters);
     }
 
     public ReflectedObject GetProperty(string propertyName)
     {
-      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(propertyName, BindingFlags.GetProperty, null, _wrappedObject, null));
+      return InvokeMember(propertyName, BindingFlags.GetProperty, null);
+    }
+
+    private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
+    {
+      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, parameters));
     }
 
 
