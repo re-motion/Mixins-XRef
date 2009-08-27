@@ -101,6 +101,7 @@
     <Compile Include="TestDomain\MixinDoSomething.cs" />
     <Compile Include="TestDomain\MixinWithConfigurationError.cs" />
     <Compile Include="TestDomain\ObjectWithInheritableAttribute.cs" />
+    <Compile Include="ReflectedObjectTest.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
     <Compile Include="TestDomain\TargetDoSomething.cs" />

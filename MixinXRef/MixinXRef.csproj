@@ -82,6 +82,7 @@
     <Compile Include="ReadonlyIdentifierGenerator.cs" />
     <Compile Include="RecursiveDirectoryCopy.cs" />
     <Compile Include="RecursiveExceptionReportGenerator.cs" />
+    <Compile Include="ReflectedObject.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
     <Compile Include="TimingScope.cs" />
