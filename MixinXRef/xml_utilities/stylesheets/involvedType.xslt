@@ -74,7 +74,7 @@
 	
 	<xsl:call-template name="attributeList">
 		<xsl:with-param name="rootMCR" select="/" />
-		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[AppliedTo/InvolvedType/@ref = current()/@id]" />
+		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[ru:contains(current()/Attributes/Attribute/@ref, @id)]" />
     <xsl:with-param name="attributeRefs" select="Attributes/Attribute"/>
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>

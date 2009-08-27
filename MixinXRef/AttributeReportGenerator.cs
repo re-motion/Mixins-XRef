@@ -48,7 +48,7 @@ namespace MixinXRef
 
       foreach (var involvedType in _involvedTypes)
       {
-        foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
+        foreach (var attribute in involvedType.Type.GetCustomAttributes (false))
         {
           if ((attribute.GetType().Assembly != typeof (IInitializableMixin).Assembly)
               && !(allAttributes[attribute.GetType()].Contains (involvedType.Type)))
