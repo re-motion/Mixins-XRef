@@ -33,9 +33,21 @@ namespace MixinXRef
 
     private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
     {
-      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, parameters));
+      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, UnWrapParameters(parameters)));
     }
 
+    private object[] UnWrapParameters(object[] parameters)
+    {
+      if (parameters == null)
+        return null;
 
+      for(int i = 0; i < parameters.Length; i++)
+      {
+        var parameter = parameters[i] as ReflectedObject;
+        if(parameter != null)
+          parameters[i] = parameter.To<object>();
+      }
+      return parameters;
+    }
   }
 }

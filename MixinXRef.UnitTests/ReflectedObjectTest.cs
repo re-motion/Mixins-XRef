@@ -40,6 +40,15 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
+    public void CallMethod_ExistingMethod_WithReflectedObject()
+    {
+      var reflectedObject = new ReflectedObject("stringContent");
+      var output = reflectedObject.CallMethod("IndexOf", new ReflectedObject('t'));
+
+      Assert.That(output.To<int>(), Is.EqualTo(1));
+    }
+
+    [Test]
     public void CallMethod_NonExistingMethod()
     {
       var reflectedObject = new ReflectedObject("stringContent");
