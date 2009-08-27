@@ -57,7 +57,7 @@ namespace MixinXRef
 
     public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
     {
-      var wrappedObjectType = assembly.GetType (fullName, true);
+      var wrappedObjectType = GetForeignType (assembly, fullName);
       return new ReflectedObject(Activator.CreateInstance (wrappedObjectType, UnWrapParameters(parameters)));
     }
 
