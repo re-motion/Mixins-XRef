@@ -6,9 +6,22 @@
 <xsl:template name="index">
 	<h1>Mixin Documentation Summary </h1> <h2> @<xsl:value-of select="/MixinXRefReport/@creation-time" /></h2>
 	
-	<p><xsl:value-of select="ru:GetOverallAssemblyCount(/)" /> assemblies with <xsl:value-of  select="ru:GetOverallTargetClassCount(/)"/> TargetClasses and <xsl:value-of select="ru:GetOverallMixinCount(/)" /> Mixins have been examined.</p>
+	<p>
+    <div>
+      <label>Assemblies:</label>
+      <xsl:value-of select="ru:GetOverallAssemblyCount(/)"/>
+    </div>
+    <div>
+      <label>Target classes:</label>
+      <xsl:value-of select="ru:GetOverallTargetClassCount(/)"/>
+    </div>
+    <div>
+      <label>Mixins:</label>
+      <xsl:value-of select="ru:GetOverallMixinCount(/)"/>
+    </div>
+  </p>
 	
-	<p>Use one of the index sites to start browsing. Hold down [Shift] to sort on multiple columns.</p>
+	<p>Use one of the index pages to start browsing. Hold down [Shift] to sort multiple columns.</p>
 	
 	<xsl:call-template name="errorList"/>
 

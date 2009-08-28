@@ -27,30 +27,36 @@
 
 <xsl:template name="involvedTypeDetail">
 	<h1><xsl:value-of select="@name" /></h1><h2><a href="../involvedType_index.html">[Involved Type]</a></h2>
-	
-	<div>
-		from assembly 
-		<xsl:call-template name="GenerateAssemblyLink">
-			<xsl:with-param name="rootMCR" select="/" />
-			<xsl:with-param name="assemblyId" select="@assembly-ref"/>
-			<xsl:with-param name="dir">..</xsl:with-param>
-		</xsl:call-template>
-	</div>
 
 	<fieldset>
 		<legend>Summary</legend>
-		
-		<div>Base: <span><xsl:call-template name="involvedTypeBaseLink"/></span></div>
-		
-		<xsl:if test="@is-target = true()">
-			<xsl:variable name="mixinCount" select="count( Mixins/Mixin )"/>
-			<div>This type is a Target with <xsl:value-of select="$mixinCount" /> Mixin<xsl:if test="$mixinCount > 1">s</xsl:if> applied.</div>
-		</xsl:if>
-		
-		<xsl:if test="@is-mixin = true()">
-			<xsl:variable name="targetCount" select="count( Targets/Target )"/>
-			<div>This type is a Mixin and is applied to <xsl:value-of select="$targetCount" /> Target<xsl:if test="$targetCount > 1">s</xsl:if>.</div>
-		</xsl:if>
+
+    <div>
+      <label>Namespace:</label>
+      <xsl:value-of select="@namespace"/>
+    </div>
+    <div>
+      <label>Assembly:</label>
+      <xsl:call-template name="GenerateAssemblyLink">
+        <xsl:with-param name="rootMCR" select="/" />
+        <xsl:with-param name="assemblyId" select="@assembly-ref"/>
+        <xsl:with-param name="dir">..</xsl:with-param>
+      </xsl:call-template>
+    </div>
+    <div>
+      <label>Base:</label>
+      <xsl:call-template name="involvedTypeBaseLink"/>
+    </div>
+
+    <div>
+      <label>Mixins applied:</label>
+      <xsl:value-of select="count( Mixins/Mixin )"/>
+    </div>
+
+    <div>
+      <label>Applied to:</label>
+      <xsl:value-of select="count( Targets/Target )"/>
+    </div>
 		
 		<xsl:if test="@is-generic-definition = true()">
 			<div><span class="dubiosInvolvedType">This type is a generic definition. Therefore detailed Mixin information is not available.</span></div>

@@ -11,6 +11,12 @@ a {
 	text-decoration: none;
 }
 
+/* for summary and involved type page */
+label {
+	min-width: 7em;
+ 	float: left;
+}
+
 /* horizontal navigation bar */
 #navigation {
 	margin-top:0;

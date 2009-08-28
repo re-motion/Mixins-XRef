@@ -86,9 +86,9 @@
 	<ul id="navigation">
 		<li><a href="{$dir}/index.html">Summary</a></li>
 		<li><a href="{$dir}/assembly_index.html">Assemblies</a></li>
-		<li><a href="{$dir}/involvedType_index.html">Involved Types</a></li>
-		<li><a href="{$dir}/interface_index.html">Interfaces</a></li>
-		<li><a href="{$dir}/attribute_index.html">Attributes</a></li>
+		<li><a href="{$dir}/involvedType_index.html">Involved Classes</a></li>
+		<li><a href="{$dir}/interface_index.html">Involved Interfaces</a></li>
+		<li><a href="{$dir}/attribute_index.html">Involved Attributes</a></li>
 	</ul>
 </xsl:template>
 
