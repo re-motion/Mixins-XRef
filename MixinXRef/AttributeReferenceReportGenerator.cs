@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
-using Remotion.Mixins;
+using MixinXRef.Reflection;
 
 namespace MixinXRef
 {
@@ -12,14 +12,18 @@ namespace MixinXRef
   {
     private readonly Type _type;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IRemotionReflection _remotionReflection;
 
-    public AttributeReferenceReportGenerator (Type type, IIdentifierGenerator<Type> attributeIdentifierGenerator)
+    public AttributeReferenceReportGenerator (
+        Type type, IIdentifierGenerator<Type> attributeIdentifierGenerator, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _type = type;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
+      _remotionReflection = remotionReflection;
     }
 
     public XElement GenerateXml ()
@@ -27,7 +31,7 @@ namespace MixinXRef
       return new XElement (
           "Attributes",
           from attribute in CustomAttributeData.GetCustomAttributes (_type)
-          where attribute.Constructor.DeclaringType.Assembly != typeof (IInitializableMixin).Assembly
+          where !_remotionReflection.IsInfrastructureType (attribute.Constructor.DeclaringType)
           select GenerateAttributeReference (attribute)
           );
     }

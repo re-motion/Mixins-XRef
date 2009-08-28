@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using Remotion.Mixins;
+using MixinXRef.Reflection;
 using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
@@ -10,16 +10,20 @@ namespace MixinXRef
   {
     private readonly MultiDefinitionCollection<Type, AttributeIntroductionDefinition> _attributeIntroductionDefinitions;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IRemotionReflection _remotionReflection;
 
     public AttributeIntroductionReportGenerator (
         MultiDefinitionCollection<Type, AttributeIntroductionDefinition> attributeIntroductionDefinitions,
-        IIdentifierGenerator<Type> attributeIdentifierGenerator)
+        IIdentifierGenerator<Type> attributeIdentifierGenerator,
+        IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("attributeIntroductionDefinitions", attributeIntroductionDefinitions);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _attributeIntroductionDefinitions = attributeIntroductionDefinitions;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
+      _remotionReflection = remotionReflection;
     }
 
     public XElement GenerateXml ()
@@ -27,7 +31,7 @@ namespace MixinXRef
       return new XElement (
           "AttributeIntroductions",
           from introducedAttribute in _attributeIntroductionDefinitions
-          where introducedAttribute.AttributeType.Assembly != typeof (IInitializableMixin).Assembly
+          where !_remotionReflection.IsInfrastructureType (introducedAttribute.AttributeType)
           select GenerateAttributeReferanceElement (introducedAttribute.AttributeType));
     }
 

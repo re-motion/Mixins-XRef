@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -23,7 +24,7 @@ namespace MixinXRef.UnitTests
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (Mixin1), mixinConfiguration);
-      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, new IdentifierGenerator<Type>());
+      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, new IdentifierGenerator<Type>(), new RemotionReflection());
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("AttributeIntroductions");
@@ -43,7 +44,7 @@ namespace MixinXRef.UnitTests
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (ObjectWithInheritableAttribute), mixinConfiguration);
-      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, attributeIdentifierGenerator);
+      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, attributeIdentifierGenerator, new RemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 

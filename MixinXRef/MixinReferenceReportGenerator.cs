@@ -78,7 +78,7 @@ namespace MixinXRef
           mixinElement.Add (
               new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml());
           mixinElement.Add (
-              new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator).GenerateXml());
+            new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
           mixinElement.Add (
               new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
         }
