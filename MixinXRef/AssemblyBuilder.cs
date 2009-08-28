@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Remotion.Reflection;
 
 namespace MixinXRef
 {
@@ -34,7 +33,11 @@ namespace MixinXRef
       for (int i = 0; i < assemblyFiles.Length; i++)
         assemblies[i] = Assembly.LoadFile (assemblyFiles[i]);
 
-      return assemblies.Where (a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute), false)).ToArray();
+      return assemblies
+          .Where (
+          a => !a.GetCustomAttributes (false).Any (attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute"))
+          .ToArray();
+      //return assemblies.Where (a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute), false)).ToArray();
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
