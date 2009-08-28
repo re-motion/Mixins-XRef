@@ -78,13 +78,15 @@ namespace MixinXRef
           mixinElement.Add (
               new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
         }
-        catch (ConfigurationException configurationException)
+        catch (Exception configurationOrValidationException)
         {
-          _configurationErrors.AddException (configurationException);
-        }
-        catch (ValidationException validationException)
-        {
-          _validationErrors.AddException (validationException);
+          var exceptionFullName = configurationOrValidationException.GetType().FullName;
+          if ("Remotion.Mixins.ConfigurationException" == exceptionFullName)
+            _configurationErrors.AddException((ConfigurationException) configurationOrValidationException);
+          else if ("Remotion.Mixins.Validation.ValidationException" == exceptionFullName)
+            _validationErrors.AddException((ValidationException) configurationOrValidationException);
+          else
+            throw;
         }
       }
 
