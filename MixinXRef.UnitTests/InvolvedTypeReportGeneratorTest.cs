@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests
 {
@@ -17,6 +17,7 @@ namespace MixinXRef.UnitTests
     private ErrorAggregator<Exception> _configurationError;
     private ErrorAggregator<Exception> _validationErrors;
     private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
+    private IRemotionReflection _remotionReflection;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
 
@@ -25,6 +26,7 @@ namespace MixinXRef.UnitTests
     {
       _configurationError = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
+      _remotionReflection = new RemotionReflection();
     }
 
     [Test]
@@ -81,7 +83,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ));
@@ -144,7 +147,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ),
@@ -170,7 +174,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType2, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()),
           new XElement (
@@ -195,7 +200,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType3, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ),
@@ -221,7 +227,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType4, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               )
@@ -278,7 +285,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ),
@@ -304,7 +312,8 @@ namespace MixinXRef.UnitTests
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
                   _configurationError,
-                  _validationErrors).
+                  _validationErrors,
+                  _remotionReflection).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType2, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ));
@@ -335,7 +344,8 @@ namespace MixinXRef.UnitTests
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           _configurationError,
-          _validationErrors
+          _validationErrors,
+          _remotionReflection
           );
     }
   }

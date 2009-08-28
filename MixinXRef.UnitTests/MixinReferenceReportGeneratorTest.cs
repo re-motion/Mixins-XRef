@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests
 {
@@ -14,12 +14,14 @@ namespace MixinXRef.UnitTests
   {
     private ErrorAggregator<Exception> _configurationErrors;
     private ErrorAggregator<Exception> _validationErrors;
+    private IRemotionReflection _remotionReflection;
 
     [SetUp]
     public void SetUp ()
     {
       _configurationErrors = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
+      _remotionReflection = new RemotionReflection();
     }
 
     [Test]
@@ -34,7 +36,8 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           _configurationErrors,
-          _validationErrors
+          _validationErrors,
+          _remotionReflection
           );
 
       var output = reportGenerator.GenerateXml();
@@ -61,7 +64,9 @@ namespace MixinXRef.UnitTests
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           _configurationErrors,
-          _validationErrors);
+          _validationErrors,
+          _remotionReflection
+          );
 
       var output = reportGenerator.GenerateXml();
 
@@ -102,7 +107,8 @@ namespace MixinXRef.UnitTests
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           _configurationErrors,
-          _validationErrors);
+          _validationErrors,
+          _remotionReflection);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -126,7 +132,7 @@ namespace MixinXRef.UnitTests
       var targetType = new InvolvedType (typeof (UselessObject));
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
-        .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
+          .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
       targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -139,7 +145,8 @@ namespace MixinXRef.UnitTests
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           _configurationErrors,
-          _validationErrors);
+          _validationErrors,
+          _remotionReflection);
 
       reportGenerator.GenerateXml();
 
@@ -152,7 +159,7 @@ namespace MixinXRef.UnitTests
       var targetType = new InvolvedType (typeof (UselessObject));
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
-        .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
+          .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
       targetType.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -165,7 +172,8 @@ namespace MixinXRef.UnitTests
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           _configurationErrors,
-          _validationErrors);
+          _validationErrors,
+          _remotionReflection);
 
       reportGenerator.GenerateXml();
 

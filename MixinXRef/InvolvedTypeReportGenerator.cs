@@ -2,8 +2,8 @@ using System;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using Remotion.Mixins;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef
 {
@@ -17,6 +17,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
     private readonly ErrorAggregator<Exception> _configurationError;
     private readonly ErrorAggregator<Exception> _validationErrors;
+    private readonly IRemotionReflection _remotionReflection;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
 
@@ -28,7 +29,8 @@ namespace MixinXRef
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         ErrorAggregator<Exception> configurationError,
-        ErrorAggregator<Exception> validationErrors)
+        ErrorAggregator<Exception> validationErrors,
+        IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -38,6 +40,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("configurationError", configurationError);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
@@ -47,6 +50,7 @@ namespace MixinXRef
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
       _configurationError = configurationError;
       _validationErrors = validationErrors;
+      _remotionReflection = remotionReflection;
     }
 
     public XElement GenerateXml ()
@@ -85,7 +89,8 @@ namespace MixinXRef
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
               _configurationError,
-              _validationErrors).GenerateXml(),
+              _validationErrors,
+              _remotionReflection).GenerateXml(),
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );

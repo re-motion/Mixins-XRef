@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using Remotion.Mixins;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef
 {
@@ -12,17 +12,20 @@ namespace MixinXRef
     private readonly Assembly[] _assemblies;
     private readonly InvolvedType[] _involvedTypes;
     private readonly MixinConfiguration _mixinConfiguration;
+    private readonly IRemotionReflection _remotionReflection;
     private string _creationTime;
 
-    public FullReportGenerator (Assembly[] assemblies, InvolvedType[] involvedTypes, MixinConfiguration mixinConfiguration)
+    public FullReportGenerator (Assembly[] assemblies, InvolvedType[] involvedTypes, MixinConfiguration mixinConfiguration, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _assemblies = assemblies;
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
+      _remotionReflection = remotionReflection;
     }
 
 
@@ -66,7 +69,8 @@ namespace MixinXRef
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
           configurationErrors,
-          validationErrors);
+          validationErrors,
+          _remotionReflection);
       var interfaceReport = new InterfaceReportGenerator (
           _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (
