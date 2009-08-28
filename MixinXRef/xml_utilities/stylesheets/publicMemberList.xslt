@@ -24,6 +24,8 @@
 			<tr>
 				<th>Name</th>
 				<th>Type</th>
+        <th>Overridden</th>
+        <th>Signature</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -36,7 +38,9 @@
 			<xsl:for-each select="$members">
 				<tr>
 					<td><xsl:value-of select="@name"/></td>
-					<td><xsl:value-of select="@type"/></td>					
+					<td><xsl:value-of select="@type"/></td>
+          <td><xsl:value-of select="@overridden"/></td>
+          <td><xsl:value-of select="@signature"/></td>
 				</tr>
 			</xsl:for-each>
 		</tbody>

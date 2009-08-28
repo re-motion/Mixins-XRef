@@ -26,35 +26,39 @@ namespace MixinXRef
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
-              new XAttribute("overridden", IsOverridden(memberInfo)),
-              new XAttribute("signature", memberInfo)
+              new XAttribute ("overridden", IsOverriddenMember (memberInfo)),
+              new XAttribute ("signature", memberInfo)
               )
           );
     }
 
-    private bool IsOverridden (MemberInfo memberInfo)
+    private bool IsOverriddenMember (MemberInfo memberInfo)
     {
       var methodInfo = memberInfo as MethodInfo;
       if (methodInfo != null)
-        return (methodInfo != methodInfo.GetBaseDefinition());
+        return IsOverriddenMethod(methodInfo);
 
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
       {
-        return propertyInfo.GetGetMethod() != propertyInfo.GetGetMethod().GetBaseDefinition() ||
-               propertyInfo.GetSetMethod() != propertyInfo.GetSetMethod().GetBaseDefinition();
+        return IsOverriddenMethod (propertyInfo.GetGetMethod()) ||
+               IsOverriddenMethod (propertyInfo.GetSetMethod());
       }
 
       var eventInfo = memberInfo as EventInfo;
       if (eventInfo != null)
       {
-        return eventInfo.GetAddMethod() != eventInfo.GetAddMethod().GetBaseDefinition() ||
-               eventInfo.GetRaiseMethod() != eventInfo.GetRaiseMethod().GetBaseDefinition() ||
-               eventInfo.GetRemoveMethod() != eventInfo.GetRemoveMethod().GetBaseDefinition();
-        
+        return IsOverriddenMethod (eventInfo.GetAddMethod()) ||
+               IsOverriddenMethod (eventInfo.GetRaiseMethod()) ||
+               IsOverriddenMethod (eventInfo.GetRemoveMethod());
       }
 
       return false;
+    }
+
+    private bool IsOverriddenMethod (MethodInfo methodInfo)
+    {
+      return (methodInfo != null) && (methodInfo != methodInfo.GetBaseDefinition());
     }
 
     private bool IsSpecialName (MemberInfo memberInfo)
