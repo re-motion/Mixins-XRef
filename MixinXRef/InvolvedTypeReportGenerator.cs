@@ -16,7 +16,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
     private readonly ErrorAggregator<Exception> _configurationError;
-    private readonly ErrorAggregator<ValidationException> _validationErrors;
+    private readonly ErrorAggregator<Exception> _validationErrors;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
 
@@ -28,7 +28,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         ErrorAggregator<Exception> configurationError,
-        ErrorAggregator<ValidationException> validationErrors)
+        ErrorAggregator<Exception> validationErrors)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);

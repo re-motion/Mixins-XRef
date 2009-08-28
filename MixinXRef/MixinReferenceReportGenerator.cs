@@ -3,7 +3,6 @@ using System.Linq;
 using System.Xml.Linq;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Validation;
 
 namespace MixinXRef
 {
@@ -15,7 +14,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
     private readonly ErrorAggregator<Exception> _configurationErrors;
-    private readonly ErrorAggregator<ValidationException> _validationErrors;
+    private readonly ErrorAggregator<Exception> _validationErrors;
 
     public MixinReferenceReportGenerator (
         InvolvedType involvedType,
@@ -24,7 +23,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         ErrorAggregator<Exception> configurationErrors,
-        ErrorAggregator<ValidationException> validationErrors
+        ErrorAggregator<Exception> validationErrors
         )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
@@ -67,7 +66,7 @@ namespace MixinXRef
       {
         try
         {
-          // may throw Exception and ValidationException
+          // may throw Exception and Exception
           var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
           var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
 
@@ -78,13 +77,13 @@ namespace MixinXRef
           mixinElement.Add (
               new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
         }
-        catch (Exception configurationOrValidationException)
+        catch (Exception configurationOrException)
         {
-          var exceptionFullName = configurationOrValidationException.GetType().FullName;
+          var exceptionFullName = configurationOrException.GetType().FullName;
           if ("Remotion.Mixins.ConfigurationException" == exceptionFullName)
-            _configurationErrors.AddException(configurationOrValidationException);
+            _configurationErrors.AddException (configurationOrException);
           else if ("Remotion.Mixins.Validation.ValidationException" == exceptionFullName)
-            _validationErrors.AddException((ValidationException) configurationOrValidationException);
+            _validationErrors.AddException (configurationOrException);
           else
             throw;
         }

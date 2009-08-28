@@ -53,7 +53,7 @@ namespace MixinXRef
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
       var configurationErrors = new ErrorAggregator<Exception>();
-      var validationErrors = new ErrorAggregator<ValidationException>();
+      var validationErrors = new ErrorAggregator<Exception>();
 
       var assemblyReport = new AssemblyReportGenerator (
           _assemblies, _involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);

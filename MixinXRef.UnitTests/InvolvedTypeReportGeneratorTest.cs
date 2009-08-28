@@ -15,7 +15,7 @@ namespace MixinXRef.UnitTests
   public class InvolvedTypeReportGeneratorTest
   {
     private ErrorAggregator<Exception> _configurationError;
-    private ErrorAggregator<ValidationException> _validationErrors;
+    private ErrorAggregator<Exception> _validationErrors;
     private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
@@ -24,7 +24,7 @@ namespace MixinXRef.UnitTests
     public void SetUp ()
     {
       _configurationError = new ErrorAggregator<Exception>();
-      _validationErrors = new ErrorAggregator<ValidationException>();
+      _validationErrors = new ErrorAggregator<Exception>();
     }
 
     [Test]
