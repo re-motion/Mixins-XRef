@@ -29,7 +29,7 @@ namespace MixinXRef.UnitTests.Reflection
         Assert.Fail ("expected exception not thrown");
       } catch(InvalidCastException invalidCastException)
       {
-        Assert.That (invalidCastException.Message, Is.EqualTo ("Invalid cast from 'System.String' to 'System.IDisposable'."));
+        Assert.That(invalidCastException.Message, Is.EqualTo("Unable to cast object of type 'System.String' to type 'System.IDisposable'."));
       }
     }
 
@@ -163,7 +163,7 @@ namespace MixinXRef.UnitTests.Reflection
       }
       catch (InvalidCastException notSupportedException)
       {
-        Assert.That(notSupportedException.Message, Is.EqualTo("Invalid cast from 'Char' to 'Single'."));
+        Assert.That(notSupportedException.Message, Is.EqualTo("Specified cast is not valid."));
       }
     }
 

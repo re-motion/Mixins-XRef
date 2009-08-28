@@ -80,7 +80,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("ref", "0"),
               new XAttribute ("relation", "Extending"),
               new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, interfaceIdentifierGenerator).GenerateXml(),
-              new AttributeIntroductionReportGenerator (mixinDefinition.AttributeIntroductions, attributeIdentifierGenerator, new RemotionReflection()).GenerateXml(),
+              new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, new RemotionReflection()).GenerateXml(),
               new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml()
               ));
 

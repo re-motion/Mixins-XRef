@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
 using Remotion.Collections;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
@@ -21,7 +20,7 @@ namespace MixinXRef
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-      IRemotionReflection remotionReflection)
+        IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
@@ -54,7 +53,7 @@ namespace MixinXRef
       {
         foreach (var attribute in involvedType.Type.GetCustomAttributes (false))
         {
-          if ((!_remotionReflection.IsInfrastructureType(attribute.GetType()))
+          if ((!_remotionReflection.IsInfrastructureType (attribute.GetType()))
               && !(allAttributes[attribute.GetType()].Contains (involvedType.Type)))
             allAttributes.Add (attribute.GetType(), involvedType.Type);
         }

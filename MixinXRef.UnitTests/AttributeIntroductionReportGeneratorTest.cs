@@ -58,11 +58,11 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    private MultiDefinitionCollection<Type, AttributeIntroductionDefinition> GetAttributeIntroductions (
+    private ReflectedObject GetAttributeIntroductions (
         InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
       var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration);
-      return targetClassDefinition.GetMixinByConfiguredType (mixinType).AttributeIntroductions;
+      return new ReflectedObject(targetClassDefinition.GetMixinByConfiguredType (mixinType).AttributeIntroductions);
     }
   }
 }

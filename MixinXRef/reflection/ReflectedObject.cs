@@ -18,21 +18,21 @@ namespace MixinXRef.Reflection
     }
 
 
-    public static ReflectedObject Create(Assembly assembly, string fullName, params object[] parameters)
+    public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
     {
-      var wrappedObjectType = GetForeignType(assembly, fullName);
-      return new ReflectedObject(Activator.CreateInstance(wrappedObjectType, UnWrapParameters(parameters)));
+      var wrappedObjectType = GetForeignType (assembly, fullName);
+      return new ReflectedObject (Activator.CreateInstance (wrappedObjectType, UnWrapParameters (parameters)));
     }
 
-    public static Type GetForeignType(Assembly assembly, string fullName)
+    public static Type GetForeignType (Assembly assembly, string fullName)
     {
-      return assembly.GetType(fullName, true);
+      return assembly.GetType (fullName, true);
     }
 
 
     public T To<T> ()
     {
-      return (T) Convert.ChangeType (_wrappedObject, typeof (T));
+      return (T) _wrappedObject;
     }
 
     public ReflectedObject CallMethod (string methodName, params object[] parameters)
@@ -68,18 +68,18 @@ namespace MixinXRef.Reflection
       return this.Select (reflectedObject => reflectedObject.To<T>());
     }
 
-    public override string ToString()
+    public override string ToString ()
     {
       return _wrappedObject.ToString();
     }
 
 
-    private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
+    private ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object[] parameters)
     {
-      return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, UnWrapParameters(parameters)));
+      return new ReflectedObject (_wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters)));
     }
 
-    private static object[] UnWrapParameters(object[] parameters)
+    private static object[] UnWrapParameters (object[] parameters)
     {
       if (parameters == null)
         return null;
@@ -92,6 +92,5 @@ namespace MixinXRef.Reflection
       }
       return parameters;
     }
-
   }
 }
