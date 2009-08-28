@@ -112,7 +112,7 @@
 		<xsl:with-param name="rootMCR" select="/" />		
 		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  
 		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Involved&#160;Types</xsl:with-param>
+		<xsl:with-param name="caption">Involved&#160;Classes</xsl:with-param>
 	</xsl:call-template>
 	
 	<xsl:call-template name="interfaceList">

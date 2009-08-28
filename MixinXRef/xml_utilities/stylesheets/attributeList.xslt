@@ -75,7 +75,7 @@
 									<xsl:with-param name="items" select="$attributeRefs[ @ref = current()/@id ]/Argument"/>
 									<xsl:with-param name="dir" select="$dir"/>
 									<xsl:with-param name="tableName">attributeArgumentListTable</xsl:with-param>
-									<xsl:with-param name="emptyText">No Arguments</xsl:with-param>
+									<xsl:with-param name="emptyText">No&#160;Arguments</xsl:with-param>
 								</xsl:call-template>
 							</td>
 					</xsl:if>
