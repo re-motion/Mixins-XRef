@@ -33,7 +33,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              new XAttribute ("overridden", false)
+              new XAttribute ("overridden", false),
+              new XAttribute ("signature", "Void Dispose()")
               )
           );
 
@@ -54,7 +55,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XAttribute ("overridden", false)
+              new XAttribute ("overridden", false),
+              new XAttribute ("signature", "Void .ctor()")
               )
           );
 
@@ -75,13 +77,15 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XAttribute ("overridden", false)
+              new XAttribute ("overridden", false),
+              new XAttribute ("signature", "Void .ctor()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              new XAttribute ("overridden", true)
+              new XAttribute ("overridden", true),
+              new XAttribute ("signature", "System.String PropertyName")
               )
           );
 
