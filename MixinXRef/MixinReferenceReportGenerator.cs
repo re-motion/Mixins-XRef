@@ -3,7 +3,6 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
 using Remotion.Mixins;
-using Remotion.Mixins.Context;
 
 namespace MixinXRef
 {
@@ -56,24 +55,24 @@ namespace MixinXRef
       return new XElement (
           "Mixins",
           from mixin in _involvedType.ClassContext.Mixins
-          select GenerateMixinElement (mixin));
+          select GenerateMixinElement (new ReflectedObject(mixin)));
     }
 
-    private XElement GenerateMixinElement (MixinContext mixinContext)
+    private XElement GenerateMixinElement (ReflectedObject mixinContext)
     {
       var mixinElement = new XElement (
           "Mixin",
-          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.MixinType)),
-          new XAttribute ("relation", mixinContext.MixinKind)
+          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty("MixinType").To<Type>() )),
+          new XAttribute ("relation", mixinContext.GetProperty("MixinKind"))
           );
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
       {
         try
         {
-          // may throw Exception and Exception
+          // may throw ConfigurationException and ValidationException
           var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
-          var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
+          var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.GetProperty("MixinType").To<Type>() );
 
           mixinElement.Add (
               new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), _interfaceIdentifierGenerator).GenerateXml());
