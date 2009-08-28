@@ -8,7 +8,19 @@ namespace MixinXRef.Reflection
   {
     public bool IsNonApplicationAssembly (Assembly assembly)
     {
-      return assembly.GetCustomAttributes (false).Any (attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
+      return
+          assembly.GetCustomAttributes (false).Any (
+              attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
+    }
+
+    public bool IsConfigurationException (Exception exception)
+    {
+      return exception.GetType().FullName == "Remotion.Mixins.ConfigurationException";
+    }
+
+    public bool IsValidationException (Exception exception)
+    {
+      return exception.GetType().FullName == "Remotion.Mixins.Validation.ValidationException";
     }
   }
 }
