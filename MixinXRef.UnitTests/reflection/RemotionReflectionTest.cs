@@ -1,8 +1,9 @@
 using System;
+using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Reflection
 {
   [TestFixture]
   public class RemotionReflectionTest

@@ -68,7 +68,7 @@
     <Compile Include="InterfaceReportGenerator.cs" />
     <Compile Include="InterfaceIntroductionReportGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
-    <Compile Include="IRemotionReflection.cs" />
+    <Compile Include="reflection\IRemotionReflection.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
@@ -84,8 +84,8 @@
     <Compile Include="ReadonlyIdentifierGenerator.cs" />
     <Compile Include="RecursiveDirectoryCopy.cs" />
     <Compile Include="RecursiveExceptionReportGenerator.cs" />
-    <Compile Include="ReflectedObject.cs" />
-    <Compile Include="RemotionReflection.cs" />
+    <Compile Include="reflection\ReflectedObject.cs" />
+    <Compile Include="reflection\RemotionReflection.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
     <Compile Include="TimingScope.cs" />

@@ -1,10 +1,11 @@
 using System;
 using System.Text;
+using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Reflection
 {
   [TestFixture]
   public class ReflectedObjectTest

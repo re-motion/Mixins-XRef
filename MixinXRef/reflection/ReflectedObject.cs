@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public class ReflectedObject : IEnumerable<ReflectedObject>
   {

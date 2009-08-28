@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public interface IRemotionReflection
   {

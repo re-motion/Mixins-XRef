@@ -78,7 +78,7 @@
     <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
     <Compile Include="RecursiveDirectoryCopyTest.cs" />
     <Compile Include="RecursiveExceptionReportGeneratorTest.cs" />
-    <Compile Include="RemotionReflectionTest.cs" />
+    <Compile Include="reflection\RemotionReflectionTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />
@@ -105,7 +105,7 @@
     <Compile Include="TestDomain\MixinDoSomething.cs" />
     <Compile Include="TestDomain\MixinWithConfigurationError.cs" />
     <Compile Include="TestDomain\ObjectWithInheritableAttribute.cs" />
-    <Compile Include="ReflectedObjectTest.cs" />
+    <Compile Include="reflection\ReflectedObjectTest.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
     <Compile Include="TestDomain\TargetDoSomething.cs" />

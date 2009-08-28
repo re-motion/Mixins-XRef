@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public class RemotionReflection : IRemotionReflection
   {
