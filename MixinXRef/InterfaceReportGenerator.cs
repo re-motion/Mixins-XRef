@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using Remotion.Collections;
 using Remotion.Mixins;
 
@@ -13,22 +14,26 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private readonly IRemotionReflection _remotionReflection;
 
     public InterfaceReportGenerator (
         InvolvedType[] involvedTypes,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-        IIdentifierGenerator<Type> interfaceIdentifierGenerator)
+        IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+        IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
+      _remotionReflection = remotionReflection;
     }
 
 
@@ -39,7 +44,7 @@ namespace MixinXRef
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces.Keys
-          where usedInterface.Assembly != typeof (IInitializableMixin).Assembly
+          where !_remotionReflection.IsInfrastructureType(usedInterface)
           select GenerateInterfaceElement (usedInterface, allInterfaces)
           );
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -55,7 +56,8 @@ namespace MixinXRef.UnitTests
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>()
+          new IdentifierGenerator<Type>(),
+          new RemotionReflection()
           );
     }
   }

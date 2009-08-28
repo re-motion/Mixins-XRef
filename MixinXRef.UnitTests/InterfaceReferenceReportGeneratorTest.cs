@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -12,7 +13,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
-      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (object), new IdentifierGenerator<Type>());
+      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (object), new IdentifierGenerator<Type>(), new RemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 
@@ -25,7 +26,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithInterfaces ()
     {
       // TargetClass1 implements IDisposealbe
-      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (TargetClass1), new IdentifierGenerator<Type>());
+      var reportGenerator = new InterfaceReferenceReportGenerator(typeof(TargetClass1), new IdentifierGenerator<Type>(), new RemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 

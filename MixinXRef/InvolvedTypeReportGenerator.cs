@@ -79,7 +79,7 @@ namespace MixinXRef
           _summaryPicker.GetSummary (involvedType.Type),
           new MemberReportGenerator (involvedType.Type).GenerateXml(),
           new InterfaceReferenceReportGenerator (
-              involvedType.Type, _interfaceIdentifierGenerator).GenerateXml(),
+              involvedType.Type, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
           new AttributeReferenceReportGenerator (
               involvedType.Type, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (
