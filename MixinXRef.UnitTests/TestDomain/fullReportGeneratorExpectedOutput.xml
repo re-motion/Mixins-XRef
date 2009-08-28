@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-08-19 12:52:59">
+<MixinXRefReport creation-time="2009-08-28 11:06:20">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="C:\Development\MixinRef\trunk\MixinXRef.UnitTests\bin\Debug\Castle.DynamicProxy.dll" />
@@ -21,7 +21,7 @@
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
@@ -32,7 +32,7 @@
     <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes>
@@ -48,7 +48,7 @@
     <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
@@ -63,7 +63,7 @@
     <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes>
@@ -76,8 +76,8 @@
     <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="System.Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Method" name="Dispose" />
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Method" name="Dispose" overridden="false" signature="Void Dispose()" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces>
         <Interface ref="0" />
@@ -94,7 +94,7 @@
     <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="System.Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
-        <Member type="Constructor" name=".ctor" />
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
@@ -106,7 +106,7 @@
   <Interfaces>
     <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable">
       <PublicMembers>
-        <Member type="Method" name="Dispose" />
+        <Member type="Method" name="Dispose" overridden="false" signature="Void Dispose()" />
       </PublicMembers>
       <ImplementedBy>
         <InvolvedType ref="4" />
