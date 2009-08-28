@@ -52,7 +52,7 @@ namespace MixinXRef
           new IdentifierPopulator<Type> (_involvedTypes.Select (it => it.Type)).GetReadonlyIdentifierGenerator ("none");
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
-      var configurationErrors = new ErrorAggregator<ConfigurationException>();
+      var configurationErrors = new ErrorAggregator<Exception>();
       var validationErrors = new ErrorAggregator<ValidationException>();
 
       var assemblyReport = new AssemblyReportGenerator (

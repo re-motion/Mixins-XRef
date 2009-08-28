@@ -12,7 +12,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_NoErrors ()
     {
-      var errorAggregator = new ErrorAggregator<ConfigurationException>();
+      var errorAggregator = new ErrorAggregator<Exception>();
       var reportGenerator = new ConfigurationErrorReportGenerator (errorAggregator);
 
       var output = reportGenerator.GenerateXml();
@@ -24,33 +24,33 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_WithErrors ()
     {
-      var errorAggregator = new ErrorAggregator<ConfigurationException>();
+      var errorAggregator = new ErrorAggregator<Exception>();
 
       var innerException1 = SetUpExceptionWithDummyStackTrace ("inner exception", null);
-      var configurationException1 = SetUpExceptionWithDummyStackTrace("test configuration exception 1", innerException1);
-      var configurationException2 = SetUpExceptionWithDummyStackTrace("test configuration excpetion 2", null);
+      var Exception1 = SetUpExceptionWithDummyStackTrace("test configuration exception 1", innerException1);
+      var Exception2 = SetUpExceptionWithDummyStackTrace("test configuration excpetion 2", null);
 
-      errorAggregator.AddException (configurationException1);
-      errorAggregator.AddException (configurationException2);
+      errorAggregator.AddException (Exception1);
+      errorAggregator.AddException (Exception2);
       var reportGenerator = new ConfigurationErrorReportGenerator (errorAggregator);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
           "ConfigurationErrors",
-          new RecursiveExceptionReportGenerator (configurationException1).GenerateXml(),
-          new RecursiveExceptionReportGenerator (configurationException2).GenerateXml()
+          new RecursiveExceptionReportGenerator (Exception1).GenerateXml(),
+          new RecursiveExceptionReportGenerator (Exception2).GenerateXml()
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    private ConfigurationException SetUpExceptionWithDummyStackTrace(string exceptionMessage, Exception innerException)
+    private Exception SetUpExceptionWithDummyStackTrace(string exceptionMessage, Exception innerException)
     {
       try
       {
-        throw new ConfigurationException (exceptionMessage, innerException);
+        throw new Exception (exceptionMessage, innerException);
       }
-      catch (ConfigurationException caughtException)
+      catch (Exception caughtException)
       {
         return caughtException;
       }

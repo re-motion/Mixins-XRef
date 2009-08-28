@@ -1,15 +1,14 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
   public class ConfigurationErrorReportGenerator : IReportGenerator
   {
-    private readonly ErrorAggregator<ConfigurationException> _errorAggregator;
+    private readonly ErrorAggregator<Exception> _errorAggregator;
 
-    public ConfigurationErrorReportGenerator (ErrorAggregator<ConfigurationException> errorAggregator)
+    public ConfigurationErrorReportGenerator(ErrorAggregator<Exception> errorAggregator)
     {
       ArgumentUtility.CheckNotNull ("errorAggregator", errorAggregator);
 

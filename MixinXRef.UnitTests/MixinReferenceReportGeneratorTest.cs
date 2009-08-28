@@ -12,13 +12,13 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class MixinReferenceReportGeneratorTest
   {
-    private ErrorAggregator<ConfigurationException> _configurationErrors;
+    private ErrorAggregator<Exception> _configurationErrors;
     private ErrorAggregator<ValidationException> _validationErrors;
 
     [SetUp]
     public void SetUp ()
     {
-      _configurationErrors = new ErrorAggregator<ConfigurationException>();
+      _configurationErrors = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<ValidationException>();
     }
 

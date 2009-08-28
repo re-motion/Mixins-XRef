@@ -14,7 +14,7 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private ErrorAggregator<ConfigurationException> _configurationError;
+    private ErrorAggregator<Exception> _configurationError;
     private ErrorAggregator<ValidationException> _validationErrors;
     private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
 
@@ -23,7 +23,7 @@ namespace MixinXRef.UnitTests
     [SetUp]
     public void SetUp ()
     {
-      _configurationError = new ErrorAggregator<ConfigurationException>();
+      _configurationError = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<ValidationException>();
     }
 

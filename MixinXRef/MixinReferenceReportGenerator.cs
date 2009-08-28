@@ -14,7 +14,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly ErrorAggregator<ConfigurationException> _configurationErrors;
+    private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<ValidationException> _validationErrors;
 
     public MixinReferenceReportGenerator (
@@ -23,7 +23,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        ErrorAggregator<ConfigurationException> configurationErrors,
+        ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<ValidationException> validationErrors
         )
     {
@@ -67,7 +67,7 @@ namespace MixinXRef
       {
         try
         {
-          // may throw ConfigurationException and ValidationException
+          // may throw Exception and ValidationException
           var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
           var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
 
@@ -82,7 +82,7 @@ namespace MixinXRef
         {
           var exceptionFullName = configurationOrValidationException.GetType().FullName;
           if ("Remotion.Mixins.ConfigurationException" == exceptionFullName)
-            _configurationErrors.AddException((ConfigurationException) configurationOrValidationException);
+            _configurationErrors.AddException(configurationOrValidationException);
           else if ("Remotion.Mixins.Validation.ValidationException" == exceptionFullName)
             _validationErrors.AddException((ValidationException) configurationOrValidationException);
           else
