@@ -32,7 +32,8 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Method),
-              new XAttribute ("name", "Dispose")
+              new XAttribute ("name", "Dispose"),
+              new XAttribute ("overridden", false)
               )
           );
 
@@ -52,7 +53,8 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
-              new XAttribute ("name", ".ctor")
+              new XAttribute ("name", ".ctor"),
+              new XAttribute ("overridden", false)
               )
           );
 
@@ -60,7 +62,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GenerateXml_PropertyWithoutGetAndSet ()
+    public void GenerateXml_PropertyWithoutGetAndSet_Overriden ()
     {
       var reportGenerator = new MemberReportGenerator (typeof (ClassWithProperty));
 
@@ -72,12 +74,14 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
-              new XAttribute ("name", ".ctor")
+              new XAttribute ("name", ".ctor"),
+              new XAttribute ("overridden", false)
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
-              new XAttribute ("name", "PropertyName")
+              new XAttribute ("name", "PropertyName"),
+              new XAttribute ("overridden", true)
               )
           );
 

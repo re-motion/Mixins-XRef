@@ -88,6 +88,7 @@
     <Compile Include="InvolvedTypeReportGeneratorTest.cs" />
     <Compile Include="SummaryPickerTest.cs" />
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
+    <Compile Include="TestDomain\BaseClassWithProperty.cs" />
     <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />

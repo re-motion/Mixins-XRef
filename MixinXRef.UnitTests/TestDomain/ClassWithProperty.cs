@@ -2,8 +2,8 @@ using System;
 
 namespace MixinXRef.UnitTests.TestDomain
 {
-  public class ClassWithProperty
+  public class ClassWithProperty : BaseClassWithProperty
   {
-    public string PropertyName { get; set; }
+    public override string PropertyName { get; set; }
   }
 }
