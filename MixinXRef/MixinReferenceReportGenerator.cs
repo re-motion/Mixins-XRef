@@ -76,7 +76,7 @@ namespace MixinXRef
           var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.MixinType);
 
           mixinElement.Add (
-              new InterfaceIntroductionReportGenerator (mixinDefinition.InterfaceIntroductions, _interfaceIdentifierGenerator).GenerateXml());
+              new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), _interfaceIdentifierGenerator).GenerateXml());
           mixinElement.Add (
             new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
           mixinElement.Add (
