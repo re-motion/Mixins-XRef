@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins.Context;
@@ -31,7 +32,7 @@ namespace MixinXRef.UnitTests
       File.Copy (@"TestDomain\Remotion.Mixins.Persistent.Signed.dll", Path.Combine (assemblyDirectory, "Remotion.Mixins.Persistent.Signed.dll"));
 
       // load assemblies from directory
-      var assemblyBuilder = new AssemblyBuilder (assemblyDirectory);
+      var assemblyBuilder = new AssemblyBuilder (assemblyDirectory, new RemotionReflection());
       var output = assemblyBuilder.GetAssemblies ();
 
       // *.ddl in alphabetic order, then *.exe in alphabetic order

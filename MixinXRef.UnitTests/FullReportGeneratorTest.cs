@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -37,7 +38,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
-      var assemblies = new AssemblyBuilder (".").GetAssemblies();
+      var assemblies = new AssemblyBuilder (".", new RemotionReflection()).GetAssemblies();
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()

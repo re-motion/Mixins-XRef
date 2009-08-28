@@ -2,18 +2,22 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MixinXRef.Reflection;
 
 namespace MixinXRef
 {
   public class AssemblyBuilder
   {
     private readonly string _assemblyDirectory;
+    private readonly IRemotionReflection _remotionReflection;
 
-    public AssemblyBuilder (string assemblyDirectory)
+    public AssemblyBuilder (string assemblyDirectory, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _assemblyDirectory = Path.GetFullPath (assemblyDirectory);
+      _remotionReflection = remotionReflection;
 
       // register assembly reference resolver
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
@@ -33,11 +37,7 @@ namespace MixinXRef
       for (int i = 0; i < assemblyFiles.Length; i++)
         assemblies[i] = Assembly.LoadFile (assemblyFiles[i]);
 
-      return assemblies
-          .Where (
-          a => !a.GetCustomAttributes (false).Any (attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute"))
-          .ToArray();
-      //return assemblies.Where (a => !a.IsDefined (typeof (NonApplicationAssemblyAttribute), false)).ToArray();
+      return assemblies.Where (a => !_remotionReflection.IsNonApplicationAssembly(a)).ToArray();
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
 
@@ -11,7 +12,7 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
-      var program = new Program (Console.In, Console.Out);
+      var program = new Program (Console.In, Console.Out, new RemotionReflection());
 
       var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
@@ -48,14 +49,18 @@ namespace MixinXRef
 
     private readonly TextReader _input;
     private readonly TextWriter _output;
+    private readonly IRemotionReflection _remotionReflection;
 
-    public Program (TextReader input, TextWriter output)
+    public Program (TextReader input, TextWriter output, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("input", input);
       ArgumentUtility.CheckNotNull ("output", output);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+
 
       _input = input;
       _output = output;
+      _remotionReflection = remotionReflection;
     }
 
     public int CheckArguments (string[] arguments)
@@ -105,7 +110,7 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var assemblies = new AssemblyBuilder (assemblyDirectory).GetAssemblies();
+      var assemblies = new AssemblyBuilder (assemblyDirectory, _remotionReflection).GetAssemblies();
       if (assemblies.Length == 0)
       {
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);

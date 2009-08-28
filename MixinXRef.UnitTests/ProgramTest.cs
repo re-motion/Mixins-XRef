@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
@@ -12,16 +13,17 @@ namespace MixinXRef.UnitTests
         "Output directory 'existingOutputDirectory' does already exist\r\nDo you want override the directory and including files? [y/N] ";
 
     private Program _program;
-
     private TextWriter _standardOutput;
+    private IRemotionReflection _remotionReflection;
 
 
     [SetUp]
     public void SetUp ()
     {
       _standardOutput = new StringWriter();
+      _remotionReflection = new RemotionReflection();
 
-      _program = new Program (new StringReader (""), _standardOutput);
+      _program = new Program (new StringReader (""), _standardOutput, _remotionReflection);
     }
 
 
@@ -103,7 +105,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "n" for No
-      _program = new Program (new StringReader ("n"), _standardOutput);
+      _program = new Program (new StringReader ("n"), _standardOutput, _remotionReflection);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
@@ -123,7 +125,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "YES" for Yes
-      _program = new Program (new StringReader ("YES"), _standardOutput);
+      _program = new Program (new StringReader ("YES"), _standardOutput, _remotionReflection);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
@@ -157,7 +159,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (assemblyDirectory), Is.True);
 
       var output = _program.GetAssemblies (assemblyDirectory);
-      var expectedOutput = new AssemblyBuilder (assemblyDirectory).GetAssemblies();
+      var expectedOutput = new AssemblyBuilder (assemblyDirectory, _remotionReflection).GetAssemblies();
 
       Assert.That (output, Is.EqualTo (expectedOutput));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
