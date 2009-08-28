@@ -14,7 +14,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly ErrorAggregator<ConfigurationException> _configurationError;
+    private readonly ErrorAggregator<ConfigurationException> _configurationErrors;
     private readonly ErrorAggregator<ValidationException> _validationErrors;
 
     public MixinReferenceReportGenerator (
@@ -23,7 +23,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        ErrorAggregator<ConfigurationException> configurationError,
+        ErrorAggregator<ConfigurationException> configurationErrors,
         ErrorAggregator<ValidationException> validationErrors
         )
     {
@@ -32,7 +32,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("configurationError", configurationError);
+      ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
 
       _involvedType = involvedType;
@@ -40,7 +40,7 @@ namespace MixinXRef
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _configurationError = configurationError;
+      _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
     }
 
@@ -80,7 +80,7 @@ namespace MixinXRef
         }
         catch (ConfigurationException configurationException)
         {
-          _configurationError.AddException (configurationException);
+          _configurationErrors.AddException (configurationException);
         }
         catch (ValidationException validationException)
         {

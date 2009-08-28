@@ -17,6 +17,19 @@ namespace MixinXRef
       _wrappedObject = wrappedObject;
     }
 
+
+    public static ReflectedObject Create(Assembly assembly, string fullName, params object[] parameters)
+    {
+      var wrappedObjectType = GetForeignType(assembly, fullName);
+      return new ReflectedObject(Activator.CreateInstance(wrappedObjectType, UnWrapParameters(parameters)));
+    }
+
+    public static Type GetForeignType(Assembly assembly, string fullName)
+    {
+      return assembly.GetType(fullName, true);
+    }
+
+
     public T To<T> ()
     {
       return (T) Convert.ChangeType (_wrappedObject, typeof (T));
@@ -54,19 +67,6 @@ namespace MixinXRef
     {
       return this.Select (reflectedObject => reflectedObject.To<T>());
     }
-
-    public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
-    {
-      var wrappedObjectType = GetForeignType (assembly, fullName);
-      return new ReflectedObject(Activator.CreateInstance (wrappedObjectType, UnWrapParameters(parameters)));
-    }
-
-    public static Type GetForeignType(Assembly assembly, string fullName)
-    {
-      return assembly.GetType (fullName, true);
-    }
-
-
 
     private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
     {
