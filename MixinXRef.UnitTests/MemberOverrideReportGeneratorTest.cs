@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -62,10 +63,10 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    private IEnumerable<MemberDefinitionBase> GetMemberOverrides (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
+    private ReflectedObject GetMemberOverrides (InvolvedType targetType, Type mixinType, MixinConfiguration mixinConfiguration)
     {
       var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration);
-      return targetClassDefinition.GetMixinByConfiguredType (mixinType).GetAllOverrides ();
+      return new ReflectedObject(targetClassDefinition.GetMixinByConfiguredType (mixinType).GetAllOverrides ());
 
     }
   }

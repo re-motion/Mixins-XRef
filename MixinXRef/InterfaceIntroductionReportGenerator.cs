@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -28,7 +27,7 @@ namespace MixinXRef
       return new XElement (
           "InterfaceIntroductions",
           from introducedInterface in _interfaceIntroductionDefinitions
-          select GenerateInterfaceReferanceElement (introducedInterface.GetProperty("InterfaceType").To<Type>()));
+          select GenerateInterfaceReferanceElement (introducedInterface.GetProperty ("InterfaceType").To<Type>()));
     }
 
     private XElement GenerateInterfaceReferanceElement (Type introducedInterface)

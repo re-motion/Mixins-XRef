@@ -81,7 +81,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("relation", "Extending"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).GenerateXml(),
               new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, new RemotionReflection()).GenerateXml(),
-              new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml()
+              new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

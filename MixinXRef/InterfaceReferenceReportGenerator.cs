@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
@@ -12,7 +11,8 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IRemotionReflection _remotionReflection;
 
-    public InterfaceReferenceReportGenerator (Type type, IIdentifierGenerator<Type> interfaceIdentifierGenerator, IRemotionReflection remotionReflection)
+    public InterfaceReferenceReportGenerator (
+        Type type, IIdentifierGenerator<Type> interfaceIdentifierGenerator, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
@@ -28,7 +28,7 @@ namespace MixinXRef
       return new XElement (
           "Interfaces",
           from implementedInterface in _type.GetInterfaces()
-          where !_remotionReflection.IsInfrastructureType(implementedInterface)
+          where !_remotionReflection.IsInfrastructureType (implementedInterface)
           select GenerateInterfaceReference (implementedInterface)
           );
     }

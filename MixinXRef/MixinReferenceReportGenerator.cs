@@ -80,7 +80,7 @@ namespace MixinXRef
           mixinElement.Add (
             new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
           mixinElement.Add (
-              new MemberOverrideReportGenerator (mixinDefinition.GetAllOverrides()).GenerateXml());
+              new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml());
         }
         catch (Exception configurationOrException)
         {

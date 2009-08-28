@@ -1,16 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Remotion.Mixins.Definitions;
+using MixinXRef.Reflection;
+
 
 namespace MixinXRef
 {
   public class MemberOverrideReportGenerator : IReportGenerator
   {
-    private readonly IEnumerable<MemberDefinitionBase> _memberDefinitions;
+    // IEnumerable<MemberDefinitionBase>
+    private readonly ReflectedObject _memberDefinitions;
 
-    public MemberOverrideReportGenerator (IEnumerable<MemberDefinitionBase> memberDefinitions)
+    public MemberOverrideReportGenerator(ReflectedObject memberDefinitions)
     {
       ArgumentUtility.CheckNotNull ("memberDefinitions", memberDefinitions);
 
@@ -25,12 +26,12 @@ namespace MixinXRef
           select GenerateOverridenMemberElement (overridenMember));
     }
 
-    private XElement GenerateOverridenMemberElement (MemberDefinitionBase overriddenMember)
+    private XElement GenerateOverridenMemberElement(ReflectedObject overriddenMember)
     {
       return new XElement (
           "Member",
-          new XAttribute ("type", overriddenMember.MemberType),
-          new XAttribute ("name", overriddenMember.Name)
+          new XAttribute ("type", overriddenMember.GetProperty("MemberType")),
+          new XAttribute ("name", overriddenMember.GetProperty("Name"))
           );
     }
   }

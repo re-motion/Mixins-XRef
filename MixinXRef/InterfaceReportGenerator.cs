@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
 using Remotion.Collections;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
@@ -44,7 +43,7 @@ namespace MixinXRef
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces.Keys
-          where !_remotionReflection.IsInfrastructureType(usedInterface)
+          where !_remotionReflection.IsInfrastructureType (usedInterface)
           select GenerateInterfaceElement (usedInterface, allInterfaces)
           );
     }
