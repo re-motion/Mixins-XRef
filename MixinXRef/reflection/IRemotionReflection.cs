@@ -8,5 +8,6 @@ namespace MixinXRef.Reflection
     bool IsNonApplicationAssembly (Assembly assembly);
     bool IsConfigurationException (Exception exception);
     bool IsValidationException (Exception exception);
+    bool IsInfrastructureType (Type type);
   }
 }

@@ -11,13 +11,19 @@ namespace MixinXRef.UnitTests.Reflection
   [TestFixture]
   public class RemotionReflectionTest
   {
+
+    private RemotionReflection _remotionReflection;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _remotionReflection = new RemotionReflection();
+    }
     [Test]
     public void IsNonApplicationAssembly_False ()
     {
-      var remotionReflection = new RemotionReflection();
-
       var assembly = typeof (IDisposable).Assembly;
-      var output = remotionReflection.IsNonApplicationAssembly (assembly);
+      var output = _remotionReflection.IsNonApplicationAssembly (assembly);
 
       Assert.That (output, Is.False);
     }
@@ -25,11 +31,9 @@ namespace MixinXRef.UnitTests.Reflection
     [Test]
     public void IsNonApplicationAssembly_True ()
     {
-      var remotionReflection = new RemotionReflection();
-
       // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is NonApplicationAssembly
       var assembly = typeof (SafeContext).Assembly;
-      var output = remotionReflection.IsNonApplicationAssembly (assembly);
+      var output = _remotionReflection.IsNonApplicationAssembly (assembly);
 
       Assert.That (output, Is.True);
     }
@@ -37,12 +41,10 @@ namespace MixinXRef.UnitTests.Reflection
     [Test]
     public void IsConfigurationException ()
     {
-      var remotionReflection = new RemotionReflection();
-
       var configurationException = new ConfigurationException ("configurationException");
 
-      var outputTrue = remotionReflection.IsConfigurationException (configurationException);
-      var outputFalse = remotionReflection.IsConfigurationException (new Exception());
+      var outputTrue = _remotionReflection.IsConfigurationException (configurationException);
+      var outputFalse = _remotionReflection.IsConfigurationException (new Exception());
 
       Assert.That (outputTrue, Is.True);
       Assert.That (outputFalse, Is.False);
@@ -51,12 +53,20 @@ namespace MixinXRef.UnitTests.Reflection
     [Test]
     public void IsValidationException()
     {
-      var remotionReflection = new RemotionReflection();
-
       var validationException = new ValidationException (new DefaultValidationLog());
 
-      var outputTrue = remotionReflection.IsValidationException(validationException);
-      var outputFalse = remotionReflection.IsValidationException(new Exception());
+      var outputTrue = _remotionReflection.IsValidationException(validationException);
+      var outputFalse = _remotionReflection.IsValidationException(new Exception());
+
+      Assert.That(outputTrue, Is.True);
+      Assert.That(outputFalse, Is.False);
+    }
+
+    [Test]
+    public void IsInfrastructurType ()
+    {
+      var outputTrue = _remotionReflection.IsInfrastructureType (typeof (IInitializableMixin));
+      var outputFalse = _remotionReflection.IsInfrastructureType(typeof(IDisposable));
 
       Assert.That(outputTrue, Is.True);
       Assert.That(outputFalse, Is.False);

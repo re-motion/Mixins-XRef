@@ -22,5 +22,10 @@ namespace MixinXRef.Reflection
     {
       return exception.GetType().FullName == "Remotion.Mixins.Validation.ValidationException";
     }
+
+    public bool IsInfrastructureType (Type type)
+    {
+      return type.Assembly.GetName().Name == "Remotion.Interfaces";
+    }
   }
 }
