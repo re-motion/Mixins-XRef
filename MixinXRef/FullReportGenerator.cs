@@ -74,7 +74,7 @@ namespace MixinXRef
       var interfaceReport = new InterfaceReportGenerator (
           _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, interfaceIdentiferGenerator);
       var attributeReport = new AttributeReportGenerator (
-          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, attributeIdentiferGenerator);
+          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, attributeIdentiferGenerator, _remotionReflection);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (validationErrors);
 

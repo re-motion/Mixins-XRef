@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Reflection;
 using Remotion.Collections;
 using Remotion.Mixins;
 
@@ -13,22 +14,26 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private readonly IRemotionReflection _remotionReflection;
 
     public AttributeReportGenerator (
         InvolvedType[] involvedTypes,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-        IIdentifierGenerator<Type> attributeIdentifierGenerator)
+        IIdentifierGenerator<Type> attributeIdentifierGenerator,
+      IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
+      _remotionReflection = remotionReflection;
     }
 
     public XElement GenerateXml ()
@@ -49,7 +54,7 @@ namespace MixinXRef
       {
         foreach (var attribute in involvedType.Type.GetCustomAttributes (false))
         {
-          if ((attribute.GetType().Assembly != typeof (IInitializableMixin).Assembly)
+          if ((!_remotionReflection.IsInfrastructureType(attribute.GetType()))
               && !(allAttributes[attribute.GetType()].Contains (involvedType.Type)))
             allAttributes.Add (attribute.GetType(), involvedType.Type);
         }
