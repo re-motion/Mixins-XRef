@@ -14,7 +14,7 @@
 		<xsl:with-param name="additionalItems" select="$attributeRefs" />
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">attributeListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No Attributes</xsl:with-param>
+		<xsl:with-param name="emptyText">No&#160;Involved&#160;Attributes</xsl:with-param>
 	</xsl:call-template>
 	
 </xsl:template>

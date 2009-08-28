@@ -12,7 +12,7 @@
 		<xsl:with-param name="items" select="$interfaces"/>
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">interfaceListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No Interfaces</xsl:with-param>
+		<xsl:with-param name="emptyText">No&#160;Involved&#160;Interfaces</xsl:with-param>
 	</xsl:call-template>	
 	
 </xsl:template>
