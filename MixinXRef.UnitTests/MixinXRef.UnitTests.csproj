@@ -43,6 +43,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MixinXRef\lib\Remotion.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Remotion.Mixins.Persistent.Signed, Version=0.0.0.0, Culture=neutral, PublicKeyToken=a621a9e7e5c32e69, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -77,6 +78,7 @@
     <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
     <Compile Include="RecursiveDirectoryCopyTest.cs" />
     <Compile Include="RecursiveExceptionReportGeneratorTest.cs" />
+    <Compile Include="RemotionReflectionTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />
