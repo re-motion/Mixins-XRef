@@ -68,6 +68,12 @@ namespace MixinXRef
       return this.Select (reflectedObject => reflectedObject.To<T>());
     }
 
+    public override string ToString()
+    {
+      return _wrappedObject.ToString();
+    }
+
+
     private ReflectedObject InvokeMember(string memberName, BindingFlags memberType, object[] parameters)
     {
       return new ReflectedObject(_wrappedObject.GetType().InvokeMember(memberName, memberType, null, _wrappedObject, UnWrapParameters(parameters)));

@@ -227,5 +227,14 @@ namespace MixinXRef.UnitTests
 
     }
 
+    [Test]
+    public void ToString_Test()
+    {
+      const string content = "toString() for string";
+      var reflectedObject = new ReflectedObject (content);
+
+      Assert.That (reflectedObject.ToString(), Is.EqualTo (content));
+    }
+
   }
 }
