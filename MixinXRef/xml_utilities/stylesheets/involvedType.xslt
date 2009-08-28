@@ -19,14 +19,14 @@
 
 <xsl:template name="involvedTypeDetailSite">
 	<xsl:call-template name="htmlSite">
-			<xsl:with-param name="siteTitle">Involved Type Detail</xsl:with-param>
+			<xsl:with-param name="siteTitle">Involved Class Detail</xsl:with-param>
 			<xsl:with-param name="siteFileName">involvedTypes/<xsl:value-of select="@id"/>.html</xsl:with-param>
 			<xsl:with-param name="bodyContentTemplate">involvedTypeDetail</xsl:with-param>
 	</xsl:call-template>
 </xsl:template>
 
 <xsl:template name="involvedTypeDetail">
-	<h1><xsl:value-of select="@name" /></h1><h2><a href="../involvedType_index.html">[Involved Type]</a></h2>
+	<h1><xsl:value-of select="@name" /></h1><h2><a href="../involvedType_index.html">[Involved Class]</a></h2>
 
 	<fieldset>
 		<legend>Summary</legend>
