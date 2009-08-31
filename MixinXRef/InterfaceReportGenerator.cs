@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Collections;
 
 namespace MixinXRef
 {
@@ -48,20 +48,25 @@ namespace MixinXRef
           );
     }
 
-    private MultiDictionary<Type, Type> GetAllInterfaces ()
+    private Dictionary<Type, List<Type>> GetAllInterfaces ()
     {
-      var allInterfaces = new MultiDictionary<Type, Type>();
+      var allInterfaces = new Dictionary<Type, List<Type>>();
 
       foreach (var involvedType in _involvedTypes)
       {
         foreach (var usedInterface in involvedType.Type.GetInterfaces())
-          allInterfaces.Add (usedInterface, involvedType.Type);
+        {
+          if (!allInterfaces.ContainsKey (usedInterface))
+            allInterfaces.Add (usedInterface, new List<Type>());
+
+          allInterfaces[usedInterface].Add (involvedType.Type);
+        }
       }
 
       return allInterfaces;
     }
 
-    private XElement GenerateInterfaceElement (Type usedInterface, MultiDictionary<Type, Type> allInterfaces)
+    private XElement GenerateInterfaceElement (Type usedInterface, Dictionary<Type, List<Type>> allInterfaces)
     {
       return new XElement (
           "Interface",
