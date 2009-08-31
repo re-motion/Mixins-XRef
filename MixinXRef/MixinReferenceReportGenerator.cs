@@ -70,7 +70,7 @@ namespace MixinXRef
       {
         try
         {
-          // may throw ConfigurationException and ValidationException
+          // may throw ConfigurationException or ValidationException
           var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
           var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.GetProperty("MixinType").To<Type>() );
 
@@ -81,12 +81,12 @@ namespace MixinXRef
           mixinElement.Add (
               new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml());
         }
-        catch (Exception configurationOrException)
+        catch (Exception configurationOrValidationException)
         {
-          if (_remotionReflection.IsConfigurationException (configurationOrException))
-            _configurationErrors.AddException (configurationOrException);
-          else if (_remotionReflection.IsValidationException (configurationOrException))
-            _validationErrors.AddException (configurationOrException);
+          if (_remotionReflection.IsConfigurationException (configurationOrValidationException))
+            _configurationErrors.AddException (configurationOrValidationException);
+          else if (_remotionReflection.IsValidationException (configurationOrValidationException))
+            _validationErrors.AddException (configurationOrValidationException);
           else
             throw;
         }
