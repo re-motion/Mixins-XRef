@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Collections;
 
 namespace MixinXRef
 {
@@ -45,23 +45,30 @@ namespace MixinXRef
           select GenerateAttributeElement (attribute, allAttributes));
     }
 
-    private MultiDictionary<Type, Type> GetAllAttributes ()
+    private Dictionary<Type, List<Type>> GetAllAttributes ()
     {
-      var allAttributes = new MultiDictionary<Type, Type>();
+      var allAttributes = new Dictionary<Type, List<Type>>();
 
       foreach (var involvedType in _involvedTypes)
       {
         foreach (var attribute in involvedType.Type.GetCustomAttributes (false))
         {
-          if ((!_remotionReflection.IsInfrastructureType (attribute.GetType()))
-              && !(allAttributes[attribute.GetType()].Contains (involvedType.Type)))
-            allAttributes.Add (attribute.GetType(), involvedType.Type);
+          var attributeType = attribute.GetType();
+          if (!_remotionReflection.IsInfrastructureType (attributeType))
+          {
+            if (!allAttributes.ContainsKey (attributeType))
+              allAttributes.Add (attributeType, new List<Type>());
+
+            var values = allAttributes[attributeType];
+            if (!values.Contains (involvedType.Type))
+              values.Add (involvedType.Type);
+          }
         }
       }
       return allAttributes;
     }
 
-    private XElement GenerateAttributeElement (Type attribute, MultiDictionary<Type, Type> allAttributes)
+    private XElement GenerateAttributeElement (Type attribute, Dictionary<Type, List<Type>> allAttributes)
     {
       return new XElement (
           "Attribute",
