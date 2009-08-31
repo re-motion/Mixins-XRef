@@ -32,11 +32,13 @@ namespace MixinXRef
           );
     }
 
-    private bool IsOverriddenMember (MemberInfo memberInfo)
+    public bool IsOverriddenMember (MemberInfo memberInfo)
     {
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+
       var methodInfo = memberInfo as MethodInfo;
       if (methodInfo != null)
-        return IsOverriddenMethod(methodInfo);
+        return IsOverriddenMethod (methodInfo);
 
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
@@ -55,6 +57,7 @@ namespace MixinXRef
 
       return false;
     }
+
 
     private bool IsOverriddenMethod (MethodInfo methodInfo)
     {

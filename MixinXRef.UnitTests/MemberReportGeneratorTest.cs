@@ -73,6 +73,13 @@ namespace MixinXRef.UnitTests
       // MemberReportGenerator removes get_* and set_* functions of properties
       var expectedOutput = new XElement (
           "PublicMembers",
+          new XElement(
+              "Member",
+              new XAttribute("type", MemberTypes.Method),
+              new XAttribute("name", "DoSomething"),
+              new XAttribute("overridden", true),
+              new XAttribute("signature", "Void DoSomething()")
+              ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
@@ -90,6 +97,30 @@ namespace MixinXRef.UnitTests
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void IsOverriddenMember_Method ()
+    {
+      var reportGenerator = new MemberReportGenerator (typeof (object));
+
+      var baseMethodInfo = typeof (BaseClassWithProperty).GetMethod ("DoSomething");
+      var subMethodInfo = typeof (ClassWithProperty).GetMethod ("DoSomething");
+
+      Assert.That (reportGenerator.IsOverriddenMember (baseMethodInfo), Is.EqualTo (false));
+      Assert.That (reportGenerator.IsOverriddenMember (subMethodInfo), Is.EqualTo (true));
+    }
+
+    [Test]
+    public void IsOverridenMember_Property ()
+    {
+      var reportGenerator = new MemberReportGenerator (typeof (object));
+
+      var basePropertyInfo = typeof (BaseClassWithProperty).GetProperty ("PropertyName");
+      var subPropertyInfo = typeof (ClassWithProperty).GetProperty ("PropertyName");
+
+      Assert.That (reportGenerator.IsOverriddenMember (basePropertyInfo), Is.EqualTo (false));
+      Assert.That (reportGenerator.IsOverriddenMember (subPropertyInfo), Is.EqualTo (true));
     }
   }
 }
