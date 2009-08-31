@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Remotion.Mixins.Context;
-using Remotion.Utilities;
 
 namespace MixinXRef
 {
@@ -61,12 +60,25 @@ namespace MixinXRef
 
     public override int GetHashCode ()
     {
-      return EqualityUtility.GetRotatedHashCode (_realType, _classContext, _targetTypes.Count);
+      int hashCode = _realType.GetHashCode();
+      Rotate (ref hashCode);
+      hashCode ^= _classContext == null ? 0 : _classContext.GetHashCode();
+      Rotate (ref hashCode);
+      hashCode ^= _targetTypes.Count;
+
+      return hashCode;
     }
 
     public override string ToString ()
     {
       return String.Format ("{0}, isTarget: {1}, isMixin: {2}", _realType, IsTarget, IsMixin);
+    }
+
+
+    private static void Rotate (ref int value)
+    {
+      const int rotateBy = 11;
+      value = (value << rotateBy) ^ (value >> (32 - rotateBy));
     }
   }
 }
