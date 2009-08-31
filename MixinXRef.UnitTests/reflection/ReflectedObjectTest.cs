@@ -236,6 +236,15 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
+    public void CallMethod_Static ()
+    {
+      // public static bool string.IsNullOrEmpty (string aString);
+      var output = ReflectedObject.CallMethod (typeof (string), "IsNullOrEmpty", "notEmpty");
+
+      Assert.That (output.To<bool>(), Is.False);
+    }
+
+    [Test]
     public void ToString_Test ()
     {
       const string content = "toString() for string";

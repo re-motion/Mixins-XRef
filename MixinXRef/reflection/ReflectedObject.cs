@@ -36,6 +36,36 @@ namespace MixinXRef.Reflection
       return assembly.GetType (fullName, true);
     }
 
+    public static ReflectedObject CallMethod(Type type, string methodName, params object[] parameters)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+      ArgumentUtility.CheckNotNull ("methodName", methodName);
+      ArgumentUtility.CheckNotNull ("parameters", parameters);
+
+      return InvokeMember (type, methodName, BindingFlags.InvokeMethod, null, parameters);
+    }
+
+
+    private static ReflectedObject InvokeMember(Type wrappedObjectType, string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
+    {
+      var returnValue = wrappedObjectType.InvokeMember(memberName, memberType, null, wrappedObject, UnWrapParameters(parameters));
+      return returnValue == null ? null : new ReflectedObject(returnValue);
+    }
+
+    private static object[] UnWrapParameters(object[] parameters)
+    {
+      if (parameters == null)
+        return null;
+
+      for (int i = 0; i < parameters.Length; i++)
+      {
+        var parameter = parameters[i] as ReflectedObject;
+        if (parameter != null)
+          parameters[i] = parameter.To<object>();
+      }
+      return parameters;
+    }
+
 
     public T To<T> ()
     {
@@ -47,14 +77,14 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
-      return InvokeMember (methodName, BindingFlags.InvokeMethod, _wrappedObject, parameters);
+      return InvokeMember (_wrappedObject.GetType(), methodName, BindingFlags.InvokeMethod, _wrappedObject, parameters);
     }
 
     public ReflectedObject GetProperty (string propertyName)
     {
       ArgumentUtility.CheckNotNull ("propertyName", propertyName);
 
-      return InvokeMember (propertyName, BindingFlags.GetProperty, _wrappedObject, null);
+      return InvokeMember (_wrappedObject.GetType(), propertyName, BindingFlags.GetProperty, _wrappedObject, null);
     }
 
     public IEnumerator<ReflectedObject> GetEnumerator ()
@@ -83,27 +113,6 @@ namespace MixinXRef.Reflection
     public override string ToString ()
     {
       return _wrappedObject.ToString();
-    }
-
-
-    private static ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
-    {
-      var returnValue = wrappedObject.GetType().InvokeMember (memberName, memberType, null, wrappedObject, UnWrapParameters (parameters));
-      return returnValue == null ? null : new ReflectedObject (returnValue);
-    }
-
-    private static object[] UnWrapParameters (object[] parameters)
-    {
-      if (parameters == null)
-        return null;
-
-      for (int i = 0; i < parameters.Length; i++)
-      {
-        var parameter = parameters[i] as ReflectedObject;
-        if (parameter != null)
-          parameters[i] = parameter.To<object>();
-      }
-      return parameters;
     }
   }
 }
