@@ -20,12 +20,19 @@ namespace MixinXRef.Reflection
 
     public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
     {
+      ArgumentUtility.CheckNotNull ("assembly", assembly);
+      ArgumentUtility.CheckNotNull ("fullName", fullName);
+      ArgumentUtility.CheckNotNull ("parameters", parameters);
+
       var wrappedObjectType = GetForeignType (assembly, fullName);
       return new ReflectedObject (Activator.CreateInstance (wrappedObjectType, UnWrapParameters (parameters)));
     }
 
     public static Type GetForeignType (Assembly assembly, string fullName)
     {
+      ArgumentUtility.CheckNotNull ("assembly", assembly);
+      ArgumentUtility.CheckNotNull ("fullName", fullName);
+
       return assembly.GetType (fullName, true);
     }
 
@@ -37,11 +44,16 @@ namespace MixinXRef.Reflection
 
     public ReflectedObject CallMethod (string methodName, params object[] parameters)
     {
+      ArgumentUtility.CheckNotNull ("methodName", methodName);
+      ArgumentUtility.CheckNotNull ("parameters", parameters);
+
       return InvokeMember (methodName, BindingFlags.InvokeMethod, parameters);
     }
 
     public ReflectedObject GetProperty (string propertyName)
     {
+      ArgumentUtility.CheckNotNull ("propertyName", propertyName);
+
       return InvokeMember (propertyName, BindingFlags.GetProperty, null);
     }
 
