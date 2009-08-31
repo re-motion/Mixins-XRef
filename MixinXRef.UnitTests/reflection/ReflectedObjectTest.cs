@@ -12,6 +12,20 @@ namespace MixinXRef.UnitTests.Reflection
   public class ReflectedObjectTest
   {
     [Test]
+    public void Constructor_ArgumentException ()
+    {
+      try
+      {
+        new ReflectedObject(new ReflectedObject(new object()));
+        Assert.Fail("expected exception not thrown");
+      }
+      catch (ArgumentException argumentException)
+      {
+        Assert.That(argumentException.Message, Is.EqualTo("There is no point in wrapping an instance of 'MixinXRef.Reflection.ReflectedObject'."));
+      }
+    }
+
+    [Test]
     public void To_CorrespondingType ()
     {
       var reflectedObject = new ReflectedObject ("string");

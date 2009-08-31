@@ -14,6 +14,9 @@ namespace MixinXRef.Reflection
     {
       ArgumentUtility.CheckNotNull ("wrappedObject", wrappedObject);
 
+      if (wrappedObject is ReflectedObject)
+        throw new ArgumentException ("There is no point in wrapping an instance of 'MixinXRef.Reflection.ReflectedObject'.");
+
       _wrappedObject = wrappedObject;
     }
 
@@ -36,7 +39,7 @@ namespace MixinXRef.Reflection
       return assembly.GetType (fullName, true);
     }
 
-    public static ReflectedObject CallMethod(Type type, string methodName, params object[] parameters)
+    public static ReflectedObject CallMethod (Type type, string methodName, params object[] parameters)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("methodName", methodName);
@@ -46,13 +49,14 @@ namespace MixinXRef.Reflection
     }
 
 
-    private static ReflectedObject InvokeMember(Type wrappedObjectType, string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
+    private static ReflectedObject InvokeMember (
+        Type wrappedObjectType, string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
     {
-      var returnValue = wrappedObjectType.InvokeMember(memberName, memberType, null, wrappedObject, UnWrapParameters(parameters));
-      return returnValue == null ? null : new ReflectedObject(returnValue);
+      var returnValue = wrappedObjectType.InvokeMember (memberName, memberType, null, wrappedObject, UnWrapParameters (parameters));
+      return returnValue == null ? null : new ReflectedObject (returnValue);
     }
 
-    private static object[] UnWrapParameters(object[] parameters)
+    private static object[] UnWrapParameters (object[] parameters)
     {
       if (parameters == null)
         return null;
