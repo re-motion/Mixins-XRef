@@ -47,14 +47,14 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
-      return InvokeMember (methodName, BindingFlags.InvokeMethod, parameters);
+      return InvokeMember (methodName, BindingFlags.InvokeMethod, _wrappedObject, parameters);
     }
 
     public ReflectedObject GetProperty (string propertyName)
     {
       ArgumentUtility.CheckNotNull ("propertyName", propertyName);
 
-      return InvokeMember (propertyName, BindingFlags.GetProperty, null);
+      return InvokeMember (propertyName, BindingFlags.GetProperty, _wrappedObject, null);
     }
 
     public IEnumerator<ReflectedObject> GetEnumerator ()
@@ -86,9 +86,9 @@ namespace MixinXRef.Reflection
     }
 
 
-    private ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object[] parameters)
+    private static ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
     {
-      var returnValue = _wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters));
+      var returnValue = wrappedObject.GetType().InvokeMember (memberName, memberType, null, wrappedObject, UnWrapParameters (parameters));
       return returnValue == null ? null : new ReflectedObject (returnValue);
     }
 
