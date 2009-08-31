@@ -76,7 +76,8 @@ namespace MixinXRef.Reflection
 
     private ReflectedObject InvokeMember (string memberName, BindingFlags memberType, object[] parameters)
     {
-      return new ReflectedObject (_wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters)));
+      var returnValue = _wrappedObject.GetType().InvokeMember (memberName, memberType, null, _wrappedObject, UnWrapParameters (parameters));
+      return returnValue == null ? null : new ReflectedObject (returnValue);
     }
 
     private static object[] UnWrapParameters (object[] parameters)

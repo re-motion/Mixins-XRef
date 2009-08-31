@@ -74,6 +74,8 @@ namespace MixinXRef
           var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
           var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.GetProperty("MixinType").To<Type>() );
 
+          // TODO: use mixinDefinition.Type.GetGenericArguments() to find generic parameter instantiations
+
           mixinElement.Add (
               new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), _interfaceIdentifierGenerator).GenerateXml());
           mixinElement.Add (
