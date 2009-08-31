@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -15,7 +16,7 @@ namespace MixinXRef.UnitTests
     public void FindInvolvedTypes_EmptyConfiguration ()
     {
       var mixinConfiguration = new MixinConfiguration();
-      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration, new Assembly[0]);
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new Assembly[0]);
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
@@ -26,7 +27,7 @@ namespace MixinXRef.UnitTests
     public void FindInvolvedTypes_WithOneTarget ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      var involvedTypeFinder = new InvolvedTypeFinder(mixinConfiguration, new[] { typeof(Mixin1).Assembly });
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly });
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
@@ -45,7 +46,7 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
-      var involvedTypeFinder = new InvolvedTypeFinder(mixinConfiguration, new[] { typeof(Mixin1).Assembly });
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly });
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
@@ -68,7 +69,7 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<Mixin1>().AddMixin<Mixin2>()
           .BuildConfiguration();
-      var involvedTypeFinder = new InvolvedTypeFinder(mixinConfiguration, new[] { typeof(Mixin1).Assembly });
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly });
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
@@ -89,20 +90,25 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<UselessObject>().AddMixin<Mixin1>()
           .BuildConfiguration();
-      var involvedTypeFinder = new InvolvedTypeFinder(mixinConfiguration, new[] { typeof(Mixin1).Assembly });
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly });
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
       var expectedType1 = new InvolvedType (typeof (UselessObject));
       expectedType1.ClassContext = mixinConfiguration.ClassContexts.First();
-      var expectedType2 = new InvolvedType(typeof(Mixin1));
-      expectedType2.TargetTypes.Add(typeof(UselessObject));
-      expectedType2.TargetTypes.Add(typeof(ClassInheritsFromUselessObject));
+      var expectedType2 = new InvolvedType (typeof (Mixin1));
+      expectedType2.TargetTypes.Add (typeof (UselessObject));
+      expectedType2.TargetTypes.Add (typeof (ClassInheritsFromUselessObject));
 
-      var expectedType3 = new InvolvedType(typeof(ClassInheritsFromUselessObject));
+      var expectedType3 = new InvolvedType (typeof (ClassInheritsFromUselessObject));
       expectedType3.ClassContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (ClassInheritsFromUselessObject));
 
-      Assert.That (involvedTypes, Is.EquivalentTo(new[] { expectedType1, expectedType2, expectedType3 }));
+      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
+    }
+
+    private static InvolvedTypeFinder CreateInvolvedTypeFinder (MixinConfiguration mixinConfiguration, params Assembly[] assemblies)
+    {
+      return new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), assemblies);
     }
   }
 }

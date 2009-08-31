@@ -46,7 +46,7 @@ namespace MixinXRef.UnitTests
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
+      var involvedTypes = new InvolvedTypeFinder (new ReflectedObject(mixinConfiguration), new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, new RemotionReflection());
       var output = reportGenerator.GenerateXmlDocument();

@@ -1,17 +1,17 @@
 using System;
 using System.Reflection;
-using Remotion.Mixins;
+using MixinXRef.Reflection;
 using Remotion.Mixins.Context;
-
 
 namespace MixinXRef
 {
   public class InvolvedTypeFinder : IInvolvedTypeFinder
   {
-    private readonly MixinConfiguration _mixinConfiguration;
+    // MixinConfiguration _mixinConfiguration;
+    private readonly ReflectedObject _mixinConfiguration;
     private readonly Assembly[] _assemblies;
 
-    public InvolvedTypeFinder (MixinConfiguration mixinConfiguration, Assembly[] assemblies)
+    public InvolvedTypeFinder(ReflectedObject mixinConfiguration, Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
@@ -28,13 +28,13 @@ namespace MixinXRef
       {
         foreach (var type in assembly.GetTypes())
         {
-          ClassContext classContext = _mixinConfiguration.ClassContexts.GetWithInheritance (type);
+          ReflectedObject classContext = _mixinConfiguration.GetProperty("ClassContexts").CallMethod("GetWithInheritance", type);
           if (classContext != null)
           {
-            involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
+            involvedTypes.GetOrCreateValue (type).ClassContext = classContext.To<ClassContext>();
 
-            foreach (var mixinContext in classContext.Mixins)
-              involvedTypes.GetOrCreateValue (mixinContext.MixinType).TargetTypes.Add (classContext.Type);
+            foreach (var mixinContext in classContext.GetProperty("Mixins"))
+              involvedTypes.GetOrCreateValue (mixinContext.GetProperty("MixinType").To<Type>()).TargetTypes.Add (classContext.GetProperty("Type").To<Type>());
           }
         }
       }
