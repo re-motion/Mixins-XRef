@@ -5,7 +5,6 @@
 <xsl:template name="tableTemplate">
 		<xsl:param name="rootMCR"/>
 		<xsl:param name="items"/>
-    <xsl:param name="additionalItems"/>
 		<xsl:param name="dir"/>
 		<xsl:param name="tableName"/>
 		<xsl:param name="emptyText"/>
@@ -49,10 +48,17 @@
 					<xsl:call-template name="attributeListTable">
 						<xsl:with-param name="rootMCR" select="$rootMCR" />
 						<xsl:with-param name="attributes" select="$items" />
-						<xsl:with-param name="attributeRefs" select="$additionalItems" />
 						<xsl:with-param name="dir" select="$dir" />
 					</xsl:call-template>
 				</xsl:when>
+        <!-- attribute table -->
+        <xsl:when test="$tableName = 'attributeRefListTable'">
+          <xsl:call-template name="attributeRefListTable">
+            <xsl:with-param name="rootMCR" select="$rootMCR" />
+            <xsl:with-param name="attributeRefs" select="$items" />
+            <xsl:with-param name="dir" select="$dir" />
+          </xsl:call-template>
+        </xsl:when>
 				<!-- public members table -->
 				<xsl:when test="$tableName = 'publicMemberListTable'">
 					<xsl:call-template name="publicMemberListTable">

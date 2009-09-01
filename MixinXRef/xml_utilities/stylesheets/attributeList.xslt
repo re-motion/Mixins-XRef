@@ -5,13 +5,11 @@
 <xsl:template name="attributeList">
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="attributes" />
-  <xsl:param name="attributeRefs" />
 	<xsl:param name="dir" />
 	
 	<xsl:call-template name="tableTemplate">
 		<xsl:with-param name="rootMCR" select="$rootMCR"/>
 		<xsl:with-param name="items" select="$attributes"/>
-		<xsl:with-param name="additionalItems" select="$attributeRefs" />
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">attributeListTable</xsl:with-param>
 		<xsl:with-param name="emptyText">No&#160;Involved&#160;Attributes</xsl:with-param>
@@ -22,7 +20,6 @@
 <xsl:template name="attributeListTable">
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="attributes" />
-	<xsl:param name="attributeRefs" />
 	<xsl:param name="dir" />
 	
 		<table>
@@ -33,9 +30,6 @@
 					<th>Name</th>
 					<th># of Uses</th>
 					<th>Assembly</th>	
-					<xsl:if test="$attributeRefs">
-						<th>Arguments</th>
-					</xsl:if>
 				</tr>
 			</thead>
 			<tfoot>
@@ -44,9 +38,6 @@
 					<td><xsl:value-of select="count( $attributes )" /></td>
 					<td>-</td>
 					<td><xsl:value-of select="count( distinct-values( $attributes/@assembly-ref ) )" /></td>
-					<xsl:if test="$attributeRefs">
-						<td>-</td>
-					</xsl:if>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -68,61 +59,11 @@
 								<xsl:with-param name="dir" select="$dir" />
 							</xsl:call-template>
 						</td>
-						<xsl:if test="$attributeRefs">
-							<td>
-								<xsl:call-template name="tableTemplate">
-									<xsl:with-param name="rootMCR" select="$rootMCR"/>
-									<xsl:with-param name="items" select="$attributeRefs[ @ref = current()/@id ]/Argument"/>
-									<xsl:with-param name="dir" select="$dir"/>
-									<xsl:with-param name="tableName">attributeArgumentListTable</xsl:with-param>
-									<xsl:with-param name="emptyText">No&#160;Arguments</xsl:with-param>
-								</xsl:call-template>
-							</td>
-					</xsl:if>
 					</tr>
           
 				</xsl:for-each>
 			</tbody>
 		</table>
 </xsl:template>
-	
-<xsl:template name="attributeArgumentListTable">
-	<xsl:param name="rootMCR" />	
-	<xsl:param name="arguments" />
-
-	<table class="noSorting">
-		<caption>Arguments&#160;(<xsl:value-of select="count( $arguments )" />)</caption>
-		<thead>
-			<tr>
-				<th>Kind</th>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Value</th>	
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td>-</td>
-				<td><xsl:value-of select="count( $arguments )" /></td>
-				<td>-</td>
-				<td>-</td>
-			</tr>
-		</tfoot>
-		<tbody>
-			<xsl:for-each select="$arguments">
-        <xsl:sort select="@kind"/>
-        <xsl:sort select="@name"/>
-				<tr>
-					<td><xsl:value-of select="@kind"/></td>
-					<td><xsl:value-of select="@name"/></td>
-					<td><xsl:value-of select="@type"/></td>
-					<td><xsl:value-of select="@value"/></td>
-				</tr>
-			</xsl:for-each>
-		</tbody>
-	</table>
-	
-</xsl:template>
-
-
+  
 </xsl:stylesheet>

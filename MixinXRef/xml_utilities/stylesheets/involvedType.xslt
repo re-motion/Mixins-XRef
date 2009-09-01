@@ -93,9 +93,8 @@
 		<div class="emptyText">No Targets</div>
 	</xsl:if>
 	
-	<xsl:call-template name="attributeList">
+	<xsl:call-template name="attributeRefList">
 		<xsl:with-param name="rootMCR" select="/" />
-		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[ru:contains(current()/Attributes/Attribute/@ref, @id)]" />
     <xsl:with-param name="attributeRefs" select="Attributes/Attribute"/>
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
