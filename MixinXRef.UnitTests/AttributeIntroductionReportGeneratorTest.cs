@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass2));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (Mixin1), mixinConfiguration);
       var reportGenerator = new AttributeIntroductionReportGenerator(attributeIntroductions, new IdentifierGenerator<Type>(), ProgramTest.GetRemotionReflection());
@@ -41,7 +41,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (UselessObject));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (ObjectWithInheritableAttribute), mixinConfiguration);
       var reportGenerator = new AttributeIntroductionReportGenerator(attributeIntroductions, attributeIdentifierGenerator, ProgramTest.GetRemotionReflection());

@@ -22,7 +22,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var memberOverrides = GetMemberOverrides (type1, typeof (Mixin1), mixinConfiguration);
 
@@ -44,7 +44,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetDoSomething));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var memberOverrides = GetMemberOverrides (type1, typeof (MixinDoSomething), mixinConfiguration);
 

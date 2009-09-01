@@ -4,7 +4,6 @@ using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests.Reflection
 {
@@ -16,12 +15,12 @@ namespace MixinXRef.UnitTests.Reflection
     {
       try
       {
-        new ReflectedObject(new ReflectedObject(new object()));
-        Assert.Fail("expected exception not thrown");
+        new ReflectedObject (new ReflectedObject (new object()));
+        Assert.Fail ("expected exception not thrown");
       }
       catch (ArgumentException argumentException)
       {
-        Assert.That(argumentException.Message, Is.EqualTo("There is no point in wrapping an instance of 'MixinXRef.Reflection.ReflectedObject'."));
+        Assert.That (argumentException.Message, Is.EqualTo ("There is no point in wrapping an instance of 'MixinXRef.Reflection.ReflectedObject'."));
       }
     }
 
@@ -242,6 +241,52 @@ namespace MixinXRef.UnitTests.Reflection
       var reflectedObject = new ReflectedObject (content);
 
       Assert.That (reflectedObject.ToString(), Is.EqualTo (content));
+    }
+
+    [Test]
+    public void Equals_False_Unsymetric ()
+    {
+      var reflectedObject1 = new ReflectedObject ("string");
+
+      // would be nice but does not follow the equals contract (symmetric)
+      // Assert.That (reflectedObject1, Is.EqualTo ("string"));
+      Assert.That (reflectedObject1, Is.Not.EqualTo ("string"));
+    }
+
+    [Test]
+    public void Equals_True_Unwrap ()
+    {
+      var reflectedObject1 = new ReflectedObject ("string");
+      var reflectedObject2 = new ReflectedObject ("string");
+
+      Assert.That (reflectedObject1, Is.EqualTo (reflectedObject2));
+    }
+
+    [Test]
+    public void Equals_False ()
+    {
+      var reflectedObject1 = new ReflectedObject ("string");
+      var reflectedObject2 = new ReflectedObject ("anotherString");
+
+      Assert.That (reflectedObject1, Is.Not.EqualTo (reflectedObject2));
+    }
+
+    [Test]
+    public void GetHashCode_Same ()
+    {
+      var reflectedObject1 = new ReflectedObject ("string");
+      var reflectedObject2 = new ReflectedObject ("string");
+
+      Assert.That (reflectedObject1.GetHashCode(), Is.EqualTo (reflectedObject2.GetHashCode()));
+    }
+
+    [Test]
+    public void GetHashCode_Different ()
+    {
+      var reflectedObject1 = new ReflectedObject ("string");
+      var reflectedObject2 = new ReflectedObject ("anotherString");
+
+      Assert.That (reflectedObject1.GetHashCode(), Is.Not.EqualTo (reflectedObject2.GetHashCode()));
     }
   }
 }

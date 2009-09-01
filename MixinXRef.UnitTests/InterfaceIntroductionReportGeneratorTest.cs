@@ -22,7 +22,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass2));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First ());
 
       var interfaceIntroductions = GetInterfaceIntroductions (type1, typeof (Mixin2), mixinConfiguration);
       var reportGenerator = new InterfaceIntroductionReportGenerator (interfaceIntroductions, new IdentifierGenerator<Type> ());
@@ -43,7 +43,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass2));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First ();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First ());
 
       // TargetClass2 does not implement any interface
       // Mixin3 introduces interface IDisposable

@@ -52,7 +52,7 @@ namespace MixinXRef.UnitTests
 
 
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
+      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -95,7 +95,7 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>().AddMixin<Mixin3>()
           .BuildConfiguration();
-      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
+      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -133,7 +133,7 @@ namespace MixinXRef.UnitTests
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
-      targetType.ClassContext = mixinConfiguration.ClassContexts.Last();
+      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.Last());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -160,7 +160,7 @@ namespace MixinXRef.UnitTests
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
-      targetType.ClassContext = mixinConfiguration.ClassContexts.First();
+      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();

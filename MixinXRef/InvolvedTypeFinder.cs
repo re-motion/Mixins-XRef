@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
-using Remotion.Mixins.Context;
 
 namespace MixinXRef
 {
@@ -31,7 +30,7 @@ namespace MixinXRef
           ReflectedObject classContext = _mixinConfiguration.GetProperty("ClassContexts").CallMethod("GetWithInheritance", type);
           if (classContext != null)
           {
-            involvedTypes.GetOrCreateValue (type).ClassContext = classContext.To<ClassContext>();
+            involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
 
             foreach (var mixinContext in classContext.GetProperty("Mixins"))
               involvedTypes.GetOrCreateValue (mixinContext.GetProperty("MixinType").To<Type>()).TargetTypes.Add (classContext.GetProperty("Type").To<Type>());

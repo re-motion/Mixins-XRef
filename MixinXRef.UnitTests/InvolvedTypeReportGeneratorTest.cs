@@ -100,9 +100,9 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var involvedType1 = new InvolvedType (typeof (TargetClass1));
-      involvedType1.ClassContext = mixinConfiguration.ClassContexts.First();
+      involvedType1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
       var involvedType2 = new InvolvedType (typeof (TargetClass2));
-      involvedType2.ClassContext = mixinConfiguration.ClassContexts.Last();
+      involvedType2.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.Last());
       var involvedType3 = new InvolvedType (typeof (Mixin1));
       involvedType3.TargetTypes.Add (typeof (TargetClass1));
       var involvedType4 = new InvolvedType (typeof (Mixin2));
@@ -242,7 +242,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_DifferentAssemblies ()
     {
       var involvedType1 = new InvolvedType (typeof (TargetClass1));
-      involvedType1.ClassContext = new ClassContext (typeof (TargetClass1));
+      involvedType1.ClassContext = new ReflectedObject(new ClassContext (typeof (TargetClass1)));
       var involvedType2 = new InvolvedType (typeof (object));
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();

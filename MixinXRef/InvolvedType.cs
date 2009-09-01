@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Remotion.Mixins.Context;
+using MixinXRef.Reflection;
 
 namespace MixinXRef
 {
   public class InvolvedType
   {
     private readonly Type _realType;
-    private ClassContext _classContext;
+    // ClassContext _classContext;
+    private ReflectedObject _classContext;
     private readonly IList<Type> _targetTypes = new List<Type>();
 
     public InvolvedType (Type realType)
@@ -33,7 +34,7 @@ namespace MixinXRef
       get { return _targetTypes.Count > 0; }
     }
 
-    public ClassContext ClassContext
+    public ReflectedObject ClassContext
     {
       get
       {
@@ -53,8 +54,8 @@ namespace MixinXRef
     {
       var other = obj as InvolvedType;
       return other != null
-             && other._realType == _realType
-             && other._classContext == _classContext
+             && object.Equals(other._realType, _realType)
+             && object.Equals(other._classContext, _classContext)
              && other._targetTypes.SequenceEqual (_targetTypes);
     }
 

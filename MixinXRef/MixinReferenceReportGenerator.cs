@@ -54,8 +54,8 @@ namespace MixinXRef
 
       return new XElement (
           "Mixins",
-          from mixin in _involvedType.ClassContext.Mixins
-          select GenerateMixinElement (new ReflectedObject (mixin)));
+          from mixin in _involvedType.ClassContext.GetProperty("Mixins")
+          select GenerateMixinElement (mixin));
     }
 
     private XElement GenerateMixinElement (ReflectedObject mixinContext)

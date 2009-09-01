@@ -54,6 +54,13 @@ namespace MixinXRef.Reflection
       }
     }
 
+    private static object UnWrapInstance(object instance)
+    {
+      var reflectedInstance = instance as ReflectedObject;
+
+      return reflectedInstance == null ? instance : reflectedInstance.To<object>();
+    }
+
     private static object[] UnWrapParameters (object[] parameters)
     {
       if (parameters == null)
@@ -61,9 +68,7 @@ namespace MixinXRef.Reflection
 
       for (int i = 0; i < parameters.Length; i++)
       {
-        var parameter = parameters[i] as ReflectedObject;
-        if (parameter != null)
-          parameters[i] = parameter.To<object>();
+        parameters[i] = UnWrapInstance (parameters[i]);
       }
       return parameters;
     }
@@ -115,6 +120,16 @@ namespace MixinXRef.Reflection
     public override string ToString ()
     {
       return _wrappedObject.ToString();
+    }
+
+    public override bool Equals(object obj)
+    {
+      return (obj is ReflectedObject) ? _wrappedObject.Equals (UnWrapInstance (obj)) : false;
+    }
+
+    public override int GetHashCode()
+    {
+      return _wrappedObject.GetHashCode();
     }
   }
 }

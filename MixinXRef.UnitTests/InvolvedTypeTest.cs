@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -15,7 +16,9 @@ namespace MixinXRef.UnitTests
     public void Equals_True ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
+      type1.ClassContext = new ReflectedObject(new ClassContext(typeof(TargetClass1)));
       var type2 = new InvolvedType (typeof (TargetClass1));
+      type2.ClassContext = new ReflectedObject(new ClassContext(typeof(TargetClass1)));
 
       Assert.That (type1, Is.EqualTo (type2));
     }
@@ -33,7 +36,7 @@ namespace MixinXRef.UnitTests
     public void Equals_False_IsTargetDoesntMatch ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = new ClassContext (typeof (TargetClass1));
+      type1.ClassContext = new ReflectedObject(new ClassContext (typeof (TargetClass1)));
       var type2 = new InvolvedType (typeof (TargetClass1));
 
       Assert.That (type1, Is.Not.EqualTo (type2));
@@ -42,10 +45,6 @@ namespace MixinXRef.UnitTests
     [Test]
     public void Equals_False_IsMixinDoesntMatch ()
     {
-      var mixinContext = MixinConfiguration.BuildNew()
-          .ForClass<TargetClass1>().AddMixin<Mixin1>()
-          .BuildConfiguration().ClassContexts.First().Mixins.First();
-
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (Mixin1));
       type2.TargetTypes.Add (typeof (TargetClass1));
@@ -64,8 +63,8 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (TargetClass1));
 
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
-      type2.ClassContext = mixinConfiguration.ClassContexts.Last();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
+      type2.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.Last());
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -87,7 +86,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = mixinConfiguration.ClassContexts.First();
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
 
       Assert.That (type1.IsTarget, Is.True);
       Assert.That (type1.ClassContext, Is.Not.Null);
