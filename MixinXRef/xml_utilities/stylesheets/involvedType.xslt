@@ -47,7 +47,17 @@
       <label>Base:</label>
       <xsl:call-template name="involvedTypeBaseLink"/>
     </div>
-
+	<div>
+      <label>Interfaces:</label>
+		<xsl:for-each select="Interfaces/Interface/@ref">
+			<xsl:if test="position() != 1">, </xsl:if>
+			<xsl:call-template name="GenerateInterfaceLink">
+				<xsl:with-param name="rootMCR" select="/" />
+				<xsl:with-param name="interfaceId" select="." />
+				<xsl:with-param name="dir">..</xsl:with-param>
+			</xsl:call-template>			
+		</xsl:for-each>
+    </div>
     <div>
       <label>Mixins applied:</label>
       <xsl:value-of select="count( Mixins/Mixin )"/>
@@ -70,12 +80,6 @@
 	<xsl:call-template name="publicMemberList">
 			<!-- summaries may contain other tags, eg. 'cref' and content -->
 			<xsl:with-param name="members" select="PublicMembers/Member"/>
-	</xsl:call-template>
-
-	<xsl:call-template name="interfaceList">
-		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="interfaces" select="/MixinXRefReport/Interfaces/Interface[ImplementedBy/InvolvedType/@ref = current()/@id]" />
-		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
 	
 	<xsl:call-template name="attributeList">
