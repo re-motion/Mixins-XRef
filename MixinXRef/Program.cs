@@ -3,8 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins;
-using Remotion.Mixins.Context;
 
 namespace MixinXRef
 {
@@ -136,19 +134,19 @@ namespace MixinXRef
 
       using (new TimingScope ("Complete SaveXmlDocument"))
       {
-        MixinConfiguration mixinConfiguration;
+        ReflectedObject mixinConfiguration;
         using (new TimingScope ("BuildConfigurationFromAssemblies"))
         {
-          mixinConfiguration = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
+          mixinConfiguration = _remotionReflection.BuildConfigurationFromAssemblies (assemblies);
         }
 
         InvolvedType[] involvedTypes;
         using (new TimingScope ("FindInvolvedTypes"))
         {
-          involvedTypes = new InvolvedTypeFinder (new ReflectedObject(mixinConfiguration), assemblies).FindInvolvedTypes();
+          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
         }
 
-        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject(mixinConfiguration), _remotionReflection);
+        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, _remotionReflection);
 
         XDocument outputDocument;
         using (new TimingScope ("GenerateXmlDocument"))
