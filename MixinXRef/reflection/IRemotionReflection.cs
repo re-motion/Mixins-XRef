@@ -11,5 +11,6 @@ namespace MixinXRef.Reflection
     bool IsInfrastructureType (Type type);
 
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
+    Assembly FindRemotionAssembly (Assembly[] assemblies);
   }
 }

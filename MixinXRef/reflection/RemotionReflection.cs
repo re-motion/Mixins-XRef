@@ -42,5 +42,10 @@ namespace MixinXRef.Reflection
       var targetClassDefinitionUtilityType = _remotionAssembly.GetType ("Remotion.Mixins.TargetClassDefinitionUtility", true);
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }
+
+    public Assembly FindRemotionAssembly (Assembly[] assemblies)
+    {
+      return assemblies.SingleOrDefault (a => a.GetName().Name == "Remotion");
+    }
   }
 }
