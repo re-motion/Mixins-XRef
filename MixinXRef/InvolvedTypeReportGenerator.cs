@@ -3,14 +3,14 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
   public class InvolvedTypeReportGenerator : IReportGenerator
   {
     private readonly InvolvedType[] _involvedTypes;
-    private readonly MixinConfiguration _mixinConfiguration;
+    // MixinConfiguration _mixinConfiguration;
+    private readonly ReflectedObject _mixinConfiguration;
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
@@ -23,7 +23,7 @@ namespace MixinXRef
 
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
-        MixinConfiguration mixinConfiguration,
+        ReflectedObject mixinConfiguration,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
@@ -84,7 +84,7 @@ namespace MixinXRef
               involvedType.Type, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (
               involvedType,
-              new ReflectedObject(_mixinConfiguration), 
+              _mixinConfiguration,
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,

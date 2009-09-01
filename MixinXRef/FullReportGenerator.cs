@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
@@ -16,7 +15,8 @@ namespace MixinXRef
     private readonly IRemotionReflection _remotionReflection;
     private string _creationTime;
 
-    public FullReportGenerator(Assembly[] assemblies, InvolvedType[] involvedTypes, ReflectedObject mixinConfiguration, IRemotionReflection remotionReflection)
+    public FullReportGenerator (
+        Assembly[] assemblies, InvolvedType[] involvedTypes, ReflectedObject mixinConfiguration, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
@@ -64,7 +64,7 @@ namespace MixinXRef
 
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
-          _mixinConfiguration.To<MixinConfiguration>(),
+          _mixinConfiguration,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
@@ -73,9 +73,17 @@ namespace MixinXRef
           validationErrors,
           _remotionReflection);
       var interfaceReport = new InterfaceReportGenerator (
-          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, interfaceIdentiferGenerator, _remotionReflection);
+          _involvedTypes,
+          readonlyAssemblyIdentifierGenerator,
+          readonlyInvolvedTypeIdentiferGenerator,
+          interfaceIdentiferGenerator,
+          _remotionReflection);
       var attributeReport = new AttributeReportGenerator (
-          _involvedTypes, readonlyAssemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator, attributeIdentiferGenerator, _remotionReflection);
+          _involvedTypes,
+          readonlyAssemblyIdentifierGenerator,
+          readonlyInvolvedTypeIdentiferGenerator,
+          attributeIdentiferGenerator,
+          _remotionReflection);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (validationErrors);
 

@@ -338,7 +338,7 @@ namespace MixinXRef.UnitTests
 
       return new InvolvedTypeReportGenerator (
           involvedTypes,
-          mixinConfiguration,
+          new ReflectedObject(mixinConfiguration), 
           assemblyIdentifierGenerator,
           _readonlyInvolvedTypeIdentifierGenerator,
           interfaceIdentifierGenerator,
