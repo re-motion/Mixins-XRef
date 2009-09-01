@@ -47,13 +47,6 @@
 		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Attributes/Attribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType /@ref, @base-ref))]" />
 	</xsl:call-template>
 
-	<xsl:call-template name="involvedTypeList">
-		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="involvedTypes" select="//InvolvedTypes/InvolvedType[Attributes/Attribute/@ref = current()/@id]"/>
-		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Used&#160;on</xsl:with-param>
-	</xsl:call-template>
-
 </xsl:template>
 	
 </xsl:stylesheet>
