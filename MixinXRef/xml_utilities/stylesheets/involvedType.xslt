@@ -76,27 +76,29 @@
 			<xsl:apply-templates select="summary" />
 		</div>
 	</fieldset>
-	
-	<xsl:call-template name="publicMemberList">
-			<!-- summaries may contain other tags, eg. 'cref' and content -->
-			<xsl:with-param name="members" select="PublicMembers/Member"/>
+
+	<xsl:call-template name="mixinList">
+		<xsl:with-param name="involvedType" select="." />
 	</xsl:call-template>
-	
+
+	<xsl:call-template name="treeBuilder">
+		<xsl:with-param name="involvedType" select="." />
+		<!-- starting point for recursion: get all targets for this mixin and get rid of targets which base-ref points to another target of the same ==> only get root targets -->
+		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id)) and not(ru:contains(current()/Targets/Target/@ref, @base-ref)) ]" />
+	</xsl:call-template>
+
 	<xsl:call-template name="attributeList">
 		<xsl:with-param name="rootMCR" select="/" />
 		<xsl:with-param name="attributes" select="/MixinXRefReport/Attributes/Attribute[ru:contains(current()/Attributes/Attribute/@ref, @id)]" />
     <xsl:with-param name="attributeRefs" select="Attributes/Attribute"/>
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
-	
-	<xsl:call-template name="mixinList">
-		<xsl:with-param name="involvedType" select="." />
+			
+	<xsl:call-template name="publicMemberList">
+			<!-- summaries may contain other tags, eg. 'cref' and content -->
+			<xsl:with-param name="members" select="PublicMembers/Member"/>
 	</xsl:call-template>
 	
-	<xsl:call-template name="treeBuilder">
-		<xsl:with-param name="involvedType" select="." />
-	</xsl:call-template>
-
 </xsl:template>
 
 
