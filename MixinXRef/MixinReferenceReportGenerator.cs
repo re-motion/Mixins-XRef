@@ -84,15 +84,14 @@ namespace MixinXRef
           mixinElement.Add (
               new MemberOverrideReportGenerator (mixinDefinition.CallMethod("GetAllOverrides")).GenerateXml());
         }
-        catch (Exception invokeException)
+        catch (Exception configurationOrValidationException)
         {
-          var configurationOrValidationException = invokeException.InnerException;
           if (_remotionReflection.IsConfigurationException (configurationOrValidationException))
             _configurationErrors.AddException (configurationOrValidationException);
           else if (_remotionReflection.IsValidationException (configurationOrValidationException))
             _validationErrors.AddException (configurationOrValidationException);
           else
-            throw configurationOrValidationException;
+            throw;
         }
       }
 
