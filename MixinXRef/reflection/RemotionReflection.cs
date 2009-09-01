@@ -6,12 +6,11 @@ namespace MixinXRef.Reflection
 {
   public class RemotionReflection : IRemotionReflection
   {
-    private readonly Assembly _remotionAssembly;
+    private Assembly _remotionAssembly;
 
-    public RemotionReflection (Assembly remotionAssembly)
+    public void SetRemotionAssembly(Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
-
       _remotionAssembly = remotionAssembly;
     }
 
@@ -39,6 +38,9 @@ namespace MixinXRef.Reflection
 
     public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
     {
+      if (_remotionAssembly == null) 
+        throw new InvalidOperationException ("Call SetRemotionAssembly prior to this method.");
+
       var targetClassDefinitionUtilityType = _remotionAssembly.GetType ("Remotion.Mixins.TargetClassDefinitionUtility", true);
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }

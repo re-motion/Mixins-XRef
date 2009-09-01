@@ -12,7 +12,9 @@ namespace MixinXRef.UnitTests
   {
     public static RemotionReflection GetRemotionReflection()
     {
-      return new RemotionReflection (typeof (TargetClassDefinitionUtility).Assembly);
+      var remotionReflection = new RemotionReflection();
+      remotionReflection.SetRemotionAssembly(typeof(TargetClassDefinitionUtility).Assembly);
+      return remotionReflection;
     }
 
     public const string _userPromptOnExistingOutputDirectory =

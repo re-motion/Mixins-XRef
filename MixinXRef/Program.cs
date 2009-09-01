@@ -12,7 +12,7 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
-      var program = new Program (Console.In, Console.Out, new RemotionReflection(typeof(TargetClassDefinitionUtility).Assembly));
+      var program = new Program (Console.In, Console.Out, new RemotionReflection());
 
       var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
@@ -116,6 +116,16 @@ namespace MixinXRef
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
         return null;
       }
+
+      var remotionAssembly = _remotionReflection.FindRemotionAssembly (assemblies);
+      if (remotionAssembly == null) 
+      {
+        _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
+        return null;
+      }
+      
+      _remotionReflection.SetRemotionAssembly (remotionAssembly);
+
       return assemblies;
     }
 

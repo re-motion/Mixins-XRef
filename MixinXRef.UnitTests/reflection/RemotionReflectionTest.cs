@@ -88,6 +88,24 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
+    public void GetTargetClassDefinition_OnNonInitializedRemotionReflection()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .BuildConfiguration();
+
+      try
+      {
+        new RemotionReflection().GetTargetClassDefinition(typeof(TargetClass2), new ReflectedObject(mixinConfiguration));
+        Assert.Fail ("Expected exception not thrown");
+      }
+      catch (InvalidOperationException invalidOperationException)
+      {
+        Assert.That(invalidOperationException.Message, Is.EqualTo("Call SetRemotionAssembly prior to this method."));
+      }
+    }
+
+    [Test]
     public void FindRemotionAssembly_FindRightAssembly ()
     {
       var remotionAssembly = typeof (TargetClassDefinitionUtility).Assembly;
