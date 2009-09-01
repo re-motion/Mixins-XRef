@@ -27,16 +27,7 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("fullName", fullName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
-      var wrappedObjectType = GetForeignType (assembly, fullName);
-      return new ReflectedObject (Activator.CreateInstance (wrappedObjectType, UnWrapParameters (parameters)));
-    }
-
-    public static Type GetForeignType (Assembly assembly, string fullName)
-    {
-      ArgumentUtility.CheckNotNull ("assembly", assembly);
-      ArgumentUtility.CheckNotNull ("fullName", fullName);
-
-      return assembly.GetType (fullName, true);
+      return new ReflectedObject (Activator.CreateInstance (assembly.GetType (fullName, true), UnWrapParameters (parameters)));
     }
 
     public static ReflectedObject CallMethod (Type type, string methodName, params object[] parameters)

@@ -3,12 +3,18 @@ using System.IO;
 using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class ProgramTest
   {
+    public static RemotionReflection GetRemotionReflection()
+    {
+      return new RemotionReflection (typeof (TargetClassDefinitionUtility).Assembly);
+    }
+
     public const string _userPromptOnExistingOutputDirectory =
         "Output directory 'existingOutputDirectory' does already exist\r\nDo you want override the directory and including files? [y/N] ";
 
@@ -21,7 +27,7 @@ namespace MixinXRef.UnitTests
     public void SetUp ()
     {
       _standardOutput = new StringWriter();
-      _remotionReflection = new RemotionReflection();
+      _remotionReflection = ProgramTest.GetRemotionReflection();
 
       _program = new Program (new StringReader (""), _standardOutput, _remotionReflection);
     }

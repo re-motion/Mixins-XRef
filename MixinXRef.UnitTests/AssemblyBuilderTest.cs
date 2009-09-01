@@ -32,7 +32,7 @@ namespace MixinXRef.UnitTests
       File.Copy (@"TestDomain\Remotion.Mixins.Persistent.Signed.dll", Path.Combine (assemblyDirectory, "Remotion.Mixins.Persistent.Signed.dll"));
 
       // load assemblies from directory
-      var assemblyBuilder = new AssemblyBuilder (assemblyDirectory, new RemotionReflection());
+      var assemblyBuilder = new AssemblyBuilder(assemblyDirectory, ProgramTest.GetRemotionReflection());
       var output = assemblyBuilder.GetAssemblies ();
 
       // *.ddl in alphabetic order, then *.exe in alphabetic order

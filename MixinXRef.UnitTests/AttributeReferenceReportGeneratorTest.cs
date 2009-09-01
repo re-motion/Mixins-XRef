@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests
     public void SetUp ()
     {
       _identifierGenerator = new IdentifierGenerator<Type>();
-      _remotionReflection = new RemotionReflection();
+      _remotionReflection = ProgramTest.GetRemotionReflection();
     }
 
     [Test]

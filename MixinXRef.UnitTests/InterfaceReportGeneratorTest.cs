@@ -57,7 +57,7 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          new RemotionReflection()
+          ProgramTest.GetRemotionReflection()
           );
     }
   }

@@ -9,5 +9,7 @@ namespace MixinXRef.Reflection
     bool IsConfigurationException (Exception exception);
     bool IsValidationException (Exception exception);
     bool IsInfrastructureType (Type type);
+
+    ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
   }
 }

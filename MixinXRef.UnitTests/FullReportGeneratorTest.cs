@@ -15,7 +15,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void FullReportGenerator_Empty ()
     {
-      var reportGenerator = new FullReportGenerator (new Assembly[0], new InvolvedType[0], new MixinConfiguration(), new RemotionReflection());
+      var reportGenerator = new FullReportGenerator (
+          new Assembly[0], new InvolvedType[0], new MixinConfiguration(), ProgramTest.GetRemotionReflection());
 
       var output = reportGenerator.GenerateXmlDocument();
 
@@ -38,7 +39,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
-      var assemblies = new AssemblyBuilder (".", new RemotionReflection()).GetAssemblies();
+      var assemblies = new AssemblyBuilder(".", ProgramTest.GetRemotionReflection()).GetAssemblies();
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
@@ -46,9 +47,9 @@ namespace MixinXRef.UnitTests
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinder (new ReflectedObject(mixinConfiguration), new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
+      var involvedTypes = new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, new RemotionReflection());
+      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, ProgramTest.GetRemotionReflection());
       var output = reportGenerator.GenerateXmlDocument();
 
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");

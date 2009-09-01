@@ -13,7 +13,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
-      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (object), new IdentifierGenerator<Type>(), new RemotionReflection());
+      var reportGenerator = new InterfaceReferenceReportGenerator (typeof (object), new IdentifierGenerator<Type>(), ProgramTest.GetRemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 
@@ -26,7 +26,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_WithInterfaces ()
     {
       // TargetClass1 implements IDisposealbe
-      var reportGenerator = new InterfaceReferenceReportGenerator(typeof(TargetClass1), new IdentifierGenerator<Type>(), new RemotionReflection());
+      var reportGenerator = new InterfaceReferenceReportGenerator(typeof(TargetClass1), new IdentifierGenerator<Type>(), ProgramTest.GetRemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 

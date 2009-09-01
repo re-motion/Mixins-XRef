@@ -26,7 +26,7 @@ namespace MixinXRef.UnitTests
     {
       _configurationError = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
-      _remotionReflection = new RemotionReflection();
+      _remotionReflection = ProgramTest.GetRemotionReflection();
     }
 
     [Test]

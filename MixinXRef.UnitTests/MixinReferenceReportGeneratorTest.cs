@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests
     {
       _configurationErrors = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
-      _remotionReflection = new RemotionReflection();
+      _remotionReflection = ProgramTest.GetRemotionReflection();
     }
 
     [Test]
@@ -80,7 +80,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("ref", "0"),
               new XAttribute ("relation", "Extending"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).GenerateXml(),
-              new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, new RemotionReflection()).GenerateXml(),
+              new AttributeIntroductionReportGenerator(new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, ProgramTest.GetRemotionReflection()).GenerateXml(),
               new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml()
               ));
 

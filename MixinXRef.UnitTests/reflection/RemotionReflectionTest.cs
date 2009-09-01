@@ -1,9 +1,11 @@
 using System;
 using MixinXRef.Reflection;
+using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Context.MixedTypes;
 using Remotion.Mixins;
+using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
 
 namespace MixinXRef.UnitTests.Reflection
@@ -11,14 +13,14 @@ namespace MixinXRef.UnitTests.Reflection
   [TestFixture]
   public class RemotionReflectionTest
   {
-
     private RemotionReflection _remotionReflection;
 
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflection = new RemotionReflection();
+      _remotionReflection = ProgramTest.GetRemotionReflection();
     }
+
     [Test]
     public void IsNonApplicationAssembly_False ()
     {
@@ -51,25 +53,38 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    public void IsValidationException()
+    public void IsValidationException ()
     {
       var validationException = new ValidationException (new DefaultValidationLog());
 
-      var outputTrue = _remotionReflection.IsValidationException(validationException);
-      var outputFalse = _remotionReflection.IsValidationException(new Exception());
+      var outputTrue = _remotionReflection.IsValidationException (validationException);
+      var outputFalse = _remotionReflection.IsValidationException (new Exception());
 
-      Assert.That(outputTrue, Is.True);
-      Assert.That(outputFalse, Is.False);
+      Assert.That (outputTrue, Is.True);
+      Assert.That (outputFalse, Is.False);
     }
 
     [Test]
     public void IsInfrastructurType ()
     {
       var outputTrue = _remotionReflection.IsInfrastructureType (typeof (IInitializableMixin));
-      var outputFalse = _remotionReflection.IsInfrastructureType(typeof(IDisposable));
+      var outputFalse = _remotionReflection.IsInfrastructureType (typeof (IDisposable));
 
-      Assert.That(outputTrue, Is.True);
-      Assert.That(outputFalse, Is.False);
+      Assert.That (outputTrue, Is.True);
+      Assert.That (outputFalse, Is.False);
+    }
+
+    [Test]
+    public void GetTargetClassDefinition ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .BuildConfiguration();
+
+      var output = _remotionReflection.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
+      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass2), mixinConfiguration);
+
+      Assert.That (output.To<TargetClassDefinition>(), Is.EqualTo (expectedOutput));
     }
   }
 }

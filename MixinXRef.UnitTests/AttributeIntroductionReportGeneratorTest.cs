@@ -24,7 +24,7 @@ namespace MixinXRef.UnitTests
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (Mixin1), mixinConfiguration);
-      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, new IdentifierGenerator<Type>(), new RemotionReflection());
+      var reportGenerator = new AttributeIntroductionReportGenerator(attributeIntroductions, new IdentifierGenerator<Type>(), ProgramTest.GetRemotionReflection());
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("AttributeIntroductions");
@@ -44,7 +44,7 @@ namespace MixinXRef.UnitTests
       type1.ClassContext = mixinConfiguration.ClassContexts.First();
 
       var attributeIntroductions = GetAttributeIntroductions (type1, typeof (ObjectWithInheritableAttribute), mixinConfiguration);
-      var reportGenerator = new AttributeIntroductionReportGenerator (attributeIntroductions, attributeIdentifierGenerator, new RemotionReflection());
+      var reportGenerator = new AttributeIntroductionReportGenerator(attributeIntroductions, attributeIdentifierGenerator, ProgramTest.GetRemotionReflection());
 
       var output = reportGenerator.GenerateXml();
 

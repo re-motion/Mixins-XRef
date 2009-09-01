@@ -12,7 +12,7 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
-      var program = new Program (Console.In, Console.Out, new RemotionReflection());
+      var program = new Program (Console.In, Console.Out, new RemotionReflection(typeof(TargetClassDefinitionUtility).Assembly));
 
       var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
