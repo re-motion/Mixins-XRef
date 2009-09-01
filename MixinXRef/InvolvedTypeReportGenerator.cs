@@ -84,7 +84,7 @@ namespace MixinXRef
               involvedType.Type, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (
               involvedType,
-              _mixinConfiguration,
+              new ReflectedObject(_mixinConfiguration), 
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,

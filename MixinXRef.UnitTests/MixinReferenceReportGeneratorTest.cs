@@ -31,7 +31,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           involvedTypeDummy,
-          new MixinConfiguration(),
+          new ReflectedObject(new MixinConfiguration()), 
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
@@ -59,7 +59,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          mixinConfiguration,
+          new ReflectedObject(mixinConfiguration), 
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -102,7 +102,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          mixinConfiguration,
+          new ReflectedObject(mixinConfiguration), 
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -140,7 +140,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          mixinConfiguration,
+          new ReflectedObject(mixinConfiguration), 
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -167,7 +167,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          mixinConfiguration,
+          new ReflectedObject(mixinConfiguration), 
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,

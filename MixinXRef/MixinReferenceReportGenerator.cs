@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
-using Remotion.Mixins;
 
 namespace MixinXRef
 {
   public class MixinReferenceReportGenerator : IReportGenerator
   {
     private readonly InvolvedType _involvedType;
-    private readonly MixinConfiguration _mixinConfiguration;
+    // MixinConfiguration _mixinConfiguration;
+    private readonly ReflectedObject _mixinConfiguration;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
@@ -19,7 +19,7 @@ namespace MixinXRef
 
     public MixinReferenceReportGenerator (
         InvolvedType involvedType,
-        MixinConfiguration mixinConfiguration,
+        ReflectedObject mixinConfiguration,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
@@ -55,15 +55,15 @@ namespace MixinXRef
       return new XElement (
           "Mixins",
           from mixin in _involvedType.ClassContext.Mixins
-          select GenerateMixinElement (new ReflectedObject(mixin)));
+          select GenerateMixinElement (new ReflectedObject (mixin)));
     }
 
     private XElement GenerateMixinElement (ReflectedObject mixinContext)
     {
       var mixinElement = new XElement (
           "Mixin",
-          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty("MixinType").To<Type>() )),
-          new XAttribute ("relation", mixinContext.GetProperty("MixinKind"))
+          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty ("MixinType").To<Type>())),
+          new XAttribute ("relation", mixinContext.GetProperty ("MixinKind"))
           );
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
@@ -71,26 +71,28 @@ namespace MixinXRef
         try
         {
           // may throw ConfigurationException or ValidationException
-          var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (_involvedType.Type, _mixinConfiguration);
-          var mixinDefinition = targetClassDefinition.GetMixinByConfiguredType (mixinContext.GetProperty("MixinType").To<Type>() );
+          var targetClassDefinition = _remotionReflection.GetTargetClassDefinition (_involvedType.Type, _mixinConfiguration);
+          var mixinDefinition = targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
           // TODO: use mixinDefinition.Type.GetGenericArguments() to find generic parameter instantiations
 
           mixinElement.Add (
-              new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), _interfaceIdentifierGenerator).GenerateXml());
+              new InterfaceIntroductionReportGenerator (mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).
+                  GenerateXml());
           mixinElement.Add (
-            new AttributeIntroductionReportGenerator (new ReflectedObject(mixinDefinition.AttributeIntroductions), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
+              new AttributeIntroductionReportGenerator (mixinDefinition.GetProperty("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
           mixinElement.Add (
-              new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml());
+              new MemberOverrideReportGenerator (mixinDefinition.CallMethod("GetAllOverrides")).GenerateXml());
         }
-        catch (Exception configurationOrValidationException)
+        catch (Exception invokeException)
         {
+          var configurationOrValidationException = invokeException.InnerException;
           if (_remotionReflection.IsConfigurationException (configurationOrValidationException))
             _configurationErrors.AddException (configurationOrValidationException);
           else if (_remotionReflection.IsValidationException (configurationOrValidationException))
             _validationErrors.AddException (configurationOrValidationException);
           else
-            throw;
+            throw configurationOrValidationException;
         }
       }
 
