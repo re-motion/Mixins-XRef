@@ -138,7 +138,7 @@ namespace MixinXRef
           involvedTypes = new InvolvedTypeFinder (new ReflectedObject(mixinConfiguration), assemblies).FindInvolvedTypes();
         }
 
-        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, _remotionReflection);
+        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject(mixinConfiguration), _remotionReflection);
 
         XDocument outputDocument;
         using (new TimingScope ("GenerateXmlDocument"))

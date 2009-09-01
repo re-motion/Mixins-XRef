@@ -11,11 +11,12 @@ namespace MixinXRef
   {
     private readonly Assembly[] _assemblies;
     private readonly InvolvedType[] _involvedTypes;
-    private readonly MixinConfiguration _mixinConfiguration;
+    // MixinConfiguration _mixinConfiguration;
+    private readonly ReflectedObject _mixinConfiguration;
     private readonly IRemotionReflection _remotionReflection;
     private string _creationTime;
 
-    public FullReportGenerator (Assembly[] assemblies, InvolvedType[] involvedTypes, MixinConfiguration mixinConfiguration, IRemotionReflection remotionReflection)
+    public FullReportGenerator(Assembly[] assemblies, InvolvedType[] involvedTypes, ReflectedObject mixinConfiguration, IRemotionReflection remotionReflection)
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
@@ -63,7 +64,7 @@ namespace MixinXRef
 
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
-          _mixinConfiguration,
+          _mixinConfiguration.To<MixinConfiguration>(),
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
