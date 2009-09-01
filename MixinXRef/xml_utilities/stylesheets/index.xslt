@@ -24,6 +24,10 @@
 	<p>Use one of the index pages to start browsing. Hold down [Shift] to sort multiple columns.</p>
 	
 	<xsl:call-template name="errorList"/>
+	
+	<p>
+		<img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
+	 </p>
 
 </xsl:template>
 

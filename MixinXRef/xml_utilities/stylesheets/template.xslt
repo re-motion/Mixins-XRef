@@ -53,10 +53,6 @@
 						<xsl:message terminate="yes" >site template rule '<xsl:value-of select="$bodyContentTemplate" />' could not be found</xsl:message>
 					</xsl:otherwise>
 				</xsl:choose>
-				
-			<p>
-				<img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
-			 </p>
 			 
 			</body>
 		</html>
