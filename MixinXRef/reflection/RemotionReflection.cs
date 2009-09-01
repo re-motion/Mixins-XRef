@@ -38,16 +38,30 @@ namespace MixinXRef.Reflection
 
     public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
     {
-      if (_remotionAssembly == null) 
-        throw new InvalidOperationException ("Call SetRemotionAssembly prior to this method.");
+      CheckAssemblyIsSet();
 
       var targetClassDefinitionUtilityType = _remotionAssembly.GetType ("Remotion.Mixins.TargetClassDefinitionUtility", true);
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }
 
+    public ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies)
+    {
+      CheckAssemblyIsSet();
+
+      var declarativeConfigurationBuilderType = _remotionAssembly.GetType("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
+      return ReflectedObject.CallMethod(declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
+    }
+
     public Assembly FindRemotionAssembly (Assembly[] assemblies)
     {
       return assemblies.SingleOrDefault (a => a.GetName().Name == "Remotion");
+    }    
+    
+    
+    private void CheckAssemblyIsSet ()
+    {
+      if (_remotionAssembly == null) 
+        throw new InvalidOperationException ("Call SetRemotionAssembly prior to this method.");
     }
   }
 }

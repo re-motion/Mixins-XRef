@@ -5,6 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Context.MixedTypes;
 using Remotion.Mixins;
+using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
 
@@ -81,10 +82,10 @@ namespace MixinXRef.UnitTests.Reflection
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
 
-      var output = _remotionReflection.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
+      var reflectedOutput = _remotionReflection.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
       var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass2), mixinConfiguration);
 
-      Assert.That (output.To<TargetClassDefinition>(), Is.EqualTo (expectedOutput));
+      Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.EqualTo (expectedOutput));
     }
 
     [Test]
@@ -98,6 +99,33 @@ namespace MixinXRef.UnitTests.Reflection
       {
         new RemotionReflection().GetTargetClassDefinition(typeof(TargetClass2), new ReflectedObject(mixinConfiguration));
         Assert.Fail ("Expected exception not thrown");
+      }
+      catch (InvalidOperationException invalidOperationException)
+      {
+        Assert.That(invalidOperationException.Message, Is.EqualTo("Call SetRemotionAssembly prior to this method."));
+      }
+    }
+
+    [Test]
+    public void BuildConfigurationFromAssemblies()
+    {
+      var assemblies = new[] { typeof(TargetClass1).Assembly, typeof(object).Assembly };
+
+      var reflectedOuput = _remotionReflection.BuildConfigurationFromAssemblies (assemblies);
+      var expectedOutput = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
+
+      Assert.That(reflectedOuput.To<MixinConfiguration>().ClassContexts, Is.EqualTo(expectedOutput.ClassContexts));
+    }
+
+    [Test]
+    public void BuildConfigurationFromAssemblies_OnNonInitializedRemotionReflection()
+    {
+      var assemblies = new[] { typeof(TargetClass1).Assembly, typeof(object).Assembly };
+
+      try
+      {
+        new RemotionReflection().BuildConfigurationFromAssemblies(assemblies);
+        Assert.Fail("Expected exception not thrown");
       }
       catch (InvalidOperationException invalidOperationException)
       {
@@ -125,5 +153,8 @@ namespace MixinXRef.UnitTests.Reflection
 
       Assert.That(output, Is.Null);
     }
+
+
+
   }
 }
