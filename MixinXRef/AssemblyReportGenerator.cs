@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
@@ -48,7 +49,7 @@ namespace MixinXRef
           new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
           new XAttribute ("name", assembly.GetName().Name),
           new XAttribute ("version", assembly.GetName().Version),
-          new XAttribute ("location", assembly.Location),
+          new XAttribute ("location", GetShortAssemblyLocation (assembly)),
           from involvedType in involvedTypesForAssembly
           select
               new XElement (
@@ -56,6 +57,11 @@ namespace MixinXRef
               new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (involvedType.Type))
               )
           );
+    }
+
+    public string GetShortAssemblyLocation (Assembly assembly)
+    {
+      return assembly.GlobalAssemblyCache ? assembly.Location : Path.GetFileName (assembly.Location);
     }
   }
 }
