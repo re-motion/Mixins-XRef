@@ -41,11 +41,11 @@
 			<xsl:with-param name="members" select="PublicMembers/Member"/>
 	</xsl:call-template>
 
-	<xsl:call-template name="involvedTypeList">
-		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="involvedTypes" select="//InvolvedTypes/InvolvedType[Interfaces/Interface/@ref = current()/@id]"/>
-		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Implementing&#160;Types</xsl:with-param>
+	<xsl:call-template name="treeBuilder">
+		<xsl:with-param name="caption">Implementing&#160;Classes&#160;(<xsl:value-of select="count( ImplementedBy/InvolvedType )" />)</xsl:with-param>
+		<!-- starting point for recursion: get all involved classes which implements this interface 
+				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes -->
+		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Interfaces/Interface/@ref, current()/@id)) and not(ru:contains(current()/ImplementedBy/InvolvedType /@ref, @base-ref))]" />
 	</xsl:call-template>
 
 </xsl:template>

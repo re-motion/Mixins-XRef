@@ -3,15 +3,15 @@
 	exclude-result-prefixes="xs fn ru">
 	
 <xsl:template name="treeBuilder">
-	<xsl:param name="involvedType" />
+	<xsl:param name="caption" />
 	<xsl:param name="rootTypes" />
-	<xsl:if test="$involvedType/@is-mixin = true()">
-		<div><span class="treeHeader">Targets (<xsl:value-of select="count( $involvedType/Targets/Target )" />)</span></div>
+
+		<div><span class="treeHeader"><xsl:value-of select="$caption" /></span></div>
 		
 		<xsl:call-template name="inOrderTreeWalk">
 			<xsl:with-param name="rootTypes" select="$rootTypes" /> 
 		</xsl:call-template>
-	</xsl:if>
+	
 </xsl:template>
 
 <xsl:function name="ru:GetRecursiveTreeCount">
