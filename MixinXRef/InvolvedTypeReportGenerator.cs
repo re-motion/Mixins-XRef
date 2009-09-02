@@ -89,22 +89,15 @@ namespace MixinXRef
               involvedType.Type, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (
               involvedType,
-              _mixinConfiguration,
+              GetTargetClassDefinition(involvedType),
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
-              _configurationErrors,
-              _validationErrors,
               _remotionReflection,
               _outputFormatter).GenerateXml(),
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );
-    }
-
-    private string GetCSharpLikeNameForBaseType (Type type)
-    {
-      return type.BaseType == null ? "none" : _outputFormatter.GetCSharpLikeName (type.BaseType);
     }
 
     public ReflectedObject GetTargetClassDefinition (InvolvedType involvedType)
@@ -128,6 +121,11 @@ namespace MixinXRef
        }
       // MixinConfiguration is not valid
       return null;
+    }
+
+    private string GetCSharpLikeNameForBaseType(Type type)
+    {
+      return type.BaseType == null ? "none" : _outputFormatter.GetCSharpLikeName(type.BaseType);
     }
   }
 }

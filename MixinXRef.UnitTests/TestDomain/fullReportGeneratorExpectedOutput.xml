@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-02 10:47:49">
+<MixinXRefReport creation-time="2009-09-02 14:23:42">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="Castle.DynamicProxy.dll" />
@@ -18,7 +18,7 @@
     <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
-    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
@@ -26,27 +26,54 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending" instance-name="Mixin2">
-          <InterfaceIntroductions />
-          <AttributeIntroductions />
-          <MemberOverrides />
-        </Mixin>
+        <Mixin ref="1" relation="Extending" instance-name="ClassWithBookAttribute" />
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes>
-        <Attribute ref="0" />
+        <Attribute ref="0">
+          <Argument kind="constructor" type="Int32" name="id" value="1337" />
+          <Argument kind="named" type="String" name="Title" value="C# in depth" />
+        </Attribute>
       </Attributes>
       <Targets>
         <Target ref="0" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <summary>No summary found.</summary>
+      <PublicMembers>
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
+      </PublicMembers>
+      <Interfaces />
+      <Attributes />
+      <Mixins>
+        <Mixin ref="3" relation="Extending" instance-name="Mixin2">
+          <InterfaceIntroductions />
+          <AttributeIntroductions />
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <summary>No summary found.</summary>
+      <PublicMembers>
+        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
+      </PublicMembers>
+      <Interfaces />
+      <Attributes>
+        <Attribute ref="1" />
+      </Attributes>
+      <Targets>
+        <Target ref="2" />
+      </Targets>
+    </InvolvedType>
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Method" name="Dispose" overridden="false" signature="Void Dispose()" />
@@ -57,47 +84,20 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="3" relation="Extending" instance-name="Mixin1">
+        <Mixin ref="5" relation="Extending" instance-name="Mixin1">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <summary>No summary found.</summary>
       <PublicMembers>
         <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
       </PublicMembers>
       <Interfaces />
       <Attributes />
-      <Targets>
-        <Target ref="2" />
-      </Targets>
-    </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
-      </PublicMembers>
-      <Interfaces />
-      <Attributes />
-      <Mixins>
-        <Mixin ref="5" relation="Extending" instance-name="ClassWithBookAttribute" />
-      </Mixins>
-    </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Constructor" name=".ctor" overridden="false" signature="Void .ctor()" />
-      </PublicMembers>
-      <Interfaces />
-      <Attributes>
-        <Attribute ref="1">
-          <Argument kind="constructor" type="Int32" name="id" value="1337" />
-          <Argument kind="named" type="String" name="Title" value="C# in depth" />
-        </Attribute>
-      </Attributes>
       <Targets>
         <Target ref="4" />
       </Targets>
@@ -109,19 +109,19 @@
         <Member type="Method" name="Dispose" overridden="false" signature="Void Dispose()" />
       </PublicMembers>
       <ImplementedBy>
-        <InvolvedType ref="2" />
+        <InvolvedType ref="4" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute id="0" assembly-ref="none" namespace="System" name="SerializableAttribute">
+    <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
         <InvolvedType ref="1" />
       </AppliedTo>
     </Attribute>
-    <Attribute id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
+    <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType ref="5" />
+        <InvolvedType ref="3" />
       </AppliedTo>
     </Attribute>
   </Attributes>

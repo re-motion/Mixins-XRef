@@ -82,12 +82,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType1),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -147,12 +145,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType1),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -175,12 +171,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType2),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -202,12 +196,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType3,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType3),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -230,12 +222,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType4,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType4),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -289,12 +279,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType1),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),
@@ -317,12 +305,10 @@ namespace MixinXRef.UnitTests
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2,
-                  new ReflectedObject (mixinConfiguration),
+                  reportGenerator.GetTargetClassDefinition(involvedType1),
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationErrors,
-                  _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
                   GenerateXml(),

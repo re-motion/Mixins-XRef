@@ -11,45 +11,38 @@ namespace MixinXRef
   public class MixinReferenceReportGenerator : IReportGenerator
   {
     private readonly InvolvedType _involvedType;
-    // MixinConfiguration _mixinConfiguration;
-    private readonly ReflectedObject _mixinConfiguration;
+    // TargetClassDefinition _targetClassDefinition
+    private readonly ReflectedObject _targetClassDefinition;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly ErrorAggregator<Exception> _configurationErrors;
-    private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflection _remotionReflection;
     private readonly IOutputFormatter _outputFormatter;
 
     public MixinReferenceReportGenerator (
         InvolvedType involvedType,
-        ReflectedObject mixinConfiguration,
+        ReflectedObject targetClassDefinitionOrNull,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        ErrorAggregator<Exception> configurationErrors,
-        ErrorAggregator<Exception> validationErrors,
         IRemotionReflection remotionReflection,
         IOutputFormatter outputFormatter
         )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
-      ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      // may be null
+      // ArgumentUtility.CheckNotNull ("targetClassDefinitionOrNull", targetClassDefinitionOrNull);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
-      ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedType = involvedType;
-      _mixinConfiguration = mixinConfiguration;
+      _targetClassDefinition = targetClassDefinitionOrNull;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _configurationErrors = configurationErrors;
-      _validationErrors = validationErrors;
       _remotionReflection = remotionReflection;
       _outputFormatter = outputFormatter;
     }
@@ -76,34 +69,20 @@ namespace MixinXRef
           specificName
           );
 
-      if (!_involvedType.Type.IsGenericTypeDefinition)
+      if (_targetClassDefinition != null)
       {
-        try
-        {
-          // may throw ConfigurationException or ValidationException
-          var targetClassDefinition = _remotionReflection.GetTargetClassDefinition (_involvedType.Type, _mixinConfiguration);
-          var mixinDefinition = targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
+        var mixinDefinition = _targetClassDefinition.CallMethod("GetMixinByConfiguredType", mixinContext.GetProperty("MixinType").To<Type>());
 
-          // set more specific name for mixin references
-          specificName.Value = _outputFormatter.GetCSharpLikeName(mixinDefinition.GetProperty("Type").To<Type>());
+        // set more specific name for mixin references
+        specificName.Value = _outputFormatter.GetCSharpLikeName(mixinDefinition.GetProperty("Type").To<Type>());
 
-          mixinElement.Add (
-              new InterfaceIntroductionReportGenerator (mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).
-                  GenerateXml());
-          mixinElement.Add (
-              new AttributeIntroductionReportGenerator (mixinDefinition.GetProperty("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
-          mixinElement.Add (
-              new MemberOverrideReportGenerator (mixinDefinition.CallMethod("GetAllOverrides")).GenerateXml());
-        }
-        catch (Exception configurationOrValidationException)
-        {
-          if (_remotionReflection.IsConfigurationException (configurationOrValidationException))
-            _configurationErrors.AddException (configurationOrValidationException);
-          else if (_remotionReflection.IsValidationException (configurationOrValidationException))
-            _validationErrors.AddException (configurationOrValidationException);
-          else
-            throw;
-        }
+        mixinElement.Add(
+            new InterfaceIntroductionReportGenerator(mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).
+                GenerateXml());
+        mixinElement.Add(
+            new AttributeIntroductionReportGenerator(mixinDefinition.GetProperty("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
+        mixinElement.Add(
+            new MemberOverrideReportGenerator(mixinDefinition.CallMethod("GetAllOverrides")).GenerateXml());
       }
 
       return mixinElement;

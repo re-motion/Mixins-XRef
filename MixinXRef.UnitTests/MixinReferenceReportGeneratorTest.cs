@@ -7,22 +7,20 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using Remotion.Mixins.Context;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class MixinReferenceReportGeneratorTest
   {
-    private ErrorAggregator<Exception> _configurationErrors;
-    private ErrorAggregator<Exception> _validationErrors;
     private IRemotionReflection _remotionReflection;
     private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
     {
-      _configurationErrors = new ErrorAggregator<Exception>();
-      _validationErrors = new ErrorAggregator<Exception>();
       _remotionReflection = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
     }
@@ -34,12 +32,10 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           involvedTypeDummy,
-          new ReflectedObject(new MixinConfiguration()), 
+          new ReflectedObject(new TargetClassDefinition(new ClassContext(involvedTypeDummy.Type))), 
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          _configurationErrors,
-          _validationErrors,
           _remotionReflection,
           _outputFormatter
           );
@@ -63,12 +59,10 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          new ReflectedObject(mixinConfiguration), 
+          new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(targetType.Type, mixinConfiguration)), 
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configurationErrors,
-          _validationErrors,
           _remotionReflection,
           _outputFormatter
           );
@@ -108,12 +102,10 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          new ReflectedObject(mixinConfiguration), 
+          null, // generic target class
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configurationErrors,
-          _validationErrors,
           _remotionReflection,
           _outputFormatter);
 
@@ -133,62 +125,6 @@ namespace MixinXRef.UnitTests
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
-    }
-
-    [Test]
-    public void GenerateXml_MixinConfigurationError ()
-    {
-      var targetType = new InvolvedType (typeof (UselessObject));
-
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
-      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.Last());
-
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
-
-      var reportGenerator = new MixinReferenceReportGenerator (
-          targetType,
-          new ReflectedObject(mixinConfiguration), 
-          new IdentifierGenerator<Type>(),
-          interfaceIdentifierGenerator,
-          attributeIdentifierGenerator,
-          _configurationErrors,
-          _validationErrors,
-          _remotionReflection,
-          _outputFormatter);
-
-      reportGenerator.GenerateXml();
-
-      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (1));
-    }
-
-    [Test]
-    public void GenerateXml_MixinValidationError ()
-    {
-      var targetType = new InvolvedType (typeof (UselessObject));
-
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
-      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
-
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
-
-      var reportGenerator = new MixinReferenceReportGenerator (
-          targetType,
-          new ReflectedObject(mixinConfiguration), 
-          new IdentifierGenerator<Type>(),
-          interfaceIdentifierGenerator,
-          attributeIdentifierGenerator,
-          _configurationErrors,
-          _validationErrors,
-          _remotionReflection,
-          _outputFormatter);
-
-      reportGenerator.GenerateXml();
-
-      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (1));
     }
   }
 }
