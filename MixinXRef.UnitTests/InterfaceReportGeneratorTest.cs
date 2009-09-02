@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -11,6 +12,13 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InterfaceReportGeneratorTest
   {
+    private IOutputFormatter _outputFormatter;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _outputFormatter = new OutputFormatter();
+    }
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
@@ -27,7 +35,7 @@ namespace MixinXRef.UnitTests
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
       var reportGenerator = CreateReportGenerator (involvedType);
-      var memberReportGenerator = new MemberReportGenerator (typeof(IDisposable));
+      var memberReportGenerator = new MemberReportGenerator(typeof(IDisposable), null, _outputFormatter);
 
       XElement output = reportGenerator.GenerateXml ();
 
@@ -57,7 +65,8 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          ProgramTest.GetRemotionReflection()
+          ProgramTest.GetRemotionReflection(),
+          _outputFormatter
           );
     }
   }

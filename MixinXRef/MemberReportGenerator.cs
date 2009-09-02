@@ -2,17 +2,29 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
+using MixinXRef.Reflection;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
   public class MemberReportGenerator : IReportGenerator
   {
     private readonly Type _type;
+    // TargetClassDefinition
+    private readonly ReflectedObject _targetClassDefinition;
+    private readonly IOutputFormatter _outputFormatter;
 
-    public MemberReportGenerator (Type type)
+    public MemberReportGenerator (Type type, ReflectedObject targetClassDefinitionOrNull, IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("type", type);
+      // may be null
+      // ArgumentUtility.CheckNotNull ("targetClassDefinitionOrNull", targetClassDefinitionOrNull);
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
+
       _type = type;
+      _targetClassDefinition = targetClassDefinitionOrNull;
+      _outputFormatter = outputFormatter;
     }
 
 
@@ -26,10 +38,15 @@ namespace MixinXRef
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
-              new XElement ("modifiers", IsOverriddenMember (memberInfo) ? "overridden" : null),
+              new XElement("modifiers", GenerateModifiers(memberInfo)),
               new XElement ("signature", memberInfo)
               )
           );
+    }
+
+    public string GenerateModifiers(MemberInfo memberInfo)
+    {
+      return IsOverriddenMember (memberInfo) ? "overridden" : null;
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)

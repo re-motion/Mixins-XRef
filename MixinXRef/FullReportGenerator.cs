@@ -86,7 +86,8 @@ namespace MixinXRef
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
-          _remotionReflection);
+          _remotionReflection,
+          _outputFormatter);
       var attributeReport = new AttributeReportGenerator (
           _involvedTypes,
           readonlyAssemblyIdentifierGenerator,

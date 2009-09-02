@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -10,10 +11,18 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class MemberReportGeneratorTest
   {
+    private IOutputFormatter _outputFormatter;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _outputFormatter = new OutputFormatter();
+    }
+
     [Test]
     public void GenerateXml_InterfaceWithZeroMembers ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (IUseless));
+      var reportGenerator = new MemberReportGenerator(typeof(IUseless), null, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement ("PublicMembers");
@@ -24,7 +33,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InterfaceWithMembers ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (IDisposable));
+      var reportGenerator = new MemberReportGenerator(typeof(IDisposable), null, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -44,7 +53,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ObjectWithoutOwnMembers ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (UselessObject));
+      var reportGenerator = new MemberReportGenerator(typeof(UselessObject), null, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
 
@@ -66,7 +75,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_PropertyWithoutGetAndSet_Overriden ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (ClassWithProperty));
+      var reportGenerator = new MemberReportGenerator(typeof(ClassWithProperty), null, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
 
@@ -102,7 +111,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void IsOverriddenMember_Method ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (object));
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
 
       var baseMethodInfo = typeof (BaseClassWithProperty).GetMethod ("DoSomething");
       var subMethodInfo = typeof (ClassWithProperty).GetMethod ("DoSomething");
@@ -114,7 +123,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void IsOverridenMember_Property ()
     {
-      var reportGenerator = new MemberReportGenerator (typeof (object));
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
 
       var basePropertyInfo = typeof (BaseClassWithProperty).GetProperty ("PropertyName");
       var subPropertyInfo = typeof (ClassWithProperty).GetProperty ("PropertyName");

@@ -70,6 +70,8 @@ namespace MixinXRef
     private XElement CreateInvolvedTypeElement (InvolvedType involvedType)
     {
       var realType = involvedType.Type;
+      var targetClassDefinition = GetTargetClassDefinition (involvedType);
+
       return new XElement (
           "InvolvedType",
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
@@ -80,16 +82,16 @@ namespace MixinXRef
           new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
-          new XAttribute ("is-generic-definition", involvedType.Type.IsGenericTypeDefinition),
-          _summaryPicker.GetSummary (involvedType.Type),
-          new MemberReportGenerator (involvedType.Type).GenerateXml(),
+          new XAttribute("is-generic-definition", realType.IsGenericTypeDefinition),
+          _summaryPicker.GetSummary(realType),
+          new MemberReportGenerator(realType, targetClassDefinition, _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (
-              involvedType.Type, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              realType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
           new AttributeReferenceReportGenerator (
-              involvedType.Type, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
+              realType, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (
               involvedType,
-              GetTargetClassDefinition(involvedType),
+              targetClassDefinition,
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
