@@ -67,8 +67,8 @@
 				</tr>
 			</tfoot>
 			<tbody>
-				<xsl:for-each select="$mixinRefs">
-					<xsl:variable name="mixin" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@id = current()/@ref]"/>
+				<xsl:for-each select="$mixinRefs">				
+					<xsl:variable name="mixin" select=" key('involvedType', @ref) "/>
 					
 					<tr class="{ ru:getDubiosInvolvedTypeClass(.) }">
 						<td><xsl:value-of select="$mixin/@namespace"/></td>
