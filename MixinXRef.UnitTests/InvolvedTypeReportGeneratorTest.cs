@@ -9,13 +9,14 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private ErrorAggregator<Exception> _configurationError;
+    private ErrorAggregator<Exception> _configurationErrors;
     private ErrorAggregator<Exception> _validationErrors;
     private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
     private IRemotionReflection _remotionReflection;
@@ -26,7 +27,7 @@ namespace MixinXRef.UnitTests
     [SetUp]
     public void SetUp ()
     {
-      _configurationError = new ErrorAggregator<Exception>();
+      _configurationErrors = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
       _remotionReflection = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
@@ -85,7 +86,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -150,7 +151,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -178,7 +179,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -205,7 +206,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -233,7 +234,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -292,7 +293,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -320,7 +321,7 @@ namespace MixinXRef.UnitTests
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
-                  _configurationError,
+                  _configurationErrors,
                   _validationErrors,
                   _remotionReflection,
                   _outputFormatter).
@@ -329,6 +330,87 @@ namespace MixinXRef.UnitTests
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GetTargetClassDefinition ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .BuildConfiguration();
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+      var involvedType = new InvolvedType (typeof (TargetClass1));
+      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
+
+      var output = reportGenerator.GetTargetClassDefinition (involvedType).To<TargetClassDefinition>();
+      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass1), mixinConfiguration);
+
+      Assert.That (output, Is.EqualTo (expectedOutput));
+    }
+
+    [Test]
+    public void GetTargetClassDefinition_NoTarget ()
+    {
+      var mixinConfiguration = new MixinConfiguration();
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+      var involvedType = new InvolvedType (typeof (TargetClass1));
+
+      var output = reportGenerator.GetTargetClassDefinition (involvedType);
+
+      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
+      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
+      Assert.That (output, Is.Null);
+    }
+
+    [Test]
+    public void GetTargetClassDefinition_GenericTarget ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass (typeof (GenericTarget<,>)).AddMixin<Mixin1>()
+          .BuildConfiguration();
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+      var involvedType = new InvolvedType (typeof (GenericTarget<,>));
+
+      var output = reportGenerator.GetTargetClassDefinition (involvedType);
+
+      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
+      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
+      Assert.That (output, Is.Null);
+    }
+
+    [Test]
+    public void GenerateXml_MixinConfigurationError ()
+    {
+      var involvedType = new InvolvedType (typeof (UselessObject));
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
+      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+
+      var output = reportGenerator.GetTargetClassDefinition (involvedType);
+
+      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (1));
+      Assert.That (output, Is.Null);
+    }
+
+    [Test]
+    public void GenerateXml_MixinValidationError ()
+    {
+      var involvedType = new InvolvedType (typeof (UselessObject));
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
+      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+
+      var output = reportGenerator.GetTargetClassDefinition (involvedType);
+
+      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (1));
+      Assert.That (output, Is.Null);
     }
 
     private InvolvedTypeReportGenerator CreateReportGenerator (
@@ -353,7 +435,7 @@ namespace MixinXRef.UnitTests
           _readonlyInvolvedTypeIdentifierGenerator,
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _configurationError,
+          _configurationErrors,
           _validationErrors,
           _remotionReflection,
           new OutputFormatter()

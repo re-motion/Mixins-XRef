@@ -15,7 +15,7 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly ErrorAggregator<Exception> _configurationError;
+    private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflection _remotionReflection;
     private readonly IOutputFormatter _outputFormatter;
@@ -29,7 +29,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        ErrorAggregator<Exception> configurationError,
+        ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
         IRemotionReflection remotionReflection,
         IOutputFormatter outputFormatter
@@ -41,7 +41,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("configurationError", configurationError);
+      ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
@@ -52,7 +52,7 @@ namespace MixinXRef
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _configurationError = configurationError;
+      _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
       _remotionReflection = remotionReflection;
       _outputFormatter = outputFormatter;
@@ -93,7 +93,7 @@ namespace MixinXRef
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
-              _configurationError,
+              _configurationErrors,
               _validationErrors,
               _remotionReflection,
               _outputFormatter).GenerateXml(),
@@ -105,6 +105,29 @@ namespace MixinXRef
     private string GetCSharpLikeNameForBaseType (Type type)
     {
       return type.BaseType == null ? "none" : _outputFormatter.GetCSharpLikeName (type.BaseType);
+    }
+
+    public ReflectedObject GetTargetClassDefinition (InvolvedType involvedType)
+    {
+      if (!involvedType.IsTarget || involvedType.Type.IsGenericTypeDefinition)
+        return null;
+
+      try
+        {
+          // may throw ConfigurationException or ValidationException
+          return _remotionReflection.GetTargetClassDefinition(involvedType.Type, _mixinConfiguration);
+        }
+       catch (Exception configurationOrValidationException)
+       {
+         if (_remotionReflection.IsConfigurationException(configurationOrValidationException))
+           _configurationErrors.AddException(configurationOrValidationException);
+         else if (_remotionReflection.IsValidationException(configurationOrValidationException))
+           _validationErrors.AddException(configurationOrValidationException);
+         else
+           throw;
+       }
+      // MixinConfiguration is not valid
+      return null;
     }
   }
 }
