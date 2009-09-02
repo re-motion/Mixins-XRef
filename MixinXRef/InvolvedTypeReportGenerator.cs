@@ -71,7 +71,7 @@ namespace MixinXRef
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", GetCSharpLikeName (realType)),
-          new XAttribute ("base", GetFullNameForBaseType (realType)),
+          new XAttribute ("base", GetCSharpLikeNameForBaseType (realType)),
           new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
@@ -115,18 +115,9 @@ namespace MixinXRef
       return result.ToString();
     }
 
-    private string GetFullNameForBaseType (Type type)
+    private string GetCSharpLikeNameForBaseType (Type type)
     {
-      // for System.Object
-      if (type.BaseType == null)
-        return "none";
-
-      // for special generic types
-      if (type.BaseType.IsGenericType)
-        return GetCSharpLikeName (type.BaseType.GetGenericTypeDefinition());
-
-      // for standard types
-      return type.BaseType.FullName;
+      return type.BaseType == null ? "none" : GetCSharpLikeName (type.BaseType);
     }
   }
 }
