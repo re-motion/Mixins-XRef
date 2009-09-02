@@ -85,7 +85,6 @@
 		<caption>Arguments&#160;(<xsl:value-of select="count( $arguments )" />)</caption>
 		<thead>
 			<tr>
-				<th>Kind</th>
 				<th>Name</th>
 				<th>Type</th>
 				<th>Value</th>	
@@ -93,7 +92,6 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<td>-</td>
 				<td><xsl:value-of select="count( $arguments )" /></td>
 				<td>-</td>
 				<td>-</td>
@@ -101,11 +99,13 @@
 		</tfoot>
 		<tbody>
 			<xsl:for-each select="$arguments">
-        <xsl:sort select="@kind"/>
         <xsl:sort select="@name"/>
+        <xsl:sort select="@kind"/>
 				<tr>
-					<td><xsl:value-of select="@kind"/></td>
-					<td><xsl:value-of select="@name"/></td>
+					<td>
+            <xsl:value-of select="@name"/>
+            <span class="small-method-type">[<xsl:value-of select="@kind"/>]</span>
+          </td>
 					<td><xsl:value-of select="@type"/></td>
 					<td><xsl:value-of select="@value"/></td>
 				</tr>
