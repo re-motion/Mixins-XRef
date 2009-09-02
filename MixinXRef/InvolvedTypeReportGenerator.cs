@@ -98,7 +98,7 @@ namespace MixinXRef
 
     private string GetCSharpLikeName (Type type)
     {
-      if (!type.ContainsGenericParameters)
+      if (!type.IsGenericType)
         return type.Name;
 
       var typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
