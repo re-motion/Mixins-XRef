@@ -61,6 +61,7 @@
     <Compile Include="AttributeReportGenerator.cs" />
     <Compile Include="ConfigurationErrorReportGenerator.cs" />
     <Compile Include="ErrorAggregator.cs" />
+    <Compile Include="formatting\OutputFormatter.cs" />
     <Compile Include="FullReportGenerator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="IdentifierPopulator.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="InterfaceReportGenerator.cs" />
     <Compile Include="InterfaceIntroductionReportGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
+    <Compile Include="formatting\IOutputFormatter.cs" />
     <Compile Include="reflection\IRemotionReflection.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />
