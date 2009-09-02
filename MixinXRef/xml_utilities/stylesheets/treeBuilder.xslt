@@ -5,11 +5,13 @@
 <xsl:template name="treeBuilder">
 	<xsl:param name="caption" />
 	<xsl:param name="rootTypes" />
+  <xsl:param name="allReferences" />
 
 		<div><span class="treeHeader"><xsl:value-of select="$caption" /></span></div>
 		
 		<xsl:call-template name="inOrderTreeWalk">
-			<xsl:with-param name="rootTypes" select="$rootTypes" /> 
+			<xsl:with-param name="rootTypes" select="$rootTypes" />
+      <xsl:with-param name="allReferences" select="$allReferences" />
 		</xsl:call-template>
 	
 </xsl:template>
@@ -24,11 +26,12 @@
   
 <xsl:template name="inOrderTreeWalk">
 	<xsl:param name="rootTypes" />
+  <xsl:param name="allReferences" />
 	
 	<ul>	
 		<xsl:for-each select="$rootTypes">
       <xsl:sort select="@name"/>
-			<xsl:variable name="subTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id]" />
+			<xsl:variable name="subTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id  and  ru:contains($allReferences, @id)]" />
 			<li>
 				<xsl:if test="exists($subTypes)">
 					<span><xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, .) - 1"/>)</span><a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
@@ -36,6 +39,7 @@
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
 						<xsl:with-param name="rootTypes" select="$subTypes" />
+            <xsl:with-param name="allReferences" select="$allReferences" />
 					</xsl:call-template>
 				</xsl:if>
 				<xsl:if test="empty( $subTypes )">

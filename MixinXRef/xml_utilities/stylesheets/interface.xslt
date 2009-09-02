@@ -46,6 +46,7 @@
 		<!-- starting point for recursion: get all involved classes which implements this interface 
 				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes -->
 		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Interfaces/Interface/@ref, current()/@id)) and not(ru:contains(current()/ImplementedBy/InvolvedType /@ref, @base-ref))]" />
+    <xsl:with-param name="allReferences" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains(Interfaces/Interface/@ref, current()/@id) ]/@id" />
 	</xsl:call-template>
 
 </xsl:template>
