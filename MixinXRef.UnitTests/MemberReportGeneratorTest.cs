@@ -11,8 +11,9 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class MemberReportGeneratorTest
   {
+    private const string c_overriddenSpan = "<span class=\"keyword\">overridden</span>";
     private IOutputFormatter _outputFormatter;
-
+    
     [SetUp]
     public void SetUp ()
     {
@@ -86,7 +87,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-              new XElement("modifiers", new XCData("overridden")),
+              new XElement("modifiers", new XCData(c_overriddenSpan)),
               new XElement("signature", "Void DoSomething()")
               ),
           new XElement (
@@ -100,7 +101,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              new XElement("modifiers", new XCData("overridden")),
+              new XElement("modifiers", new XCData(c_overriddenSpan)),
               new XElement("signature", "System.String PropertyName")
               )
           );

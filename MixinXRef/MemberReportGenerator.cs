@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -38,17 +37,20 @@ namespace MixinXRef
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
-              GenerateModifiers(memberInfo),
+              GenerateModifiers (memberInfo),
               new XElement ("signature", memberInfo)
               )
           );
     }
 
-    public XElement GenerateModifiers(MemberInfo memberInfo)
+    public XElement GenerateModifiers (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      return new XElement("modifiers" , new XCData(IsOverriddenMember (memberInfo) ? "overridden" : ""));
+      var modifierMarkup = _outputFormatter.CreateModifierMarkup (
+          IsOverriddenMember (memberInfo));
+
+      return new XElement ("modifiers", new XCData (modifierMarkup));
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)

@@ -23,5 +23,15 @@ namespace MixinXRef.Formatting
       result.Append (">");
       return result.ToString ();
     }
+
+    public string CreateModifierMarkup (bool overridden)
+    {
+      return CreateSpan ("keyword", overridden ? "overridden" : null);
+    }
+
+    private string CreateSpan(string className, string content)
+    {
+      return content == null ? "" : String.Format ("<span class=\"{0}\">{1}</span>", className, content);
+    }
   }
 }

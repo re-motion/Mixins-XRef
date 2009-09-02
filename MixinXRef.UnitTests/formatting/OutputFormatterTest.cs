@@ -50,8 +50,24 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That (output, Is.EqualTo ("Dictionary<TKey, Int32>"));
     }
 
-    public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
+    public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>{}
+
+    [Test]
+    public void CreateModifierMarkup_Empty ()
     {
+      var output = _outputFormatter.CreateModifierMarkup (false);
+      const string expectedOutput = "";
+
+      Assert.That(output, Is.EqualTo(expectedOutput));
+    }
+
+    [Test]
+    public void CreateModifierMarkup()
+    {
+      var output = _outputFormatter.CreateModifierMarkup(true);
+      const string expectedOutput = "<span class=\"keyword\">overridden</span>";
+
+      Assert.That(output, Is.EqualTo(expectedOutput));
     }
   }
 }
