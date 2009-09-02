@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -15,6 +16,7 @@ namespace MixinXRef.UnitTests
     private ErrorAggregator<Exception> _configurationErrors;
     private ErrorAggregator<Exception> _validationErrors;
     private IRemotionReflection _remotionReflection;
+    private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
@@ -22,6 +24,7 @@ namespace MixinXRef.UnitTests
       _configurationErrors = new ErrorAggregator<Exception>();
       _validationErrors = new ErrorAggregator<Exception>();
       _remotionReflection = ProgramTest.GetRemotionReflection();
+      _outputFormatter = new OutputFormatter();
     }
 
     [Test]
@@ -37,7 +40,8 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Type>(),
           _configurationErrors,
           _validationErrors,
-          _remotionReflection
+          _remotionReflection,
+          _outputFormatter
           );
 
       var output = reportGenerator.GenerateXml();
@@ -65,7 +69,8 @@ namespace MixinXRef.UnitTests
           attributeIdentifierGenerator,
           _configurationErrors,
           _validationErrors,
-          _remotionReflection
+          _remotionReflection,
+          _outputFormatter
           );
 
       var output = reportGenerator.GenerateXml();
@@ -79,6 +84,7 @@ namespace MixinXRef.UnitTests
               "Mixin",
               new XAttribute ("ref", "0"),
               new XAttribute ("relation", "Extending"),
+              new XAttribute ("instance-name", "Mixin1"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).GenerateXml(),
               new AttributeIntroductionReportGenerator(new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, ProgramTest.GetRemotionReflection()).GenerateXml(),
               new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml()
@@ -108,7 +114,8 @@ namespace MixinXRef.UnitTests
           attributeIdentifierGenerator,
           _configurationErrors,
           _validationErrors,
-          _remotionReflection);
+          _remotionReflection,
+          _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -116,11 +123,13 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute ("relation", "Extending")),
+              new XAttribute ("relation", "Extending"),
+              new XAttribute ("instance-name", "ClassWithBookAttribute")),
           new XElement (
               "Mixin",
               new XAttribute ("ref", "1"),
-              new XAttribute ("relation", "Extending"))
+              new XAttribute ("relation", "Extending"),
+              new XAttribute ("instance-name", "Mixin3"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -146,7 +155,8 @@ namespace MixinXRef.UnitTests
           attributeIdentifierGenerator,
           _configurationErrors,
           _validationErrors,
-          _remotionReflection);
+          _remotionReflection,
+          _outputFormatter);
 
       reportGenerator.GenerateXml();
 
@@ -173,7 +183,8 @@ namespace MixinXRef.UnitTests
           attributeIdentifierGenerator,
           _configurationErrors,
           _validationErrors,
-          _remotionReflection);
+          _remotionReflection,
+          _outputFormatter);
 
       reportGenerator.GenerateXml();
 

@@ -1,7 +1,10 @@
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using Remotion.Mixins.Context;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -16,6 +19,7 @@ namespace MixinXRef
     private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflection _remotionReflection;
+    private readonly IOutputFormatter _outputFormatter;
 
     public MixinReferenceReportGenerator (
         InvolvedType involvedType,
@@ -25,7 +29,8 @@ namespace MixinXRef
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
-        IRemotionReflection remotionReflection
+        IRemotionReflection remotionReflection,
+        IOutputFormatter outputFormatter
         )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
@@ -36,6 +41,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedType = involvedType;
       _mixinConfiguration = mixinConfiguration;
@@ -45,6 +51,7 @@ namespace MixinXRef
       _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
       _remotionReflection = remotionReflection;
+      _outputFormatter = outputFormatter;
     }
 
     public XElement GenerateXml ()
@@ -60,10 +67,13 @@ namespace MixinXRef
 
     private XElement GenerateMixinElement (ReflectedObject mixinContext)
     {
+      // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
+      var specificName = new XAttribute ("instance-name", _outputFormatter.GetCSharpLikeName (mixinContext.GetProperty ("MixinType").To<Type>()));
       var mixinElement = new XElement (
           "Mixin",
           new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty ("MixinType").To<Type>())),
-          new XAttribute ("relation", mixinContext.GetProperty ("MixinKind"))
+          new XAttribute ("relation", mixinContext.GetProperty ("MixinKind")),
+          specificName
           );
 
       if (!_involvedType.Type.IsGenericTypeDefinition)
@@ -74,7 +84,8 @@ namespace MixinXRef
           var targetClassDefinition = _remotionReflection.GetTargetClassDefinition (_involvedType.Type, _mixinConfiguration);
           var mixinDefinition = targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
-          // TODO: use mixinDefinition.Type.GetGenericArguments() to find generic parameter instantiations
+          // set more specific name for mixin references
+          specificName.Value = _outputFormatter.GetCSharpLikeName(mixinDefinition.GetProperty("Type").To<Type>());
 
           mixinElement.Add (
               new InterfaceIntroductionReportGenerator (mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).

@@ -95,7 +95,8 @@ namespace MixinXRef
               _attributeIdentifierGenerator,
               _configurationError,
               _validationErrors,
-              _remotionReflection).GenerateXml(),
+              _remotionReflection,
+              _outputFormatter).GenerateXml(),
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );

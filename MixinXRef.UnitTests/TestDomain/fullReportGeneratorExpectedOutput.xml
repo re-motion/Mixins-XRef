@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-02 09:15:33">
+<MixinXRefReport creation-time="2009-09-02 10:47:49">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="Castle.DynamicProxy.dll" />
@@ -26,7 +26,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending">
+        <Mixin ref="1" relation="Extending" instance-name="Mixin2">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -57,7 +57,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="3" relation="Extending">
+        <Mixin ref="3" relation="Extending" instance-name="Mixin1">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -83,7 +83,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="5" relation="Extending" />
+        <Mixin ref="5" relation="Extending" instance-name="ClassWithBookAttribute" />
       </Mixins>
     </InvolvedType>
     <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
