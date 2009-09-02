@@ -38,15 +38,17 @@ namespace MixinXRef
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
-              new XElement("modifiers", GenerateModifiers(memberInfo)),
+              GenerateModifiers(memberInfo),
               new XElement ("signature", memberInfo)
               )
           );
     }
 
-    public string GenerateModifiers(MemberInfo memberInfo)
+    public XElement GenerateModifiers(MemberInfo memberInfo)
     {
-      return IsOverriddenMember (memberInfo) ? "overridden" : null;
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+
+      return new XElement("modifiers" , new XCData(IsOverriddenMember (memberInfo) ? "overridden" : ""));
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)
@@ -74,7 +76,6 @@ namespace MixinXRef
 
       return false;
     }
-
 
     private bool IsOverriddenMethod (MethodInfo methodInfo)
     {
