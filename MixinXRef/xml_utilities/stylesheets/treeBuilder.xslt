@@ -19,9 +19,10 @@
 <xsl:function name="ru:GetRecursiveTreeCount">
   <xsl:param name="rootMCR" />
   <xsl:param name="rootType" />
-
-  <xsl:variable name="subTypes" select="$rootMCR/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = $rootType/@id]" />
-  <xsl:copy-of select="sum( for $subType in $subTypes return ru:GetRecursiveTreeCount($rootMCR, $subType) ) + 1" />
+  <xsl:param name="allReferences" />
+  
+  <xsl:variable name="subTypes" select="$rootMCR/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = $rootType/@id  and  ru:contains($allReferences, @id)]" />
+  <xsl:copy-of select="sum( for $subType in $subTypes return ru:GetRecursiveTreeCount($rootMCR, $subType, $allReferences) ) + 1" />
 </xsl:function>
   
 <xsl:template name="inOrderTreeWalk">
@@ -34,7 +35,7 @@
 			<xsl:variable name="subTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id  and  ru:contains($allReferences, @id)]" />
 			<li>
 				<xsl:if test="exists($subTypes)">
-					<span><xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, .) - 1"/>)</span><a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
+					<span><xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, ., $allReferences) - 1"/>)</span><a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
 					
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
