@@ -26,8 +26,8 @@ namespace MixinXRef
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
-              new XAttribute ("overridden", IsOverriddenMember (memberInfo)),
-              new XAttribute ("signature", memberInfo)
+              new XElement ("modifiers", IsOverriddenMember (memberInfo) ? "overridden" : null),
+              new XElement ("signature", memberInfo)
               )
           );
     }

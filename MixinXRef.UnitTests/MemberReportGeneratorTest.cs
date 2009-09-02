@@ -33,8 +33,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              new XAttribute ("overridden", false),
-              new XAttribute ("signature", "Void Dispose()")
+              new XElement ("modifiers"),
+              new XElement("signature", "Void Dispose()")
               )
           );
 
@@ -55,8 +55,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XAttribute ("overridden", false),
-              new XAttribute ("signature", "Void .ctor()")
+               new XElement("modifiers"),
+              new XElement("signature", "Void .ctor()")
               )
           );
 
@@ -77,22 +77,22 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-              new XAttribute("overridden", true),
-              new XAttribute("signature", "Void DoSomething()")
+              new XElement("modifiers", "overridden"),
+              new XElement("signature", "Void DoSomething()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XAttribute ("overridden", false),
-              new XAttribute ("signature", "Void .ctor()")
+              new XElement("modifiers"),
+              new XElement("signature", "Void .ctor()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              new XAttribute ("overridden", true),
-              new XAttribute ("signature", "System.String PropertyName")
+              new XElement("modifiers", "overridden"),
+              new XElement("signature", "System.String PropertyName")
               )
           );
 
