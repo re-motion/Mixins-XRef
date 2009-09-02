@@ -74,6 +74,12 @@
 	</xsl:call-template>
 </xsl:template>
 
+<xsl:template name="GenerateMixinReferenceLink">
+	<xsl:param name="mixin"/>
+	
+	<a href="{$mixin/@ref}.html"><xsl:value-of select="$mixin/@instance-name" /></a>
+</xsl:template>
+
 <xsl:template name="GenerateInterfaceLink">
 	<xsl:param name="rootMCR" />
 	<xsl:param name="interfaceId"/>

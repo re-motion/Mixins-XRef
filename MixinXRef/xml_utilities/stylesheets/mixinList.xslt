@@ -73,10 +73,8 @@
 					<tr class="{ ru:getDubiosInvolvedTypeClass(.) }">
 						<td><xsl:value-of select="$mixin/@namespace"/></td>
 						<td>
-							<xsl:call-template name="GenerateInvolvedTypeLink">
-								<xsl:with-param name="rootMCR" select="$rootMCR" />
-								<xsl:with-param name="involvedTypeId" select="$mixin/@id" />
-								<xsl:with-param name="dir" select="$dir" />
+							<xsl:call-template name="GenerateMixinReferenceLink">
+								<xsl:with-param name="mixin" select="." />
 							</xsl:call-template>
 						</td>
 						<td><xsl:value-of select="count( $mixin/Targets/Target )" /></td>
