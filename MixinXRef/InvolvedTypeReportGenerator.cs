@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
-using System.Text;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 
 namespace MixinXRef
@@ -18,6 +18,7 @@ namespace MixinXRef
     private readonly ErrorAggregator<Exception> _configurationError;
     private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflection _remotionReflection;
+    private readonly IOutputFormatter _outputFormatter;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
 
@@ -30,7 +31,9 @@ namespace MixinXRef
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         ErrorAggregator<Exception> configurationError,
         ErrorAggregator<Exception> validationErrors,
-        IRemotionReflection remotionReflection)
+        IRemotionReflection remotionReflection,
+        IOutputFormatter outputFormatter
+      )
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -41,6 +44,7 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("configurationError", configurationError);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
@@ -51,6 +55,7 @@ namespace MixinXRef
       _configurationError = configurationError;
       _validationErrors = validationErrors;
       _remotionReflection = remotionReflection;
+      _outputFormatter = outputFormatter;
     }
 
     public XElement GenerateXml ()
@@ -70,7 +75,7 @@ namespace MixinXRef
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
-          new XAttribute ("name", GetCSharpLikeName (realType)),
+          new XAttribute ("name", _outputFormatter.GetCSharpLikeName (realType)),
           new XAttribute ("base", GetCSharpLikeNameForBaseType (realType)),
           new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
@@ -96,28 +101,9 @@ namespace MixinXRef
           );
     }
 
-    private string GetCSharpLikeName (Type type)
-    {
-      if (!type.IsGenericType)
-        return type.Name;
-
-      var typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
-
-      StringBuilder result = new StringBuilder (typeName);
-      result.Append ("<");
-      foreach (Type genericArgument in type.GetGenericArguments())
-      {
-        result.Append (genericArgument.Name);
-        result.Append (", ");
-      }
-      result.Remove (result.Length - 2, 2);
-      result.Append (">");
-      return result.ToString();
-    }
-
     private string GetCSharpLikeNameForBaseType (Type type)
     {
-      return type.BaseType == null ? "none" : GetCSharpLikeName (type.BaseType);
+      return type.BaseType == null ? "none" : _outputFormatter.GetCSharpLikeName (type.BaseType);
     }
   }
 }

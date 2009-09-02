@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MixinXRef.Formatting;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -46,12 +47,11 @@ namespace MixinXRef.UnitTests.formatting
     {
       var output = _outputFormatter.GetCSharpLikeName (typeof (ContainsGenericArguments<>).BaseType);
 
-      Assert.That (output, Is.EqualTo ("GenericTarget<TParameter1, Int32>"));
+      Assert.That (output, Is.EqualTo ("Dictionary<TKey, Int32>"));
     }
 
-    public class ContainsGenericArguments<TParameter1> : GenericTarget<TParameter1, int>
+    public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
     {
-      
     }
   }
 }

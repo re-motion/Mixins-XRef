@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -23,15 +24,16 @@ namespace MixinXRef.UnitTests
     private Program _program;
     private TextWriter _standardOutput;
     private IRemotionReflection _remotionReflection;
-
+    private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
     {
       _standardOutput = new StringWriter();
       _remotionReflection = ProgramTest.GetRemotionReflection();
+      _outputFormatter = new OutputFormatter();
 
-      _program = new Program (new StringReader (""), _standardOutput, _remotionReflection);
+      _program = new Program (new StringReader (""), _standardOutput, _remotionReflection, _outputFormatter);
     }
 
 
@@ -113,7 +115,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "n" for No
-      _program = new Program (new StringReader ("n"), _standardOutput, _remotionReflection);
+      _program = new Program (new StringReader ("n"), _standardOutput, _remotionReflection, _outputFormatter);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
@@ -133,7 +135,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "YES" for Yes
-      _program = new Program (new StringReader ("YES"), _standardOutput, _remotionReflection);
+      _program = new Program (new StringReader ("YES"), _standardOutput, _remotionReflection, _outputFormatter);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 

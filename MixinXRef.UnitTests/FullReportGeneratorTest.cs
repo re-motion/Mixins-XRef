@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace MixinXRef.UnitTests
     public void FullReportGenerator_Empty ()
     {
       var reportGenerator = new FullReportGenerator (
-          new Assembly[0], new InvolvedType[0], new ReflectedObject(new MixinConfiguration()), ProgramTest.GetRemotionReflection());
+          new Assembly[0], new InvolvedType[0], new ReflectedObject(new MixinConfiguration()), ProgramTest.GetRemotionReflection(), new OutputFormatter());
 
       var output = reportGenerator.GenerateXmlDocument();
 
@@ -49,7 +50,7 @@ namespace MixinXRef.UnitTests
 
       var involvedTypes = new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject(mixinConfiguration), ProgramTest.GetRemotionReflection());
+      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject (mixinConfiguration), ProgramTest.GetRemotionReflection (), new OutputFormatter ());
       var output = reportGenerator.GenerateXmlDocument();
 
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");

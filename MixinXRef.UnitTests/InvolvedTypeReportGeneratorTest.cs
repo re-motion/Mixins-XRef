@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -345,7 +346,8 @@ namespace MixinXRef.UnitTests
           attributeIdentifierGenerator,
           _configurationError,
           _validationErrors,
-          _remotionReflection
+          _remotionReflection,
+          new OutputFormatter()
           );
     }
   }

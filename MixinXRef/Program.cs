@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 
 namespace MixinXRef
@@ -10,7 +11,7 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
-      var program = new Program (Console.In, Console.Out, new RemotionReflection());
+      var program = new Program (Console.In, Console.Out, new RemotionReflection(), new OutputFormatter());
 
       var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
@@ -48,17 +49,19 @@ namespace MixinXRef
     private readonly TextReader _input;
     private readonly TextWriter _output;
     private readonly IRemotionReflection _remotionReflection;
+    private readonly IOutputFormatter _outputFormatter;
 
-    public Program (TextReader input, TextWriter output, IRemotionReflection remotionReflection)
+    public Program (TextReader input, TextWriter output, IRemotionReflection remotionReflection, IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("input", input);
       ArgumentUtility.CheckNotNull ("output", output);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
-
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _input = input;
       _output = output;
       _remotionReflection = remotionReflection;
+      _outputFormatter = outputFormatter;
     }
 
     public int CheckArguments (string[] arguments)
@@ -146,7 +149,7 @@ namespace MixinXRef
           involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
         }
 
-        FullReportGenerator reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, _remotionReflection);
+        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, _remotionReflection, _outputFormatter);
 
         XDocument outputDocument;
         using (new TimingScope ("GenerateXmlDocument"))
