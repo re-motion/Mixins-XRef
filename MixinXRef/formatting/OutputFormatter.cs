@@ -14,12 +14,13 @@ namespace MixinXRef.Formatting
 
       StringBuilder result = new StringBuilder (typeName);
       result.Append ("<");
-      for(int i = 0; i < type.GetGenericArguments().Length; i++)
+      var genericArguments = type.GetGenericArguments();
+      for(int i = 0; i < genericArguments.Length; i++)
       {
         if(i != 0)
           result.Append(", ");
 
-        result.Append (type.GetGenericArguments()[i].Name);
+        result.Append (genericArguments[i].Name);
       }
       result.Append (">");
       return result.ToString();
