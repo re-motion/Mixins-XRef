@@ -1,5 +1,8 @@
 using System;
+using System.Reflection;
 using System.Text;
+using Remotion.Mixins.Definitions;
+using Remotion.Collections;
 
 namespace MixinXRef.Formatting
 {
@@ -24,9 +27,14 @@ namespace MixinXRef.Formatting
       return result.ToString ();
     }
 
-    public string CreateModifierMarkup (bool overridden)
+    public string CreateModifierMarkup (string visibility, bool overridden)
     {
-      return CreateSpan ("keyword", overridden ? "overridden" : null);
+      var modifiers = new StringBuilder();
+
+      modifiers.Append (CreateSpan ("keyword", visibility));
+      modifiers.Append (CreateSpan ("keyword", overridden ? "overridden" : null));
+
+      return modifiers.ToString();
     }
 
     private string CreateSpan(string className, string content)

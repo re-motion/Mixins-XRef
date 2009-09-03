@@ -111,6 +111,7 @@
     <Compile Include="TestDomain\TargetClass2.cs" />
     <Compile Include="TestDomain\TargetDoSomething.cs" />
     <Compile Include="TestDomain\UselessObject.cs" />
+    <Compile Include="TestDomain\VisibilityTestClass.cs" />
     <Compile Include="ValidationErrorReportGeneratorTest.cs" />
     <Compile Include="XRefTransformerTest.cs" />
   </ItemGroup>

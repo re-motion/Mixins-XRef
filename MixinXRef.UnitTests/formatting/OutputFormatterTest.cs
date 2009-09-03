@@ -53,19 +53,28 @@ namespace MixinXRef.UnitTests.formatting
     public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>{}
 
     [Test]
-    public void CreateModifierMarkup_Empty ()
+    public void CreateModifierMarkup_FewestPossibleModifiers ()
     {
-      var output = _outputFormatter.CreateModifierMarkup (false);
-      const string expectedOutput = "";
+      var output = _outputFormatter.CreateModifierMarkup("public", false);
+      const string expectedOutput = "<span class=\"keyword\">public</span>";
 
       Assert.That(output, Is.EqualTo(expectedOutput));
     }
 
     [Test]
-    public void CreateModifierMarkup()
+    public void CreateModifierMarkup_Overriden()
     {
-      var output = _outputFormatter.CreateModifierMarkup(true);
-      const string expectedOutput = "<span class=\"keyword\">overridden</span>";
+      var output = _outputFormatter.CreateModifierMarkup("public", true);
+      const string expectedOutput = "<span class=\"keyword\">public</span><span class=\"keyword\">overridden</span>";
+
+      Assert.That(output, Is.EqualTo(expectedOutput));
+    }
+
+    [Test]
+    public void CreateModifierMarkup_MemberVisibility()
+    {
+      var output = _outputFormatter.CreateModifierMarkup("public", false);
+      const string expectedOutput = "<span class=\"keyword\">public</span>";
 
       Assert.That(output, Is.EqualTo(expectedOutput));
     }

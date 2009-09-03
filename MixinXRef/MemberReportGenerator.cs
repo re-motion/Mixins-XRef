@@ -48,7 +48,9 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
       var modifierMarkup = _outputFormatter.CreateModifierMarkup (
-          IsOverriddenMember (memberInfo));
+          GetMemberVisibility (memberInfo),
+          IsOverriddenMember (memberInfo)
+          );
 
       return new XElement ("modifiers", new XCData (modifierMarkup));
     }
@@ -64,19 +66,58 @@ namespace MixinXRef
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
       {
-        return IsOverriddenMethod (propertyInfo.GetGetMethod()) ||
-               IsOverriddenMethod (propertyInfo.GetSetMethod());
+        return IsOverriddenMethod (propertyInfo.GetGetMethod (true)) ||
+               IsOverriddenMethod (propertyInfo.GetSetMethod (true));
       }
 
       var eventInfo = memberInfo as EventInfo;
       if (eventInfo != null)
       {
-        return IsOverriddenMethod (eventInfo.GetAddMethod()) ||
-               IsOverriddenMethod (eventInfo.GetRaiseMethod()) ||
-               IsOverriddenMethod (eventInfo.GetRemoveMethod());
+        return IsOverriddenMethod (eventInfo.GetAddMethod (true)) ||
+               IsOverriddenMethod (eventInfo.GetRaiseMethod (true)) ||
+               IsOverriddenMethod (eventInfo.GetRemoveMethod (true));
       }
 
       return false;
+    }
+
+    public string GetMemberVisibility (MemberInfo memberInfo)
+    {
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+
+      var methodInfo = memberInfo as MethodInfo;
+      if (methodInfo != null)
+        return GetMethodVisibility (methodInfo);
+
+      var propertyInfo = memberInfo as PropertyInfo;
+      if (propertyInfo != null)
+        return GetMethodVisibility (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true));
+
+      var eventInfo = memberInfo as EventInfo;
+      if (eventInfo != null)
+        return GetMethodVisibility (eventInfo.GetAddMethod (true));
+
+      // has to be a field or constructor (which both have visibility properties like MethodInfo)
+      return GetMethodVisibility(memberInfo);
+    }
+
+
+    private string GetMethodVisibility (MemberInfo memberInfo)
+    {
+      var methodOrFieldInfo = new ReflectedObject (memberInfo);
+
+      if (methodOrFieldInfo.GetProperty ("IsPublic").To<bool>())
+        return "public";
+      if (methodOrFieldInfo.GetProperty ("IsFamily").To<bool>())
+        return "protected";
+      if (methodOrFieldInfo.GetProperty ("IsFamilyOrAssembly").To<bool>())
+        return "protected internal";
+      if (methodOrFieldInfo.GetProperty ("IsAssembly").To<bool>())
+        return "internal";
+      if (methodOrFieldInfo.GetProperty ("IsPrivate").To<bool>())
+        return "private";
+
+      throw new Exception ("Unknown member visibility");
     }
 
     private bool IsOverriddenMethod (MethodInfo methodInfo)
