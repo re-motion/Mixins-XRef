@@ -32,6 +32,10 @@
 		<legend>Summary</legend>
 
     <div>
+      <label>Modifiers:</label>
+      <xsl:apply-templates select="Modifiers" />
+    </div>
+    <div>
       <label>Namespace:</label>
       <xsl:value-of select="@namespace"/>
     </div>
