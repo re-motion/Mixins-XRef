@@ -21,6 +21,7 @@ namespace MixinXRef
     private readonly IOutputFormatter _outputFormatter;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
+    private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
 
     public InvolvedTypeReportGenerator (
         InvolvedType[] involvedTypes,
@@ -82,7 +83,8 @@ namespace MixinXRef
           new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
-          new XAttribute("is-generic-definition", realType.IsGenericTypeDefinition),
+          new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
+          _typeModifierUtility.GetTypeModifiers (realType),
           _summaryPicker.GetSummary(realType),
           new MemberReportGenerator(realType, targetClassDefinition, _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (

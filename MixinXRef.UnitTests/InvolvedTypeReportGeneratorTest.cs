@@ -23,6 +23,7 @@ namespace MixinXRef.UnitTests
     private IOutputFormatter _outputFormatter;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
+    private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
 
     [SetUp]
     public void SetUp ()
@@ -76,6 +77,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", true),
+              _typeModifierUtility.GetTypeModifiers(involvedType1.Type),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -139,6 +141,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType1.Type),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator(involvedType1.Type, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -165,6 +168,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType2.Type),
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator(involvedType2.Type, reportGenerator.GetTargetClassDefinition(involvedType2), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -190,6 +194,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType3.Type),
               _summaryPicker.GetSummary (involvedType3.Type),
               new MemberReportGenerator(involvedType3.Type, reportGenerator.GetTargetClassDefinition(involvedType3), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType3.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -216,6 +221,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType4.Type),
               _summaryPicker.GetSummary (involvedType4.Type),
               new MemberReportGenerator(involvedType4.Type, reportGenerator.GetTargetClassDefinition(involvedType4), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType4.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -273,6 +279,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType1.Type),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator(involvedType1.Type, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -299,6 +306,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              _typeModifierUtility.GetTypeModifiers (involvedType2.Type),
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator(involvedType2.Type, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
