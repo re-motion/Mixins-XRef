@@ -61,7 +61,7 @@ namespace MixinXRef
     private XElement GenerateMixinElement (ReflectedObject mixinContext)
     {
       // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
-      var specificName = new XAttribute ("instance-name", _outputFormatter.GetCSharpLikeName (mixinContext.GetProperty ("MixinType").To<Type>()));
+      var specificName = new XAttribute ("instance-name", _outputFormatter.GetFormattedTypeName (mixinContext.GetProperty ("MixinType").To<Type>()));
       var mixinElement = new XElement (
           "Mixin",
           new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty ("MixinType").To<Type>())),
@@ -74,7 +74,7 @@ namespace MixinXRef
         var mixinDefinition = _targetClassDefinition.CallMethod("GetMixinByConfiguredType", mixinContext.GetProperty("MixinType").To<Type>());
 
         // set more specific name for mixin references
-        specificName.Value = _outputFormatter.GetCSharpLikeName(mixinDefinition.GetProperty("Type").To<Type>());
+        specificName.Value = _outputFormatter.GetFormattedTypeName(mixinDefinition.GetProperty("Type").To<Type>());
 
         mixinElement.Add(
             new InterfaceIntroductionReportGenerator(mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).

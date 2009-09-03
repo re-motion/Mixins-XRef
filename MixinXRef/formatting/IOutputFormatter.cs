@@ -4,7 +4,7 @@ namespace MixinXRef.Formatting
 {
   public interface IOutputFormatter
   {
-    string GetCSharpLikeName (Type type);
+    string GetFormattedTypeName (Type type);
     string CreateModifierMarkup (string visibility, bool overridden);
   }
 }

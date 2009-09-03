@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetCSharpLikeName_NormalType ()
     {
-      var output = _outputFormatter.GetCSharpLikeName (typeof (UselessObject));
+      var output = _outputFormatter.GetFormattedTypeName (typeof (UselessObject));
 
       Assert.That (output, Is.EqualTo ("UselessObject"));
     }
@@ -29,7 +29,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetCSharpLikeName_GenericDefinition ()
     {
-      var output = _outputFormatter.GetCSharpLikeName (typeof (GenericTarget<,>));
+      var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<,>));
       
       Assert.That (output, Is.EqualTo ("GenericTarget<TParameter1, TParameter2>"));
     }
@@ -37,7 +37,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetCSharpLikeName_GenericType ()
     {
-      var output = _outputFormatter.GetCSharpLikeName (typeof (GenericTarget<string, int>));
+      var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<string, int>));
       
       Assert.That (output, Is.EqualTo ("GenericTarget<String, Int32>"));
     }
@@ -45,7 +45,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetCSharpLikeName_ContainsGenericArguments ()
     {
-      var output = _outputFormatter.GetCSharpLikeName (typeof (ContainsGenericArguments<>).BaseType);
+      var output = _outputFormatter.GetFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
       Assert.That (output, Is.EqualTo ("Dictionary<TKey, Int32>"));
     }

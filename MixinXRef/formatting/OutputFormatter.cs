@@ -8,7 +8,7 @@ namespace MixinXRef.Formatting
 {
   public class OutputFormatter : IOutputFormatter
   {
-    public string GetCSharpLikeName (Type type)
+    public string GetFormattedTypeName (Type type)
     {
       if (!type.IsGenericType)
         return type.Name;
