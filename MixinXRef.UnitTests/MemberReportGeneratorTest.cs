@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              _outputFormatter.CreateModifierMarkup("public virtual"),
+              _outputFormatter.CreateModifierMarkup("public abstract"),
               new XElement("signature", "Void Dispose()")
               )
           );
@@ -190,6 +190,26 @@ namespace MixinXRef.UnitTests
 
       var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("public virtual"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_PublicAbstractMethod()
+    {
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
+      var memberInfo = typeof(ModifierTestClass).GetMember("PublicAbstractMethod")[0];
+
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
+      Assert.That(output, Is.EqualTo("public abstract"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_PublicAbstractAndOverriddenMethod()
+    {
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
+      var memberInfo = typeof(SubModifierTestClass).GetMember("PublicAbstractMethod")[0];
+
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
+      Assert.That(output, Is.EqualTo("public abstract overridden"));
     }
   }
 }

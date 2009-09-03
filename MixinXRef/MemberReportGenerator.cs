@@ -48,10 +48,10 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
       var memberModifiers = GetMemberModifiers (memberInfo);
-      if (IsOverriddenMember(memberInfo))
-        memberModifiers = memberModifiers.Replace(" virtual", "");
+      //if (IsOverriddenMember(memberInfo))
+      //  memberModifiers = memberModifiers.Replace(" virtual", "");
 
-      memberModifiers += IsOverriddenMember (memberInfo) ? " overridden" : "";
+      //memberModifiers += IsOverriddenMember (memberInfo) ? " overridden" : "";
 
       return _outputFormatter.CreateModifierMarkup (memberModifiers);
     }
@@ -88,22 +88,22 @@ namespace MixinXRef
 
       var methodInfo = memberInfo as MethodInfo;
       if (methodInfo != null)
-        return GetMethodVisibility (methodInfo);
+        return GetMethodFieldOrConstructorVisibility (methodInfo);
 
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
-        return GetMethodVisibility (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true));
+        return GetMethodFieldOrConstructorVisibility (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true));
 
       var eventInfo = memberInfo as EventInfo;
       if (eventInfo != null)
-        return GetMethodVisibility (eventInfo.GetAddMethod (true));
+        return GetMethodFieldOrConstructorVisibility (eventInfo.GetAddMethod (true));
 
       // has to be a field or constructor (which both have visibility properties like MethodInfo)
-      return GetMethodVisibility(memberInfo);
+      return GetMethodFieldOrConstructorVisibility(memberInfo);
     }
 
 
-    private string GetMethodVisibility (MemberInfo memberInfo)
+    private string GetMethodFieldOrConstructorVisibility (MemberInfo memberInfo)
     {
       var methodFieldOrConstructorInfo = new ReflectedObject (memberInfo);
       
@@ -119,10 +119,16 @@ namespace MixinXRef
         modifiers = "internal";
       if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
         modifiers = "private";
-      
-      if (memberInfo is MethodInfo && methodFieldOrConstructorInfo.GetProperty("IsVirtual").To<bool>())
-        modifiers  += " virtual";
-      
+
+      if (memberInfo is MethodInfo)
+      {
+        if (methodFieldOrConstructorInfo.GetProperty("IsAbstract").To<bool>())
+          modifiers += " abstract";
+        if (IsOverriddenMember(memberInfo))
+          modifiers += " overridden";
+        if (!modifiers.Contains("overridden") && !modifiers.Contains("abstract") && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
+          modifiers += " virtual";
+      }
       return modifiers;
     }
 
