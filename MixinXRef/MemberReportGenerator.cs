@@ -99,8 +99,8 @@ namespace MixinXRef
     private string GetMethodModifiers(MemberInfo methodFieldOrConstructor, MemberInfo memberInfoForOverride)
     {
       var methodFieldOrConstructorInfo = new ReflectedObject(methodFieldOrConstructor);
-      
-      string modifiers = null;
+
+      var modifiers = "";
 
       if (methodFieldOrConstructorInfo.GetProperty ("IsPublic").To<bool>())
         modifiers = "public";
