@@ -70,6 +70,7 @@
     <Compile Include="InterfaceIntroductionReportGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="formatting\IOutputFormatter.cs" />
+    <Compile Include="MemberModifierReportGenerator.cs" />
     <Compile Include="reflection\IRemotionReflection.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />

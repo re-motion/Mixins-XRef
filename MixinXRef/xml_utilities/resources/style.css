@@ -101,6 +101,12 @@ tbody tr.odd td {
 	vertical-align: top;
 }
 
+/* keywords */
+span.keyword {
+  font: normal Courier New;
+  color: blue;
+} 
+
 /* treeview styles */
 .tree-link {
 	font-size: 80%;

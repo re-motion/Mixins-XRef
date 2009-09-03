@@ -72,6 +72,7 @@
     <Compile Include="InterfaceIntroductionReportGeneratorTest.cs" />
     <Compile Include="AttributeIntroductionReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeStoreTest.cs" />
+    <Compile Include="MemberModifierReportGeneratorTest.cs" />
     <Compile Include="MemberOverrideReportGeneratorTest.cs" />
     <Compile Include="MemberReportGeneratorTest.cs" />
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
