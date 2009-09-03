@@ -22,6 +22,11 @@ namespace MixinXRef.UnitTests.TestDomain
     }
 
     public abstract void PublicAbstractMethod();
+
+
+    public class NestedClass
+    {
+    }
   }
   public delegate void ChangedEventHandler(object sender, EventArgs e);
 

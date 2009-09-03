@@ -96,7 +96,7 @@ namespace MixinXRef
           return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
 
         case MemberTypes.NestedType:
-          return "todo nestedType";
+          return "todo nestedType    " + memberInfo.Name + "   " + memberInfo.GetType();
 
         case MemberTypes.Custom:
         case MemberTypes.TypeInfo:

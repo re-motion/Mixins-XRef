@@ -221,5 +221,15 @@ namespace MixinXRef.UnitTests
       var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("public override sealed"));
     }
+
+    [Test]
+    public void GetMemberModifiers_NestedType()
+    {
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
+      var memberInfo = typeof(ModifierTestClass).GetMember("NestedClass")[0];
+
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
+      Assert.That(output, Is.EqualTo("todo nested"));
+    }
   }
 }
