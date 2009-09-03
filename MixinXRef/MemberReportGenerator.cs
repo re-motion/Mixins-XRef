@@ -80,19 +80,31 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      if (memberInfo is MethodInfo)
-        return GetMethodModifiers(memberInfo, memberInfo);
+      switch (memberInfo.MemberType)
+      {
+        case MemberTypes.Method:
+        case MemberTypes.Constructor:
+        case MemberTypes.Field:
+          return GetMethodModifiers(memberInfo, memberInfo);
 
-      var propertyInfo = memberInfo as PropertyInfo;
-      if (propertyInfo != null)
-        return GetMethodModifiers (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true), memberInfo);
+        case MemberTypes.Property:
+          var propertyInfo = (PropertyInfo) memberInfo ;
+          return GetMethodModifiers (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true), memberInfo);
 
-      var eventInfo = memberInfo as EventInfo;
-      if (eventInfo != null)
-        return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
+        case MemberTypes.Event:
+          var eventInfo = (EventInfo) memberInfo;
+          return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
 
-      // has to be a field or constructor (which both have visibility properties like MethodInfo)
-      return GetMethodModifiers(memberInfo, memberInfo);
+        case MemberTypes.NestedType:
+          return "todo nestedType";
+
+        case MemberTypes.Custom:
+        case MemberTypes.TypeInfo:
+          return "TODO special MemberTypes";
+
+        default:
+          throw new Exception ("unknown member type");
+      }
     }
 
 
@@ -104,13 +116,13 @@ namespace MixinXRef
 
       if (methodFieldOrConstructorInfo.GetProperty ("IsPublic").To<bool>())
         modifiers = "public";
-      if (methodFieldOrConstructorInfo.GetProperty ("IsFamily").To<bool>())
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsFamily").To<bool>())
         modifiers = "protected";
-      if (methodFieldOrConstructorInfo.GetProperty ("IsFamilyOrAssembly").To<bool>())
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsFamilyOrAssembly").To<bool>())
         modifiers = "protected internal";
-      if (methodFieldOrConstructorInfo.GetProperty ("IsAssembly").To<bool>())
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsAssembly").To<bool>())
         modifiers = "internal";
-      if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
         modifiers = "private";
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
