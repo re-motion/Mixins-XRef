@@ -70,7 +70,7 @@
     <Compile Include="InterfaceIntroductionReportGenerator.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="formatting\IOutputFormatter.cs" />
-    <Compile Include="MemberModifierReportGenerator.cs" />
+    <Compile Include="MemberModifierUtility.cs" />
     <Compile Include="reflection\IRemotionReflection.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
     <Compile Include="TimingScope.cs" />
+    <Compile Include="TypeModifierUtility.cs" />
     <Compile Include="ValidationErrorReportGenerator.cs" />
     <Compile Include="XRefTransformer.cs" />
   </ItemGroup>

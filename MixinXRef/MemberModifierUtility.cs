@@ -4,8 +4,10 @@ using MixinXRef.Reflection;
 
 namespace MixinXRef
 {
-  public class MemberModifierReportGenerator
+  public class MemberModifierUtility
   {
+    private TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
+
     public bool IsOverriddenMember (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
@@ -52,7 +54,7 @@ namespace MixinXRef
           return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
 
         case MemberTypes.NestedType:
-          return "todo nestedType    " + memberInfo.Name + "   " + memberInfo.GetType();
+          return _typeModifierUtility.GetTypeModifiers ((Type)memberInfo);
 
         case MemberTypes.Custom:
         case MemberTypes.TypeInfo:

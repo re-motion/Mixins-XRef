@@ -3,7 +3,7 @@ using System;
 namespace MixinXRef.UnitTests.TestDomain
 {
   
-  public abstract class ModifierTestClass : IDisposable
+  public abstract class MemberModifierTestClass : IDisposable
   {
     public void PublicMethod ()
     {
@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests.TestDomain
   public delegate void ChangedEventHandler(object sender, EventArgs e);
 
 
-  public abstract class SubModifierTestClass : ModifierTestClass
+  public abstract class SubModifierTestClass : MemberModifierTestClass
   {
     public abstract override void PublicAbstractMethod();
 

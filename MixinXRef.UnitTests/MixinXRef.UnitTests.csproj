@@ -72,7 +72,7 @@
     <Compile Include="InterfaceIntroductionReportGeneratorTest.cs" />
     <Compile Include="AttributeIntroductionReportGeneratorTest.cs" />
     <Compile Include="InvolvedTypeStoreTest.cs" />
-    <Compile Include="MemberModifierReportGeneratorTest.cs" />
+    <Compile Include="MemberModifierUtilityTest.cs" />
     <Compile Include="MemberOverrideReportGeneratorTest.cs" />
     <Compile Include="MemberReportGeneratorTest.cs" />
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
@@ -111,8 +111,10 @@
     <Compile Include="TestDomain\TargetClass1.cs" />
     <Compile Include="TestDomain\TargetClass2.cs" />
     <Compile Include="TestDomain\TargetDoSomething.cs" />
+    <Compile Include="TestDomain\TypeModifierTestClass.cs" />
     <Compile Include="TestDomain\UselessObject.cs" />
-    <Compile Include="TestDomain\ModifierTestClass.cs" />
+    <Compile Include="TestDomain\MemberModifierTestClass.cs" />
+    <Compile Include="TypeModifierUtilityTest.cs" />
     <Compile Include="ValidationErrorReportGeneratorTest.cs" />
     <Compile Include="XRefTransformerTest.cs" />
   </ItemGroup>
