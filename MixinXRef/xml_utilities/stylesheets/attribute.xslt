@@ -36,8 +36,8 @@
 		</xsl:call-template>
 	</div>
 
-	<xsl:call-template name="publicMemberList">
-			<xsl:with-param name="members" select="PublicMembers/Member"/>
+	<xsl:call-template name="memberList">
+			<xsl:with-param name="members" select="Members/Member"/>
 	</xsl:call-template>
 
 

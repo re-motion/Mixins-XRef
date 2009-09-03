@@ -30,7 +30,7 @@ namespace MixinXRef
     public XElement GenerateXml ()
     {
       return new XElement (
-          "PublicMembers",
+          "Members",
           from memberInfo in _type.GetMembers()
           where memberInfo.DeclaringType == _type && !IsSpecialName (memberInfo)
           select new XElement (

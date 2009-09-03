@@ -41,7 +41,7 @@
 
 <!-- component stylesheets -->
 <xsl:include href="stylesheets/involvedTypeList.xslt" />
-<xsl:include href="stylesheets/publicMemberList.xslt" />
+<xsl:include href="stylesheets/memberList.xslt" />
 <xsl:include href="stylesheets/interfaceList.xslt" />
 <xsl:include href="stylesheets/attributeList.xslt" />
 <xsl:include href="stylesheets/attributeRefList.xslt" />

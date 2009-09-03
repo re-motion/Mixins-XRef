@@ -100,9 +100,9 @@
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
 			
-	<xsl:call-template name="publicMemberList">
+	<xsl:call-template name="memberList">
 			<!-- summaries may contain other tags, eg. 'cref' and content -->
-			<xsl:with-param name="members" select="PublicMembers/Member"/>
+			<xsl:with-param name="members" select="Members/Member"/>
 	</xsl:call-template>
 	
 </xsl:template>

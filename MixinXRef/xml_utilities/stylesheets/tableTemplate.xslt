@@ -60,8 +60,8 @@
           </xsl:call-template>
         </xsl:when>
 				<!-- public members table -->
-				<xsl:when test="$tableName = 'publicMemberListTable'">
-					<xsl:call-template name="publicMemberListTable">
+				<xsl:when test="$tableName = 'memberListTable'">
+					<xsl:call-template name="memberListTable">
 						<xsl:with-param name="members" select="$items" />
 					</xsl:call-template>
 				</xsl:when>
