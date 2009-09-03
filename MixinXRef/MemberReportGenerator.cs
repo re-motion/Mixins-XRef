@@ -52,7 +52,7 @@ namespace MixinXRef
           IsOverriddenMember (memberInfo)
           );
 
-      return new XElement ("modifiers", new XCData (modifierMarkup));
+      return modifierMarkup;
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)

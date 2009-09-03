@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
@@ -56,27 +57,29 @@ namespace MixinXRef.UnitTests.formatting
     public void CreateModifierMarkup_FewestPossibleModifiers ()
     {
       var output = _outputFormatter.CreateModifierMarkup("public", false);
-      const string expectedOutput = "<span class=\"keyword\">public</span>";
+      var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
 
-      Assert.That(output, Is.EqualTo(expectedOutput));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void CreateModifierMarkup_Overriden()
     {
       var output = _outputFormatter.CreateModifierMarkup("public", true);
-      const string expectedOutput = "<span class=\"keyword\">public</span><span class=\"keyword\">overridden</span>";
+      var expectedOutput = new XElement("Modifiers",
+        new XElement("Keyword", "public"),
+        new XElement("Keyword", "overridden"));
 
-      Assert.That(output, Is.EqualTo(expectedOutput));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void CreateModifierMarkup_MemberVisibility()
     {
       var output = _outputFormatter.CreateModifierMarkup("public", false);
-      const string expectedOutput = "<span class=\"keyword\">public</span>";
+      var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
 
-      Assert.That(output, Is.EqualTo(expectedOutput));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
   }
 }

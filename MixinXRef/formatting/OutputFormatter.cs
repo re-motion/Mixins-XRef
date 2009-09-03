@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MixinXRef.Formatting
 {
@@ -15,10 +16,10 @@ namespace MixinXRef.Formatting
       StringBuilder result = new StringBuilder (typeName);
       result.Append ("<");
       var genericArguments = type.GetGenericArguments();
-      for(int i = 0; i < genericArguments.Length; i++)
+      for (int i = 0; i < genericArguments.Length; i++)
       {
-        if(i != 0)
-          result.Append(", ");
+        if (i != 0)
+          result.Append (", ");
 
         result.Append (genericArguments[i].Name);
       }
@@ -26,19 +27,19 @@ namespace MixinXRef.Formatting
       return result.ToString();
     }
 
-    public string CreateModifierMarkup (string visibility, bool overridden)
+    public XElement CreateModifierMarkup (string visibility, bool overridden)
     {
-      var modifiers = new StringBuilder();
+      var modifiers = new XElement ("Modifiers");
 
-      modifiers.Append (CreateSpan ("keyword", visibility));
-      modifiers.Append (CreateSpan ("keyword", overridden ? "overridden" : null));
+      modifiers.Add (CreateElement ("Keyword", visibility));
+      modifiers.Add (CreateElement ("Keyword", overridden ? "overridden" : null));
 
-      return modifiers.ToString();
+      return modifiers;
     }
 
-    private string CreateSpan (string className, string content)
+    private XElement CreateElement (string elementName, string content)
     {
-      return content == null ? "" : String.Format ("<span class=\"{0}\">{1}</span>", className, content);
+      return content == null ? null : new XElement (elementName, content);
     }
   }
 }

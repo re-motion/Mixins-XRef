@@ -1,10 +1,11 @@
 using System;
+using System.Xml.Linq;
 
 namespace MixinXRef.Formatting
 {
   public interface IOutputFormatter
   {
     string GetFormattedTypeName (Type type);
-    string CreateModifierMarkup (string visibility, bool overridden);
+    XElement CreateModifierMarkup (string visibility, bool overridden);
   }
 }

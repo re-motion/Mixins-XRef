@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              new XElement("modifiers", new XCData(_outputFormatter.CreateModifierMarkup("public", false))),
+              _outputFormatter.CreateModifierMarkup("public", false),
               new XElement("signature", "Void Dispose()")
               )
           );
@@ -64,7 +64,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XElement("modifiers", new XCData(_outputFormatter.CreateModifierMarkup("public", false))),
+              _outputFormatter.CreateModifierMarkup("public", false),
               new XElement("signature", "Void .ctor()")
               )
           );
@@ -86,21 +86,21 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-              new XElement("modifiers", new XCData(_outputFormatter.CreateModifierMarkup("public", true))),
+             _outputFormatter.CreateModifierMarkup("public", true),
               new XElement("signature", "Void DoSomething()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              new XElement("modifiers", new XCData(_outputFormatter.CreateModifierMarkup("public", false))),
+              _outputFormatter.CreateModifierMarkup("public", false),
               new XElement("signature", "Void .ctor()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              new XElement("modifiers", new XCData(_outputFormatter.CreateModifierMarkup("public", true))),
+              _outputFormatter.CreateModifierMarkup("public", true),
               new XElement("signature", "System.String PropertyName")
               )
           );
