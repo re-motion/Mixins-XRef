@@ -20,7 +20,7 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetCSharpLikeName_NormalType ()
+    public void GetFormattedTypeName_NormalType ()
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (UselessObject));
 
@@ -28,7 +28,7 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetCSharpLikeName_GenericDefinition ()
+    public void GetFormattedTypeName_GenericDefinition ()
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<,>));
       
@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetCSharpLikeName_GenericType ()
+    public void GetFormattedTypeName_GenericType ()
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<string, int>));
       
@@ -44,7 +44,7 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetCSharpLikeName_ContainsGenericArguments ()
+    public void GetFormattedTypeName_ContainsGenericArguments ()
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
@@ -56,7 +56,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void CreateModifierMarkup_FewestPossibleModifiers ()
     {
-      var output = _outputFormatter.CreateModifierMarkup("public", false);
+      var output = _outputFormatter.CreateModifierMarkup("public");
       var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
 
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
@@ -65,7 +65,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void CreateModifierMarkup_Overriden()
     {
-      var output = _outputFormatter.CreateModifierMarkup("public", true);
+      var output = _outputFormatter.CreateModifierMarkup("public overridden");
       var expectedOutput = new XElement("Modifiers",
         new XElement("Keyword", "public"),
         new XElement("Keyword", "overridden"));
@@ -76,7 +76,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void CreateModifierMarkup_MemberVisibility()
     {
-      var output = _outputFormatter.CreateModifierMarkup("public", false);
+      var output = _outputFormatter.CreateModifierMarkup("public");
       var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
 
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));

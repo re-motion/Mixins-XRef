@@ -27,12 +27,14 @@ namespace MixinXRef.Formatting
       return result.ToString();
     }
 
-    public XElement CreateModifierMarkup (string visibility, bool overridden)
+    public XElement CreateModifierMarkup (string keywords)
     {
       var modifiers = new XElement ("Modifiers");
 
-      modifiers.Add (CreateElement ("Keyword", visibility));
-      modifiers.Add (CreateElement ("Keyword", overridden ? "overridden" : null));
+      foreach (var keyword in keywords.Split(' '))
+      {
+        modifiers.Add(CreateElement("Keyword", keyword));  
+      }
 
       return modifiers;
     }

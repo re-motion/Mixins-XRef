@@ -47,12 +47,13 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      var modifierMarkup = _outputFormatter.CreateModifierMarkup (
-          GetMemberVisibility (memberInfo),
-          IsOverriddenMember (memberInfo)
-          );
+      var memberModifiers = GetMemberModifiers (memberInfo);
+      if (IsOverriddenMember(memberInfo))
+        memberModifiers = memberModifiers.Replace(" virtual", "");
 
-      return modifierMarkup;
+      memberModifiers += IsOverriddenMember (memberInfo) ? " overridden" : "";
+
+      return _outputFormatter.CreateModifierMarkup (memberModifiers);
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)
@@ -81,7 +82,7 @@ namespace MixinXRef
       return false;
     }
 
-    public string GetMemberVisibility (MemberInfo memberInfo)
+    public string GetMemberModifiers (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
@@ -104,20 +105,25 @@ namespace MixinXRef
 
     private string GetMethodVisibility (MemberInfo memberInfo)
     {
-      var methodOrFieldInfo = new ReflectedObject (memberInfo);
+      var methodFieldOrConstructorInfo = new ReflectedObject (memberInfo);
+      
+      string modifiers = null;
 
-      if (methodOrFieldInfo.GetProperty ("IsPublic").To<bool>())
-        return "public";
-      if (methodOrFieldInfo.GetProperty ("IsFamily").To<bool>())
-        return "protected";
-      if (methodOrFieldInfo.GetProperty ("IsFamilyOrAssembly").To<bool>())
-        return "protected internal";
-      if (methodOrFieldInfo.GetProperty ("IsAssembly").To<bool>())
-        return "internal";
-      if (methodOrFieldInfo.GetProperty ("IsPrivate").To<bool>())
-        return "private";
-
-      throw new Exception ("Unknown member visibility");
+      if (methodFieldOrConstructorInfo.GetProperty ("IsPublic").To<bool>())
+        modifiers = "public";
+      if (methodFieldOrConstructorInfo.GetProperty ("IsFamily").To<bool>())
+        modifiers = "protected";
+      if (methodFieldOrConstructorInfo.GetProperty ("IsFamilyOrAssembly").To<bool>())
+        modifiers = "protected internal";
+      if (methodFieldOrConstructorInfo.GetProperty ("IsAssembly").To<bool>())
+        modifiers = "internal";
+      if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
+        modifiers = "private";
+      
+      if (memberInfo is MethodInfo && methodFieldOrConstructorInfo.GetProperty("IsVirtual").To<bool>())
+        modifiers  += " virtual";
+      
+      return modifiers;
     }
 
     private bool IsOverriddenMethod (MethodInfo methodInfo)

@@ -6,6 +6,6 @@ namespace MixinXRef.Formatting
   public interface IOutputFormatter
   {
     string GetFormattedTypeName (Type type);
-    XElement CreateModifierMarkup (string visibility, bool overridden);
+    XElement CreateModifierMarkup (string keywords);
   }
 }

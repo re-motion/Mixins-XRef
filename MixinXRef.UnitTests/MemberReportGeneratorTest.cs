@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              _outputFormatter.CreateModifierMarkup("public", false),
+              _outputFormatter.CreateModifierMarkup("public virtual"),
               new XElement("signature", "Void Dispose()")
               )
           );
@@ -64,7 +64,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateModifierMarkup("public", false),
+              _outputFormatter.CreateModifierMarkup("public"),
               new XElement("signature", "Void .ctor()")
               )
           );
@@ -86,21 +86,21 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-             _outputFormatter.CreateModifierMarkup("public", true),
+             _outputFormatter.CreateModifierMarkup("public overridden"),
               new XElement("signature", "Void DoSomething()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateModifierMarkup("public", false),
+              _outputFormatter.CreateModifierMarkup("public"),
               new XElement("signature", "Void .ctor()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              _outputFormatter.CreateModifierMarkup("public", true),
+              _outputFormatter.CreateModifierMarkup("public overridden"),
               new XElement("signature", "System.String PropertyName")
               )
           );
@@ -133,53 +133,63 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetMemberVisibility_PublicMethod ()
+    public void GetMemberModifiers_PublicMethod ()
     {
       var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
-      var memberInfo = typeof (VisibilityTestClass).GetMember ("PublicMethod")[0];
+      var memberInfo = typeof (ModifierTestClass).GetMember ("PublicMethod")[0];
 
-      var output = reportGenerator.GetMemberVisibility(memberInfo);
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That (output, Is.EqualTo ("public"));
     }
 
     [Test]
-    public void GetMemberVisibility_ProtectedProperty()
+    public void GetMemberModifiers_ProtectedProperty()
     {
       var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
-      var memberInfo = typeof(VisibilityTestClass).GetMember("ProtectedProperty", BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var memberInfo = typeof(ModifierTestClass).GetMember("ProtectedProperty", BindingFlags.Instance | BindingFlags.NonPublic)[0];
 
-      var output = reportGenerator.GetMemberVisibility(memberInfo);
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("protected"));
     }
 
     [Test]
-    public void GetMemberVisibility_ProtectedInternalEvent()
+    public void GetMemberModifiers_ProtectedInternalEvent()
     {
       var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
-      var memberInfo = typeof(VisibilityTestClass).GetMember("ProtectedInternalEvent", BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var memberInfo = typeof(ModifierTestClass).GetMember("ProtectedInternalEvent", BindingFlags.Instance | BindingFlags.NonPublic)[0];
 
-      var output = reportGenerator.GetMemberVisibility(memberInfo);
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("protected internal"));
     }
 
     [Test]
-    public void GetMemberVisibility_InternalField()
+    public void GetMemberModifiers_InternalField()
     {
       var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
-      var memberInfo = typeof(VisibilityTestClass).GetMember("InternalField", BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var memberInfo = typeof(ModifierTestClass).GetMember("InternalField", BindingFlags.Instance | BindingFlags.NonPublic)[0];
 
-      var output = reportGenerator.GetMemberVisibility(memberInfo);
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("internal"));
     }
 
     [Test]
-    public void GetMemberVisibility_PrivateField()
+    public void GetMemberModifiers_PrivateField()
     {
       var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
-      var memberInfo = typeof(VisibilityTestClass).GetMember("_privateField", BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var memberInfo = typeof(ModifierTestClass).GetMember("_privateField", BindingFlags.Instance | BindingFlags.NonPublic)[0];
 
-      var output = reportGenerator.GetMemberVisibility(memberInfo);
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("private"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_PublicVirtualMethod()
+    {
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
+      var memberInfo = typeof(ModifierTestClass).GetMember("PublicVirtualMethod")[0];
+
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
+      Assert.That(output, Is.EqualTo("public virtual"));
     }
   }
 }
