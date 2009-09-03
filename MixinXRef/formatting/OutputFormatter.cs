@@ -1,8 +1,5 @@
 using System;
-using System.Reflection;
 using System.Text;
-using Remotion.Mixins.Definitions;
-using Remotion.Collections;
 
 namespace MixinXRef.Formatting
 {
@@ -17,14 +14,15 @@ namespace MixinXRef.Formatting
 
       StringBuilder result = new StringBuilder (typeName);
       result.Append ("<");
-      foreach (Type genericArgument in type.GetGenericArguments ())
+      for(int i = 0; i < type.GetGenericArguments().Length; i++)
       {
-        result.Append (genericArgument.Name);
-        result.Append (", ");
+        if(i != 0)
+          result.Append(", ");
+
+        result.Append (type.GetGenericArguments()[i].Name);
       }
-      result.Remove (result.Length - 2, 2);
       result.Append (">");
-      return result.ToString ();
+      return result.ToString();
     }
 
     public string CreateModifierMarkup (string visibility, bool overridden)
@@ -37,7 +35,7 @@ namespace MixinXRef.Formatting
       return modifiers.ToString();
     }
 
-    private string CreateSpan(string className, string content)
+    private string CreateSpan (string className, string content)
     {
       return content == null ? "" : String.Format ("<span class=\"{0}\">{1}</span>", className, content);
     }
