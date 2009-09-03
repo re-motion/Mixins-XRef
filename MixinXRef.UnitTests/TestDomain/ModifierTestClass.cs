@@ -29,6 +29,10 @@ namespace MixinXRef.UnitTests.TestDomain
   public abstract class SubModifierTestClass : ModifierTestClass
   {
     public abstract override void PublicAbstractMethod();
+
+    public override sealed void PublicVirtualMethod()
+    {
+    }
   }
   
 }

@@ -47,13 +47,7 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      var memberModifiers = GetMemberModifiers (memberInfo);
-      //if (IsOverriddenMember(memberInfo))
-      //  memberModifiers = memberModifiers.Replace(" virtual", "");
-
-      //memberModifiers += IsOverriddenMember (memberInfo) ? " overridden" : "";
-
-      return _outputFormatter.CreateModifierMarkup (memberModifiers);
+      return _outputFormatter.CreateModifierMarkup(GetMemberModifiers(memberInfo));
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)
@@ -86,26 +80,25 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      var methodInfo = memberInfo as MethodInfo;
-      if (methodInfo != null)
-        return GetMethodFieldOrConstructorVisibility (methodInfo);
+      if (memberInfo is MethodInfo)
+        return GetMethodModifiers(memberInfo, memberInfo);
 
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
-        return GetMethodFieldOrConstructorVisibility (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true));
+        return GetMethodModifiers (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true), memberInfo);
 
       var eventInfo = memberInfo as EventInfo;
       if (eventInfo != null)
-        return GetMethodFieldOrConstructorVisibility (eventInfo.GetAddMethod (true));
+        return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
 
       // has to be a field or constructor (which both have visibility properties like MethodInfo)
-      return GetMethodFieldOrConstructorVisibility(memberInfo);
+      return GetMethodModifiers(memberInfo, memberInfo);
     }
 
 
-    private string GetMethodFieldOrConstructorVisibility (MemberInfo memberInfo)
+    private string GetMethodModifiers(MemberInfo methodFieldOrConstructor, MemberInfo memberInfoForOverride)
     {
-      var methodFieldOrConstructorInfo = new ReflectedObject (memberInfo);
+      var methodFieldOrConstructorInfo = new ReflectedObject(methodFieldOrConstructor);
       
       string modifiers = null;
 
@@ -120,13 +113,15 @@ namespace MixinXRef
       if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
         modifiers = "private";
 
-      if (memberInfo is MethodInfo)
+      if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {
         if (methodFieldOrConstructorInfo.GetProperty("IsAbstract").To<bool>())
           modifiers += " abstract";
-        if (IsOverriddenMember(memberInfo))
-          modifiers += " overridden";
-        if (!modifiers.Contains("overridden") && !modifiers.Contains("abstract") && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
+        if (IsOverriddenMember(memberInfoForOverride))
+          modifiers += " override";
+        if (methodFieldOrConstructorInfo.GetProperty("IsFinal").To<bool>())
+          modifiers += " sealed";
+        if (!modifiers.Contains("override") && !modifiers.Contains("abstract") && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
       }
       return modifiers;

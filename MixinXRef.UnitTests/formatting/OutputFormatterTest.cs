@@ -54,32 +54,13 @@ namespace MixinXRef.UnitTests.formatting
     public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>{}
 
     [Test]
-    public void CreateModifierMarkup_FewestPossibleModifiers ()
+    public void CreateModifierMarkup ()
     {
-      var output = _outputFormatter.CreateModifierMarkup("public");
-      var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
+      var output = _outputFormatter.CreateModifierMarkup("keyword1 keyword2");
+      var expectedOutput = new XElement("Modifiers", new XElement("Keyword", "keyword1"), new XElement("Keyword", "keyword2"));
 
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
-    [Test]
-    public void CreateModifierMarkup_Overriden()
-    {
-      var output = _outputFormatter.CreateModifierMarkup("public overridden");
-      var expectedOutput = new XElement("Modifiers",
-        new XElement("Keyword", "public"),
-        new XElement("Keyword", "overridden"));
-
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
-    }
-
-    [Test]
-    public void CreateModifierMarkup_MemberVisibility()
-    {
-      var output = _outputFormatter.CreateModifierMarkup("public");
-      var expectedOutput = new XElement("Modifiers",new XElement("Keyword", "public"));
-
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
-    }
   }
 }

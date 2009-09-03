@@ -86,7 +86,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-             _outputFormatter.CreateModifierMarkup("public overridden"),
+             _outputFormatter.CreateModifierMarkup("public override"),
               new XElement("signature", "Void DoSomething()")
               ),
           new XElement (
@@ -100,7 +100,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              _outputFormatter.CreateModifierMarkup("public overridden"),
+              _outputFormatter.CreateModifierMarkup("public override"),
               new XElement("signature", "System.String PropertyName")
               )
           );
@@ -209,7 +209,17 @@ namespace MixinXRef.UnitTests
       var memberInfo = typeof(SubModifierTestClass).GetMember("PublicAbstractMethod")[0];
 
       var output = reportGenerator.GetMemberModifiers(memberInfo);
-      Assert.That(output, Is.EqualTo("public abstract overridden"));
+      Assert.That(output, Is.EqualTo("public abstract override"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_PubliOverriddenAndSealedMethod()
+    {
+      var reportGenerator = new MemberReportGenerator(typeof(object), null, _outputFormatter);
+      var memberInfo = typeof(SubModifierTestClass).GetMember("PublicVirtualMethod")[0];
+
+      var output = reportGenerator.GetMemberModifiers(memberInfo);
+      Assert.That(output, Is.EqualTo("public override sealed"));
     }
   }
 }
