@@ -103,7 +103,9 @@ tbody tr.odd td {
 
 /* keywords */
 span.keyword {
-  font: normal Courier New;
+  font-family: Courier New;
+  font-size: 85%;
+  font-weight: bold;
   color: blue;
 } 
 
