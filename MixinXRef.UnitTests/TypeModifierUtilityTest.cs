@@ -17,6 +17,7 @@ namespace MixinXRef.UnitTests
       _typeModifierUtility = new TypeModifierUtility();
     }
 
+
     [Test]
     public void GetTypeModifiers_Visibility()
     {
@@ -24,8 +25,22 @@ namespace MixinXRef.UnitTests
       Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass).GetNestedType ("ProtectedClass", BindingFlags.Instance | BindingFlags.NonPublic)), Is.EqualTo ("protected"));
       Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass.ProtectedInternalClass)), Is.EqualTo ("protected internal"));
       Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass.InternalClass)), Is.EqualTo ("internal"));
-      Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass).GetNestedType ("PrivateStruct", BindingFlags.Instance | BindingFlags.NonPublic)), Is.EqualTo ("private"));
+      Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass).GetNestedType ("PrivateClass", BindingFlags.Instance | BindingFlags.NonPublic)), Is.EqualTo ("private"));
       Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TopLevelInternalClass)), Is.EqualTo ("internal"));
+    }
+
+    [Test]
+    public void GetTypeModifiers_Sealed ()
+    {
+      Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (PublicSealedClass)), Is.EqualTo ("public sealed"));
+      // struct is sealed by default
+      Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (TypeModifierTestClass.PublicStruct)), Is.EqualTo ("public sealed"));
+    }
+
+    [Test]
+    public void GetTypeModifiers_Abstract ()
+    {
+      Assert.That (_typeModifierUtility.GetTypeModifiers (typeof (PublicAbstractClass)), Is.EqualTo ("public abstract"));      
     }
   }
 }

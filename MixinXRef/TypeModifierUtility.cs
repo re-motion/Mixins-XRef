@@ -6,22 +6,28 @@ namespace MixinXRef
   {
     public string GetTypeModifiers (Type type)
     {
+      var modifiers = "";
+
       if (type.IsPublic || type.IsNestedPublic)
-        return "public";
-      if (type.IsNestedFamily)
-        return "protected";
-      if (type.IsNestedFamORAssem)
-        return "protected internal";
-      if (type.IsNestedAssembly)
-        return "internal";
-      if (type.IsNestedPrivate)
-        return "private";
-
+        modifiers = "public";
+      else if (type.IsNestedFamily)
+        modifiers = "protected";
+      else if (type.IsNestedFamORAssem)
+        modifiers = "protected internal";
+      else if (type.IsNestedAssembly)
+        modifiers = "internal";
+      else if (type.IsNestedPrivate)
+        modifiers = "private";
       // non nested internal class - no own flag?
-      if (type.IsNotPublic)
-        return "internal";      
+      else if (type.IsNotPublic)
+        modifiers = "internal";
+      
+      if (type.IsAbstract)
+        modifiers += " abstract";
+      else if (type.IsSealed)
+        modifiers += " sealed";
 
-      return "unknown visibility";
+      return modifiers;
     }
   }
 }

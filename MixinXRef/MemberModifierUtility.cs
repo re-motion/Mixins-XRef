@@ -87,7 +87,7 @@ namespace MixinXRef
       {
         if (methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>())
           modifiers += " abstract";
-        if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
+        else if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
             (!methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>() || IsOverriddenMember (memberInfoForOverride)))
           modifiers += " sealed";
         if (IsOverriddenMember (memberInfoForOverride))

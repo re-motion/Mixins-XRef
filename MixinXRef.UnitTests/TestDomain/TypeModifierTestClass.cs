@@ -7,8 +7,13 @@ namespace MixinXRef.UnitTests.TestDomain
     protected class ProtectedClass {}
     protected internal class ProtectedInternalClass { }
     internal class InternalClass { }
-    private struct PrivateStruct {}
+    private class PrivateClass{} 
+    public struct PublicStruct {}
   }
 
-  internal class TopLevelInternalClass { }
+  internal class TopLevelInternalClass {}
+
+  public sealed class PublicSealedClass {}
+
+  public abstract class PublicAbstractClass {}
 }
