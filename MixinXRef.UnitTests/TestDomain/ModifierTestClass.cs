@@ -3,7 +3,7 @@ using System;
 namespace MixinXRef.UnitTests.TestDomain
 {
   
-  public abstract class ModifierTestClass
+  public abstract class ModifierTestClass : IDisposable
   {
     public void PublicMethod ()
     {
@@ -26,6 +26,11 @@ namespace MixinXRef.UnitTests.TestDomain
 
     public class NestedClass
     {
+    }
+
+    public void Dispose ()
+    {
+      throw new NotImplementedException();
     }
   }
   public delegate void ChangedEventHandler(object sender, EventArgs e);

@@ -219,7 +219,7 @@ namespace MixinXRef.UnitTests
       var memberInfo = typeof(SubModifierTestClass).GetMember("PublicVirtualMethod")[0];
 
       var output = reportGenerator.GetMemberModifiers(memberInfo);
-      Assert.That(output, Is.EqualTo("public override sealed"));
+      Assert.That (output, Is.EqualTo ("public sealed override"));
     }
 
     [Test]
@@ -230,6 +230,16 @@ namespace MixinXRef.UnitTests
 
       var output = reportGenerator.GetMemberModifiers(memberInfo);
       Assert.That(output, Is.EqualTo("todo nested"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_Test1 ()
+    {
+      var reportGenerator = new MemberReportGenerator (typeof (object), null, _outputFormatter);
+      var memberInfo = typeof (ModifierTestClass).GetMember ("Dispose")[0];
+
+      var output = reportGenerator.GetMemberModifiers (memberInfo);
+      Assert.That (output, Is.EqualTo ("public"));
     }
   }
 }

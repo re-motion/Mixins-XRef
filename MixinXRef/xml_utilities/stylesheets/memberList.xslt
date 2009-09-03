@@ -19,12 +19,12 @@
 <xsl:param name="members"/>
 
 	<table>
-		<caption>Public&#160;Members&#160;(<xsl:value-of select="count( $members )"/>)</caption>
+		<caption>Members&#160;(<xsl:value-of select="count( $members )"/>)</caption>
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Type</th>
-        <th>Overridden</th>
+        <th>Modifiers</th>
         <th>Signature</th>
 			</tr>
 		</thead>
@@ -39,12 +39,18 @@
 				<tr>
 					<td><xsl:value-of select="@name"/></td>
 					<td><xsl:value-of select="@type"/></td>
-          <td><xsl:value-of select="@overridden"/></td>
-          <td><xsl:value-of select="@signature"/></td>
+					<td>
+						<xsl:apply-templates select="Modifiers" />
+					</td>
+				  <td><xsl:value-of select="@signature"/></td>
 				</tr>
 			</xsl:for-each>
 		</tbody>
 	</table>
 </xsl:template>
 	
+<xsl:template match="Modifiers/Keyword">
+	<span class="keyword"><xsl:value-of select="."/></span>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -47,7 +47,7 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      return _outputFormatter.CreateModifierMarkup(GetMemberModifiers(memberInfo));
+      return _outputFormatter.CreateModifierMarkup (GetMemberModifiers (memberInfo));
     }
 
     public bool IsOverriddenMember (MemberInfo memberInfo)
@@ -85,11 +85,11 @@ namespace MixinXRef
         case MemberTypes.Method:
         case MemberTypes.Constructor:
         case MemberTypes.Field:
-          return GetMethodModifiers(memberInfo, memberInfo);
+          return GetMethodModifiers (memberInfo, memberInfo);
 
         case MemberTypes.Property:
-          var propertyInfo = (PropertyInfo) memberInfo ;
-          return GetMethodModifiers (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod(true), memberInfo);
+          var propertyInfo = (PropertyInfo) memberInfo;
+          return GetMethodModifiers (propertyInfo.GetGetMethod (true) ?? propertyInfo.GetSetMethod (true), memberInfo);
 
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;
@@ -108,9 +108,9 @@ namespace MixinXRef
     }
 
 
-    private string GetMethodModifiers(MemberInfo methodFieldOrConstructor, MemberInfo memberInfoForOverride)
+    private string GetMethodModifiers (MemberInfo methodFieldOrConstructor, MemberInfo memberInfoForOverride)
     {
-      var methodFieldOrConstructorInfo = new ReflectedObject(methodFieldOrConstructor);
+      var methodFieldOrConstructorInfo = new ReflectedObject (methodFieldOrConstructor);
 
       var modifiers = "";
 
@@ -127,13 +127,17 @@ namespace MixinXRef
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {
-        if (methodFieldOrConstructorInfo.GetProperty("IsAbstract").To<bool>())
+        if (methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>())
           modifiers += " abstract";
-        if (IsOverriddenMember(memberInfoForOverride))
-          modifiers += " override";
-        if (methodFieldOrConstructorInfo.GetProperty("IsFinal").To<bool>())
+        if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
+            (!methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>() || IsOverriddenMember (memberInfoForOverride)))
           modifiers += " sealed";
-        if (!modifiers.Contains("override") && !modifiers.Contains("abstract") && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
+        if (IsOverriddenMember (memberInfoForOverride))
+          modifiers += " override";
+        if (!IsOverriddenMember (memberInfoForOverride) &&
+            !methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool> () && 
+            !methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() && 
+            methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
       }
       return modifiers;
