@@ -62,26 +62,36 @@ namespace MixinXRef
     {
       var signature = new StringBuilder();
 
-      if (nestedType.IsClass)
+      if (nestedType.IsEnum)
       {
-        signature.Append("class ");
+        signature.Append ("enum ");
         signature.Append (nestedType.Name);
+      }
+      else if (nestedType.IsClass || nestedType.IsInterface)
+      {
+        if (nestedType.IsClass)
+          signature.Append ("class ");
+        if (nestedType.IsInterface)
+          signature.Append ("interface ");
+
+        signature.Append (nestedType.Name);
+
+        var isSubClass = nestedType.BaseType == null ? false : (nestedType.BaseType != typeof (object));
 
         var interfaces = nestedType.GetInterfaces ();
 
-        if (nestedType.BaseType != typeof (object) && interfaces.Length > 0)
+        if (isSubClass || interfaces.Length > 0)
           signature.Append (" : ");
-        
+
         var firstItem = true;
 
-        if (nestedType.BaseType != typeof (object))
+        if (isSubClass)
         {
           signature.Append (_outputFormatter.GetShortName (nestedType.BaseType));
           firstItem = false;
         }
         if (interfaces.Length > 0)
         {
-          
           foreach (var @interface in interfaces)
           {
             if (firstItem)
@@ -89,16 +99,12 @@ namespace MixinXRef
             else
               signature.Append (", ");
 
-            signature.Append (_outputFormatter.GetShortName(@interface));
+            signature.Append (_outputFormatter.GetShortName (@interface));
           }
         }
       }
-
-      if (nestedType.IsEnum)
-      {
-        signature.Append ("enum ");
-        signature.Append (nestedType.Name);
-      }
+      else
+        signature.Append("ToDo: " + nestedType);
 
       return signature.ToString();
     }

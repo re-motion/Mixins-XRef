@@ -11,7 +11,12 @@ namespace MixinXRef.Formatting
       if (!type.IsGenericType)
         return type.Name;
 
-      var typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
+      var typeName = "";
+
+      if (type.IsNested)
+        typeName = type.FullName.Substring (0, type.FullName.IndexOf ('`'));
+      else
+        typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
 
       StringBuilder result = new StringBuilder (typeName);
       result.Append ("<");

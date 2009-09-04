@@ -73,7 +73,16 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output, Is.EqualTo ("MultiDictionary<string, int> _dictionary"));
     }
-    
+
+    [Test]
+    public void GetMemberSignature_NestedClass ()
+    {
+      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("NestedClass", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
+      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+
+      Assert.That (output, Is.EqualTo ("class NestedClass"));
+    }
+
     [Test]
     public void GetMemberSignature_NestedClassWithInterfaceAndInheritance ()
     {
@@ -82,6 +91,23 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output, Is.EqualTo ("class NestedClassWithInterfaceAndInheritance : GenericTarget<string, int>, IDisposable"));
     }
+    
+    [Test]
+    public void GetMemberSignature_NestedClassInterface ()
+    {
+      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("INestedInterface", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
+      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
 
+      Assert.That (output, Is.EqualTo ("interface INestedInterface : IDisposable"));
+    }
+
+    [Test]
+    public void GetMemberSignature_NestedEnumeration ()
+    {
+      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("NestedEnumeration", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
+      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+
+      Assert.That (output, Is.EqualTo ("enum NestedEnumeration"));
+    }
   }
 }

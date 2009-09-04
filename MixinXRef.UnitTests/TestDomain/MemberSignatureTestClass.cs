@@ -24,7 +24,10 @@ namespace MixinXRef.UnitTests.TestDomain
     public virtual void PublicVirtualMethod()
     {
     }
-    
+
+    public class NestedClass
+    { }
+
     public class NestedClassWithInterfaceAndInheritance : GenericTarget<string, int>, IDisposable
     {
       public void Dispose ()
@@ -32,6 +35,11 @@ namespace MixinXRef.UnitTests.TestDomain
         throw new NotImplementedException();
       }
     }
+
+    public interface INestedInterface : IDisposable
+    {}
+
+    public enum NestedEnumeration {}
 
     public void Dispose ()
     {
