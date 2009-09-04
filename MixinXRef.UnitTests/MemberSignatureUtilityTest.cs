@@ -63,5 +63,14 @@ namespace MixinXRef.UnitTests
 
       Assert.That (output, Is.EqualTo ("event ChangedEventHandler ProtectedInternalEvent"));
     }
+
+    [Test]
+    public void GetMemberSignature_Field ()
+    {
+      var memberInfo = typeof (MemberModifierTestClass).GetMember ("_dictionary", BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+
+      Assert.That (output, Is.EqualTo ("MultiDictionary<string, int> _dictionary"));
+    }
   }
 }

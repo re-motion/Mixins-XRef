@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Remotion.Collections;
 
 namespace MixinXRef.UnitTests.TestDomain
 {
@@ -34,6 +36,7 @@ namespace MixinXRef.UnitTests.TestDomain
     }
 
     public long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam) { return 0; }
+    protected MultiDictionary<string, int> _dictionary;
   }
   public delegate void ChangedEventHandler(object sender, EventArgs e);
 

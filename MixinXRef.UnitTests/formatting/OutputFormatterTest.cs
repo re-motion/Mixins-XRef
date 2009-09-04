@@ -41,7 +41,7 @@ namespace MixinXRef.UnitTests.formatting
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<string, int>));
 
-      Assert.That (output, Is.EqualTo ("GenericTarget<String, Int32>"));
+      Assert.That (output, Is.EqualTo ("GenericTarget<string, int>"));
     }
 
     [Test]
@@ -49,7 +49,7 @@ namespace MixinXRef.UnitTests.formatting
     {
       var output = _outputFormatter.GetFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
-      Assert.That (output, Is.EqualTo ("Dictionary<TKey, Int32>"));
+      Assert.That (output, Is.EqualTo ("Dictionary<TKey, int>"));
     }
 
     public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
