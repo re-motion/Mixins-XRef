@@ -30,10 +30,13 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
+      // TODO: find a better way to remove private modifiers
       return new XElement (
           "Members",
-          from memberInfo in _type.GetMembers ()
-          where memberInfo.DeclaringType == _type && !IsSpecialName (memberInfo)
+          from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic)
+          where memberInfo.DeclaringType == _type && 
+                !IsSpecialName (memberInfo) && 
+                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains("private")
           select new XElement (
               "Member",
               new XAttribute ("type", memberInfo.MemberType),
