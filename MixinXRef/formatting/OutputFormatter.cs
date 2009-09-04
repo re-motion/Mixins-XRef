@@ -12,9 +12,18 @@ namespace MixinXRef.Formatting
         return type.Name;
 
       var typeName = "";
+      var nestedTypeName = "";
 
       if (type.IsNested)
+      {
         typeName = type.FullName.Substring (0, type.FullName.IndexOf ('`'));
+        var index = type.FullName.IndexOf ('+');
+        if (index > 0)
+        {
+          nestedTypeName = (type.FullName.Substring (index, type.FullName.Length - index));
+          nestedTypeName = "." + nestedTypeName.Substring (0, nestedTypeName.IndexOf('['));
+        }
+      }
       else
         typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
 
@@ -29,6 +38,8 @@ namespace MixinXRef.Formatting
         result.Append (GetShortName(genericArguments[i]));
       }
       result.Append (">");
+      result.Append (nestedTypeName);
+
       return result.ToString();
     }
 
