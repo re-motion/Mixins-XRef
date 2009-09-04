@@ -7,7 +7,14 @@ namespace MixinXRef
 {
   public class MemberSignatureUtility
   {
-    private IOutputFormatter _outputFormatter = new OutputFormatter();
+    private readonly IOutputFormatter _outputFormatter;
+
+    public MemberSignatureUtility (IOutputFormatter outputFormatter)
+    {
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
+
+      _outputFormatter = outputFormatter;
+    }
 
     public string GetMemberSignatur (MemberInfo memberInfo)
     {
@@ -39,7 +46,8 @@ namespace MixinXRef
           return _outputFormatter.GetShortName (propertyInfo.PropertyType) + " " + propertyInfo.Name;
 
         case MemberTypes.NestedType:
-          return "TODO nested type";
+          var nestedType = (Type) memberInfo;
+          return CreateNestedTypeSignature (nestedType);
 
         case MemberTypes.Custom:
         case MemberTypes.TypeInfo:
@@ -48,6 +56,51 @@ namespace MixinXRef
         default:
           throw new Exception ("unknown member type");
       }
+    }
+
+    private string CreateNestedTypeSignature (Type nestedType)
+    {
+      var signature = new StringBuilder();
+
+      if (nestedType.IsClass)
+      {
+        signature.Append("class ");
+        signature.Append (nestedType.Name);
+
+        var interfaces = nestedType.GetInterfaces ();
+
+        if (nestedType.BaseType != typeof (object) && interfaces.Length > 0)
+          signature.Append (" : ");
+        
+        var firstItem = true;
+
+        if (nestedType.BaseType != typeof (object))
+        {
+          signature.Append (_outputFormatter.GetShortName (nestedType.BaseType));
+          firstItem = false;
+        }
+        if (interfaces.Length > 0)
+        {
+          
+          foreach (var @interface in interfaces)
+          {
+            if (firstItem)
+              firstItem = false;
+            else
+              signature.Append (", ");
+
+            signature.Append (_outputFormatter.GetShortName(@interface));
+          }
+        }
+      }
+
+      if (nestedType.IsEnum)
+      {
+        signature.Append ("enum ");
+        signature.Append (nestedType.Name);
+      }
+
+      return signature.ToString();
     }
 
     private string GetParamterList (ParameterInfo[] parameterInfos)

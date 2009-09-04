@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Remotion.Collections;
 
 namespace MixinXRef.UnitTests.TestDomain
 {
@@ -19,24 +17,18 @@ namespace MixinXRef.UnitTests.TestDomain
 
     private string _privateField;
 
-    public virtual void PublicVirtualMethod()
-    {
-    }
+    public virtual void PublicVirtualMethod() {}
 
     public abstract void PublicAbstractMethod();
 
-
-    public class NestedClass
-    {
-    }
-
     public void Dispose ()
     {
-      throw new NotImplementedException();
+      throw new NotImplementedException ();
     }
 
-    public long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam) { return 0; }
-    protected MultiDictionary<string, int> _dictionary;
+
+    public class NestedClass {}
+
   }
   public delegate void ChangedEventHandler(object sender, EventArgs e);
 
