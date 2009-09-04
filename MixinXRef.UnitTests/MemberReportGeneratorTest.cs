@@ -43,7 +43,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
               _outputFormatter.CreateModifierMarkup("public abstract"),
-              new XElement("signature", "Void Dispose()")
+              new XElement("Signature", "void Dispose ()")
               )
           );
 
@@ -65,7 +65,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               _outputFormatter.CreateModifierMarkup("public"),
-              new XElement("signature", "Void .ctor()")
+              new XElement ("Signature", "UselessObject ()")
               )
           );
 
@@ -87,21 +87,21 @@ namespace MixinXRef.UnitTests
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
              _outputFormatter.CreateModifierMarkup("public override"),
-              new XElement("signature", "Void DoSomething()")
+              new XElement("Signature", "void DoSomething ()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               _outputFormatter.CreateModifierMarkup("public"),
-              new XElement("signature", "Void .ctor()")
+              new XElement ("Signature", "ClassWithProperty ()")
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
               _outputFormatter.CreateModifierMarkup("public override"),
-              new XElement("signature", "System.String PropertyName")
+              new XElement("Signature", "string PropertyName")
               )
           );
 

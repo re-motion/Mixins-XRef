@@ -76,6 +76,7 @@ namespace MixinXRef.Formatting
           case "Double":
           case "SByte":
           case "String":
+          case "Void":
             return name.ToLower ();
           default:
             return GetFormattedTypeName (type);

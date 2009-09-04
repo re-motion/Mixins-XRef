@@ -42,7 +42,7 @@
 					<td>
 						<xsl:apply-templates select="Modifiers" />
 					</td>
-				  <td><xsl:value-of select="@signature"/></td>
+				  <td><xsl:value-of select="Signature/."/></td>
 				</tr>
 			</xsl:for-each>
 		</tbody>

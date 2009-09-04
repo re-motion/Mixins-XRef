@@ -25,7 +25,7 @@ namespace MixinXRef.UnitTests
       var memberInfo = typeof (MemberSignatureTestClass).GetMethod ("Dispose");
       var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
 
-      Assert.That (output, Is.EqualTo ("Void Dispose ()"));
+      Assert.That (output, Is.EqualTo ("void Dispose ()"));
     }
 
     [Test]

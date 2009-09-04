@@ -14,6 +14,8 @@ namespace MixinXRef
     private readonly ReflectedObject _targetClassDefinition;
     private readonly IOutputFormatter _outputFormatter;
     private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
+    private readonly MemberSignatureUtility _memberSignatureUtility;
+
 
     public MemberReportGenerator (Type type, ReflectedObject targetClassDefinitionOrNull, IOutputFormatter outputFormatter)
     {
@@ -25,6 +27,7 @@ namespace MixinXRef
       _type = type;
       _targetClassDefinition = targetClassDefinitionOrNull;
       _outputFormatter = outputFormatter;
+      _memberSignatureUtility = new MemberSignatureUtility (outputFormatter);
     }
 
 
@@ -42,7 +45,7 @@ namespace MixinXRef
               new XAttribute ("type", memberInfo.MemberType),
               new XAttribute ("name", memberInfo.Name),
               _outputFormatter.CreateModifierMarkup (_memberModifierUtility.GetMemberModifiers (memberInfo)),
-              new XElement ("signature", memberInfo)
+              new XElement ("Signature", _memberSignatureUtility.GetMemberSignatur(memberInfo))
               )
           );
     }
