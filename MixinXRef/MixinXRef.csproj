@@ -71,6 +71,7 @@
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="formatting\IOutputFormatter.cs" />
     <Compile Include="MemberModifierUtility.cs" />
+    <Compile Include="MemberSignatureUtility.cs" />
     <Compile Include="reflection\IRemotionReflection.cs" />
     <Compile Include="IReportGenerator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />

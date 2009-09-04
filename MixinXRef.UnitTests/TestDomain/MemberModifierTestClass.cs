@@ -32,6 +32,8 @@ namespace MixinXRef.UnitTests.TestDomain
     {
       throw new NotImplementedException();
     }
+
+    public long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam) { return 0; }
   }
   public delegate void ChangedEventHandler(object sender, EventArgs e);
 

@@ -75,6 +75,7 @@
     <Compile Include="MemberModifierUtilityTest.cs" />
     <Compile Include="MemberOverrideReportGeneratorTest.cs" />
     <Compile Include="MemberReportGeneratorTest.cs" />
+    <Compile Include="MemberSignatureUtilityTest.cs" />
     <Compile Include="MixinReferenceReportGeneratorTest.cs" />
     <Compile Include="ProgramTest.cs" />
     <Compile Include="ReadonlyIdentifierGeneratorTest.cs" />
