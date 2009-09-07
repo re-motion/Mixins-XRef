@@ -45,6 +45,7 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .ForClass<MemberModifierTestClass>().AddMixin<MemberSignatureTestClass>()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 

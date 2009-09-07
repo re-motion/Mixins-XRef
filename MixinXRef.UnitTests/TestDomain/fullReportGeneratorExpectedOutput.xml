@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-07 14:35:47">
+<MixinXRefReport creation-time="2009-09-07 14:56:56">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -12,6 +12,9 @@
       <InvolvedType ref="4" />
       <InvolvedType ref="5" />
       <InvolvedType ref="6" />
+      <InvolvedType ref="7" />
+      <InvolvedType ref="8" />
+      <InvolvedType ref="9" />
     </Assembly>
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
@@ -19,7 +22,380 @@
     <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
-    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
+    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+        <Keyword>abstract</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="PublicMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicVirtualMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>virtual</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicVirtualMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicAbstractMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicAbstractMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="Dispose">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>MemberModifierTestClass</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Property" name="ProtectedProperty">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>ProtectedProperty</Name>
+          </Signature>
+        </Member>
+        <Member type="Event" name="ProtectedInternalEvent">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>event</Keyword>
+            <Type>ChangedEventHandler</Type>
+            <Name>ProtectedInternalEvent</Name>
+          </Signature>
+        </Member>
+        <Member type="Field" name="InternalField">
+          <Modifiers>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>InternalField</Name>
+          </Signature>
+        </Member>
+        <Member type="Field" name="_readonlyField">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>readonly</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>_readonlyField</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedStaticClass">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedStaticClass</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedClass">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedClass</Name>
+          </Signature>
+        </Member>
+      </Members>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Mixins>
+        <Mixin ref="1" relation="Extending" instance-name="MemberSignatureTestClass">
+          <InterfaceIntroductions />
+          <AttributeIntroductions />
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberSignatureTestClass" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="PublicMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicVirtualMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>virtual</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicVirtualMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="Dispose">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="MethodWithParams">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>long</Keyword>
+            <Name>MethodWithParams</Name>
+            <Text>(</Text>
+            <Keyword>int</Keyword>
+            <ParameterName>intParam</ParameterName>
+            <Text>,</Text>
+            <Keyword>string</Keyword>
+            <ParameterName>stringParam</ParameterName>
+            <Text>,</Text>
+            <Type>AssemblyBuilder</Type>
+            <ParameterName>assemblyBuilderParam</ParameterName>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>MemberSignatureTestClass</Name>
+            <Text>(</Text>
+            <Keyword>int</Keyword>
+            <ParameterName>Param1</ParameterName>
+            <Text>,</Text>
+            <Keyword>string</Keyword>
+            <ParameterName>Param2</ParameterName>
+            <Text>,</Text>
+            <Type>ApplicationAssemblyFinderFilter</Type>
+            <ParameterName>Param3</ParameterName>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Property" name="ProtectedProperty">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>ProtectedProperty</Name>
+          </Signature>
+        </Member>
+        <Member type="Event" name="ProtectedInternalEvent">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>event</Keyword>
+            <Type>ChangedEventHandler</Type>
+            <Name>ProtectedInternalEvent</Name>
+          </Signature>
+        </Member>
+        <Member type="Field" name="InternalField">
+          <Modifiers>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>InternalField</Name>
+          </Signature>
+        </Member>
+        <Member type="Field" name="_dictionary">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>MultiDictionary&lt;string, int&gt;</Type>
+            <Name>_dictionary</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedClass">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedClass</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedClassWithInterfaceAndInheritance">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedClassWithInterfaceAndInheritance</Name>
+            <Text>:</Text>
+            <Type>GenericTarget&lt;string, int&gt;</Type>
+            <Text>,</Text>
+            <Type>IDisposable</Type>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="INestedInterface">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>interface</Keyword>
+            <Name>INestedInterface</Name>
+            <Text>:</Text>
+            <Type>IDisposable</Type>
+            <Text>,</Text>
+            <Type>ICloneable</Type>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedEnumeration">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>sealed</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>enum</Keyword>
+            <Name>NestedEnumeration</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedStruct">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>sealed</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>struct</Keyword>
+            <Name>NestedStruct</Name>
+            <Text>:</Text>
+            <Type>IDisposable</Type>
+          </Signature>
+        </Member>
+      </Members>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Targets>
+        <Target ref="0" />
+        <Target ref="2" />
+      </Targets>
+    </InvolvedType>
+    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="0" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+        <Keyword>abstract</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="PublicAbstractMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+            <Keyword>override</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicAbstractMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicVirtualMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>sealed</Keyword>
+            <Keyword>override</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>void</Type>
+            <Name>PublicVirtualMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>SubModifierTestClass</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Mixins>
+        <Mixin ref="1" relation="Extending" instance-name="MemberSignatureTestClass">
+          <InterfaceIntroductions />
+          <AttributeIntroductions />
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -39,10 +415,10 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending" instance-name="ClassWithBookAttribute" />
+        <Mixin ref="4" relation="Extending" instance-name="ClassWithBookAttribute" />
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -67,11 +443,11 @@
         </Attribute>
       </Attributes>
       <Targets>
-        <Target ref="0" />
-        <Target ref="2" />
+        <Target ref="3" />
+        <Target ref="5" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -104,7 +480,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending" instance-name="ClassWithBookAttribute">
+        <Mixin ref="4" relation="Extending" instance-name="ClassWithBookAttribute">
           <InterfaceIntroductions />
           <AttributeIntroductions>
             <Attribute ref="0" />
@@ -113,7 +489,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -133,14 +509,14 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="4" relation="Extending" instance-name="Mixin2">
+        <Mixin ref="7" relation="Extending" instance-name="Mixin2">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="7" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -162,10 +538,10 @@
         <Attribute ref="1" />
       </Attributes>
       <Targets>
-        <Target ref="3" />
+        <Target ref="6" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="8" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -198,14 +574,14 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="6" relation="Extending" instance-name="Mixin1">
+        <Mixin ref="9" relation="Extending" instance-name="Mixin1">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="9" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -225,7 +601,7 @@
       <Interfaces />
       <Attributes />
       <Targets>
-        <Target ref="5" />
+        <Target ref="8" />
       </Targets>
     </InvolvedType>
   </InvolvedTypes>
@@ -246,20 +622,23 @@
         </Member>
       </Members>
       <ImplementedBy>
+        <InvolvedType ref="0" />
+        <InvolvedType ref="1" />
         <InvolvedType ref="2" />
         <InvolvedType ref="5" />
+        <InvolvedType ref="8" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
     <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
-        <InvolvedType ref="1" />
+        <InvolvedType ref="4" />
       </AppliedTo>
     </Attribute>
     <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType ref="4" />
+        <InvolvedType ref="7" />
       </AppliedTo>
     </Attribute>
   </Attributes>

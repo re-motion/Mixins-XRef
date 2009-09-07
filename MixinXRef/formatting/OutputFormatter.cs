@@ -109,8 +109,13 @@ namespace MixinXRef.Formatting
 
       for (int i = 0; i < parameterInfos.Length; i++)
       {
+        if (i != 0)
+          signatureElement.Add (CreateElement("Text", ","));
+
         signatureElement.Add (CreateTypeOrKeywordElement (parameterInfos[i].ParameterType));
-        signatureElement.Add (CreateElement ("Text", (parameterInfos[i].Name + ((i < parameterInfos.Length - 1) ? "," : ""))));
+        signatureElement.Add (CreateElement ("ParameterName", parameterInfos[i].Name));
+
+        
       }
 
       signatureElement.Add (CreateElement ("Text", ")"));

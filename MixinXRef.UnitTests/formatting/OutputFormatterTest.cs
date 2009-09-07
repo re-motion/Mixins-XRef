@@ -87,11 +87,13 @@ namespace MixinXRef.UnitTests.formatting
           "Signature",
           new XElement ("Text", "("),
           new XElement ("Keyword", "int"),
-          new XElement ("Text", "intParam,"),
+          new XElement ("ParameterName", "intParam"),
+          new XElement ("Text", ","),
           new XElement ("Keyword", "string"),
-          new XElement ("Text", "stringParam,"),
+          new XElement ("ParameterName", "stringParam"),
+          new XElement ("Text", ","),
           new XElement ("Type", "AssemblyBuilder"),
-          new XElement ("Text", "assemblyBuilderParam"),
+          new XElement ("ParameterName", "assemblyBuilderParam"),
           new XElement ("Text", ")")
           );
 
@@ -113,111 +115,105 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void CreateEventMarkup()
+    public void CreateEventMarkup ()
     {
-      var output = _outputFormatter.CreateEventMarkup("EventName", typeof(ChangedEventHandler));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateEventMarkup ("EventName", typeof (ChangedEventHandler));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "event"),
-          new XElement("Type", "ChangedEventHandler"),
-          new XElement("Name", "EventName")
+          new XElement ("Keyword", "event"),
+          new XElement ("Type", "ChangedEventHandler"),
+          new XElement ("Name", "EventName")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateFieldMarkup()
+    public void CreateFieldMarkup ()
     {
-      var output = _outputFormatter.CreateFieldMarkup("FieldName", typeof(int));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateFieldMarkup ("FieldName", typeof (int));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "int"),
-          new XElement("Name", "FieldName")
+          new XElement ("Keyword", "int"),
+          new XElement ("Name", "FieldName")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreatePropertyMarkup()
+    public void CreatePropertyMarkup ()
     {
-      var output = _outputFormatter.CreatePropertyMarkup("PropertyName", typeof(int));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreatePropertyMarkup ("PropertyName", typeof (int));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "int"),
-          new XElement("Name", "PropertyName")
+          new XElement ("Keyword", "int"),
+          new XElement ("Name", "PropertyName")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateNestedTypeMarkup_NestedEnumeration()
+    public void CreateNestedTypeMarkup_NestedEnumeration ()
     {
-
-      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedEnumeration));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateNestedTypeMarkup (typeof (MemberSignatureTestClass.NestedEnumeration));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "enum"),
-          new XElement("Name", "NestedEnumeration")
+          new XElement ("Keyword", "enum"),
+          new XElement ("Name", "NestedEnumeration")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateNestedTypeMarkup_NestedStruct()
+    public void CreateNestedTypeMarkup_NestedStruct ()
     {
-
-      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedStruct));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateNestedTypeMarkup (typeof (MemberSignatureTestClass.NestedStruct));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "struct"),
-          new XElement("Name", "NestedStruct"),
-          new XElement("Text", ":"),
-          new XElement("Type", "IDisposable")
+          new XElement ("Keyword", "struct"),
+          new XElement ("Name", "NestedStruct"),
+          new XElement ("Text", ":"),
+          new XElement ("Type", "IDisposable")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateNestedTypeMarkup_NestedInterface()
+    public void CreateNestedTypeMarkup_NestedInterface ()
     {
-
-      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.INestedInterface));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateNestedTypeMarkup (typeof (MemberSignatureTestClass.INestedInterface));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "interface"),
-          new XElement("Name", "INestedInterface"),
-          new XElement("Text", ":"),
-          new XElement("Type", "IDisposable"),
-          new XElement("Text", ","),
-          new XElement("Type", "ICloneable")
+          new XElement ("Keyword", "interface"),
+          new XElement ("Name", "INestedInterface"),
+          new XElement ("Text", ":"),
+          new XElement ("Type", "IDisposable"),
+          new XElement ("Text", ","),
+          new XElement ("Type", "ICloneable")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateNestedTypeMarkup_NestedClass()
+    public void CreateNestedTypeMarkup_NestedClass ()
     {
-
-      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
-      var expectedOutput = new XElement(
+      var output = _outputFormatter.CreateNestedTypeMarkup (typeof (MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
+      var expectedOutput = new XElement (
           "Signature",
-          new XElement("Keyword", "class"),
-          new XElement("Name", "NestedClassWithInterfaceAndInheritance"),
-          new XElement("Text", ":"),
-          new XElement("Type", "GenericTarget<string, int>"),
-          new XElement("Text", ","),
-          new XElement("Type", "IDisposable")
+          new XElement ("Keyword", "class"),
+          new XElement ("Name", "NestedClassWithInterfaceAndInheritance"),
+          new XElement ("Text", ":"),
+          new XElement ("Type", "GenericTarget<string, int>"),
+          new XElement ("Text", ","),
+          new XElement ("Type", "IDisposable")
           );
 
-      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
-
-    
   }
 }
