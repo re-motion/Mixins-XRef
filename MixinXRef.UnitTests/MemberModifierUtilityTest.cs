@@ -128,12 +128,21 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetMemberModifiers_Test1 ()
+    public void GetMemberModifiers_InterfaceImplementation ()
     {
       var memberInfo = typeof (MemberModifierTestClass).GetMember ("Dispose")[0];
 
       var output = _memberModifierUtility.GetMemberModifiers (memberInfo);
       Assert.That (output, Is.EqualTo ("public"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_ReadonlyField ()
+    {
+      var memberInfo = typeof (MemberModifierTestClass).GetMember ("_readonlyField")[0];
+
+      var output = _memberModifierUtility.GetMemberModifiers (memberInfo);
+      Assert.That (output, Is.EqualTo ("public readonly"));
     }
   }
 }

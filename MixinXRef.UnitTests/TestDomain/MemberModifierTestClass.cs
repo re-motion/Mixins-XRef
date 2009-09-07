@@ -27,6 +27,8 @@ namespace MixinXRef.UnitTests.TestDomain
     }
 
 
+    public readonly string _readonlyField;
+
     public class NestedClass {}
 
   }

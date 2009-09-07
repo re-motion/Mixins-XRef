@@ -98,6 +98,9 @@ namespace MixinXRef
             methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
       }
+      if (methodFieldOrConstructor is FieldInfo && ((FieldInfo)methodFieldOrConstructor).IsInitOnly)
+         modifiers += " readonly" ;
+
       return modifiers;
     }
 
