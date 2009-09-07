@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace MixinXRef.Formatting
@@ -8,5 +9,6 @@ namespace MixinXRef.Formatting
     string GetFormattedTypeName (Type type);
     string GetShortName (Type type);
     XElement CreateModifierMarkup (string keywords);
+    XElement CreateSignatureMarkup (string signature, MemberTypes memberType);
   }
 }

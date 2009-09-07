@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
@@ -55,11 +56,6 @@ namespace MixinXRef.Formatting
       return modifiers;
     }
 
-    private XElement CreateElement (string elementName, string content)
-    {
-      return content == null ? null : new XElement (elementName, content);
-    }
-
     public string GetShortName (Type type)
     {
       var name = type.Name;
@@ -103,6 +99,37 @@ namespace MixinXRef.Formatting
           index, name.Length - index);
 
       return shortParameterName;
+    }
+
+    public XElement CreateSignatureMarkup (string signature, MemberTypes memberType)
+    {
+      switch (memberType)
+      {
+        case MemberTypes.Constructor:
+          return CreateConstructorMarkup (signature);
+
+        default:
+          return null;
+      }
+    }
+
+    public XElement CreateConstructorMarkup (string signature)
+    {
+      var constructorMarkup = new XElement ("Signature");
+
+      // [0] = type name, [1] = (Param1, Param2, ...)
+      var signatureParts = signature.Split (' ');
+      constructorMarkup.Add (CreateElement ("Type", signatureParts[0]));
+      constructorMarkup.Add (CreateElement ("Text", "("));
+      constructorMarkup.Add (CreateElement ("Text", ")"));
+
+      return constructorMarkup;
+    }
+
+
+    private XElement CreateElement (string elementName, string content)
+    {
+      return content == null ? null : new XElement (elementName, content);
     }
   }
 }

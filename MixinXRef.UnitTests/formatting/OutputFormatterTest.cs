@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.UnitTests.TestDomain;
@@ -11,7 +12,7 @@ namespace MixinXRef.UnitTests.formatting
   [TestFixture]
   public class OutputFormatterTest
   {
-    private IOutputFormatter _outputFormatter;
+    private OutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
@@ -64,53 +65,27 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    //[Test]
-    //public void CreateSignatureMarkup_Method ()
-    //{
-    //  var parameterTypes = new Type[] {typeof(string), typeof(int), typeof(UselessObject)};
-    //  var parameterNames = new string[] { "StringParamter", "IntParamter", "UselessObjectParamter" };
-    //  //, parameterTypes, parameterNames
-    //  var output = _outputFormatter.CreateSignatureMarkup (typeof (string).Name, "ToString", MemberTypes.Method);
+    [Test]
+    public void CreateSignatureMarkup ()
+    {
+      var constructorOutput = _outputFormatter.CreateSignatureMarkup ("ClassName ()", MemberTypes.Constructor);
+      var expectedConstructorOutput = _outputFormatter.CreateConstructorMarkup ("ClassName ()");
       
-    //  var expectedOutput = new XElement (
-    //      "Signature",
-    //      new XElement ("Keyword", "string"),
-    //      new XElement ("Name", "ToString"),
-    //      new XElement ("BeginList", "("), 
-    //      new XElement ("EndList", ")")
-    //      );
+      Assert.That (constructorOutput.ToString (), Is.EqualTo (expectedConstructorOutput.ToString ()));
+    }
 
-    //  Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
-    //}
+    [Test]
+    public void CreateConstructorMarkup ()
+    {
+      var output = _outputFormatter.CreateConstructorMarkup ("ClassName ()");
+      var expectedOutput = new XElement (
+          "Signature",
+          new XElement ("Type", "ClassName"),
+          new XElement ("Text", "("),
+          new XElement ("Text", ")")
+          );
 
-    //[Test]
-    //public void CreateSignatureMarkup_Property ()
-    //{
-    //  var output = _outputFormatter.CreateSignatureMarkup ("string", "Name", MemberTypes.Property);
-
-    //  var expectedOutput = new XElement (
-    //      "Signature",
-    //      new XElement ("Keyword", "string"),
-    //      new XElement ("Name", "Name")
-    //      );
-
-    //  Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
-    //}
-
-    //[Test]
-    //public void CreateSignatureMarkup_Constructor()
-    //{
-    //  var output = _outputFormatter.CreateSignatureMarkup ("ClassType", "ClassName", MemberTypes.Constructor);
-
-    //  var expectedOutput = new XElement (
-    //      "Signature",
-    //      new XElement ("Keyword", "ClassType"),
-    //      new XElement ("Name", "ClassName"),
-    //      new XElement ("BeginList", "("),
-    //      new XElement ("EndList", ")")
-    //      );
-
-    //  Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
-    //}
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
   }
 }
