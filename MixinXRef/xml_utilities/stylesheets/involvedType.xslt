@@ -52,7 +52,7 @@
       <xsl:call-template name="involvedTypeBaseLink"/>
     </div>
 	<div>
-      <label>Interfaces:</label>
+    <label>Interfaces:</label>
 		<xsl:for-each select="Interfaces/Interface/@ref">
 			<xsl:if test="position() != 1">, </xsl:if>
 			<xsl:call-template name="GenerateInterfaceLink">
@@ -61,6 +61,7 @@
 				<xsl:with-param name="dir">..</xsl:with-param>
 			</xsl:call-template>			
 		</xsl:for-each>
+    <xsl:if test="empty(Interfaces/Interface)">-</xsl:if>
     </div>
     <div>
       <label>Mixins applied:</label>
