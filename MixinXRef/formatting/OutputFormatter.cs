@@ -179,15 +179,13 @@ namespace MixinXRef.Formatting
         inheritance.Add (nestedType.BaseType);
       inheritance.AddRange (nestedType.GetInterfaces());
 
-      if (inheritance.Count > 0)
+      for (int i = 0; i < inheritance.Count; i++)
       {
-        nestedTypeMarkup.Add (CreateElement ("Text", ":"));
-        for (int i = 0; i < inheritance.Count; i++)
-        {
-          if (i != 0)
-            nestedTypeMarkup.Add (CreateElement ("Text", ","));
-          nestedTypeMarkup.Add(CreateElement("Type", GetShortName(inheritance[i])));
-        }
+        if (i == 0)
+          nestedTypeMarkup.Add (CreateElement ("Text", ":"));
+        else
+          nestedTypeMarkup.Add (CreateElement ("Text", ","));
+        nestedTypeMarkup.Add(CreateElement("Type", GetShortName(inheritance[i])));
       }
 
       return nestedTypeMarkup;
