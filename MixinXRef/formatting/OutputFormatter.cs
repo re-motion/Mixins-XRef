@@ -159,8 +159,6 @@ namespace MixinXRef.Formatting
 
     private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
     {
-      // type and memberName must not be null
-
       var markup = new XElement ("Signature");
 
       markup.Add(CreateElement("Keyword", prefix));
