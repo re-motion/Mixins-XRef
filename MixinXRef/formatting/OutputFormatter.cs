@@ -21,7 +21,7 @@ namespace MixinXRef.Formatting
         if (index > 0)
         {
           nestedTypeName = (type.FullName.Substring (index, type.FullName.Length - index));
-          nestedTypeName = "." + nestedTypeName.Substring (0, nestedTypeName.IndexOf('['));
+          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf('['));
         }
       }
       else
@@ -79,7 +79,7 @@ namespace MixinXRef.Formatting
           case "Int64":
             return "long";
           case "Single":
-            return "flaot";
+            return "float";
           case "UInt16":
             return "ushort";
           case "UInt32":
