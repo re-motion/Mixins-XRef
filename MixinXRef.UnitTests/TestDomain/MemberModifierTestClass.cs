@@ -5,6 +5,10 @@ namespace MixinXRef.UnitTests.TestDomain
   
   public abstract class MemberModifierTestClass : IDisposable
   {
+    static MemberModifierTestClass ()
+    {
+    }
+
     public void PublicMethod ()
     {
     }
@@ -26,6 +30,13 @@ namespace MixinXRef.UnitTests.TestDomain
       throw new NotImplementedException ();
     }
 
+    public static int _staticField;
+
+    public static void StaticMethod ()
+    {}
+
+    public static class NestedStaticClass
+    {}
 
     public readonly string _readonlyField;
 

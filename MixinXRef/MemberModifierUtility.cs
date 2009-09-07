@@ -85,6 +85,7 @@ namespace MixinXRef
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {
+        
         if (methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>())
           modifiers += " abstract";
         else if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
@@ -98,6 +99,10 @@ namespace MixinXRef
             methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
       }
+
+      if (!(methodFieldOrConstructor is EventInfo) && methodFieldOrConstructorInfo.GetProperty ("IsStatic").To<bool> ())
+          modifiers += " static";
+
       if (methodFieldOrConstructor is FieldInfo && ((FieldInfo)methodFieldOrConstructor).IsInitOnly)
          modifiers += " readonly" ;
 

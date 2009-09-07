@@ -144,5 +144,14 @@ namespace MixinXRef.UnitTests
       var output = _memberModifierUtility.GetMemberModifiers (memberInfo);
       Assert.That (output, Is.EqualTo ("public readonly"));
     }
+
+    [Test]
+    public void GetMemberModifiers_StaticField ()
+    {
+      var memberInfo = typeof (MemberModifierTestClass).GetMember ("_staticField")[0];
+
+      var output = _memberModifierUtility.GetMemberModifiers (memberInfo);
+      Assert.That (output, Is.EqualTo ("public static"));
+    }
   }
 }
