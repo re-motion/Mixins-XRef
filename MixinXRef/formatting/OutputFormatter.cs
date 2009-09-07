@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
@@ -156,6 +157,42 @@ namespace MixinXRef.Formatting
       return CreateMemberMarkup (null, propertyType, propertyName, null);
     }
 
+    public XElement CreateNestedTypeMarkup(Type nestedType)
+    {
+      if (nestedType.IsEnum)
+        return CreateMemberMarkup("enum", null, nestedType.Name, null);
+      
+      string prefix;
+      if (nestedType.IsClass)
+        prefix = "class";
+      else if (nestedType.IsInterface)
+        prefix = "interface";
+      else if (nestedType.IsValueType)
+        prefix = "struct";
+      else
+        prefix = "unknown";
+
+      var nestedTypeMarkup = CreateMemberMarkup(prefix, null, nestedType.Name, null);
+
+      var inheritance = new List<Type>();
+      if (nestedType.BaseType != null && nestedType.BaseType != typeof(object) && nestedType.BaseType != typeof(ValueType))
+        inheritance.Add (nestedType.BaseType);
+      inheritance.AddRange (nestedType.GetInterfaces());
+
+      if (inheritance.Count > 0)
+      {
+        nestedTypeMarkup.Add (CreateElement ("Text", ":"));
+        for (int i = 0; i < inheritance.Count; i++)
+        {
+          if (i != 0)
+            nestedTypeMarkup.Add (CreateElement ("Text", ","));
+          nestedTypeMarkup.Add(CreateElement("Type", GetShortName(inheritance[i])));
+        }
+      }
+
+      return nestedTypeMarkup;
+    }
+
 
     private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
     {
@@ -185,5 +222,7 @@ namespace MixinXRef.Formatting
     {
       return content == null ? null : new XElement (elementName, content);
     }
+
+
   }
 }

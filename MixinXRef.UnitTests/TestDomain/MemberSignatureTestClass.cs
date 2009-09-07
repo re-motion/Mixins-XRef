@@ -36,10 +36,17 @@ namespace MixinXRef.UnitTests.TestDomain
       }
     }
 
-    public interface INestedInterface : IDisposable
+    public interface INestedInterface : IDisposable, ICloneable
     {}
 
     public enum NestedEnumeration {}
+
+    public struct NestedStruct : IDisposable {
+      public void Dispose ()
+      {
+        throw new NotImplementedException();
+      }
+    }
 
     public void Dispose ()
     {

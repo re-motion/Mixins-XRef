@@ -152,7 +152,72 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
+    [Test]
+    public void CreateNestedTypeMarkup_NestedEnumeration()
+    {
 
+      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedEnumeration));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "enum"),
+          new XElement("Name", "NestedEnumeration")
+          );
 
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateNestedTypeMarkup_NestedStruct()
+    {
+
+      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedStruct));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "struct"),
+          new XElement("Name", "NestedStruct"),
+          new XElement("Text", ":"),
+          new XElement("Type", "IDisposable")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateNestedTypeMarkup_NestedInterface()
+    {
+
+      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.INestedInterface));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "interface"),
+          new XElement("Name", "INestedInterface"),
+          new XElement("Text", ":"),
+          new XElement("Type", "IDisposable"),
+          new XElement("Text", ","),
+          new XElement("Type", "ICloneable")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateNestedTypeMarkup_NestedClass()
+    {
+
+      var output = _outputFormatter.CreateNestedTypeMarkup(typeof(MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "class"),
+          new XElement("Name", "NestedClassWithInterfaceAndInheritance"),
+          new XElement("Text", ":"),
+          new XElement("Type", "GenericTarget<string, int>"),
+          new XElement("Text", ","),
+          new XElement("Type", "IDisposable")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    
   }
 }

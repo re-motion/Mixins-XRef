@@ -14,5 +14,6 @@ namespace MixinXRef.Formatting
     XElement CreateEventMarkup (string eventName, Type handlerType);
     XElement CreateFieldMarkup(string fieldName, Type fieldType);
     XElement CreatePropertyMarkup(string propertyName, Type propertyType);
+    XElement CreateNestedTypeMarkup (Type nestedType);
   }
 }
