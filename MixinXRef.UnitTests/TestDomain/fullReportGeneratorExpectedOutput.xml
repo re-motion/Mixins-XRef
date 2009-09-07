@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-07 10:51:01">
+<MixinXRefReport creation-time="2009-09-07 12:12:17">
   <Assemblies>
-    <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="Castle.Core.dll" />
-    <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="Castle.DynamicProxy.dll" />
-    <Assembly id="2" name="log4net" version="1.2.10.0" location="log4net.dll" />
-    <Assembly id="3" name="MixinXRef.UnitTests" version="1.0.0.0" location="MixinXRef.UnitTests.dll">
+    <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
+    <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
+    <Assembly id="2" name="log4net" version="1.2.10.0" location="./log4net.dll" />
+    <Assembly id="3" name="MixinXRef.UnitTests" version="1.0.0.0" location="./MixinXRef.UnitTests.dll">
       <InvolvedType ref="0" />
       <InvolvedType ref="1" />
       <InvolvedType ref="2" />
@@ -13,10 +13,10 @@
       <InvolvedType ref="5" />
       <InvolvedType ref="6" />
     </Assembly>
-    <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="nunit.framework.dll" />
-    <Assembly id="5" name="Remotion" version="1.11.20.13" location="Remotion.dll" />
-    <Assembly id="6" name="Remotion.Interfaces" version="1.11.20.13" location="Remotion.Interfaces.dll" />
-    <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="MixinXRef.exe" />
+    <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
+    <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
+    <Assembly id="6" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
+    <Assembly id="7" name="MixinXRef" version="1.0.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">

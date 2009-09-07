@@ -61,7 +61,7 @@ namespace MixinXRef
 
     public string GetShortAssemblyLocation (Assembly assembly)
     {
-      return assembly.GlobalAssemblyCache ? assembly.Location : Path.GetFileName (assembly.Location);
+      return assembly.GlobalAssemblyCache ? assembly.Location : "./" + Path.GetFileName (assembly.Location);
     }
   }
 }

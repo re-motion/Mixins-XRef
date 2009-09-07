@@ -49,7 +49,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute("name", _assembly1.GetName().Name),
               new XAttribute("version", _assembly1.GetName().Version),
-              new XAttribute ("location", Path.GetFileName (_assembly1.Location)),
+              new XAttribute ("location", "./" + Path.GetFileName (_assembly1.Location)),
               new XElement ("InvolvedType", new XAttribute ("ref", "0")),
               new XElement ("InvolvedType", new XAttribute ("ref", "1")),
               new XElement ("InvolvedType", new XAttribute ("ref", "2")),
@@ -73,7 +73,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("name", _assembly1.GetName().Name),
               new XAttribute("version", _assembly1.GetName().Version),
-              new XAttribute ("location", Path.GetFileName(_assembly1.Location))),
+              new XAttribute("location", "./" + Path.GetFileName(_assembly1.Location))),
           new XElement (
               "Assembly",
               new XAttribute ("id", "1"),
@@ -90,7 +90,7 @@ namespace MixinXRef.UnitTests
     {
       var reportGenerator = CreateReportGenerator (new Assembly[0]);
       // non-GAC assembly
-      Assert.That (reportGenerator.GetShortAssemblyLocation (_assembly1), Is.EqualTo (Path.GetFileName(_assembly1.Location)));
+      Assert.That (reportGenerator.GetShortAssemblyLocation (_assembly1), Is.EqualTo ("./" + Path.GetFileName(_assembly1.Location)));
       // GAC assembly
       Assert.That (reportGenerator.GetShortAssemblyLocation (_assembly2), Is.EqualTo (_assembly2.Location));
     }
