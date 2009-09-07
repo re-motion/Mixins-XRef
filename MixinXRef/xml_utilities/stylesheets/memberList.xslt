@@ -42,15 +42,15 @@
 					<td>
 						<xsl:apply-templates select="Modifiers" />
 					</td>
-				  <td><xsl:value-of select="Signature/."/></td>
+				  <td><xsl:apply-templates select="Signature" /></td>
 				</tr>
 			</xsl:for-each>
 		</tbody>
 	</table>
 </xsl:template>
 	
-<xsl:template match="Modifiers/Keyword">
-	<span class="keyword"><xsl:value-of select="."/></span>
+<xsl:template match="Keyword | Name |  Type | Text | ParameterName">
+	<span class="{name(.)}"><xsl:value-of select="."/></span>
 </xsl:template>
 
 </xsl:stylesheet>

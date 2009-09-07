@@ -23,7 +23,7 @@ namespace MixinXRef.Formatting
         if (index > 0)
         {
           nestedTypeName = (type.FullName.Substring (index, type.FullName.Length - index));
-          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf ('['));
+          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf ('[') - 1);
         }
       }
       else
@@ -110,12 +110,10 @@ namespace MixinXRef.Formatting
       for (int i = 0; i < parameterInfos.Length; i++)
       {
         if (i != 0)
-          signatureElement.Add (CreateElement("Text", ","));
+          signatureElement.Add (CreateElement ("Text", ","));
 
         signatureElement.Add (CreateTypeOrKeywordElement (parameterInfos[i].ParameterType));
         signatureElement.Add (CreateElement ("ParameterName", parameterInfos[i].Name));
-
-        
       }
 
       signatureElement.Add (CreateElement ("Text", ")"));
@@ -162,11 +160,11 @@ namespace MixinXRef.Formatting
       return CreateMemberMarkup (null, propertyType, propertyName, null);
     }
 
-    public XElement CreateNestedTypeMarkup(Type nestedType)
+    public XElement CreateNestedTypeMarkup (Type nestedType)
     {
       if (nestedType.IsEnum)
-        return CreateMemberMarkup("enum", null, nestedType.Name, null);
-      
+        return CreateMemberMarkup ("enum", null, nestedType.Name, null);
+
       string prefix;
       if (nestedType.IsClass)
         prefix = "class";
@@ -177,10 +175,10 @@ namespace MixinXRef.Formatting
       else
         prefix = "unknown";
 
-      var nestedTypeMarkup = CreateMemberMarkup(prefix, null, nestedType.Name, null);
+      var nestedTypeMarkup = CreateMemberMarkup (prefix, null, nestedType.Name, null);
 
       var inheritance = new List<Type>();
-      if (nestedType.BaseType != null && nestedType.BaseType != typeof(object) && nestedType.BaseType != typeof(ValueType))
+      if (nestedType.BaseType != null && nestedType.BaseType != typeof (object) && nestedType.BaseType != typeof (ValueType))
         inheritance.Add (nestedType.BaseType);
       inheritance.AddRange (nestedType.GetInterfaces());
 
@@ -190,7 +188,7 @@ namespace MixinXRef.Formatting
           nestedTypeMarkup.Add (CreateElement ("Text", ":"));
         else
           nestedTypeMarkup.Add (CreateElement ("Text", ","));
-        nestedTypeMarkup.Add(CreateElement("Type", GetShortName(inheritance[i])));
+        nestedTypeMarkup.Add (CreateElement ("Type", GetShortName (inheritance[i])));
       }
 
       return nestedTypeMarkup;
@@ -201,11 +199,11 @@ namespace MixinXRef.Formatting
     {
       var markup = new XElement ("Signature");
 
-      markup.Add(CreateElement("Keyword", prefix));
+      markup.Add (CreateElement ("Keyword", prefix));
       markup.Add (CreateTypeOrKeywordElement (type));
       markup.Add (CreateElement ("Name", memberName));
 
-      if(parameterInfos != null)
+      if (parameterInfos != null)
         AddParameterMarkup (parameterInfos, markup);
 
       return markup;
@@ -216,7 +214,7 @@ namespace MixinXRef.Formatting
       if (type == null)
         return null;
 
-      if (type.IsPrimitive || type == typeof(string) || type == typeof(void))
+      if (type.IsPrimitive || type == typeof (string) || type == typeof (void))
         return CreateElement ("Keyword", GetShortName (type));
       return CreateElement ("Type", GetShortName (type));
     }
@@ -225,7 +223,5 @@ namespace MixinXRef.Formatting
     {
       return content == null ? null : new XElement (elementName, content);
     }
-
-
   }
 }

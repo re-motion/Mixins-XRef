@@ -29,8 +29,6 @@
 <xsl:include href="stylesheets/template.xslt" />
 <xsl:include href="stylesheets/tableTemplate.xslt" />
 <xsl:include href="stylesheets/utility.xslt"/>
-<xsl:include href="stylesheets/treeBuilder.xslt"/>
-<xsl:include href="stylesheets/mixinList.xslt"/>
 
 <!-- include sub stylesheets for sites -->
 <xsl:include href="stylesheets/index.xslt" />
@@ -46,6 +44,8 @@
 <xsl:include href="stylesheets/attributeList.xslt" />
 <xsl:include href="stylesheets/attributeRefList.xslt" />
 <xsl:include href="stylesheets/errorList.xslt" />
+<xsl:include href="stylesheets/treeBuilder.xslt"/>
+<xsl:include href="stylesheets/mixinList.xslt"/>
 
 
 <!-- 'main' template -->

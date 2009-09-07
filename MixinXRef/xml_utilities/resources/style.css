@@ -101,13 +101,25 @@ tbody tr.odd td {
 	vertical-align: top;
 }
 
-/* keywords */
-span.keyword {
-  font-family: Courier New;
-  font-size: 85%;
-  font-weight: bold;
-  color: blue;
+/* signature and modifier markup */
+span.Keyword, span.Name, span.Text, span.Type, span.ParameterName {
+	font-size: 15px;
 } 
+span.Keyword {
+	color: blue;
+}
+span.Name {
+	font-weight: bold;
+}
+span.Type {
+	color: rgb(0, 128, 128);
+}
+span.ParameterName {
+	font-style: italic;
+}
+/* ':', ',' and unformatted text */
+span.Text {
+}
 
 /* treeview styles */
 .tree-link {
