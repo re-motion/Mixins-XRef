@@ -216,7 +216,7 @@ namespace MixinXRef.Formatting
       if (type == null)
         return null;
 
-      if (type.IsPrimitive || type == typeof (string))
+      if (type.IsPrimitive || type == typeof(string) || type == typeof(void))
         return CreateElement ("Keyword", GetShortName (type));
       return CreateElement ("Type", GetShortName (type));
     }
