@@ -101,19 +101,6 @@ namespace MixinXRef.Formatting
       return shortParameterName;
     }
 
-    public XElement CreateConstructorMarkup (string name, ParameterInfo[] parameterInfos)
-    {
-      ArgumentUtility.CheckNotNull ("name", name);
-      ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
-
-      var constructorMarkup = new XElement ("Signature");
-
-      constructorMarkup.Add (CreateElement ("Name", name));
-      AddParameterMarkup (parameterInfos, constructorMarkup);
-
-      return constructorMarkup;
-    }
-
     public void AddParameterMarkup (ParameterInfo[] parameterInfos, XElement signatureElement)
     {
       ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
@@ -131,6 +118,19 @@ namespace MixinXRef.Formatting
       signatureElement.Add (CreateElement ("Text", ")"));
     }
 
+    public XElement CreateConstructorMarkup(string name, ParameterInfo[] parameterInfos)
+    {
+      ArgumentUtility.CheckNotNull("name", name);
+      ArgumentUtility.CheckNotNull("parameterInfos", parameterInfos);
+
+      var constructorMarkup = new XElement("Signature");
+
+      constructorMarkup.Add(CreateElement("Name", name));
+      AddParameterMarkup(parameterInfos, constructorMarkup);
+
+      return constructorMarkup;
+    }
+
     public XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos)
     {
       ArgumentUtility.CheckNotNull ("methodName", methodName);
@@ -143,6 +143,43 @@ namespace MixinXRef.Formatting
       AddParameterMarkup (parameterInfos, methodMarkup);
 
       return methodMarkup;
+    }
+
+    public XElement CreateEventMarkup (string eventName, Type handlerType)
+    {
+      ArgumentUtility.CheckNotNull ("eventName", eventName);
+      ArgumentUtility.CheckNotNull ("handlerType", handlerType);
+
+      var eventMarkup = new XElement("Signature");
+      eventMarkup.Add (CreateElement ("Keyword", "event"));
+      eventMarkup.Add(CreateTypeOrKeywordElement(handlerType));
+      eventMarkup.Add(CreateElement("Name", eventName));
+
+      return eventMarkup;
+    }
+
+    public XElement CreateFieldMarkup(string fieldName, Type fieldType)
+    {
+      ArgumentUtility.CheckNotNull ("fieldName", fieldName);
+      ArgumentUtility.CheckNotNull ("fieldType", fieldType);
+
+      var eventMarkup = new XElement("Signature");
+      eventMarkup.Add(CreateTypeOrKeywordElement(fieldType));
+      eventMarkup.Add(CreateElement("Name", fieldName));
+
+      return eventMarkup;
+    }
+
+    public XElement CreatePropertyMarkup (string propertyName, Type propertyType)
+    {
+      ArgumentUtility.CheckNotNull ("propertyName", propertyName);
+      ArgumentUtility.CheckNotNull ("propertyType", propertyType);
+
+      var eventMarkup = new XElement("Signature");
+      eventMarkup.Add(CreateTypeOrKeywordElement(propertyType));
+      eventMarkup.Add(CreateElement("Name", propertyName));
+
+      return eventMarkup;
     }
 
 

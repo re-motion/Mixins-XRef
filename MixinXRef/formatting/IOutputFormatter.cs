@@ -11,5 +11,8 @@ namespace MixinXRef.Formatting
     XElement CreateModifierMarkup (string keywords);
     XElement CreateConstructorMarkup (string name, ParameterInfo[] parameterInfos);
     XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos);
+    XElement CreateEventMarkup (string eventName, Type handlerType);
+    XElement CreateFieldMarkup(string fieldName, Type fieldType);
+    XElement CreatePropertyMarkup(string propertyName, Type propertyType);
   }
 }

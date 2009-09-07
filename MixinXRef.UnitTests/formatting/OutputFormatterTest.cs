@@ -111,5 +111,48 @@ namespace MixinXRef.UnitTests.formatting
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
+
+    [Test]
+    public void CreateEventMarkup()
+    {
+      var output = _outputFormatter.CreateEventMarkup("EventName", typeof(ChangedEventHandler));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "event"),
+          new XElement("Type", "ChangedEventHandler"),
+          new XElement("Name", "EventName")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateFieldMarkup()
+    {
+      var output = _outputFormatter.CreateFieldMarkup("FieldName", typeof(int));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "int"),
+          new XElement("Name", "FieldName")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreatePropertyMarkup()
+    {
+      var output = _outputFormatter.CreatePropertyMarkup("PropertyName", typeof(int));
+      var expectedOutput = new XElement(
+          "Signature",
+          new XElement("Keyword", "int"),
+          new XElement("Name", "PropertyName")
+          );
+
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
+
+
   }
 }
