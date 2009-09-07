@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-03 13:41:41">
+<MixinXRefReport creation-time="2009-09-07 10:51:01">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="Castle.DynamicProxy.dll" />
@@ -11,6 +11,7 @@
       <InvolvedType ref="3" />
       <InvolvedType ref="4" />
       <InvolvedType ref="5" />
+      <InvolvedType ref="6" />
     </Assembly>
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.11.20.13" location="Remotion.dll" />
@@ -19,15 +20,18 @@
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
       <summary>No summary found.</summary>
-      <PublicMembers>
+      <Members>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <signature>Void .ctor()</signature>
+          <Signature>GenericTarget&lt;TParameter1, TParameter2&gt; ()</Signature>
         </Member>
-      </PublicMembers>
+      </Members>
       <Interfaces />
       <Attributes />
       <Mixins>
@@ -35,15 +39,18 @@
       </Mixins>
     </InvolvedType>
     <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
       <summary>No summary found.</summary>
-      <PublicMembers>
+      <Members>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <signature>Void .ctor()</signature>
+          <Signature>ClassWithBookAttribute ()</Signature>
         </Member>
-      </PublicMembers>
+      </Members>
       <Interfaces />
       <Attributes>
         <Attribute ref="0">
@@ -53,106 +60,151 @@
       </Attributes>
       <Targets>
         <Target ref="0" />
-      </Targets>
-    </InvolvedType>
-    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Constructor" name=".ctor">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <signature>Void .ctor()</signature>
-        </Member>
-      </PublicMembers>
-      <Interfaces />
-      <Attributes />
-      <Mixins>
-        <Mixin ref="3" relation="Extending" instance-name="Mixin2">
-          <InterfaceIntroductions />
-          <AttributeIntroductions />
-          <MemberOverrides />
-        </Mixin>
-      </Mixins>
-    </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
-      <summary>No summary found.</summary>
-      <PublicMembers>
-        <Member type="Constructor" name=".ctor">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <signature>Void .ctor()</signature>
-        </Member>
-      </PublicMembers>
-      <Interfaces />
-      <Attributes>
-        <Attribute ref="1" />
-      </Attributes>
-      <Targets>
         <Target ref="2" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
       <summary>No summary found.</summary>
-      <PublicMembers>
+      <Members>
         <Member type="Method" name="Dispose">
           <Modifiers>
             <Keyword>public</Keyword>
-            <Keyword>sealed</Keyword>
-            <Keyword>virtual</Keyword>
           </Modifiers>
-          <signature>Void Dispose()</signature>
+          <Signature>void Dispose ()</Signature>
         </Member>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <signature>Void .ctor()</signature>
+          <Signature>NestedClassWithInterfaceAndInheritance ()</Signature>
         </Member>
-      </PublicMembers>
+      </Members>
       <Interfaces>
         <Interface ref="0" />
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="5" relation="Extending" instance-name="Mixin1">
+        <Mixin ref="1" relation="Extending" instance-name="ClassWithBookAttribute">
+          <InterfaceIntroductions />
+          <AttributeIntroductions>
+            <Attribute ref="0" />
+          </AttributeIntroductions>
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>TargetClass2 ()</Signature>
+        </Member>
+      </Members>
+      <Interfaces />
+      <Attributes />
+      <Mixins>
+        <Mixin ref="4" relation="Extending" instance-name="Mixin2">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
       <summary>No summary found.</summary>
-      <PublicMembers>
+      <Members>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <signature>Void .ctor()</signature>
+          <Signature>Mixin2 ()</Signature>
         </Member>
-      </PublicMembers>
+      </Members>
+      <Interfaces />
+      <Attributes>
+        <Attribute ref="1" />
+      </Attributes>
+      <Targets>
+        <Target ref="3" />
+      </Targets>
+    </InvolvedType>
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="Dispose">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>void Dispose ()</Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>TargetClass1 ()</Signature>
+        </Member>
+      </Members>
+      <Interfaces>
+        <Interface ref="0" />
+      </Interfaces>
+      <Attributes />
+      <Mixins>
+        <Mixin ref="6" relation="Extending" instance-name="Mixin1">
+          <InterfaceIntroductions />
+          <AttributeIntroductions />
+          <MemberOverrides />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>Mixin1 ()</Signature>
+        </Member>
+      </Members>
       <Interfaces />
       <Attributes />
       <Targets>
-        <Target ref="4" />
+        <Target ref="5" />
       </Targets>
     </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
     <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable">
-      <PublicMembers>
+      <Members>
         <Member type="Method" name="Dispose">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
           </Modifiers>
-          <signature>Void Dispose()</signature>
+          <Signature>void Dispose ()</Signature>
         </Member>
-      </PublicMembers>
+      </Members>
       <ImplementedBy>
-        <InvolvedType ref="4" />
+        <InvolvedType ref="2" />
+        <InvolvedType ref="5" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
@@ -164,7 +216,7 @@
     </Attribute>
     <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType ref="3" />
+        <InvolvedType ref="4" />
       </AppliedTo>
     </Attribute>
   </Attributes>

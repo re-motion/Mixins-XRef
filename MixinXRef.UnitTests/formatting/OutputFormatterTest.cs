@@ -65,42 +65,51 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    [Test]
-    public void CreateSignatureMarkup ()
-    {
-      var constructorOutput = _outputFormatter.CreateSignatureMarkup ("ClassName ()", MemberTypes.Constructor);
-      var expectedConstructorOutput = _outputFormatter.CreateConstructorMarkup ("ClassName ()");
-      
-      Assert.That (constructorOutput.ToString (), Is.EqualTo (expectedConstructorOutput.ToString ()));
-    }
 
     [Test]
     public void CreateConstructorMarkup ()
     {
-      var output = _outputFormatter.CreateConstructorMarkup ("ClassName (string Parameter1)");
-      var expectedOutput = new XElement ("Signature", new XElement ("Type", "ClassName"));
-      _outputFormatter.CreateParameterMarkup ("(string Parameter1)", expectedOutput);
+      var output = _outputFormatter.CreateConstructorMarkup ("ClassName", new ParameterInfo[0]);
+      var expectedOutput = new XElement ("Signature", new XElement ("Name", "ClassName"), new XElement ("Text", "("), new XElement ("Text", ")"));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
-    public void CreateParameterMarkup ()
+    public void AddParameterMarkup_WithTypeAndKeyword ()
     {
-      var output = new XElement ("TestElement");
-      const string parameters = "(string Parameter1, type2 Parameter2)";
-      _outputFormatter.CreateParameterMarkup (parameters, output);
+      var output = new XElement ("Signature");
+      var parameterInfos = typeof (MemberSignatureTestClass).GetMethod ("MethodWithParams").GetParameters();
+
+      // int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam
+      _outputFormatter.AddParameterMarkup (parameterInfos, output);
       var expectedOutput = new XElement (
-          "TestElement", 
-          new XElement("Text", "("),
-          new XElement("Keyword", "string"),
-          new XElement("Text", "Parameter1,"),
-          new XElement("Type", "type2"),
-          new XElement("Text", "Parameter2"),
-          new XElement("Text", ")")
+          "Signature",
+          new XElement ("Text", "("),
+          new XElement ("Keyword", "int"),
+          new XElement ("Text", "intParam,"),
+          new XElement ("Keyword", "string"),
+          new XElement ("Text", "stringParam,"),
+          new XElement ("Type", "AssemblyBuilder"),
+          new XElement ("Text", "assemblyBuilderParam"),
+          new XElement ("Text", ")")
           );
 
-      Assert.That (output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateMethodMarkup ()
+    {
+      var output = _outputFormatter.CreateMethodMarkup ("MethodName", typeof (string), new ParameterInfo[0]);
+      var expectedOutput = new XElement (
+          "Signature",
+          new XElement ("Keyword", "string"),
+          new XElement ("Name", "MethodName")
+          );
+      _outputFormatter.AddParameterMarkup (new ParameterInfo[0], expectedOutput);
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
   }
 }

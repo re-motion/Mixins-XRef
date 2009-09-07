@@ -101,54 +101,57 @@ namespace MixinXRef.Formatting
       return shortParameterName;
     }
 
-    public XElement CreateSignatureMarkup (string signature, MemberTypes memberType)
+    public XElement CreateConstructorMarkup (string name, ParameterInfo[] parameterInfos)
     {
-      switch (memberType)
-      {
-        case MemberTypes.Constructor:
-          return CreateConstructorMarkup (signature);
+      ArgumentUtility.CheckNotNull ("name", name);
+      ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-        default:
-          return null;
-      }
-    }
-
-    public XElement CreateConstructorMarkup (string signature)
-    {
       var constructorMarkup = new XElement ("Signature");
 
-      // [0] = type name, [1] = (Param1, Param2, ...)
-      var index = signature.IndexOf (' ');
-      var parameters = signature.Substring (index + 1, signature.Length - index-1);
-      constructorMarkup.Add (CreateElement ("Type", signature.Substring(0, index)));
-      CreateParameterMarkup (parameters, constructorMarkup);
+      constructorMarkup.Add (CreateElement ("Name", name));
+      AddParameterMarkup (parameterInfos, constructorMarkup);
 
       return constructorMarkup;
     }
 
-    public void CreateParameterMarkup (string parameters, XElement signatureElement)
+    public void AddParameterMarkup (ParameterInfo[] parameterInfos, XElement signatureElement)
     {
-      parameters = parameters.Replace ("(", "").Replace (")", "");
-
-      var parameterList = parameters.Split (new []{", "}, StringSplitOptions.RemoveEmptyEntries);
+      ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
+      ArgumentUtility.CheckNotNull ("signatureElement", signatureElement);
 
       signatureElement.Add (CreateElement ("Text", "("));
 
-      for (int i = 0; i < parameterList.Length; i++)
+      for (int i = 0; i < parameterInfos.Length; i++)
       {
-        var typeAndName = parameterList[i].Split (' ');
-        
-        var delimiter = "";
-        if (parameterList.Length > 1 && i < parameterList.Length-1)
-          delimiter = ",";
 
-        signatureElement.Add(CreateElement ("Keyword", typeAndName[0]));
-        signatureElement.Add (CreateElement ("Text", (typeAndName[1] + delimiter)));
+        signatureElement.Add (CreateTypeOrKeywordElement (parameterInfos[i].ParameterType));
+        signatureElement.Add (CreateElement ("Text", (parameterInfos[i].Name + ((i < parameterInfos.Length - 1) ? "," : ""))));
       }
 
       signatureElement.Add (CreateElement ("Text", ")"));
     }
 
+    public XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos)
+    {
+      ArgumentUtility.CheckNotNull ("methodName", methodName);
+      ArgumentUtility.CheckNotNull ("returnType", returnType);
+      ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
+
+      var methodMarkup = new XElement ("Signature");
+      methodMarkup.Add (CreateTypeOrKeywordElement (returnType));
+      methodMarkup.Add (CreateElement ("Name", methodName));
+      AddParameterMarkup (parameterInfos, methodMarkup);
+
+      return methodMarkup;
+    }
+
+
+    private XElement CreateTypeOrKeywordElement (Type type)
+    {
+      if (type.IsPrimitive || type == typeof (string))
+        return CreateElement ("Keyword", GetShortName (type));
+      return CreateElement ("Type", GetShortName (type));
+    }
 
     private XElement CreateElement (string elementName, string content)
     {
