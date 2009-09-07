@@ -22,7 +22,7 @@ namespace MixinXRef.Formatting
         if (index > 0)
         {
           nestedTypeName = (type.FullName.Substring (index, type.FullName.Length - index));
-          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf('['));
+          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf ('['));
         }
       }
       else
@@ -36,7 +36,7 @@ namespace MixinXRef.Formatting
         if (i != 0)
           result.Append (", ");
 
-        result.Append (GetShortName(genericArguments[i]));
+        result.Append (GetShortName (genericArguments[i]));
       }
       result.Append (">");
       result.Append (nestedTypeName);
@@ -48,10 +48,8 @@ namespace MixinXRef.Formatting
     {
       var modifiers = new XElement ("Modifiers");
 
-      foreach (var keyword in keywords.Split(' '))
-      {
-        modifiers.Add(CreateElement("Keyword", keyword));  
-      }
+      foreach (var keyword in keywords.Split (' '))
+        modifiers.Add (CreateElement ("Keyword", keyword));
 
       return modifiers;
     }
@@ -89,7 +87,7 @@ namespace MixinXRef.Formatting
           case "SByte":
           case "String":
           case "Void":
-            return name.ToLower ();
+            return name.ToLower();
           default:
             return GetFormattedTypeName (type);
         }
@@ -110,7 +108,6 @@ namespace MixinXRef.Formatting
 
       for (int i = 0; i < parameterInfos.Length; i++)
       {
-
         signatureElement.Add (CreateTypeOrKeywordElement (parameterInfos[i].ParameterType));
         signatureElement.Add (CreateElement ("Text", (parameterInfos[i].Name + ((i < parameterInfos.Length - 1) ? "," : ""))));
       }
@@ -118,17 +115,12 @@ namespace MixinXRef.Formatting
       signatureElement.Add (CreateElement ("Text", ")"));
     }
 
-    public XElement CreateConstructorMarkup(string name, ParameterInfo[] parameterInfos)
+    public XElement CreateConstructorMarkup (string name, ParameterInfo[] parameterInfos)
     {
-      ArgumentUtility.CheckNotNull("name", name);
-      ArgumentUtility.CheckNotNull("parameterInfos", parameterInfos);
+      ArgumentUtility.CheckNotNull ("name", name);
+      ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-      var constructorMarkup = new XElement("Signature");
-
-      constructorMarkup.Add(CreateElement("Name", name));
-      AddParameterMarkup(parameterInfos, constructorMarkup);
-
-      return constructorMarkup;
+      return CreateMemberMarkup (null, null, name, parameterInfos);
     }
 
     public XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos)
@@ -137,12 +129,7 @@ namespace MixinXRef.Formatting
       ArgumentUtility.CheckNotNull ("returnType", returnType);
       ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-      var methodMarkup = new XElement ("Signature");
-      methodMarkup.Add (CreateTypeOrKeywordElement (returnType));
-      methodMarkup.Add (CreateElement ("Name", methodName));
-      AddParameterMarkup (parameterInfos, methodMarkup);
-
-      return methodMarkup;
+      return CreateMemberMarkup (null, returnType, methodName, parameterInfos);
     }
 
     public XElement CreateEventMarkup (string eventName, Type handlerType)
@@ -150,24 +137,15 @@ namespace MixinXRef.Formatting
       ArgumentUtility.CheckNotNull ("eventName", eventName);
       ArgumentUtility.CheckNotNull ("handlerType", handlerType);
 
-      var eventMarkup = new XElement("Signature");
-      eventMarkup.Add (CreateElement ("Keyword", "event"));
-      eventMarkup.Add(CreateTypeOrKeywordElement(handlerType));
-      eventMarkup.Add(CreateElement("Name", eventName));
-
-      return eventMarkup;
+      return CreateMemberMarkup ("event", handlerType, eventName, null);
     }
 
-    public XElement CreateFieldMarkup(string fieldName, Type fieldType)
+    public XElement CreateFieldMarkup (string fieldName, Type fieldType)
     {
       ArgumentUtility.CheckNotNull ("fieldName", fieldName);
       ArgumentUtility.CheckNotNull ("fieldType", fieldType);
 
-      var eventMarkup = new XElement("Signature");
-      eventMarkup.Add(CreateTypeOrKeywordElement(fieldType));
-      eventMarkup.Add(CreateElement("Name", fieldName));
-
-      return eventMarkup;
+      return CreateMemberMarkup (null, fieldType, fieldName, null);
     }
 
     public XElement CreatePropertyMarkup (string propertyName, Type propertyType)
@@ -175,16 +153,31 @@ namespace MixinXRef.Formatting
       ArgumentUtility.CheckNotNull ("propertyName", propertyName);
       ArgumentUtility.CheckNotNull ("propertyType", propertyType);
 
-      var eventMarkup = new XElement("Signature");
-      eventMarkup.Add(CreateTypeOrKeywordElement(propertyType));
-      eventMarkup.Add(CreateElement("Name", propertyName));
-
-      return eventMarkup;
+      return CreateMemberMarkup (null, propertyType, propertyName, null);
     }
 
 
+    private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
+    {
+      // type and memberName must not be null
+
+      var markup = new XElement ("Signature");
+
+      markup.Add(CreateElement("Keyword", prefix));
+      markup.Add (CreateTypeOrKeywordElement (type));
+      markup.Add (CreateElement ("Name", memberName));
+
+      if(parameterInfos != null)
+        AddParameterMarkup (parameterInfos, markup);
+
+      return markup;
+    }
+
     private XElement CreateTypeOrKeywordElement (Type type)
     {
+      if (type == null)
+        return null;
+
       if (type.IsPrimitive || type == typeof (string))
         return CreateElement ("Keyword", GetShortName (type));
       return CreateElement ("Type", GetShortName (type));
