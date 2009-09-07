@@ -77,15 +77,30 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void CreateConstructorMarkup ()
     {
-      var output = _outputFormatter.CreateConstructorMarkup ("ClassName ()");
-      var expectedOutput = new XElement (
-          "Signature",
-          new XElement ("Type", "ClassName"),
-          new XElement ("Text", "("),
-          new XElement ("Text", ")")
-          );
+      var output = _outputFormatter.CreateConstructorMarkup ("ClassName (string Parameter1)");
+      var expectedOutput = new XElement ("Signature", new XElement ("Type", "ClassName"));
+      _outputFormatter.CreateParameterMarkup ("(string Parameter1)", expectedOutput);
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void CreateParameterMarkup ()
+    {
+      var output = new XElement ("TestElement");
+      const string parameters = "(string Parameter1, type2 Parameter2)";
+      _outputFormatter.CreateParameterMarkup (parameters, output);
+      var expectedOutput = new XElement (
+          "TestElement", 
+          new XElement("Text", "("),
+          new XElement("Keyword", "string"),
+          new XElement("Text", "Parameter1,"),
+          new XElement("Type", "type2"),
+          new XElement("Text", "Parameter2"),
+          new XElement("Text", ")")
+          );
+
+      Assert.That (output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
   }
 }

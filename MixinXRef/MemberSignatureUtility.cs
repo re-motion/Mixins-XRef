@@ -33,7 +33,7 @@ namespace MixinXRef
 
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;
-          var eventHandlerType = eventInfo.EventHandlerType ?? null;
+          var eventHandlerType = eventInfo.EventHandlerType;
           return "event " + _outputFormatter.GetShortName (eventHandlerType) + " " + eventInfo.Name;
           // +" (" + GetParamterList (eventInfo.GetAddMethod (true).GetParameters ()) + ")";
 

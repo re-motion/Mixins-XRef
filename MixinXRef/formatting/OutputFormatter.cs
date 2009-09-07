@@ -118,12 +118,35 @@ namespace MixinXRef.Formatting
       var constructorMarkup = new XElement ("Signature");
 
       // [0] = type name, [1] = (Param1, Param2, ...)
-      var signatureParts = signature.Split (' ');
-      constructorMarkup.Add (CreateElement ("Type", signatureParts[0]));
-      constructorMarkup.Add (CreateElement ("Text", "("));
-      constructorMarkup.Add (CreateElement ("Text", ")"));
+      var index = signature.IndexOf (' ');
+      var parameters = signature.Substring (index + 1, signature.Length - index-1);
+      constructorMarkup.Add (CreateElement ("Type", signature.Substring(0, index)));
+      CreateParameterMarkup (parameters, constructorMarkup);
 
       return constructorMarkup;
+    }
+
+    public void CreateParameterMarkup (string parameters, XElement signatureElement)
+    {
+      parameters = parameters.Replace ("(", "").Replace (")", "");
+
+      var parameterList = parameters.Split (new []{", "}, StringSplitOptions.RemoveEmptyEntries);
+
+      signatureElement.Add (CreateElement ("Text", "("));
+
+      for (int i = 0; i < parameterList.Length; i++)
+      {
+        var typeAndName = parameterList[i].Split (' ');
+        
+        var delimiter = "";
+        if (parameterList.Length > 1 && i < parameterList.Length-1)
+          delimiter = ",";
+
+        signatureElement.Add(CreateElement ("Keyword", typeAndName[0]));
+        signatureElement.Add (CreateElement ("Text", (typeAndName[1] + delimiter)));
+      }
+
+      signatureElement.Add (CreateElement ("Text", ")"));
     }
 
 
