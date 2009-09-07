@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using System.Text;
+using System.Xml.Linq;
 using MixinXRef.Formatting;
 
 namespace MixinXRef
@@ -16,7 +16,7 @@ namespace MixinXRef
       _outputFormatter = outputFormatter;
     }
 
-    public string GetMemberSignatur (MemberInfo memberInfo)
+    public XElement GetMemberSignatur (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
@@ -24,106 +24,35 @@ namespace MixinXRef
       {
         case MemberTypes.Method:
           var methodInfo = (MethodInfo) memberInfo;
-          return _outputFormatter.GetShortName (methodInfo.ReturnType) + " " + methodInfo.Name + " (" + GetParamterList (methodInfo.GetParameters ()) + ")";
+          return _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters());
 
         case MemberTypes.Constructor:
           var constructorInfo = (ConstructorInfo) memberInfo;
-          return _outputFormatter.GetShortName (memberInfo.DeclaringType) + " (" + GetParamterList (constructorInfo.GetParameters ()) + ")";
-          // return GetShortName (constructorInfo.Name) + " (" + GetParamterList (constructorInfo.GetParameters()) + ")";
+          return _outputFormatter.CreateConstructorMarkup (memberInfo.DeclaringType.Name, constructorInfo.GetParameters());
 
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;
-          var eventHandlerType = eventInfo.EventHandlerType;
-          return "event " + _outputFormatter.GetShortName (eventHandlerType) + " " + eventInfo.Name;
-          // +" (" + GetParamterList (eventInfo.GetAddMethod (true).GetParameters ()) + ")";
-
+          return _outputFormatter.CreateEventMarkup (eventInfo.Name, eventInfo.EventHandlerType);
+          
         case MemberTypes.Field:
           var fieldInfo = (FieldInfo) memberInfo;
-          return _outputFormatter.GetShortName (fieldInfo.FieldType) + " " + fieldInfo.Name;
+          return _outputFormatter.CreateFieldMarkup (fieldInfo.Name, fieldInfo.FieldType);
 
         case MemberTypes.Property:
           var propertyInfo = (PropertyInfo) memberInfo;
-          return _outputFormatter.GetShortName (propertyInfo.PropertyType) + " " + propertyInfo.Name;
+          return _outputFormatter.CreatePropertyMarkup (propertyInfo.Name, propertyInfo.PropertyType);
 
         case MemberTypes.NestedType:
           var nestedType = (Type) memberInfo;
-          return CreateNestedTypeSignature (nestedType);
+          return _outputFormatter.CreateNestedTypeMarkup (nestedType);
 
         case MemberTypes.Custom:
         case MemberTypes.TypeInfo:
-          return "TODO special MemberTypes";
+          return null;
 
         default:
           throw new Exception ("unknown member type");
       }
-    }
-
-    private string CreateNestedTypeSignature (Type nestedType)
-    {
-      var signature = new StringBuilder();
-
-      if (nestedType.IsEnum)
-      {
-        signature.Append ("enum ");
-        signature.Append (nestedType.Name);
-      }
-      else if (nestedType.IsClass || nestedType.IsInterface)
-      {
-        if (nestedType.IsClass)
-          signature.Append ("class ");
-        if (nestedType.IsInterface)
-          signature.Append ("interface ");
-
-        signature.Append (nestedType.Name);
-
-        var isSubClass = nestedType.BaseType == null ? false : (nestedType.BaseType != typeof (object));
-
-        var interfaces = nestedType.GetInterfaces ();
-
-        if (isSubClass || interfaces.Length > 0)
-          signature.Append (" : ");
-
-        var firstItem = true;
-
-        if (isSubClass)
-        {
-          signature.Append (_outputFormatter.GetShortName (nestedType.BaseType));
-          firstItem = false;
-        }
-        if (interfaces.Length > 0)
-        {
-          foreach (var @interface in interfaces)
-          {
-            if (firstItem)
-              firstItem = false;
-            else
-              signature.Append (", ");
-
-            signature.Append (_outputFormatter.GetShortName (@interface));
-          }
-        }
-      }
-      else
-        signature.Append("ToDo: " + nestedType);
-
-      return signature.ToString();
-    }
-
-    private string GetParamterList (ParameterInfo[] parameterInfos)
-    {
-      StringBuilder parameterList = new StringBuilder ();
-
-      bool firstRun = true;
-      foreach (var parameterInfo in parameterInfos)
-      {
-        if (firstRun)
-          firstRun = false;
-        else
-          parameterList.Append (", ");
-
-        parameterList.Append (String.Format ("{0} {1}", _outputFormatter.GetShortName (parameterInfo.ParameterType), parameterInfo.Name));
-      }
-      return parameterList.ToString();
     }
   }
 }

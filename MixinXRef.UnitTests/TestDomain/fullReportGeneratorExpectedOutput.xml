@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-07 12:12:17">
+<MixinXRefReport creation-time="2009-09-07 14:35:47">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -29,7 +29,11 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>GenericTarget&lt;TParameter1, TParameter2&gt; ()</Signature>
+          <Signature>
+            <Name>GenericTarget`2</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces />
@@ -48,7 +52,11 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>ClassWithBookAttribute ()</Signature>
+          <Signature>
+            <Name>ClassWithBookAttribute</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces />
@@ -73,13 +81,22 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>void Dispose ()</Signature>
+          <Signature>
+            <Type>void</Type>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>NestedClassWithInterfaceAndInheritance ()</Signature>
+          <Signature>
+            <Name>NestedClassWithInterfaceAndInheritance</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces>
@@ -106,7 +123,11 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>TargetClass2 ()</Signature>
+          <Signature>
+            <Name>TargetClass2</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces />
@@ -129,7 +150,11 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>Mixin2 ()</Signature>
+          <Signature>
+            <Name>Mixin2</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces />
@@ -150,13 +175,22 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>void Dispose ()</Signature>
+          <Signature>
+            <Type>void</Type>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>TargetClass1 ()</Signature>
+          <Signature>
+            <Name>TargetClass1</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces>
@@ -181,7 +215,11 @@
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
-          <Signature>Mixin1 ()</Signature>
+          <Signature>
+            <Name>Mixin1</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <Interfaces />
@@ -199,7 +237,12 @@
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
           </Modifiers>
-          <Signature>void Dispose ()</Signature>
+          <Signature>
+            <Type>void</Type>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
         </Member>
       </Members>
       <ImplementedBy>

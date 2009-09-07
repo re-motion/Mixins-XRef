@@ -43,7 +43,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
               _outputFormatter.CreateModifierMarkup("public abstract"),
-              new XElement("Signature", "void Dispose ()")
+              _outputFormatter.CreateMethodMarkup("Dispose", typeof(void), new ParameterInfo[0])
               )
           );
 
@@ -65,7 +65,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               _outputFormatter.CreateModifierMarkup("public"),
-              new XElement ("Signature", "UselessObject ()")
+              _outputFormatter.CreateConstructorMarkup("UselessObject", new ParameterInfo[0])
               )
           );
 
@@ -87,21 +87,21 @@ namespace MixinXRef.UnitTests
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
              _outputFormatter.CreateModifierMarkup("public override"),
-              new XElement("Signature", "void DoSomething ()")
+             _outputFormatter.CreateMethodMarkup("DoSomething", typeof(void), new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               _outputFormatter.CreateModifierMarkup("public"),
-              new XElement ("Signature", "ClassWithProperty ()")
+              _outputFormatter.CreateConstructorMarkup("ClassWithProperty", new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
               _outputFormatter.CreateModifierMarkup("public override"),
-              new XElement("Signature", "string PropertyName")
+              _outputFormatter.CreatePropertyMarkup("PropertyName", typeof(string))
               )
           );
 

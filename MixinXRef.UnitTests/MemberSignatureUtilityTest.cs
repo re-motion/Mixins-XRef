@@ -12,66 +12,63 @@ namespace MixinXRef.UnitTests
   {
 
     private MemberSignatureUtility _memberSignatureUtility;
+    private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
     {
-      _memberSignatureUtility = new MemberSignatureUtility(new OutputFormatter());
-    }
-
-    [Test]
-    public void GetMemberSignature_MethodNoParams ()
-    {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMethod ("Dispose");
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
-
-      Assert.That (output, Is.EqualTo ("void Dispose ()"));
+      _outputFormatter = new OutputFormatter();
+      _memberSignatureUtility = new MemberSignatureUtility(_outputFormatter);
     }
 
     [Test]
     public void GetMemberSignature_MethodWithParams ()
     {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMethod ("MethodWithParams");
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var methodInfo = typeof (MemberSignatureTestClass).GetMethod ("MethodWithParams");
+      var output = _memberSignatureUtility.GetMemberSignatur(methodInfo);
+      var expectedOutput = _outputFormatter.CreateMethodMarkup(methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters());
 
-      Assert.That (output, Is.EqualTo ("long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam)"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void GetMemberSignature_Property ()
     {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("ProtectedProperty", BindingFlags.Instance | BindingFlags.NonPublic)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var propertyInfo = typeof (MemberSignatureTestClass).GetProperty ("ProtectedProperty", BindingFlags.Instance | BindingFlags.NonPublic);
+      var output = _memberSignatureUtility.GetMemberSignatur(propertyInfo);
+      var expectedOutput = _outputFormatter.CreatePropertyMarkup(propertyInfo.Name, propertyInfo.PropertyType);
 
-      Assert.That (output, Is.EqualTo ("string ProtectedProperty"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void GetMemberSignature_Constructor ()
     {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember (".ctor", BindingFlags.Instance | BindingFlags.NonPublic)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var constructorInfo = typeof (MemberSignatureTestClass).GetConstructors (BindingFlags.Instance | BindingFlags.NonPublic)[0];
+      var output = _memberSignatureUtility.GetMemberSignatur(constructorInfo);
+      var expectedOutput = _outputFormatter.CreateConstructorMarkup("MemberSignatureTestClass", constructorInfo.GetParameters());
 
-      Assert.That (output, Is.EqualTo ("MemberSignatureTestClass (int Param1, string Param2, ApplicationAssemblyFinderFilter Param3)"));
-      // Assert.That (output, Is.EqualTo (".ctor (Int32 Param1, String Param2, ApplicationAssemblyFinderFilter Param3)"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void GetMemberSignature_Event ()
     {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("ProtectedInternalEvent", BindingFlags.Instance | BindingFlags.NonPublic)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var eventInfo = typeof (MemberSignatureTestClass).GetEvent ("ProtectedInternalEvent", BindingFlags.Instance | BindingFlags.NonPublic);
+      var output = _memberSignatureUtility.GetMemberSignatur(eventInfo);
+      var expectedOutput = _outputFormatter.CreateEventMarkup (eventInfo.Name, eventInfo.EventHandlerType);
 
-      Assert.That (output, Is.EqualTo ("event ChangedEventHandler ProtectedInternalEvent"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
     public void GetMemberSignature_Field ()
     {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("_dictionary", BindingFlags.Instance | BindingFlags.NonPublic)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var fieldInfo = typeof (MemberSignatureTestClass).GetField ("_dictionary", BindingFlags.Instance | BindingFlags.NonPublic);
+      var output = _memberSignatureUtility.GetMemberSignatur(fieldInfo);
+      var expectedOutput = _outputFormatter.CreateFieldMarkup (fieldInfo.Name, fieldInfo.FieldType);
 
-      Assert.That (output, Is.EqualTo ("MultiDictionary<string, int> _dictionary"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
 
     [Test]
@@ -79,35 +76,9 @@ namespace MixinXRef.UnitTests
     {
       var memberInfo = typeof (MemberSignatureTestClass).GetMember ("NestedClass", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
       var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
+      var expectedOutput = _outputFormatter.CreateNestedTypeMarkup ((Type) memberInfo);
 
-      Assert.That (output, Is.EqualTo ("class NestedClass"));
-    }
-
-    [Test]
-    public void GetMemberSignature_NestedClassWithInterfaceAndInheritance ()
-    {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("NestedClassWithInterfaceAndInheritance", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
-
-      Assert.That (output, Is.EqualTo ("class NestedClassWithInterfaceAndInheritance : GenericTarget<string, int>, IDisposable"));
-    }
-    
-    [Test]
-    public void GetMemberSignature_NestedClassInterface ()
-    {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("INestedInterface", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
-
-      Assert.That (output, Is.EqualTo ("interface INestedInterface : IDisposable"));
-    }
-
-    [Test]
-    public void GetMemberSignature_NestedEnumeration ()
-    {
-      var memberInfo = typeof (MemberSignatureTestClass).GetMember ("NestedEnumeration", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0];
-      var output = _memberSignatureUtility.GetMemberSignatur (memberInfo);
-
-      Assert.That (output, Is.EqualTo ("enum NestedEnumeration"));
+      Assert.That(output.ToString(), Is.EqualTo(expectedOutput.ToString()));
     }
   }
 }
