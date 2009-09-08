@@ -7,13 +7,14 @@
 	<xsl:param name="involvedTypes" />
 	<xsl:param name="dir" />
 	<xsl:param name="caption" />
+  <xsl:param name="emptyText" />
 	
 	<xsl:call-template name="tableTemplate">
 		<xsl:with-param name="rootMCR" select="$rootMCR"/>
 		<xsl:with-param name="items" select="$involvedTypes"/>
 		<xsl:with-param name="dir" select="$dir"/>
 		<xsl:with-param name="tableName">involvedTypeListTable</xsl:with-param>
-		<xsl:with-param name="emptyText">No&#160;Involved&#160;Classes</xsl:with-param>
+		<xsl:with-param name="emptyText" select="$emptyText"/>
 		<xsl:with-param name="caption" select="$caption"/>
 	</xsl:call-template>		
 	
@@ -25,14 +26,23 @@
 	<xsl:param name="dir" />
 	<xsl:param name="caption" />
 
+  <xsl:variable name="isTargetList" select="count( $involvedTypes[@is-target = true()] ) = count( $involvedTypes ) " />
+  <xsl:variable name="isMixinList" select="count( $involvedTypes[@is-mixin = true()] ) = count( $involvedTypes ) " />
+  
 	<table>
 		<caption><xsl:value-of select="$caption" />&#160;(<xsl:value-of select="count( $involvedTypes )" />)</caption>
 		<thead>
 			<tr>
 				<th>Namespace</th>
 				<th>Name</th>
-				<th># of Mixins applied</th>
-				<th>applied to # Targets</th>
+        <xsl:if test="$isTargetList">
+				  <th># of Mixins applied</th>
+        </xsl:if>
+
+        <xsl:if test="$isMixinList">
+				  <th>applied to # Targets</th>
+        </xsl:if>  
+        
 				<th>Assembly</th>
 			</tr>
 		</thead>
@@ -40,8 +50,12 @@
 			<tr>
 				<td><xsl:value-of select="count( distinct-values( $involvedTypes/@namespace ) )" /></td>
 				<td><xsl:value-of select="count( $involvedTypes )" /></td>
-				<td>-</td>
-				<td>-</td>
+        <xsl:if test="$isTargetList">
+          <td>-</td>
+        </xsl:if>
+        <xsl:if test="$isMixinList">
+          <td>-</td>
+        </xsl:if>
 				<td><xsl:value-of select="count( distinct-values( $involvedTypes/@assembly-ref ) )" /></td>
 			</tr>
 		</tfoot>
@@ -56,8 +70,12 @@
 							<xsl:with-param name="dir" select="$dir" />
 						</xsl:call-template>					
 					</td>
-					<td><xsl:value-of select="count( Mixins/Mixin )"/></td>
-					<td><xsl:value-of select="count( Targets/Target )"/></td>
+          <xsl:if test="$isTargetList">
+					  <td><xsl:value-of select="count( Mixins/Mixin )"/></td>
+          </xsl:if>
+          <xsl:if test="$isMixinList">
+				    <td><xsl:value-of select="count( Targets/Target )"/></td>
+          </xsl:if>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />

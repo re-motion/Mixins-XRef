@@ -4,19 +4,46 @@
 	
 <xsl:template name="involvedType">
 
-	<xsl:call-template name="involvedTypeList">
-		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType" />  
-		<xsl:with-param name="dir">.</xsl:with-param>
-		<xsl:with-param name="caption">Involved&#160;Classes</xsl:with-param>
-	</xsl:call-template>
+  <xsl:call-template name="htmlSite">
+    <xsl:with-param name="siteTitle">Mixin Index</xsl:with-param>
+    <xsl:with-param name="siteFileName">mixin_index.html</xsl:with-param>
+    <xsl:with-param name="bodyContentTemplate">involvedTypeMixin</xsl:with-param>
+  </xsl:call-template>
+
+  <xsl:call-template name="htmlSite">
+    <xsl:with-param name="siteTitle">Target Class Index</xsl:with-param>
+    <xsl:with-param name="siteFileName">target_index.html</xsl:with-param>
+    <xsl:with-param name="bodyContentTemplate">involvedTypeTarget</xsl:with-param>
+  </xsl:call-template>
 
   <xsl:for-each select="/MixinXRefReport/InvolvedTypes/InvolvedType" >
-		<!-- generate interface detail site for each interface -->
-		<xsl:call-template name="involvedTypeDetailSite" />	
+		<!-- generate involved type detail site -->
+	<xsl:call-template name="involvedTypeDetailSite" />	
 	</xsl:for-each>
 </xsl:template>
 
+
+<xsl:template name ="involvedTypeMixin">
+  <xsl:call-template name="involvedTypeList">
+    <xsl:with-param name="rootMCR" select="/" />
+    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@is-mixin = true() ]" />
+    <xsl:with-param name="dir">.</xsl:with-param>
+    <xsl:with-param name="caption">Mixins</xsl:with-param>
+    <xsl:with-param name="emptyText">No&#160;Mixins</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="involvedTypeTarget">
+  <xsl:call-template name="involvedTypeList">
+    <xsl:with-param name="rootMCR" select="/" />
+    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = true() ]" />
+    <xsl:with-param name="dir">.</xsl:with-param>
+    <xsl:with-param name="caption">Target&#160;Classes</xsl:with-param>
+    <xsl:with-param name="emptyText">No&#160;Target&#160;Classes</xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
+
+  
 <xsl:template name="involvedTypeDetailSite">
 	<xsl:call-template name="htmlSite">
 			<xsl:with-param name="siteTitle">Involved Class Detail</xsl:with-param>

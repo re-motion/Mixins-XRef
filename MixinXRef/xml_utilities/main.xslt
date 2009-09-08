@@ -62,12 +62,8 @@
 		<xsl:with-param name="siteFileName">assembly_index.html</xsl:with-param>
 		<xsl:with-param name="bodyContentTemplate">assembly</xsl:with-param>
 	</xsl:call-template>
-	<!-- involved type index + involved type sites -->
-	<xsl:call-template name="htmlSite">
-		<xsl:with-param name="siteTitle">Involved Type Index</xsl:with-param>
-		<xsl:with-param name="siteFileName">involvedType_index.html</xsl:with-param>
-		<xsl:with-param name="bodyContentTemplate">involvedType</xsl:with-param>
-	</xsl:call-template>
+	<!-- involved type index (now seperate mixin/target site, therefor no 'new' page) + involved type sites -->
+  <xsl:call-template name="involvedType" />
 	<!-- interface index + interface sites -->
 	<xsl:call-template name="htmlSite">
 		<xsl:with-param name="siteTitle">Interface Index</xsl:with-param>

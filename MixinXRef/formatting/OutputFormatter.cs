@@ -49,14 +49,14 @@ namespace MixinXRef.Formatting
     {
       var modifiers = new XElement ("Modifiers");
 
-      foreach (var attribute in attributes.Split(' '))
+      foreach (var attribute in attributes.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
       {
-        modifiers.Add(CreateElement("Text", "["));
-        modifiers.Add(CreateElement("Type", attribute));
-        modifiers.Add(CreateElement("Text", "]"));
+        modifiers.Add (CreateElement ("Text", "["));
+        modifiers.Add (CreateElement ("Type", attribute));
+        modifiers.Add (CreateElement ("Text", "]"));
       }
 
-      foreach (var keyword in keywords.Split (' '))
+      foreach (var keyword in keywords.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
         modifiers.Add (CreateElement ("Keyword", keyword));
 
       return modifiers;

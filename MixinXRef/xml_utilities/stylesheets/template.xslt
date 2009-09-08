@@ -35,8 +35,10 @@
 					<xsl:when test="$bodyContentTemplate = 'assembly'"><xsl:call-template name="assembly"/></xsl:when>
 					<!-- assembly detail site -->
 					<xsl:when test="$bodyContentTemplate = 'assemblyDetail'"><xsl:call-template name="assemblyDetail"/></xsl:when>
-					<!-- involved type index + involved type sites -->
-					<xsl:when test="$bodyContentTemplate = 'involvedType'"><xsl:call-template name="involvedType"/></xsl:when>
+					<!-- mixin index -->
+					<xsl:when test="$bodyContentTemplate = 'involvedTypeMixin'"><xsl:call-template name="involvedTypeMixin"/></xsl:when>
+          <!-- target index -->
+          <xsl:when test="$bodyContentTemplate = 'involvedTypeTarget'"><xsl:call-template name="involvedTypeTarget"/></xsl:when>
 					<!-- involved type detail site -->
 					<xsl:when test="$bodyContentTemplate = 'involvedTypeDetail'"><xsl:call-template name="involvedTypeDetail"/></xsl:when>
 					<!-- interface index + interface sites -->
@@ -82,7 +84,8 @@
 	<ul id="navigation">
 		<li><a href="{$dir}/index.html">Summary</a></li>
 		<li><a href="{$dir}/assembly_index.html">Assemblies</a></li>
-		<li><a href="{$dir}/involvedType_index.html">Involved Classes</a></li>
+		<li><a href="{$dir}/mixin_index.html">Mixins</a></li>
+    <li><a href="{$dir}/target_index.html">Target Classes</a></li>
 		<li><a href="{$dir}/interface_index.html">Involved Interfaces</a></li>
 		<li><a href="{$dir}/attribute_index.html">Involved Attributes</a></li>
 	</ul>

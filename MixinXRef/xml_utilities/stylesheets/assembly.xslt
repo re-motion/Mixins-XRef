@@ -110,10 +110,19 @@
 
 	<xsl:call-template name="involvedTypeList">
 		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)" />  
+		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)[ @is-mixin = true() ]" />  
 		<xsl:with-param name="dir">..</xsl:with-param>
-		<xsl:with-param name="caption">Involved&#160;Classes</xsl:with-param>
+		<xsl:with-param name="caption">Mixins</xsl:with-param>
+    <xsl:with-param name="emptyText">No&#160;Mixins</xsl:with-param>
 	</xsl:call-template>
+
+  <xsl:call-template name="involvedTypeList">
+    <xsl:with-param name="rootMCR" select="/" />
+    <xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)[ @is-target = true() ]" />
+    <xsl:with-param name="dir">..</xsl:with-param>
+    <xsl:with-param name="caption">Target&#160;Classes</xsl:with-param>
+    <xsl:with-param name="emptyText">No&#160;Target&#160;Classes</xsl:with-param>
+  </xsl:call-template>
 	
 	<xsl:call-template name="interfaceList">
 		<xsl:with-param name="rootMCR" select="/" />		

@@ -32,6 +32,8 @@
 			<tr>
 				<td><xsl:value-of select="count( $members )"/></td>
 				<td>-</td>
+        <td>-</td>
+        <td>-</td>
 			</tr>
 		</tfoot>
 		<tbody>
