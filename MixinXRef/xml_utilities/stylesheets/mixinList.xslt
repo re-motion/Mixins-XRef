@@ -27,10 +27,9 @@
 			<caption>Mixins&#160;(<xsl:value-of select="count( $mixins )" />)</caption>
 			<thead>
 				<tr>
-					<th>Namespace</th>
+					<th>Index</th>
 					<th>Name</th>
 					<th>applied to # Targets</th>
-					<th>Assembly</th>	
 					<th>Relation</th>
 					<th>Interface Introductions</th>
 					<th>Attribute Introductions</th>
@@ -39,10 +38,9 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<td><xsl:value-of select="count( distinct-values( $mixins/@namespace ) )" /></td>
+					<td>-</td>
 					<td><xsl:value-of select="count( $mixins )" /></td>
 					<td>-</td>
-					<td><xsl:value-of select="count( distinct-values( $mixins/@assembly-ref ) )" /></td>
 					<td>-</td>
 
           <xsl:if test="$target/@is-generic-definition = false()">
@@ -71,20 +69,13 @@
 					<xsl:variable name="mixin" select=" key('involvedType', @ref) "/>
 					
 					<tr class="{ ru:getDubiosInvolvedTypeClass(.) }">
-						<td><xsl:value-of select="$mixin/@namespace"/></td>
+						<td><xsl:value-of select="@index"/></td>
 						<td>
 							<xsl:call-template name="GenerateMixinReferenceLink">
 								<xsl:with-param name="mixin" select="." />
 							</xsl:call-template>
 						</td>
 						<td><xsl:value-of select="count( $mixin/Targets/Target )" /></td>
-						<td>
-							<xsl:call-template name="GenerateAssemblyLink">
-								<xsl:with-param name="rootMCR" select="$rootMCR" />
-								<xsl:with-param name="assemblyId" select="$mixin/@assembly-ref" />
-								<xsl:with-param name="dir" select="$dir" />
-							</xsl:call-template>
-						</td>
 						<td><xsl:value-of select="@relation" /></td>
 
             <xsl:call-template name="mixinSpecificData">
