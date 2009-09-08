@@ -11,7 +11,7 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
-      var program = new Program (Console.In, Console.Out, new RemotionReflection(), new OutputFormatter());
+      var program = new Program (Console.In, Console.Out, new OutputFormatter());
 
       var argumentCheckResult = program.CheckArguments (args);
       if (argumentCheckResult != 0)
@@ -20,6 +20,8 @@ namespace MixinXRef
       var assemblyDirectory = args[0];
       var outputDirectory = Path.Combine (args[1], "MixinDoc");
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
+
+      program.SetRemotionReflection(new RemotionVersionDetector(assemblyDirectory).RemotionReflection);
 
       if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
@@ -48,19 +50,17 @@ namespace MixinXRef
 
     private readonly TextReader _input;
     private readonly TextWriter _output;
-    private readonly IRemotionReflection _remotionReflection;
+    private IRemotionReflection _remotionReflection;
     private readonly IOutputFormatter _outputFormatter;
 
-    public Program (TextReader input, TextWriter output, IRemotionReflection remotionReflection, IOutputFormatter outputFormatter)
+    public Program (TextReader input, TextWriter output, IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("input", input);
       ArgumentUtility.CheckNotNull ("output", output);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _input = input;
       _output = output;
-      _remotionReflection = remotionReflection;
       _outputFormatter = outputFormatter;
     }
 
@@ -124,8 +124,6 @@ namespace MixinXRef
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
         return null;
       }
-      
-      _remotionReflection.SetRemotionAssembly (remotionAssembly);
 
       return assemblies;
     }
@@ -162,6 +160,13 @@ namespace MixinXRef
           outputDocument.Save (xmlFile);
         }
       }
+    }
+
+    public void SetRemotionReflection(IRemotionReflection remotionReflection)
+    {
+      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+
+      _remotionReflection = remotionReflection;
     }
   }
 }

@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -47,6 +49,24 @@ namespace MixinXRef
 
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
+      //var memberAttributes = new StringBuilder();
+      //if (_targetClassDefinition != null)
+      //{
+      //  var memberDefintionBase = _targetClassDefinition.CallMethod ("GetAllMembers")
+      //      .Where (memberDefinitionBase => memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo>() == memberInfo).Single();
+
+      //  if (memberDefintionBase.GetProperty ("Overrides").GetProperty ("Count").To<int>() > 0)
+      //    ; // is overriden?!;
+
+      //  MemberDefinitionBase mdb;
+        
+      //  TargetClassDefinition tcd;
+
+
+      //  // member visibility attribute
+        
+      //}
+
       return new XElement (
           "Member",
           new XAttribute ("type", memberInfo.MemberType),

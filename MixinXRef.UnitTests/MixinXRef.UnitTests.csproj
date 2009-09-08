@@ -82,6 +82,7 @@
     <Compile Include="RecursiveDirectoryCopyTest.cs" />
     <Compile Include="RecursiveExceptionReportGeneratorTest.cs" />
     <Compile Include="reflection\RemotionReflectionTest.cs" />
+    <Compile Include="reflection\RemotionVersionDetectorTest.cs" />
     <Compile Include="ReportGeneratorStub.cs" />
     <Compile Include="AssemblyReportGeneratorTest.cs" />
     <Compile Include="IdentifierGeneratorTest.cs" />

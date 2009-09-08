@@ -89,24 +89,6 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    public void GetTargetClassDefinition_OnNonInitializedRemotionReflection()
-    {
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<TargetClass2>().AddMixin<Mixin2>()
-          .BuildConfiguration();
-
-      try
-      {
-        new RemotionReflection().GetTargetClassDefinition(typeof(TargetClass2), new ReflectedObject(mixinConfiguration));
-        Assert.Fail ("Expected exception not thrown");
-      }
-      catch (InvalidOperationException invalidOperationException)
-      {
-        Assert.That(invalidOperationException.Message, Is.EqualTo("Call SetRemotionAssembly prior to this method."));
-      }
-    }
-
-    [Test]
     public void BuildConfigurationFromAssemblies()
     {
       var assemblies = new[] { typeof(TargetClass1).Assembly, typeof(object).Assembly };
@@ -115,22 +97,6 @@ namespace MixinXRef.UnitTests.Reflection
       var expectedOutput = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
 
       Assert.That(reflectedOuput.To<MixinConfiguration>().ClassContexts, Is.EqualTo(expectedOutput.ClassContexts));
-    }
-
-    [Test]
-    public void BuildConfigurationFromAssemblies_OnNonInitializedRemotionReflection()
-    {
-      var assemblies = new[] { typeof(TargetClass1).Assembly, typeof(object).Assembly };
-
-      try
-      {
-        new RemotionReflection().BuildConfigurationFromAssemblies(assemblies);
-        Assert.Fail("Expected exception not thrown");
-      }
-      catch (InvalidOperationException invalidOperationException)
-      {
-        Assert.That(invalidOperationException.Message, Is.EqualTo("Call SetRemotionAssembly prior to this method."));
-      }
     }
 
     [Test]

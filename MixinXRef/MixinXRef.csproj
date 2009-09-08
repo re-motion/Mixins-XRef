@@ -90,6 +90,7 @@
     <Compile Include="RecursiveExceptionReportGenerator.cs" />
     <Compile Include="reflection\ReflectedObject.cs" />
     <Compile Include="reflection\RemotionReflection.cs" />
+    <Compile Include="reflection\RemotionVersionDetector.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="TargetReferenceReportGenerator.cs" />
     <Compile Include="TimingScope.cs" />

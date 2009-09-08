@@ -13,9 +13,7 @@ namespace MixinXRef.UnitTests
   {
     public static RemotionReflection GetRemotionReflection()
     {
-      var remotionReflection = new RemotionReflection();
-      remotionReflection.SetRemotionAssembly(typeof(TargetClassDefinitionUtility).Assembly);
-      return remotionReflection;
+      return new RemotionReflection(typeof(TargetClassDefinitionUtility).Assembly);
     }
 
     public const string _userPromptOnExistingOutputDirectory =
@@ -33,7 +31,8 @@ namespace MixinXRef.UnitTests
       _remotionReflection = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
 
-      _program = new Program (new StringReader (""), _standardOutput, _remotionReflection, _outputFormatter);
+      _program = new Program (new StringReader (""), _standardOutput, _outputFormatter);
+      _program.SetRemotionReflection (_remotionReflection);
     }
 
 
@@ -115,7 +114,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "n" for No
-      _program = new Program (new StringReader ("n"), _standardOutput, _remotionReflection, _outputFormatter);
+      _program = new Program (new StringReader ("n"), _standardOutput, _outputFormatter);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
@@ -135,7 +134,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (outputDirectory), Is.True);
 
       // setup input "YES" for Yes
-      _program = new Program (new StringReader ("YES"), _standardOutput, _remotionReflection, _outputFormatter);
+      _program = new Program (new StringReader ("YES"), _standardOutput, _outputFormatter);
 
       var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
 
