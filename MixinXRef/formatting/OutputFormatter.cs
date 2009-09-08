@@ -45,9 +45,16 @@ namespace MixinXRef.Formatting
       return result.ToString();
     }
 
-    public XElement CreateKeywordMarkup (string keywords)
+    public XElement CreateModifierMarkup (string attributes, string keywords)
     {
       var modifiers = new XElement ("Modifiers");
+
+      foreach (var attribute in attributes.Split(' '))
+      {
+        modifiers.Add(CreateElement("Text", "["));
+        modifiers.Add(CreateElement("Type", attribute));
+        modifiers.Add(CreateElement("Text", "]"));
+      }
 
       foreach (var keyword in keywords.Split (' '))
         modifiers.Add (CreateElement ("Keyword", keyword));

@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              _outputFormatter.CreateKeywordMarkup("public abstract"),
+              _outputFormatter.CreateModifierMarkup("", "public abstract"),
               _outputFormatter.CreateMethodMarkup("Dispose", typeof(void), new ParameterInfo[0])
               )
           );
@@ -64,7 +64,7 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateKeywordMarkup("public"),
+              _outputFormatter.CreateModifierMarkup("", "public"),
               _outputFormatter.CreateConstructorMarkup("UselessObject", new ParameterInfo[0])
               )
           );
@@ -86,21 +86,21 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute("type", MemberTypes.Method),
               new XAttribute("name", "DoSomething"),
-             _outputFormatter.CreateKeywordMarkup("public override"),
+             _outputFormatter.CreateModifierMarkup("", "public override"),
              _outputFormatter.CreateMethodMarkup("DoSomething", typeof(void), new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateKeywordMarkup("public"),
+              _outputFormatter.CreateModifierMarkup("", "public"),
               _outputFormatter.CreateConstructorMarkup("ClassWithProperty", new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              _outputFormatter.CreateKeywordMarkup("public override"),
+              _outputFormatter.CreateModifierMarkup("", "public override"),
               _outputFormatter.CreatePropertyMarkup("PropertyName", typeof(string))
               )
           );

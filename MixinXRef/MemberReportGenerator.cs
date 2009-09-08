@@ -51,7 +51,7 @@ namespace MixinXRef
           "Member",
           new XAttribute ("type", memberInfo.MemberType),
           new XAttribute ("name", memberInfo.Name),
-          _outputFormatter.CreateKeywordMarkup (_memberModifierUtility.GetMemberModifiers (memberInfo)),
+          _outputFormatter.CreateModifierMarkup ("", _memberModifierUtility.GetMemberModifiers (memberInfo)),
           _memberSignatureUtility.GetMemberSignatur (memberInfo)
           );
     }
