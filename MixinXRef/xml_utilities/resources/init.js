@@ -58,7 +58,7 @@ function initTableSorter() {
 
         var rowCount = $(this).find("tbody tr").length;
         /* pager: only on index sites with a table with more than 30 rows */
-        if (rowCount > 30 && onIndexSite()) {
+        if (rowCount >= 20 && onIndexSite()) {
 			/* register event handler on dropdown-box */
             $("div.pager select.pagesize").bind("change", function() {
                 tablesorterCookieJar.set(getCookieName() + '_pagesize', $(this).attr("value"));
