@@ -68,6 +68,10 @@ fieldset legend {
 	background-color: #E7E7E7;
 }
 
+.involvedType-interfaceLinkList {
+  margin: 0 0 0 7em;
+}
+
 /* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */ 
 tbody tr:nth-child(2n) td {
 	background-color: #F0F0F6;
