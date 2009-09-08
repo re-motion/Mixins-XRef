@@ -127,6 +127,10 @@ span.Text {
 	vertical-align: top;
 }
 
+.treeview li span {
+	cursor: default;
+}
+
 .treeview {	
 	font-family: Verdana, helvetica, arial, sans-serif;
 	font-size: 13px;
@@ -227,7 +231,7 @@ table table {
 
 /* subtables cause problems;
   they produce an unnecessary amount of cols
-  which destroy the formating
+  which destroy the formatting
   setting the width to 0 solves the problem
 */
 table colgroup col{

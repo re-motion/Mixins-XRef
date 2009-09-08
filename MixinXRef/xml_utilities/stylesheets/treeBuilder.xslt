@@ -35,7 +35,10 @@
 			<xsl:variable name="subTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id  and  ru:contains($allReferences, @id)]" />
 			<li>
 				<xsl:if test="exists($subTypes)">
-					<span><xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, ., $allReferences) - 1"/>)</span><a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
+					<span title="{ ru:GetToolTip(/, .) }">
+            <xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, ., $allReferences) - 1"/>)
+          </span>
+          <a href="{@id}.html" class="tree-link"> [link]</a>
 					
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
@@ -44,7 +47,11 @@
 					</xsl:call-template>
 				</xsl:if>
 				<xsl:if test="empty( $subTypes )">
-					<xsl:value-of select="@name"/><a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
+          <span title="{ ru:GetToolTip(/, .) }">
+            <xsl:value-of select="@name"/>
+          </span>
+          <a href="{@id}.html" class="tree-link"> [link]</a>
+          
 				</xsl:if>
 			</li>		
 		</xsl:for-each>	
