@@ -26,7 +26,7 @@ namespace MixinXRef.Reflection
       switch (versionString)
       {
         case "1.11.20.13":
-          return new RemotionReflection (remotionAssembly);
+          return new RemotionReflection08 (remotionAssembly);
         case "1.13.23.2":
           return null;
 

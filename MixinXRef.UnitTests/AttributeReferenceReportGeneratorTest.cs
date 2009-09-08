@@ -11,7 +11,7 @@ namespace MixinXRef.UnitTests
   public class AttributeReferenceReportGeneratorTest
   {
     private IdentifierGenerator<Type> _identifierGenerator;
-    private RemotionReflection _remotionReflection;
+    private IRemotionReflection _remotionReflection;
 
     [SetUp]
     public void SetUp ()

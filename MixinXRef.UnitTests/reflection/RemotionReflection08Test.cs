@@ -12,9 +12,9 @@ using Remotion.Mixins.Validation;
 namespace MixinXRef.UnitTests.Reflection
 {
   [TestFixture]
-  public class RemotionReflectionTest
+  public class RemotionReflection08Test
   {
-    private RemotionReflection _remotionReflection;
+    private IRemotionReflection _remotionReflection;
 
     [SetUp]
     public void SetUp ()

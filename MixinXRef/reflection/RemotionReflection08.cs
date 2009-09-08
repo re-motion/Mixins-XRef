@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace MixinXRef.Reflection
 {
-  public class RemotionReflection : IRemotionReflection
+  public class RemotionReflection08 : IRemotionReflection
   {
     private readonly Assembly _remotionAssembly;
 
-    public RemotionReflection(Assembly remotionAssembly)
+    public RemotionReflection08(Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 

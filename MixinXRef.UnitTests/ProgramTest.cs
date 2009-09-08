@@ -11,9 +11,9 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class ProgramTest
   {
-    public static RemotionReflection GetRemotionReflection()
+    public static IRemotionReflection GetRemotionReflection()
     {
-      return new RemotionReflection(typeof(TargetClassDefinitionUtility).Assembly);
+      return new RemotionReflection08(typeof(TargetClassDefinitionUtility).Assembly);
     }
 
     public const string _userPromptOnExistingOutputDirectory =

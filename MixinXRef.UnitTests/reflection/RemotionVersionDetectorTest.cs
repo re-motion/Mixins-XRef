@@ -15,7 +15,13 @@ namespace MixinXRef.UnitTests.Reflection
       var remotionVersionDetector = new RemotionVersionDetector (".");
       var output = remotionVersionDetector.RemotionReflection;
 
-      Assert.That (output, Is.InstanceOfType (typeof (RemotionReflection)));
+      Assert.That (output, Is.InstanceOfType (typeof (RemotionReflection08)));
+    }
+
+    [Test]
+    public void DetectVersion_Old_TargetClassDefinitonUtility()
+    {
+      
     }
   }
 }
