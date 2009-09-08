@@ -8,7 +8,7 @@ namespace MixinXRef.Formatting
   {
     string GetFormattedTypeName (Type type);
     string GetShortName (Type type);
-    XElement CreateModifierMarkup (string keywords);
+    XElement CreateKeywordMarkup (string keywords);
     XElement CreateConstructorMarkup (string name, ParameterInfo[] parameterInfos);
     XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos);
     XElement CreateEventMarkup (string eventName, Type handlerType);

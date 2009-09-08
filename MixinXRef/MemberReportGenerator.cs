@@ -37,16 +37,22 @@ namespace MixinXRef
       return new XElement (
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-          where memberInfo.DeclaringType == _type && 
-                !IsSpecialName (memberInfo) && 
-                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains("private")
-          select new XElement (
-              "Member",
-              new XAttribute ("type", memberInfo.MemberType),
-              new XAttribute ("name", memberInfo.Name),
-              _outputFormatter.CreateModifierMarkup (_memberModifierUtility.GetMemberModifiers (memberInfo)),
-              _memberSignatureUtility.GetMemberSignatur(memberInfo)
-              )
+          where memberInfo.DeclaringType == _type &&
+                !IsSpecialName (memberInfo) &&
+                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private")
+          select CreateMemberElement (memberInfo)
+          );
+    }
+
+
+    private XElement CreateMemberElement (MemberInfo memberInfo)
+    {
+      return new XElement (
+          "Member",
+          new XAttribute ("type", memberInfo.MemberType),
+          new XAttribute ("name", memberInfo.Name),
+          _outputFormatter.CreateKeywordMarkup (_memberModifierUtility.GetMemberModifiers (memberInfo)),
+          _memberSignatureUtility.GetMemberSignatur (memberInfo)
           );
     }
 

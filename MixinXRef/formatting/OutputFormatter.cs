@@ -45,7 +45,7 @@ namespace MixinXRef.Formatting
       return result.ToString();
     }
 
-    public XElement CreateModifierMarkup (string keywords)
+    public XElement CreateKeywordMarkup (string keywords)
     {
       var modifiers = new XElement ("Modifiers");
 

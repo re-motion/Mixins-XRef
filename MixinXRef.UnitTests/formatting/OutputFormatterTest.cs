@@ -57,9 +57,9 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void CreateModifierMarkup ()
+    public void CreateKeywordMarkup()
     {
-      var output = _outputFormatter.CreateModifierMarkup ("keyword1 keyword2");
+      var output = _outputFormatter.CreateKeywordMarkup ("keyword1 keyword2");
       var expectedOutput = new XElement ("Modifiers", new XElement ("Keyword", "keyword1"), new XElement ("Keyword", "keyword2"));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
