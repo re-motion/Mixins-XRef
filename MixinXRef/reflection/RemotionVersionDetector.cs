@@ -8,16 +8,16 @@ namespace MixinXRef.Reflection
   {
     private readonly IRemotionReflection _remotionReflection;
 
-    public RemotionVersionDetector(string assemblyDirectory)
+    public RemotionVersionDetector (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
       var fullAssemblyPath = Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll"));
-      var remotionAssembly = Assembly.LoadFile(fullAssemblyPath);
+      var remotionAssembly = Assembly.LoadFile (fullAssemblyPath);
       _remotionReflection = DetectVersion (remotionAssembly);
     }
 
-    public IRemotionReflection DetectVersion(Assembly remotionAssembly)
+    public IRemotionReflection DetectVersion (Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 
@@ -31,7 +31,7 @@ namespace MixinXRef.Reflection
           return null;
 
         default:
-          throw new NotSupportedException(String.Format("The remotion assembly version '{0}' is not supported.", versionString));
+          throw new NotSupportedException (String.Format ("The remotion assembly version '{0}' is not supported.", versionString));
       }
     }
 

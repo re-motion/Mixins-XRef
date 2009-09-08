@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-07 14:56:56">
+<MixinXRefReport creation-time="2009-09-08 16:29:33">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -34,7 +34,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>PublicMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -46,7 +46,7 @@
             <Keyword>virtual</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>PublicVirtualMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -58,7 +58,7 @@
             <Keyword>abstract</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>PublicAbstractMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -69,7 +69,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>Dispose</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -149,7 +149,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending" instance-name="MemberSignatureTestClass">
+        <Mixin ref="1" index="0" relation="Extending" instance-name="MemberSignatureTestClass">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -162,40 +162,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Type>void</Type>
-            <Name>PublicMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="PublicVirtualMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>virtual</Keyword>
-          </Modifiers>
-          <Signature>
-            <Type>void</Type>
-            <Name>PublicVirtualMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="Dispose">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Type>void</Type>
-            <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Method" name="MethodWithParams">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -212,6 +178,40 @@
             <Text>,</Text>
             <Type>AssemblyBuilder</Type>
             <ParameterName>assemblyBuilderParam</ParameterName>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>PublicMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicVirtualMethod">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>virtual</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>PublicVirtualMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="Dispose">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>Dispose</Name>
+            <Text>(</Text>
             <Text>)</Text>
           </Signature>
         </Member>
@@ -353,7 +353,7 @@
             <Keyword>override</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>PublicAbstractMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -366,7 +366,7 @@
             <Keyword>override</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>PublicVirtualMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -388,7 +388,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="1" relation="Extending" instance-name="MemberSignatureTestClass">
+        <Mixin ref="1" index="0" relation="Extending" instance-name="MemberSignatureTestClass">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -415,7 +415,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="4" relation="Extending" instance-name="ClassWithBookAttribute" />
+        <Mixin ref="4" index="n/a" relation="Extending" instance-name="ClassWithBookAttribute" />
       </Mixins>
     </InvolvedType>
     <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
@@ -458,7 +458,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>Dispose</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -480,7 +480,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="4" relation="Extending" instance-name="ClassWithBookAttribute">
+        <Mixin ref="4" index="0" relation="Extending" instance-name="ClassWithBookAttribute">
           <InterfaceIntroductions />
           <AttributeIntroductions>
             <Attribute ref="0" />
@@ -509,7 +509,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="7" relation="Extending" instance-name="Mixin2">
+        <Mixin ref="7" index="0" relation="Extending" instance-name="Mixin2">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -552,7 +552,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>Dispose</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -574,7 +574,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="9" relation="Extending" instance-name="Mixin1">
+        <Mixin ref="9" index="0" relation="Extending" instance-name="Mixin1">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -614,7 +614,7 @@
             <Keyword>abstract</Keyword>
           </Modifiers>
           <Signature>
-            <Type>void</Type>
+            <Keyword>void</Keyword>
             <Name>Dispose</Name>
             <Text>(</Text>
             <Text>)</Text>
