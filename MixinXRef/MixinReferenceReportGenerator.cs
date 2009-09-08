@@ -3,8 +3,6 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -54,35 +52,40 @@ namespace MixinXRef
 
       return new XElement (
           "Mixins",
-          from mixin in _involvedType.ClassContext.GetProperty("Mixins")
+          from mixin in _involvedType.ClassContext.GetProperty ("Mixins")
           select GenerateMixinElement (mixin));
     }
 
     private XElement GenerateMixinElement (ReflectedObject mixinContext)
     {
-      // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
-      var specificName = new XAttribute ("instance-name", _outputFormatter.GetFormattedTypeName (mixinContext.GetProperty ("MixinType").To<Type>()));
+      var mixinType = mixinContext.GetProperty ("MixinType").To<Type>();
+
       var mixinElement = new XElement (
           "Mixin",
-          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinContext.GetProperty ("MixinType").To<Type>())),
+          new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinType)),
+          new XAttribute ("index", "n/a"),
           new XAttribute ("relation", mixinContext.GetProperty ("MixinKind")),
-          specificName
+          // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
+          new XAttribute ("instance-name", _outputFormatter.GetFormattedTypeName (mixinType))
           );
 
       if (_targetClassDefinition != null)
       {
-        var mixinDefinition = _targetClassDefinition.CallMethod("GetMixinByConfiguredType", mixinContext.GetProperty("MixinType").To<Type>());
+        var mixinDefinition = _targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
         // set more specific name for mixin references
-        specificName.Value = _outputFormatter.GetFormattedTypeName(mixinDefinition.GetProperty("Type").To<Type>());
+        mixinElement.SetAttributeValue ("instance-name", _outputFormatter.GetFormattedTypeName (mixinDefinition.GetProperty ("Type").To<Type>()));
+        // set mixin index
+        mixinElement.SetAttributeValue ("index", mixinDefinition.GetProperty ("MixinIndex").To<int>());
 
-        mixinElement.Add(
-            new InterfaceIntroductionReportGenerator(mixinDefinition.GetProperty("InterfaceIntroductions"), _interfaceIdentifierGenerator).
+        mixinElement.Add (
+            new InterfaceIntroductionReportGenerator (mixinDefinition.GetProperty ("InterfaceIntroductions"), _interfaceIdentifierGenerator).
                 GenerateXml());
-        mixinElement.Add(
-            new AttributeIntroductionReportGenerator(mixinDefinition.GetProperty("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
-        mixinElement.Add(
-            new MemberOverrideReportGenerator(mixinDefinition.CallMethod("GetAllOverrides")).GenerateXml());
+        mixinElement.Add (
+            new AttributeIntroductionReportGenerator (
+                mixinDefinition.GetProperty ("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
+        mixinElement.Add (
+            new MemberOverrideReportGenerator (mixinDefinition.CallMethod ("GetAllOverrides")).GenerateXml());
       }
 
       return mixinElement;

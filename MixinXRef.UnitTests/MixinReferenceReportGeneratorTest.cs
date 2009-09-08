@@ -32,7 +32,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           involvedTypeDummy,
-          new ReflectedObject(new TargetClassDefinition(new ClassContext(involvedTypeDummy.Type))), 
+          new ReflectedObject (new TargetClassDefinition (new ClassContext (involvedTypeDummy.Type))),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
@@ -52,14 +52,14 @@ namespace MixinXRef.UnitTests
 
 
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
+      targetType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(targetType.Type, mixinConfiguration)), 
+          new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration)),
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -77,11 +77,15 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
+              new XAttribute("index", "0"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin1"),
-              new InterfaceIntroductionReportGenerator (new ReflectedObject(mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).GenerateXml(),
-              new AttributeIntroductionReportGenerator(new ReflectedObject(mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, ProgramTest.GetRemotionReflection()).GenerateXml(),
-              new MemberOverrideReportGenerator (new ReflectedObject(mixinDefinition.GetAllOverrides())).GenerateXml()
+              new InterfaceIntroductionReportGenerator (new ReflectedObject (mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).
+                  GenerateXml(),
+              new AttributeIntroductionReportGenerator (
+                  new ReflectedObject (mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, ProgramTest.GetRemotionReflection()).
+                  GenerateXml(),
+              new MemberOverrideReportGenerator (new ReflectedObject (mixinDefinition.GetAllOverrides())).GenerateXml()
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -95,14 +99,15 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>().AddMixin<Mixin3>()
           .BuildConfiguration();
-      targetType.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
+      targetType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          null, // generic target class
+          null,
+          // generic target class
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -115,11 +120,13 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
+              new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "ClassWithBookAttribute")),
           new XElement (
               "Mixin",
               new XAttribute ("ref", "1"),
+              new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin3"))
           );
