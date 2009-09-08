@@ -122,7 +122,7 @@
 
 <xsl:template name="involvedTypeBaseLink">
 	<xsl:if test="@base-ref != 'none' ">
-		<a href="{@base-ref}.html"><xsl:value-of select="@base"/></a>
+		<a href="{@base-ref}.html" title="{ru:GetToolTip (/, key('involvedType', @base-ref) )}"><xsl:value-of select="@base"/></a>
 	</xsl:if>
 	<xsl:if test="@base-ref = 'none' ">
 		<xsl:value-of select="@base"/>

@@ -33,14 +33,30 @@
 </xsl:function>
 
 
+<!-- tooltips for links -->
+<xsl:function name="ru:GetToolTip">
+  <xsl:param name="rootMCR" />
+  <xsl:param name="item" />
+
+  <xsl:variable name="assemblyName" select="if( $item/@assembly-ref = 'none' ) then 'external' else $rootMCR/key('assembly', $item/@assembly-ref)/@name" />
+  <xsl:copy-of select="concat($item/@namespace, ', ', $assemblyName)" />
+</xsl:function>
+
 <!-- link generation templates -->
 <xsl:template name="GenerateGenericLink">
 	<xsl:param name="rootMCR" />
 	<xsl:param name="id"/>
 	<xsl:param name="keyName"/>
 	<xsl:param name="dir"/>
-	
-	<a href="{$dir}{$id}.html"><xsl:value-of select="$rootMCR/key($keyName, $id)/@name" /></a>
+
+  <xsl:variable name="item" select="$rootMCR/key($keyName, $id)" />
+
+  <xsl:if test="name($item) != 'Assembly'">
+	  <a href="{$dir}{$id}.html" title="{ru:GetToolTip($rootMCR, $item)}"><xsl:value-of select="$item/@name" /></a>
+  </xsl:if>
+  <xsl:if test="name($item) = 'Assembly'">
+    <a href="{$dir}{$id}.html"><xsl:value-of select="$item/@name" /></a>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="GenerateAssemblyLink">
@@ -76,10 +92,12 @@
 
 <xsl:template name="GenerateMixinReferenceLink">
 	<xsl:param name="mixin"/>
-	
-	<a href="{$mixin/@ref}.html"><xsl:value-of select="$mixin/@instance-name" /></a>
-</xsl:template>
 
+  <xsl:variable name="item" select="key('involvedType', $mixin/@ref)"/>
+  
+	<a href="{$mixin/@ref}.html" title="{ru:GetToolTip(/, $item)}"><xsl:value-of select="$mixin/@instance-name" /></a>
+</xsl:template>
+  
 <xsl:template name="GenerateInterfaceLink">
 	<xsl:param name="rootMCR" />
 	<xsl:param name="interfaceId"/>
