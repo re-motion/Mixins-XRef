@@ -70,6 +70,23 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
+    public void Equals_False_TargetClassDefintionDoesntMatch()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .BuildConfiguration();
+
+      var type1 = new InvolvedType(typeof(TargetClass1));
+      var type2 = new InvolvedType(typeof(TargetClass1));
+
+      type1.TargetClassDefintion = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass1), mixinConfiguration));
+      type2.TargetClassDefintion = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass2), mixinConfiguration));
+
+      Assert.That(type1, Is.Not.EqualTo(type2));
+    }
+
+    [Test]
     public void GetHashCode_EqualObjects ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1));

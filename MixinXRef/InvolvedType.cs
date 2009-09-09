@@ -67,8 +67,9 @@ namespace MixinXRef
     {
       var other = obj as InvolvedType;
       return other != null
-             && object.Equals(other._realType, _realType)
-             && object.Equals(other._classContext, _classContext)
+             && Equals(other._realType, _realType)
+             && Equals(other._classContext, _classContext)
+             && Equals(other._targetClassDefintion, _targetClassDefintion)
              && other._targetTypes.SequenceEqual (_targetTypes);
     }
 
@@ -78,8 +79,10 @@ namespace MixinXRef
       Rotate (ref hashCode);
       hashCode ^= _classContext == null ? 0 : _classContext.GetHashCode();
       Rotate (ref hashCode);
+      hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode();
+      Rotate (ref hashCode);
       hashCode ^= _targetTypes.Count;
-
+      
       return hashCode;
     }
 
