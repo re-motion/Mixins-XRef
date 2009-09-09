@@ -14,7 +14,7 @@ namespace MixinXRef.UnitTests
   public class MemberReportGeneratorTest
   {
     private IOutputFormatter _outputFormatter;
-    
+
     [SetUp]
     public void SetUp ()
     {
@@ -24,7 +24,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InterfaceWithZeroMembers ()
     {
-      var reportGenerator = CreateMemberReportGenerator(typeof(IUseless));
+      var reportGenerator = CreateMemberReportGenerator (typeof (IUseless));
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement ("Members");
@@ -35,7 +35,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InterfaceWithMembers ()
     {
-      var reportGenerator = CreateMemberReportGenerator(typeof(IDisposable));
+      var reportGenerator = CreateMemberReportGenerator (typeof (IDisposable));
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -44,8 +44,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
-              _outputFormatter.CreateModifierMarkup("", "public abstract"),
-              _outputFormatter.CreateMethodMarkup("Dispose", typeof(void), new ParameterInfo[0])
+              _outputFormatter.CreateModifierMarkup ("", "public abstract"),
+              _outputFormatter.CreateMethodMarkup ("Dispose", typeof (void), new ParameterInfo[0])
               )
           );
 
@@ -55,7 +55,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ObjectWithoutOwnMembers ()
     {
-      var reportGenerator = CreateMemberReportGenerator(typeof(UselessObject));
+      var reportGenerator = CreateMemberReportGenerator (typeof (UselessObject));
 
       var output = reportGenerator.GenerateXml();
 
@@ -66,8 +66,8 @@ namespace MixinXRef.UnitTests
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateModifierMarkup("", "public"),
-              _outputFormatter.CreateConstructorMarkup("UselessObject", new ParameterInfo[0])
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("UselessObject", new ParameterInfo[0])
               )
           );
 
@@ -77,33 +77,33 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_PropertyWithoutGetAndSet_Overriden ()
     {
-      var reportGenerator = CreateMemberReportGenerator(typeof(ClassWithProperty));
+      var reportGenerator = CreateMemberReportGenerator (typeof (ClassWithProperty));
 
       var output = reportGenerator.GenerateXml();
 
       // MemberReportGenerator removes get_* and set_* functions of properties
       var expectedOutput = new XElement (
           "Members",
-          new XElement(
+          new XElement (
               "Member",
-              new XAttribute("type", MemberTypes.Method),
-              new XAttribute("name", "DoSomething"),
-             _outputFormatter.CreateModifierMarkup("", "public override"),
-             _outputFormatter.CreateMethodMarkup("DoSomething", typeof(void), new ParameterInfo[0])
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "DoSomething"),
+              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreateMethodMarkup ("DoSomething", typeof (void), new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
-              _outputFormatter.CreateModifierMarkup("", "public"),
-              _outputFormatter.CreateConstructorMarkup("ClassWithProperty", new ParameterInfo[0])
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("ClassWithProperty", new ParameterInfo[0])
               ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
-              _outputFormatter.CreateModifierMarkup("", "public override"),
-              _outputFormatter.CreatePropertyMarkup("PropertyName", typeof(string))
+              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreatePropertyMarkup ("PropertyName", typeof (string))
               )
           );
 
@@ -113,7 +113,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void HasOverrideMixinAttribute_False ()
     {
-      var reportGenerator = CreateMemberReportGenerator(typeof(object));
+      var reportGenerator = CreateMemberReportGenerator (typeof (object));
       var memberInfo = typeof (object).GetMember ("ToString")[0];
       var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
 
@@ -121,24 +121,54 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void HasOverrideMixinAttribute_True()
+    public void HasOverrideMixinAttribute_True ()
     {
       var type = typeof (MemberOverrideTestClass.Target);
       var mixinConfiguration =
           MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
-      var targetClassDefinition = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
-      var reportGenerator = new MemberReportGenerator(type, null, targetClassDefinition, _outputFormatter);
-      
-      var memberInfo = type.GetMember("TemplateMethod")[0];
-      var output = reportGenerator.HasOverrideMixinAttribute(memberInfo);
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+      var reportGenerator = new MemberReportGenerator (type, null, targetClassDefinition, _outputFormatter);
 
-      Assert.That(output, Is.True);
+      var memberInfo = type.GetMember ("TemplateMethod")[0];
+      var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
+
+      Assert.That (output, Is.True);
     }
 
-
-    private MemberReportGenerator CreateMemberReportGenerator(Type type)
+    [Test]
+    public void GenerateXml ()
     {
-      return new MemberReportGenerator(type, null, null, _outputFormatter);
+      var type = typeof (MemberOverrideTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+      var reportGenerator = new MemberReportGenerator (type, null, targetClassDefinition, _outputFormatter);
+
+      var output = reportGenerator.GenerateXml();
+      var expectedOutput = new XElement (
+          "Members",
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "TemplateMethod"),
+              _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
+              _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0])
+              ),
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Constructor),
+              new XAttribute ("name", ".ctor"),
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("Target", new ParameterInfo[0])
+              )
+          );
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    private MemberReportGenerator CreateMemberReportGenerator (Type type)
+    {
+      return new MemberReportGenerator (type, null, null, _outputFormatter);
     }
   }
 }

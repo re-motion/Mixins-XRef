@@ -53,29 +53,16 @@ namespace MixinXRef
 
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
-      //var memberAttributes = new StringBuilder();
-      //if (_targetClassDefinition != null)
-      //{
-      //  var memberDefintionBase = _targetClassDefinition.CallMethod ("GetAllMembers")
-      //      .Where (memberDefinitionBase => memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo>() == memberInfo).Single();
+      var attributes = new StringBuilder();
 
-      //  if (memberDefintionBase.GetProperty ("Overrides").GetProperty ("Count").To<int>() > 0)
-      //    ; // is overriden?!;
-
-      //  MemberDefinitionBase mdb;
-        
-      //  TargetClassDefinition tcd;
-
-
-      //  // member visibility attribute
-        
-      //}
+      if (HasOverrideMixinAttribute(memberInfo))
+        attributes.Append ("OverrideMixin ");
 
       return new XElement (
           "Member",
           new XAttribute ("type", memberInfo.MemberType),
           new XAttribute ("name", memberInfo.Name),
-          _outputFormatter.CreateModifierMarkup ("", _memberModifierUtility.GetMemberModifiers (memberInfo)),
+          _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
           _memberSignatureUtility.GetMemberSignatur (memberInfo)
           );
     }
