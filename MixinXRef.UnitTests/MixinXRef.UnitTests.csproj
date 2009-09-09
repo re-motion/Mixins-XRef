@@ -64,7 +64,6 @@
     <Compile Include="AttributeReportGeneratorTest.cs" />
     <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
-    <Compile Include="explore\SimpleMemberOverrideTest.cs" />
     <Compile Include="formatting\OutputFormatterTest.cs" />
     <Compile Include="FullReportGeneratorTest.cs" />
     <Compile Include="IdentifierPopulatorTest.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\ClassWithProperty.cs" />
+    <Compile Include="TestDomain\FullReportGeneratorTestClass.cs" />
     <Compile Include="TestDomain\MemberOverrideTestClass.cs" />
     <Compile Include="TestDomain\MemberSignatureTestClass.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />

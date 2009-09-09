@@ -45,7 +45,7 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
-          .ForClass<MemberModifierTestClass>().AddMixin<MemberModifierTestClass>()
+          .ForClass<MemberModifierTestClass> ().AddMixin<FullReportGeneratorTestClass> ()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 
@@ -53,7 +53,7 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject (mixinConfiguration), ProgramTest.GetRemotionReflection (), new OutputFormatter ());
       var output = reportGenerator.GenerateXmlDocument();
-
+      
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       // the creation time of the validiation file is different from the creation time of the generated report
