@@ -109,9 +109,9 @@ namespace MixinXRef.UnitTests
       var involvedType2 = new InvolvedType (typeof (TargetClass2));
       involvedType2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
       var involvedType3 = new InvolvedType (typeof (Mixin1));
-      involvedType3.TargetTypes.Add (typeof (TargetClass1));
+      involvedType3.TargetTypes.Add(typeof(TargetClass1), null);
       var involvedType4 = new InvolvedType (typeof (Mixin2));
-      involvedType4.TargetTypes.Add (typeof (TargetClass2));
+      involvedType4.TargetTypes.Add(typeof(TargetClass2), null);
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();

@@ -16,9 +16,9 @@ namespace MixinXRef.UnitTests
     public void Equals_True ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = new ReflectedObject(new ClassContext(typeof(TargetClass1)));
+      type1.ClassContext = new ReflectedObject (new ClassContext (typeof (TargetClass1)));
       var type2 = new InvolvedType (typeof (TargetClass1));
-      type2.ClassContext = new ReflectedObject(new ClassContext(typeof(TargetClass1)));
+      type2.ClassContext = new ReflectedObject (new ClassContext (typeof (TargetClass1)));
 
       Assert.That (type1, Is.EqualTo (type2));
     }
@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests
     public void Equals_False_IsTargetDoesntMatch ()
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = new ReflectedObject(new ClassContext (typeof (TargetClass1)));
+      type1.ClassContext = new ReflectedObject (new ClassContext (typeof (TargetClass1)));
       var type2 = new InvolvedType (typeof (TargetClass1));
 
       Assert.That (type1, Is.Not.EqualTo (type2));
@@ -47,7 +47,7 @@ namespace MixinXRef.UnitTests
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (Mixin1));
-      type2.TargetTypes.Add (typeof (TargetClass1));
+      type2.TargetTypes.Add (typeof (TargetClass1), null);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -63,8 +63,8 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (TargetClass1));
 
-      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
-      type2.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.Last());
+      type1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
+      type2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -86,7 +86,7 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var type1 = new InvolvedType (typeof (TargetClass1));
-      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
+      type1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
 
       Assert.That (type1.IsTarget, Is.True);
       Assert.That (type1.ClassContext, Is.Not.Null);
@@ -105,7 +105,62 @@ namespace MixinXRef.UnitTests
       }
       catch (InvalidOperationException ex)
       {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class"));
+        Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class."));
+      }
+    }
+
+    [Test]
+    public void TargetClassDefinitionProperty_ForNonGenericTargetClass()
+    {
+      var type = typeof(TargetClass1);
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass(type).AddMixin<Mixin1>()
+          .BuildConfiguration();
+
+      var type1 = new InvolvedType(type);
+      type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
+      type1.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+
+      Assert.That(type1.IsTarget, Is.True);
+      Assert.That(type1.ClassContext, Is.Not.Null);
+    }
+
+    [Test]
+    public void TargetClassDefinitionProperty_ForNonTargetClass ()
+    {
+      var type1 = new InvolvedType (typeof (object));
+
+      Assert.That (type1.IsTarget, Is.False);
+      try
+      {
+        var output = type1.TargetClassDefintion;
+        Assert.Fail ("Expected exception was not thrown");
+      }
+      catch (InvalidOperationException ex)
+      {
+        Assert.That (ex.Message, Is.EqualTo ("Involved type is either not a target class or a generic target class."));
+      }
+    }
+
+    [Test]
+    public void TargetClassDefinitionProperty_ForGenericTargetClass ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass (typeof (GenericTarget<,>)).AddMixin<Mixin1>()
+          .BuildConfiguration();
+
+      var type1 = new InvolvedType (typeof (GenericTarget<,>));
+      type1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
+
+      Assert.That (type1.IsTarget, Is.True);
+      try
+      {
+        var output = type1.TargetClassDefintion;
+        Assert.Fail ("Expected exception was not thrown");
+      }
+      catch (InvalidOperationException ex)
+      {
+        Assert.That (ex.Message, Is.EqualTo ("Involved type is either not a target class or a generic target class."));
       }
     }
 
@@ -122,7 +177,7 @@ namespace MixinXRef.UnitTests
     public void MixinContextsProperty_ForMixin ()
     {
       var type1 = new InvolvedType (typeof (object));
-      type1.TargetTypes.Add (typeof (TargetClass1));
+      type1.TargetTypes.Add (typeof (TargetClass1), null);
 
       Assert.That (type1.IsMixin, Is.True);
       Assert.That (type1.TargetTypes.Count, Is.GreaterThan (0));

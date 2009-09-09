@@ -33,7 +33,7 @@ namespace MixinXRef
             involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
 
             foreach (var mixinContext in classContext.GetProperty("Mixins"))
-              involvedTypes.GetOrCreateValue (mixinContext.GetProperty("MixinType").To<Type>()).TargetTypes.Add (classContext.GetProperty("Type").To<Type>());
+              involvedTypes.GetOrCreateValue (mixinContext.GetProperty("MixinType").To<Type>()).TargetTypes.Add (classContext.GetProperty("Type").To<Type>(), null);
           }
         }
       }

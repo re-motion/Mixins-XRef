@@ -25,7 +25,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_ForMixin ()
     {
       var type1 = new InvolvedType (typeof (Mixin1));
-      type1.TargetTypes.Add (typeof (TargetClass1));
+      type1.TargetTypes.Add (typeof (TargetClass1), null);
 
       var reportGenerator = new TargetReferenceReportGenerator (type1, new IdentifierGenerator<Type>());
 

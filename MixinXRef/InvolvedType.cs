@@ -10,7 +10,10 @@ namespace MixinXRef
     private readonly Type _realType;
     // ClassContext _classContext;
     private ReflectedObject _classContext;
-    private readonly IList<Type> _targetTypes = new List<Type>();
+    // TargetClassDefinition
+    private ReflectedObject _targetClassDefintion;
+    // keys are the types of target class, values are from type MixinDefinition
+    private readonly IDictionary<Type, ReflectedObject> _targetTypes = new Dictionary<Type, ReflectedObject>();
 
     public InvolvedType (Type realType)
     {
@@ -39,13 +42,23 @@ namespace MixinXRef
       get
       {
         if (!IsTarget)
-          throw new InvalidOperationException ("Involved type is not a target class");
+          throw new InvalidOperationException ("Involved type is not a target class.");
         return _classContext;
       }
       set { _classContext = value; }
     }
 
-    public IList<Type> TargetTypes
+    public ReflectedObject TargetClassDefintion
+    {
+      get {
+        if (!IsTarget || _realType.IsGenericType)
+          throw new InvalidOperationException("Involved type is either not a target class or a generic target class.");
+        return _targetClassDefintion;
+      }
+      set { _targetClassDefintion = value; }
+    }
+
+    public IDictionary<Type, ReflectedObject> TargetTypes
     {
       get { return _targetTypes; }
     }
