@@ -69,7 +69,8 @@ namespace MixinXRef.UnitTests
           new ReflectedObject (mixinConfiguration),
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,
-          _validatonErrors).FindInvolvedTypes();
+          _validatonErrors,
+          ProgramTest.GetRemotionReflection()).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (
           assemblies,

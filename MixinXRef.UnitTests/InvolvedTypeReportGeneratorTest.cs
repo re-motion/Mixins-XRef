@@ -9,7 +9,6 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
@@ -79,7 +78,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", true),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator(involvedType1.Type, null, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType1.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -109,9 +109,9 @@ namespace MixinXRef.UnitTests
       var involvedType2 = new InvolvedType (typeof (TargetClass2));
       involvedType2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
       var involvedType3 = new InvolvedType (typeof (Mixin1));
-      involvedType3.TargetTypes.Add(typeof(TargetClass1), null);
+      involvedType3.TargetTypes.Add (typeof (TargetClass1), null);
       var involvedType4 = new InvolvedType (typeof (Mixin2));
-      involvedType4.TargetTypes.Add(typeof(TargetClass2), null);
+      involvedType4.TargetTypes.Add (typeof (TargetClass2), null);
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -143,7 +143,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator(involvedType1.Type, null, reportGenerator.GetTargetClassDefinition(involvedType1), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType1.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -170,7 +171,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
-              new MemberReportGenerator(involvedType2.Type, null, reportGenerator.GetTargetClassDefinition(involvedType2), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType2.Type, null, reportGenerator.GetTargetClassDefinition (involvedType2), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -196,7 +198,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType3.Type)),
               _summaryPicker.GetSummary (involvedType3.Type),
-              new MemberReportGenerator(involvedType3.Type, null, reportGenerator.GetTargetClassDefinition(involvedType3), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType3.Type, null, reportGenerator.GetTargetClassDefinition (involvedType3), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType3.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -223,7 +226,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType4.Type)),
               _summaryPicker.GetSummary (involvedType4.Type),
-              new MemberReportGenerator(involvedType4.Type, null, reportGenerator.GetTargetClassDefinition(involvedType4), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType4.Type, null, reportGenerator.GetTargetClassDefinition (involvedType4), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType4.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -281,7 +285,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType1.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -308,7 +313,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
-              new MemberReportGenerator (involvedType2.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).GenerateXml(),
+              new MemberReportGenerator (involvedType2.Type, null, reportGenerator.GetTargetClassDefinition (involvedType1), _outputFormatter).
+                  GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
@@ -324,87 +330,6 @@ namespace MixinXRef.UnitTests
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
-    }
-
-    [Test]
-    public void GetTargetClassDefinition ()
-    {
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<TargetClass1>().AddMixin<Mixin1>()
-          .BuildConfiguration();
-      var reportGenerator = CreateReportGenerator (
-          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
-      var involvedType = new InvolvedType (typeof (TargetClass1));
-      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-
-      var output = reportGenerator.GetTargetClassDefinition (involvedType).To<TargetClassDefinition>();
-      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass1), mixinConfiguration);
-
-      Assert.That (output, Is.EqualTo (expectedOutput));
-    }
-
-    [Test]
-    public void GetTargetClassDefinition_NoTarget ()
-    {
-      var mixinConfiguration = new MixinConfiguration();
-      var reportGenerator = CreateReportGenerator (
-          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
-      var involvedType = new InvolvedType (typeof (TargetClass1));
-
-      var output = reportGenerator.GetTargetClassDefinition (involvedType);
-
-      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
-      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
-      Assert.That (output, Is.Null);
-    }
-
-    [Test]
-    public void GetTargetClassDefinition_GenericTarget ()
-    {
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass (typeof (GenericTarget<,>)).AddMixin<Mixin1>()
-          .BuildConfiguration();
-      var reportGenerator = CreateReportGenerator (
-          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
-      var involvedType = new InvolvedType (typeof (GenericTarget<,>));
-
-      var output = reportGenerator.GetTargetClassDefinition (involvedType);
-
-      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
-      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
-      Assert.That (output, Is.Null);
-    }
-
-    [Test]
-    public void GenerateXml_MixinConfigurationError ()
-    {
-      var involvedType = new InvolvedType (typeof (UselessObject));
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>().BuildConfiguration();
-      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
-      var reportGenerator = CreateReportGenerator (
-          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
-
-      var output = reportGenerator.GetTargetClassDefinition (involvedType);
-
-      Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (1));
-      Assert.That (output, Is.Null);
-    }
-
-    [Test]
-    public void GenerateXml_MixinValidationError ()
-    {
-      var involvedType = new InvolvedType (typeof (UselessObject));
-      var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<UselessObject>().AddMixin<UselessObject>().BuildConfiguration();
-      involvedType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      var reportGenerator = CreateReportGenerator (
-          new Assembly[0], mixinConfiguration, new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
-
-      var output = reportGenerator.GetTargetClassDefinition (involvedType);
-
-      Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (1));
-      Assert.That (output, Is.Null);
     }
 
     private InvolvedTypeReportGenerator CreateReportGenerator (

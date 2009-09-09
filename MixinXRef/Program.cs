@@ -146,7 +146,7 @@ namespace MixinXRef
         InvolvedType[] involvedTypes;
         using (new TimingScope ("FindInvolvedTypes"))
         {
-          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors).FindInvolvedTypes();
+          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflection).FindInvolvedTypes();
         }
 
         var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflection, _outputFormatter);
