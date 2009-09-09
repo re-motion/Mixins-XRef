@@ -104,5 +104,10 @@ namespace MixinXRef
       }
       return false;
     }
+
+    public bool HasOverrideTargetAttribute (MemberInfo memberInfo)
+    {
+      return false;
+    }
   }
 }

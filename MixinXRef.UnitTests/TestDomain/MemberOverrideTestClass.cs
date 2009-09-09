@@ -11,11 +11,20 @@ namespace MixinXRef.UnitTests.TestDomain
       public void TemplateMethod ()
       {
       }
+
+      public virtual void OverriddenMethod()
+      {
+      }
     }
 
     public class Mixin1 : Mixin<Target>
     {
       public virtual void TemplateMethod ()
+      {
+      }
+
+      [OverrideTarget]
+      public void OverriddenMethod()
       {
       }
     }

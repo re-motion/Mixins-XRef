@@ -166,6 +166,32 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
+    [Test]
+    public void HasOverrideTargetAttribute_False()
+    {
+      var reportGenerator = CreateMemberReportGenerator(typeof(object));
+      var memberInfo = typeof(object).GetMember("ToString")[0];
+      var output = reportGenerator.HasOverrideTargetAttribute(memberInfo);
+
+      Assert.That(output, Is.False);
+    }
+
+    [Test]
+    public void HasOverrideTargetAttribute_True()
+    {
+      var type = typeof(MemberOverrideTestClass.Mixin1);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
+      var involvedType = new InvolvedType(type);
+      involvedType.TargetTypes.Add (typeof (MemberOverrideTestClass.Target));
+      var reportGenerator = new MemberReportGenerator(type, involvedType, null, _outputFormatter);
+
+      var memberInfo = type.GetMember("OverriddenMethod")[0];
+      var output = reportGenerator.HasOverrideTargetAttribute(memberInfo);
+
+      Assert.That(output, Is.True);
+    }
+
     private MemberReportGenerator CreateMemberReportGenerator (Type type)
     {
       return new MemberReportGenerator (type, null, null, _outputFormatter);
