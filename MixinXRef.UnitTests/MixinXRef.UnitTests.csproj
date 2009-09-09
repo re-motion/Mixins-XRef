@@ -64,6 +64,7 @@
     <Compile Include="AttributeReportGeneratorTest.cs" />
     <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
+    <Compile Include="explore\SimpleMemberOverridesTest.cs" />
     <Compile Include="formatting\OutputFormatterTest.cs" />
     <Compile Include="FullReportGeneratorTest.cs" />
     <Compile Include="IdentifierPopulatorTest.cs" />
