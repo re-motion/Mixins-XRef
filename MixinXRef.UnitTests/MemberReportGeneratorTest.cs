@@ -22,7 +22,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InterfaceWithZeroMembers ()
     {
-      var reportGenerator = new MemberReportGenerator(typeof(IUseless), null, _outputFormatter);
+      var reportGenerator = CreateMemberReportGenerator(typeof(IUseless));
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement ("Members");
@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_InterfaceWithMembers ()
     {
-      var reportGenerator = new MemberReportGenerator(typeof(IDisposable), null, _outputFormatter);
+      var reportGenerator = CreateMemberReportGenerator(typeof(IDisposable));
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -53,7 +53,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_ObjectWithoutOwnMembers ()
     {
-      var reportGenerator = new MemberReportGenerator(typeof(UselessObject), null, _outputFormatter);
+      var reportGenerator = CreateMemberReportGenerator(typeof(UselessObject));
 
       var output = reportGenerator.GenerateXml();
 
@@ -75,7 +75,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GenerateXml_PropertyWithoutGetAndSet_Overriden ()
     {
-      var reportGenerator = new MemberReportGenerator(typeof(ClassWithProperty), null, _outputFormatter);
+      var reportGenerator = CreateMemberReportGenerator(typeof(ClassWithProperty));
 
       var output = reportGenerator.GenerateXml();
 
@@ -106,6 +106,12 @@ namespace MixinXRef.UnitTests
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+
+    private MemberReportGenerator CreateMemberReportGenerator(Type type)
+    {
+      return new MemberReportGenerator(type, null, null, _outputFormatter);
     }
   }
 }

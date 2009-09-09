@@ -12,6 +12,7 @@ namespace MixinXRef
   public class MemberReportGenerator : IReportGenerator
   {
     private readonly Type _type;
+    private readonly InvolvedType _involvedType;
     // TargetClassDefinition
     private readonly ReflectedObject _targetClassDefinition;
     private readonly IOutputFormatter _outputFormatter;
@@ -19,14 +20,16 @@ namespace MixinXRef
     private readonly MemberSignatureUtility _memberSignatureUtility;
 
 
-    public MemberReportGenerator (Type type, ReflectedObject targetClassDefinitionOrNull, IOutputFormatter outputFormatter)
+    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, ReflectedObject targetClassDefinitionOrNull, IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       // may be null
+      // ArgumentUtility.CheckNotNull ("involvedTypeOrNull", involvedTypeOrNull);
       // ArgumentUtility.CheckNotNull ("targetClassDefinitionOrNull", targetClassDefinitionOrNull);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _type = type;
+      _involvedType = involvedTypeOrNull;
       _targetClassDefinition = targetClassDefinitionOrNull;
       _outputFormatter = outputFormatter;
       _memberSignatureUtility = new MemberSignatureUtility (outputFormatter);
