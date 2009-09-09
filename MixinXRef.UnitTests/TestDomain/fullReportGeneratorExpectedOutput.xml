@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-09 15:47:38">
+<MixinXRefReport creation-time="2009-09-09 15:56:50">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -116,131 +116,24 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="UselessObject" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
-        <Keyword>abstract</Keyword>
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="PublicVirtualMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>virtual</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicVirtualMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="PublicAbstractMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicAbstractMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="Dispose">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
-            <Keyword>protected</Keyword>
+            <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Name>MemberModifierTestClass</Name>
+            <Name>UselessObject</Name>
             <Text>(</Text>
             <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Property" name="ProtectedProperty">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>ProtectedProperty</Name>
-          </Signature>
-        </Member>
-        <Member type="Event" name="ProtectedInternalEvent">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-            <Keyword>internal</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>event</Keyword>
-            <Type>ChangedEventHandler</Type>
-            <Name>ProtectedInternalEvent</Name>
-          </Signature>
-        </Member>
-        <Member type="Field" name="InternalField">
-          <Modifiers>
-            <Keyword>internal</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>InternalField</Name>
-          </Signature>
-        </Member>
-        <Member type="Field" name="_readonlyField">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>readonly</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>_readonlyField</Name>
-          </Signature>
-        </Member>
-        <Member type="NestedType" name="NestedStaticClass">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>class</Keyword>
-            <Name>NestedStaticClass</Name>
-          </Signature>
-        </Member>
-        <Member type="NestedType" name="NestedClass">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>class</Keyword>
-            <Name>NestedClass</Name>
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="0" />
-      </Interfaces>
+      <Interfaces />
       <Attributes />
       <Mixins>
         <Mixin ref="4" index="0" relation="Extending" instance-name="FullReportGeneratorTestClass">
@@ -314,53 +207,24 @@
         <Target ref="5" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="3" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="3" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
-        <Keyword>abstract</Keyword>
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicAbstractMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-            <Keyword>override</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicAbstractMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="PublicVirtualMethod">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>sealed</Keyword>
-            <Keyword>override</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicVirtualMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Constructor" name=".ctor">
           <Modifiers>
-            <Keyword>protected</Keyword>
+            <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Name>SubModifierTestClass</Name>
+            <Name>ClassInheritsFromUselessObject</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="0" />
-      </Interfaces>
+      <Interfaces />
       <Attributes />
       <Mixins>
         <Mixin ref="4" index="0" relation="Extending" instance-name="FullReportGeneratorTestClass">
@@ -504,8 +368,6 @@
       </Members>
       <ImplementedBy>
         <InvolvedType ref="2" />
-        <InvolvedType ref="3" />
-        <InvolvedType ref="5" />
         <InvolvedType ref="8" />
       </ImplementedBy>
     </Interface>

@@ -13,11 +13,27 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class FullReportGeneratorTest
   {
+    private ErrorAggregator<Exception> _configurationErros;
+    private ErrorAggregator<Exception> _validatonErrors;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _configurationErros = new ErrorAggregator<Exception>();
+      _validatonErrors = new ErrorAggregator<Exception>();
+    }
+
     [Test]
     public void FullReportGenerator_Empty ()
     {
       var reportGenerator = new FullReportGenerator (
-          new Assembly[0], new InvolvedType[0], new ReflectedObject(new MixinConfiguration()), ProgramTest.GetRemotionReflection(), new OutputFormatter());
+          new Assembly[0],
+          new InvolvedType[0],
+          new ReflectedObject (new MixinConfiguration()),
+          _configurationErros,
+          _validatonErrors,
+          ProgramTest.GetRemotionReflection(),
+          new OutputFormatter());
 
       var output = reportGenerator.GenerateXmlDocument();
 
@@ -40,18 +56,29 @@ namespace MixinXRef.UnitTests
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
-      var assemblies = new AssemblyBuilder(".", ProgramTest.GetRemotionReflection()).GetAssemblies();
+      var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
-          .ForClass<MemberModifierTestClass> ().AddMixin<FullReportGeneratorTestClass> ()
+          .ForClass<UselessObject> ().AddMixin<FullReportGeneratorTestClass> ()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), new[] { typeof (Mixin1).Assembly }).FindInvolvedTypes();
+      var involvedTypes = new InvolvedTypeFinder (
+          new ReflectedObject (mixinConfiguration),
+          new[] { typeof (Mixin1).Assembly },
+          _configurationErros,
+          _validatonErrors).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, new ReflectedObject (mixinConfiguration), ProgramTest.GetRemotionReflection (), new OutputFormatter ());
+      var reportGenerator = new FullReportGenerator (
+          assemblies,
+          involvedTypes,
+          new ReflectedObject (mixinConfiguration),
+          _configurationErros,
+          _validatonErrors,
+          ProgramTest.GetRemotionReflection(),
+          new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
       
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");

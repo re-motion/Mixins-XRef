@@ -141,13 +141,15 @@ namespace MixinXRef
           mixinConfiguration = _remotionReflection.BuildConfigurationFromAssemblies (assemblies);
         }
 
+        var configurationErrors = new ErrorAggregator<Exception>();
+        var validationErrors = new ErrorAggregator<Exception>();
         InvolvedType[] involvedTypes;
         using (new TimingScope ("FindInvolvedTypes"))
         {
-          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies).FindInvolvedTypes();
+          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors).FindInvolvedTypes();
         }
 
-        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, _remotionReflection, _outputFormatter);
+        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflection, _outputFormatter);
 
         XDocument outputDocument;
         using (new TimingScope ("GenerateXmlDocument"))

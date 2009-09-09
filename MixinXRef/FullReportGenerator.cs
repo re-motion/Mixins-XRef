@@ -13,6 +13,8 @@ namespace MixinXRef
     private readonly InvolvedType[] _involvedTypes;
     // MixinConfiguration _mixinConfiguration;
     private readonly ReflectedObject _mixinConfiguration;
+    private readonly ErrorAggregator<Exception> _configurationErrors;
+    private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflection _remotionReflection;
     private readonly IOutputFormatter _outputFormatter;
     private string _creationTime;
@@ -21,18 +23,24 @@ namespace MixinXRef
         Assembly[] assemblies,
         InvolvedType[] involvedTypes,
         ReflectedObject mixinConfiguration,
+        ErrorAggregator<Exception> configurationErrors,
+        ErrorAggregator<Exception> validationErrors,
         IRemotionReflection remotionReflection,
         IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
+      ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
+      ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _assemblies = assemblies;
       _involvedTypes = involvedTypes;
       _mixinConfiguration = mixinConfiguration;
+      _configurationErrors = configurationErrors;
+      _validationErrors = validationErrors;
       _remotionReflection = remotionReflection;
       _outputFormatter = outputFormatter;
     }
@@ -64,8 +72,6 @@ namespace MixinXRef
           new IdentifierPopulator<Type> (_involvedTypes.Select (it => it.Type)).GetReadonlyIdentifierGenerator ("none");
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
-      var configurationErrors = new ErrorAggregator<Exception>();
-      var validationErrors = new ErrorAggregator<Exception>();
 
       var assemblyReport = new AssemblyReportGenerator (
           _assemblies, _involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
@@ -77,8 +83,8 @@ namespace MixinXRef
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
-          configurationErrors,
-          validationErrors,
+          _configurationErrors,
+          _validationErrors,
           _remotionReflection,
           _outputFormatter);
       var interfaceReport = new InterfaceReportGenerator (
@@ -94,8 +100,8 @@ namespace MixinXRef
           readonlyInvolvedTypeIdentiferGenerator,
           attributeIdentiferGenerator,
           _remotionReflection);
-      var configurationErrorReport = new ConfigurationErrorReportGenerator (configurationErrors);
-      var validationErrorReport = new ValidationErrorReportGenerator (validationErrors);
+      var configurationErrorReport = new ConfigurationErrorReportGenerator (_configurationErrors);
+      var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors);
 
       return new CompositeReportGenerator (
           assemblyReport,

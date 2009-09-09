@@ -12,6 +12,16 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InvolvedTypeFinderTest
   {
+    private ErrorAggregator<Exception> _configurationErros;
+    private ErrorAggregator<Exception> _validationErrors;
+
+    [SetUp]
+    public void SetUp ()
+    {
+      _configurationErros = new ErrorAggregator<Exception>();
+      _validationErrors = new ErrorAggregator<Exception>();
+    }
+
     [Test]
     public void FindInvolvedTypes_EmptyConfiguration ()
     {
@@ -106,9 +116,9 @@ namespace MixinXRef.UnitTests
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
     }
 
-    private static InvolvedTypeFinder CreateInvolvedTypeFinder (MixinConfiguration mixinConfiguration, params Assembly[] assemblies)
+    private InvolvedTypeFinder CreateInvolvedTypeFinder (MixinConfiguration mixinConfiguration, params Assembly[] assemblies)
     {
-      return new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), assemblies);
+      return new InvolvedTypeFinder (new ReflectedObject (mixinConfiguration), assemblies, _configurationErros, _validationErrors);
     }
   }
 }
