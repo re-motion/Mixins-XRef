@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-08 16:29:33">
+<MixinXRefReport creation-time="2009-09-09 14:19:40">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -162,25 +162,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="MethodWithParams">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>long</Keyword>
-            <Name>MethodWithParams</Name>
-            <Text>(</Text>
-            <Keyword>int</Keyword>
-            <ParameterName>intParam</ParameterName>
-            <Text>,</Text>
-            <Keyword>string</Keyword>
-            <ParameterName>stringParam</ParameterName>
-            <Text>,</Text>
-            <Type>AssemblyBuilder</Type>
-            <ParameterName>assemblyBuilderParam</ParameterName>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Method" name="PublicMethod">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -212,6 +193,25 @@
             <Keyword>void</Keyword>
             <Name>Dispose</Name>
             <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="MethodWithParams">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>long</Keyword>
+            <Name>MethodWithParams</Name>
+            <Text>(</Text>
+            <Keyword>int</Keyword>
+            <ParameterName>intParam</ParameterName>
+            <Text>,</Text>
+            <Keyword>string</Keyword>
+            <ParameterName>stringParam</ParameterName>
+            <Text>,</Text>
+            <Type>AssemblyBuilder</Type>
+            <ParameterName>assemblyBuilderParam</ParameterName>
             <Text>)</Text>
           </Signature>
         </Member>

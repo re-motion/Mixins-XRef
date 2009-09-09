@@ -154,6 +154,13 @@ namespace MixinXRef.UnitTests
               _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
               _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0])
               ),
+          new XElement(
+              "Member",
+              new XAttribute("type", MemberTypes.Method),
+              new XAttribute("name", "OverriddenMethod"),
+              _outputFormatter.CreateModifierMarkup("", "public virtual"),
+              _outputFormatter.CreateMethodMarkup("OverriddenMethod", typeof(void), new ParameterInfo[0])
+              ),
           new XElement (
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
@@ -176,21 +183,21 @@ namespace MixinXRef.UnitTests
       Assert.That(output, Is.False);
     }
 
-    [Test]
-    public void HasOverrideTargetAttribute_True()
-    {
-      var type = typeof(MemberOverrideTestClass.Mixin1);
-      var mixinConfiguration =
-          MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
-      var involvedType = new InvolvedType(type);
-      involvedType.TargetTypes.Add (typeof (MemberOverrideTestClass.Target));
-      var reportGenerator = new MemberReportGenerator(type, involvedType, null, _outputFormatter);
+    //[Test]
+    //public void HasOverrideTargetAttribute_True()
+    //{
+    //  var type = typeof(MemberOverrideTestClass.Mixin1);
+    //  var mixinConfiguration =
+    //      MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
+    //  var involvedType = new InvolvedType(type);
+    //  involvedType.TargetTypes.Add(typeof(MemberOverrideTestClass.Target));
+    //  var reportGenerator = new MemberReportGenerator(type, involvedType, null, _outputFormatter);
 
-      var memberInfo = type.GetMember("OverriddenMethod")[0];
-      var output = reportGenerator.HasOverrideTargetAttribute(memberInfo);
+    //  var memberInfo = type.GetMember("OverriddenMethod")[0];
+    //  var output = reportGenerator.HasOverrideTargetAttribute(memberInfo);
 
-      Assert.That(output, Is.True);
-    }
+    //  Assert.That(output, Is.True);
+    //}
 
     private MemberReportGenerator CreateMemberReportGenerator (Type type)
     {
