@@ -2,9 +2,11 @@ using System;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
@@ -106,6 +108,31 @@ namespace MixinXRef.UnitTests
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void HasOverrideMixinAttribute_False ()
+    {
+      var reportGenerator = CreateMemberReportGenerator(typeof(object));
+      var memberInfo = typeof (object).GetMember ("ToString")[0];
+      var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
+
+      Assert.That (output, Is.False);
+    }
+
+    [Test]
+    public void HasOverrideMixinAttribute_True()
+    {
+      var type = typeof (MemberOverrideTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
+      var targetClassDefinition = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+      var reportGenerator = new MemberReportGenerator(type, null, targetClassDefinition, _outputFormatter);
+      
+      var memberInfo = type.GetMember("TemplateMethod")[0];
+      var output = reportGenerator.HasOverrideMixinAttribute(memberInfo);
+
+      Assert.That(output, Is.True);
     }
 
 

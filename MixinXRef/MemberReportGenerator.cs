@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using Remotion.Mixins;
 using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
@@ -78,6 +79,22 @@ namespace MixinXRef
           _memberSignatureUtility.GetMemberSignatur (memberInfo)
           );
     }
+
+    public bool HasOverrideMixinAttribute(MemberInfo memberInfo)
+    {
+      if (_targetClassDefinition == null)
+        return false;
+
+      foreach (var mixinDefinition in _targetClassDefinition.GetProperty("Mixins"))
+      {
+        // compared with ToString because MemberInfo has no own implementation of Equals
+        var mixinMemberDefinition = mixinDefinition.CallMethod("GetAllMembers").Where (mdb => mdb.GetProperty("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
+        if(mixinMemberDefinition != null && mixinMemberDefinition.GetProperty("Overrides").CallMethod("ContainsKey", _type).To<bool>())
+          return true;
+      }
+      return false;
+    }
+
 
     private bool IsSpecialName (MemberInfo memberInfo)
     {
