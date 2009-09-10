@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using Remotion.Mixins.Context;
 
 namespace MixinXRef
 {
@@ -44,13 +45,31 @@ namespace MixinXRef
     public XElement GenerateXml ()
     {
       var allInterfaces = GetAllInterfaces();
+      var completeInterfaces = GetCompleteInterfaces();
 
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces.Keys
           where !_remotionReflection.IsInfrastructureType (usedInterface)
-          select GenerateInterfaceElement (usedInterface, allInterfaces)
+          select GenerateInterfaceElement (usedInterface, allInterfaces, completeInterfaces.Contains(usedInterface))
           );
+    }
+
+    public HashSet<Type> GetCompleteInterfaces ()
+    {
+      var allCompleteInterfaces = new HashSet<Type> ();
+
+      foreach (var involvedType in _involvedTypes)
+      {
+        if (!involvedType.IsTarget) continue;
+
+        foreach (var completeInterface in involvedType.ClassContext.GetProperty ("CompleteInterfaces"))
+        {
+          allCompleteInterfaces.Add (completeInterface.To<Type>());
+        }
+      }
+
+      return allCompleteInterfaces;
     }
 
     private Dictionary<Type, List<Type>> GetAllInterfaces ()
@@ -66,12 +85,24 @@ namespace MixinXRef
 
           allInterfaces[usedInterface].Add (involvedType.Type);
         }
+
+        if (involvedType.IsTarget)
+        {
+          foreach (var completeInterface in involvedType.ClassContext.GetProperty ("CompleteInterfaces"))
+          {
+            var completeInterfaceType = completeInterface.To<Type>();
+            if (!allInterfaces.ContainsKey (completeInterfaceType))
+              allInterfaces.Add (completeInterfaceType, new List<Type>());
+
+            allInterfaces[completeInterfaceType].Add (involvedType.Type);
+          }
+        }
       }
 
       return allInterfaces;
     }
 
-    private XElement GenerateInterfaceElement (Type usedInterface, Dictionary<Type, List<Type>> allInterfaces)
+    private XElement GenerateInterfaceElement (Type usedInterface, Dictionary<Type, List<Type>> allInterfaces, bool isCompleteInterface)
     {
       return new XElement (
           "Interface",
@@ -79,6 +110,7 @@ namespace MixinXRef
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute ("name", usedInterface.Name),
+          new XAttribute ("is-complete-interface", isCompleteInterface),
           new MemberReportGenerator (usedInterface, null, _outputFormatter).GenerateXml(),
           new XElement (
               "ImplementedBy",

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-10 14:12:15">
+<MixinXRefReport creation-time="2009-09-10 16:01:27">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -389,7 +389,7 @@
     </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
-    <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable">
+    <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
       <Members>
         <Member type="Method" name="Dispose">
           <Modifiers>

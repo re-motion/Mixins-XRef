@@ -15,9 +15,9 @@ namespace MixinXRef.UnitTests.TestDomain
 
     public class MyMixin : Mixin<MyMixinTarget>
     {
-      public void C ()
+      public void B ()
       {
-        Console.WriteLine ("D");
+        Console.WriteLine ("B");
       }
     }
 
