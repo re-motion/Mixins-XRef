@@ -48,7 +48,7 @@ namespace MixinXRef
     {
       var attributes = new StringBuilder();
 
-      if (_involvedType != null && _involvedType.HasTargetClassDefintion)
+      if (_involvedType != null)
       {
         if (HasOverrideMixinAttribute (memberInfo))
           attributes.Append ("OverrideMixin ");
@@ -66,6 +66,9 @@ namespace MixinXRef
     public bool HasOverrideMixinAttribute (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+
+      if (!_involvedType.HasTargetClassDefintion)
+        return false;
 
       foreach (var mixinDefinition in _involvedType.TargetClassDefintion.GetProperty ("Mixins"))
       {
