@@ -78,13 +78,10 @@ namespace MixinXRef
 
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
-          _mixinConfiguration,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
-          _configurationErrors,
-          _validationErrors,
           _remotionReflection,
           _outputFormatter);
       var interfaceReport = new InterfaceReportGenerator (

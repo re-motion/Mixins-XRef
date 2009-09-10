@@ -32,7 +32,6 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           involvedTypeDummy,
-          new ReflectedObject (new TargetClassDefinition (new ClassContext (involvedTypeDummy.Type))),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
@@ -50,16 +49,15 @@ namespace MixinXRef.UnitTests
     {
       var targetType = new InvolvedType (typeof (TargetClass1));
 
-
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
       targetType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
+      targetType.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration));
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration)),
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -106,7 +104,6 @@ namespace MixinXRef.UnitTests
 
       var reportGenerator = new MixinReferenceReportGenerator (
           targetType,
-          null,
           // generic target class
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,

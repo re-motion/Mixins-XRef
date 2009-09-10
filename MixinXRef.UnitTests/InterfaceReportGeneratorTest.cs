@@ -35,7 +35,7 @@ namespace MixinXRef.UnitTests
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
       var reportGenerator = CreateReportGenerator (involvedType);
-      var memberReportGenerator = new MemberReportGenerator(typeof(IDisposable), null, null, _outputFormatter);
+      var memberReportGenerator = new MemberReportGenerator(typeof(IDisposable), null, _outputFormatter);
 
       XElement output = reportGenerator.GenerateXml ();
 

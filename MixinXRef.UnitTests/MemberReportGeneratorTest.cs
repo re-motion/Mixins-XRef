@@ -113,8 +113,14 @@ namespace MixinXRef.UnitTests
     [Test]
     public void HasOverrideMixinAttribute_False ()
     {
-      var reportGenerator = CreateMemberReportGenerator (typeof (object));
-      var memberInfo = typeof (object).GetMember ("ToString")[0];
+      var type = typeof(UselessObject);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew().ForClass<UselessObject>().AddMixin<Mixin1>().BuildConfiguration();
+      var targetClassDefinition = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(type, mixinConfiguration));
+      var involvedType = new InvolvedType(type) { TargetClassDefintion = targetClassDefinition };
+
+      var reportGenerator = new MemberReportGenerator(type, involvedType, _outputFormatter);
+      var memberInfo = type.GetMember ("ToString")[0];
       var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
 
       Assert.That (output, Is.False);
@@ -127,7 +133,9 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration =
           MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
-      var reportGenerator = new MemberReportGenerator (type, null, targetClassDefinition, _outputFormatter);
+      var involvedType = new InvolvedType (type) { TargetClassDefintion = targetClassDefinition };
+
+      var reportGenerator = new MemberReportGenerator (type, involvedType, _outputFormatter);
 
       var memberInfo = type.GetMember ("TemplateMethod")[0];
       var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
@@ -142,7 +150,10 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration =
           MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
-      var reportGenerator = new MemberReportGenerator (type, null, targetClassDefinition, _outputFormatter);
+      var involvedType = new InvolvedType (type);
+      involvedType.TargetClassDefintion = targetClassDefinition;
+
+      var reportGenerator = new MemberReportGenerator (type, involvedType, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement (
@@ -201,7 +212,7 @@ namespace MixinXRef.UnitTests
 
     private MemberReportGenerator CreateMemberReportGenerator (Type type)
     {
-      return new MemberReportGenerator (type, null, null, _outputFormatter);
+      return new MemberReportGenerator (type, null, _outputFormatter);
     }
   }
 }

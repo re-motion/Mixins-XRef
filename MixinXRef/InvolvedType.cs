@@ -45,17 +45,30 @@ namespace MixinXRef
           throw new InvalidOperationException ("Involved type is not a target class.");
         return _classContext;
       }
-      set { _classContext = value; }
+      set
+      {
+        ArgumentUtility.CheckNotNull ("value", value);
+        _classContext = value;
+      }
+    }
+
+    public bool HasTargetClassDefintion
+    {
+      get { return _targetClassDefintion != null; }
     }
 
     public ReflectedObject TargetClassDefintion
     {
-      get {
-        if (!IsTarget || _realType.IsGenericType)
-          throw new InvalidOperationException("Involved type is either not a target class or a generic target class.");
+      get
+      {
+        if (!HasTargetClassDefintion)
+          throw new InvalidOperationException ("Involved type is either not a target class or a generic target class.");
         return _targetClassDefintion;
       }
-      set { _targetClassDefintion = value; }
+      set
+      {
+        _targetClassDefintion = value;
+      }
     }
 
     public IDictionary<Type, ReflectedObject> TargetTypes
@@ -67,9 +80,9 @@ namespace MixinXRef
     {
       var other = obj as InvolvedType;
       return other != null
-             && Equals(other._realType, _realType)
-             && Equals(other._classContext, _classContext)
-             && Equals(other._targetClassDefintion, _targetClassDefintion)
+             && Equals (other._realType, _realType)
+             && Equals (other._classContext, _classContext)
+             && Equals (other._targetClassDefintion, _targetClassDefintion)
              && other._targetTypes.SequenceEqual (_targetTypes);
     }
 
@@ -81,8 +94,8 @@ namespace MixinXRef
       Rotate (ref hashCode);
       hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode();
       Rotate (ref hashCode);
-      hashCode ^= _targetTypes.Sum(typeAndMixinDefintionPair => typeAndMixinDefintionPair.GetHashCode());
-      
+      hashCode ^= _targetTypes.Sum (typeAndMixinDefintionPair => typeAndMixinDefintionPair.GetHashCode());
+
       return hashCode;
     }
 

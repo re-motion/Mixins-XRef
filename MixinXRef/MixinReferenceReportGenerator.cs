@@ -9,8 +9,6 @@ namespace MixinXRef
   public class MixinReferenceReportGenerator : IReportGenerator
   {
     private readonly InvolvedType _involvedType;
-    // TargetClassDefinition _targetClassDefinition
-    private readonly ReflectedObject _targetClassDefinition;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
@@ -19,7 +17,6 @@ namespace MixinXRef
 
     public MixinReferenceReportGenerator (
         InvolvedType involvedType,
-        ReflectedObject targetClassDefinitionOrNull,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
@@ -28,8 +25,6 @@ namespace MixinXRef
         )
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
-      // may be null
-      // ArgumentUtility.CheckNotNull ("targetClassDefinitionOrNull", targetClassDefinitionOrNull);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
@@ -37,7 +32,6 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedType = involvedType;
-      _targetClassDefinition = targetClassDefinitionOrNull;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
@@ -69,9 +63,9 @@ namespace MixinXRef
           new XAttribute ("instance-name", _outputFormatter.GetFormattedTypeName (mixinType))
           );
 
-      if (_targetClassDefinition != null)
+      if (_involvedType.HasTargetClassDefintion)
       {
-        var mixinDefinition = _targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
+        var mixinDefinition = _involvedType.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
         // set more specific name for mixin references
         mixinElement.SetAttributeValue ("instance-name", _outputFormatter.GetFormattedTypeName (mixinDefinition.GetProperty ("Type").To<Type>()));

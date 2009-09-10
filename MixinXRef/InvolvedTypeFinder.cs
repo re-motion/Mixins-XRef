@@ -42,7 +42,7 @@ namespace MixinXRef
       {
         foreach (var type in assembly.GetTypes())
         {
-          ReflectedObject classContext = _mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", type);
+          var classContext = _mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
             involvedTypes.GetOrCreateValue (type).ClassContext = classContext;

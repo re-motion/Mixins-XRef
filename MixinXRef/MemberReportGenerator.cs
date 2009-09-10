@@ -4,9 +4,6 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
-using Remotion.Mixins;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -14,24 +11,20 @@ namespace MixinXRef
   {
     private readonly Type _type;
     private readonly InvolvedType _involvedType;
-    // TargetClassDefinition
-    private readonly ReflectedObject _targetClassDefinition;
     private readonly IOutputFormatter _outputFormatter;
     private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
     private readonly MemberSignatureUtility _memberSignatureUtility;
 
 
-    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, ReflectedObject targetClassDefinitionOrNull, IOutputFormatter outputFormatter)
+    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       // may be null
       // ArgumentUtility.CheckNotNull ("involvedTypeOrNull", involvedTypeOrNull);
-      // ArgumentUtility.CheckNotNull ("targetClassDefinitionOrNull", targetClassDefinitionOrNull);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _type = type;
       _involvedType = involvedTypeOrNull;
-      _targetClassDefinition = targetClassDefinitionOrNull;
       _outputFormatter = outputFormatter;
       _memberSignatureUtility = new MemberSignatureUtility (outputFormatter);
     }
@@ -55,8 +48,11 @@ namespace MixinXRef
     {
       var attributes = new StringBuilder();
 
-      if (HasOverrideMixinAttribute(memberInfo))
-        attributes.Append ("OverrideMixin ");
+      if (_involvedType != null && _involvedType.HasTargetClassDefintion)
+      {
+        if (HasOverrideMixinAttribute (memberInfo))
+          attributes.Append ("OverrideMixin ");
+      }
 
       return new XElement (
           "Member",
@@ -67,16 +63,17 @@ namespace MixinXRef
           );
     }
 
-    public bool HasOverrideMixinAttribute(MemberInfo memberInfo)
+    public bool HasOverrideMixinAttribute (MemberInfo memberInfo)
     {
-      if (_targetClassDefinition == null)
-        return false;
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      foreach (var mixinDefinition in _targetClassDefinition.GetProperty("Mixins"))
+      foreach (var mixinDefinition in _involvedType.TargetClassDefintion.GetProperty ("Mixins"))
       {
         // compared with ToString because MemberInfo has no own implementation of Equals
-        var mixinMemberDefinition = mixinDefinition.CallMethod("GetAllMembers").Where (mdb => mdb.GetProperty("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
-        if(mixinMemberDefinition != null && mixinMemberDefinition.GetProperty("Overrides").CallMethod("ContainsKey", _type).To<bool>())
+        var mixinMemberDefinition =
+            mixinDefinition.CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).
+                SingleOrDefault();
+        if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
           return true;
       }
       return false;
