@@ -81,14 +81,14 @@ namespace MixinXRef
       Rotate (ref hashCode);
       hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode();
       Rotate (ref hashCode);
-      hashCode ^= _targetTypes.Count;
+      hashCode ^= _targetTypes.Sum(typeAndMixinDefintionPair => typeAndMixinDefintionPair.GetHashCode());
       
       return hashCode;
     }
 
     public override string ToString ()
     {
-      return String.Format ("{0}, isTarget: {1}, isMixin: {2}", _realType, IsTarget, IsMixin);
+      return String.Format ("{0}, isTarget: {1}, isMixin: {2}, # of targets: {3}", _realType, IsTarget, IsMixin, _targetTypes.Count);
     }
 
 
