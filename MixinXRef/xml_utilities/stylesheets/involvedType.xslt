@@ -53,7 +53,13 @@
 </xsl:template>
 
 <xsl:template name="involvedTypeDetail">
-	<h1><xsl:value-of select="@name" /></h1><h2><a href="../involvedType_index.html">[Involved Class]</a></h2>
+
+  <xsl:variable name="classTypeName" select="if( @is-target = true() and @is-mixin = true() ) then 'Mixed Mixin'
+                else if ( @is-target = true() ) then 'Target Class'
+                else 'Mixin' "/>
+  <xsl:variable name="classTypeIndexLink" select="if ( @is-mixin = true() ) then 'mixin' else 'target' " />
+  
+	<h1><xsl:value-of select="@name" /></h1><h2><a href="../{$classTypeIndexLink}_index.html">[<xsl:value-of select="$classTypeName"/>]</a></h2>
 
 	<fieldset>
 		<legend>Summary</legend>
