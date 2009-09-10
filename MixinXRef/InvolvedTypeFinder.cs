@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -45,19 +46,26 @@ namespace MixinXRef
           var classContext = _mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
+            var targetClassDefinition = GetTargetClassDefinition (type);
             involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
-            involvedTypes.GetOrCreateValue (type).TargetClassDefintion = GetTargetClassDefinition (type);
+            involvedTypes.GetOrCreateValue (type).TargetClassDefintion = targetClassDefinition;
 
             foreach (var mixinContext in classContext.GetProperty ("Mixins"))
             {
-              involvedTypes.GetOrCreateValue (mixinContext.GetProperty ("MixinType").To<Type>()).TargetTypes.Add (
-                  classContext.GetProperty ("Type").To<Type>(), null);
+              var mixinType = mixinContext.GetProperty ("MixinType").To<Type>();
+              involvedTypes.GetOrCreateValue(mixinType).TargetTypes.Add(
+                  classContext.GetProperty("Type").To<Type>(), GetMixinDefiniton(mixinType, targetClassDefinition));
             }
           }
         }
       }
 
       return involvedTypes.ToArray();
+    }
+
+    public ReflectedObject GetMixinDefiniton(Type mixinType, ReflectedObject targetClassDefinition)
+    {
+      return targetClassDefinition == null ? null : targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinType);
     }
 
     public ReflectedObject GetTargetClassDefinition (Type type)

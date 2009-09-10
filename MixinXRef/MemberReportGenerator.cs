@@ -104,6 +104,10 @@ namespace MixinXRef
 
     public bool HasOverrideTargetAttribute (MemberInfo memberInfo)
     {
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+
+      //_involvedType.TargetTypes[_type]
+
       return false;
     }
   }

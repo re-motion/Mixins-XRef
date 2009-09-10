@@ -44,10 +44,11 @@ namespace MixinXRef.UnitTests
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1>(mixinConfiguration);
+      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1> (mixinConfiguration);
 
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.TargetTypes.Add (typeof (TargetClass1), null);
+      expectedType2.TargetTypes.Add (
+          typeof (TargetClass1), expectedType1.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
       Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
     }
@@ -65,17 +66,19 @@ namespace MixinXRef.UnitTests
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1>(mixinConfiguration);
+      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1> (mixinConfiguration);
 
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.TargetTypes.Add (typeof (TargetClass1), null);
+      expectedType2.TargetTypes.Add (
+          typeof (TargetClass1), expectedType1.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
       var expectedType3 = new InvolvedType (typeof (TargetClass2));
       expectedType3.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
-      expectedType3.TargetClassDefintion = CreateTargetClassDefintion<TargetClass2>(mixinConfiguration);
+      expectedType3.TargetClassDefintion = CreateTargetClassDefintion<TargetClass2> (mixinConfiguration);
 
       var expectedType4 = new InvolvedType (typeof (Mixin2));
-      expectedType4.TargetTypes.Add (typeof (TargetClass2), null);
+      expectedType4.TargetTypes.Add (
+          typeof (TargetClass2), expectedType3.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
     }
@@ -93,15 +96,16 @@ namespace MixinXRef.UnitTests
 
       var expectedType1 = new InvolvedType (typeof (TargetClass1));
       expectedType1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1>(mixinConfiguration);
-      
+      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<TargetClass1> (mixinConfiguration);
+
       var expectedType2 = new InvolvedType (typeof (Mixin1));
       expectedType2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
-      expectedType2.TargetClassDefintion = CreateTargetClassDefintion<Mixin1>(mixinConfiguration);
-      expectedType2.TargetTypes.Add (typeof (TargetClass1), null);
-      
+      expectedType2.TargetClassDefintion = CreateTargetClassDefintion<Mixin1> (mixinConfiguration);
+      expectedType2.TargetTypes.Add (
+          typeof (TargetClass1), expectedType1.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+
       var expectedType3 = new InvolvedType (typeof (Mixin2));
-      expectedType3.TargetTypes.Add (typeof (Mixin1), null);
+      expectedType3.TargetTypes.Add (typeof (Mixin1), expectedType2.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
     }
@@ -118,15 +122,18 @@ namespace MixinXRef.UnitTests
 
       var expectedType1 = new InvolvedType (typeof (UselessObject));
       expectedType1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<UselessObject>(mixinConfiguration);
+      expectedType1.TargetClassDefintion = CreateTargetClassDefintion<UselessObject> (mixinConfiguration);
 
-      var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.TargetTypes.Add (typeof (UselessObject), null);
-      expectedType2.TargetTypes.Add (typeof (ClassInheritsFromUselessObject), null);
+      var expectedType2 = new InvolvedType (typeof (ClassInheritsFromUselessObject));
+      expectedType2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (typeof (ClassInheritsFromUselessObject)));
+      expectedType2.TargetClassDefintion = CreateTargetClassDefintion<ClassInheritsFromUselessObject> (mixinConfiguration);
 
-      var expectedType3 = new InvolvedType (typeof (ClassInheritsFromUselessObject));
-      expectedType3.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (typeof (ClassInheritsFromUselessObject)));
-      expectedType3.TargetClassDefintion = CreateTargetClassDefintion<ClassInheritsFromUselessObject>(mixinConfiguration);
+      var expectedType3 = new InvolvedType (typeof (Mixin1));
+      expectedType3.TargetTypes.Add (
+          typeof (UselessObject), expectedType1.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType3.TargetTypes.Add (
+          typeof (ClassInheritsFromUselessObject), expectedType2.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+
 
       Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
     }
@@ -149,9 +156,9 @@ namespace MixinXRef.UnitTests
     public void GetTargetClassDefinition_NoTarget ()
     {
       var mixinConfiguration = new MixinConfiguration();
-      var involvedTypeFinder = CreateInvolvedTypeFinder(mixinConfiguration, typeof(UselessObject).Assembly);
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, typeof (UselessObject).Assembly);
 
-      var output = involvedTypeFinder.GetTargetClassDefinition(typeof(TargetClass1));
+      var output = involvedTypeFinder.GetTargetClassDefinition (typeof (TargetClass1));
 
       Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
       Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
@@ -164,9 +171,9 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<Mixin1>()
           .BuildConfiguration();
-      var involvedTypeFinder = CreateInvolvedTypeFinder(mixinConfiguration, typeof(UselessObject).Assembly);
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, typeof (UselessObject).Assembly);
 
-      var output = involvedTypeFinder.GetTargetClassDefinition(typeof(GenericTarget<,>));
+      var output = involvedTypeFinder.GetTargetClassDefinition (typeof (GenericTarget<,>));
 
       Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (0));
       Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (0));
@@ -179,9 +186,9 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<UselessObject>().AddMixin<MixinWithConfigurationError>()
           .BuildConfiguration();
-      var involvedTypeFinder = CreateInvolvedTypeFinder(mixinConfiguration, typeof(UselessObject).Assembly);
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, typeof (UselessObject).Assembly);
 
-      var output = involvedTypeFinder.GetTargetClassDefinition(typeof(UselessObject));
+      var output = involvedTypeFinder.GetTargetClassDefinition (typeof (UselessObject));
 
       Assert.That (_configurationErrors.Exceptions.Count(), Is.EqualTo (1));
       Assert.That (output, Is.Null);
@@ -193,9 +200,9 @@ namespace MixinXRef.UnitTests
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<UselessObject>().AddMixin<UselessObject>()
           .BuildConfiguration();
-      var involvedTypeFinder = CreateInvolvedTypeFinder(mixinConfiguration, typeof(UselessObject).Assembly);
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, typeof (UselessObject).Assembly);
 
-      var output = involvedTypeFinder.GetTargetClassDefinition(typeof(UselessObject));
+      var output = involvedTypeFinder.GetTargetClassDefinition (typeof (UselessObject));
 
       Assert.That (_validationErrors.Exceptions.Count(), Is.EqualTo (1));
       Assert.That (output, Is.Null);
@@ -211,9 +218,9 @@ namespace MixinXRef.UnitTests
           ProgramTest.GetRemotionReflection());
     }
 
-    private ReflectedObject CreateTargetClassDefintion<ForType>(MixinConfiguration mixinConfiguration)
+    private ReflectedObject CreateTargetClassDefintion<ForType> (MixinConfiguration mixinConfiguration)
     {
-      return new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(ForType), mixinConfiguration));
+      return new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (typeof (ForType), mixinConfiguration));
     }
   }
 }
