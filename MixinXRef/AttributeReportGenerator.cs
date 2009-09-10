@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 
 namespace MixinXRef
@@ -14,25 +15,30 @@ namespace MixinXRef
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
     private readonly IRemotionReflection _remotionReflection;
+    private readonly IOutputFormatter _outputFormatter;
 
     public AttributeReportGenerator (
         InvolvedType[] involvedTypes,
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        IRemotionReflection remotionReflection)
+        IRemotionReflection remotionReflection,
+        IOutputFormatter outputFormatter
+        )
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
       _remotionReflection = remotionReflection;
+      _outputFormatter = outputFormatter;
     }
 
     public XElement GenerateXml ()
@@ -75,7 +81,7 @@ namespace MixinXRef
           new XAttribute ("id", _attributeIdentifierGenerator.GetIdentifier (attribute)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (attribute.Assembly)),
           new XAttribute ("namespace", attribute.Namespace),
-          new XAttribute ("name", attribute.Name),
+          new XAttribute ("name", _outputFormatter.GetShortName(attribute)),
           new XElement (
               "AppliedTo",
               from appliedToType in allAttributes[attribute]

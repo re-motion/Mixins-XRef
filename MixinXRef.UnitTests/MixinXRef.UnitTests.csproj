@@ -101,6 +101,7 @@
     <Compile Include="TestDomain\ClassWithAlphabeticOrderingAttribute.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
+    <Compile Include="TestDomain\ClassWithNestedAttribute.cs" />
     <Compile Include="TestDomain\ClassWithProperty.cs" />
     <Compile Include="TestDomain\CompleteInterfacesTestClass.cs" />
     <Compile Include="TestDomain\FullReportGeneratorTestClass.cs" />

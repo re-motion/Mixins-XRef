@@ -96,7 +96,8 @@ namespace MixinXRef
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           attributeIdentiferGenerator,
-          _remotionReflection);
+          _remotionReflection,
+          _outputFormatter);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (_configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors);
 

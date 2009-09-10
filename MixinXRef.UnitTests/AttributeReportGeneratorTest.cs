@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using System.Xml.Linq;
-using MixinXRef.Reflection;
+using MixinXRef.Formatting;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -16,9 +16,9 @@ namespace MixinXRef.UnitTests
     {
       // UselessObject has no attributes
       var involvedType = new InvolvedType (typeof (UselessObject));
-      AttributeReportGenerator reportGenerator = CreateReportGenerator (involvedType);
+      var reportGenerator = CreateReportGenerator (involvedType);
 
-      XElement output = reportGenerator.GenerateXml();
+      var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("Attributes");
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -31,7 +31,7 @@ namespace MixinXRef.UnitTests
       var involvedType = new InvolvedType (typeof (Mixin2));
       var reportGenerator = CreateReportGenerator (involvedType);
 
-      XElement output = reportGenerator.GenerateXml();
+      var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Attributes",
@@ -43,7 +43,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("name", "SerializableAttribute"),
               new XElement (
                   "AppliedTo",
-                  new XElement(
+                  new XElement (
                       "InvolvedType",
                       new XAttribute ("ref", "0")
                       )
@@ -53,6 +53,36 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
+    [Test]
+    public void GenerateXml_WithNestedAttribute ()
+    {
+      // ClassWithNestedAttribute has 'ClassWithNestedAttribute.NestedAttribute' applied
+      var involvedType = new InvolvedType (typeof (ClassWithNestedAttribute));
+      var reportGenerator = CreateReportGenerator (involvedType);
+
+      var output = reportGenerator.GenerateXml();
+
+      var expectedOutput = new XElement (
+          "Attributes",
+          new XElement (
+              "Attribute",
+              new XAttribute ("id", "0"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "ClassWithNestedAttribute.NestedAttribute"),
+              new XElement (
+                  "AppliedTo",
+                  new XElement (
+                      "InvolvedType",
+                      new XAttribute ("ref", "0")
+                      )
+                  )
+              )
+          );
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+
     private AttributeReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
     {
       return new AttributeReportGenerator (
@@ -60,7 +90,8 @@ namespace MixinXRef.UnitTests
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          ProgramTest.GetRemotionReflection());
+          ProgramTest.GetRemotionReflection(),
+          new OutputFormatter());
     }
   }
 }
