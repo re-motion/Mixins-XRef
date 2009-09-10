@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -56,7 +53,7 @@ namespace MixinXRef
         if (HasOverrideMixinAttribute (memberInfo))
           attributes.Append ("OverrideMixin ");
 
-        if (HasOverrideTargetAttribute(memberInfo))
+        if (HasOverrideTargetAttribute (memberInfo))
           attributes.Append ("OverrideTarget ");
       }
 
@@ -93,29 +90,27 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
-      TargetClassDefinition tcd;
-      MixinDefinition m;
 
       if (!_involvedType.IsMixin)
         return false;
 
       foreach (var typeAndMixinDefinitionPair in _involvedType.TargetTypes)
       {
-        if(typeAndMixinDefinitionPair.Value == null)
+        if (typeAndMixinDefinitionPair.Value == null)
           continue;
 
-        var targetMemberDefinition = typeAndMixinDefinitionPair.Value.GetProperty("TargetClass")
-          .CallMethod("GetAllMembers").Where (mdb => mdb.GetProperty("MemberInfo").ToString() == memberInfo.ToString())
-          .SingleOrDefault();
-        if (targetMemberDefinition != null && targetMemberDefinition.GetProperty("Overrides").CallMethod("ContainsKey", _type).To<bool>())
+        var targetMemberDefinition = typeAndMixinDefinitionPair.Value.GetProperty ("TargetClass")
+            .CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString())
+            .SingleOrDefault();
+        if (targetMemberDefinition != null && targetMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
           return true;
       }
-      
+
       return false;
     }
 
 
-    private bool IsSpecialName(MemberInfo memberInfo)
+    private bool IsSpecialName (MemberInfo memberInfo)
     {
       if (memberInfo.MemberType == MemberTypes.Method)
       {
@@ -127,10 +122,10 @@ namespace MixinXRef
         return (
                    methodInfo.IsSpecialName &&
                    (
-                       methodName.StartsWith("add_") ||
-                       methodName.StartsWith("remove_") ||
-                       methodName.StartsWith("get_") ||
-                       methodName.StartsWith("set_")
+                       methodName.StartsWith ("add_") ||
+                       methodName.StartsWith ("remove_") ||
+                       methodName.StartsWith ("get_") ||
+                       methodName.StartsWith ("set_")
                    )
                );
       }
