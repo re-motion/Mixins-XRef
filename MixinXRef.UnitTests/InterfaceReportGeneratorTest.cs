@@ -21,6 +21,7 @@ namespace MixinXRef.UnitTests
     {
       _outputFormatter = new OutputFormatter();
     }
+
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
@@ -37,9 +38,9 @@ namespace MixinXRef.UnitTests
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
       var reportGenerator = CreateReportGenerator (involvedType);
-      var memberReportGenerator = new MemberReportGenerator(typeof(IDisposable), null, _outputFormatter);
+      var memberReportGenerator = new MemberReportGenerator (typeof (IDisposable), null, _outputFormatter);
 
-      var output = reportGenerator.GenerateXml ();
+      var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Interfaces",
@@ -53,22 +54,22 @@ namespace MixinXRef.UnitTests
               memberReportGenerator.GenerateXml(),
               new XElement (
                   "ImplementedBy",
-                  new XElement(
-                    "InvolvedType",
-                    new XAttribute("ref", "0"))
-                )
+                  new XElement (
+                      "InvolvedType",
+                      new XAttribute ("ref", "0"))
+                  )
               ));
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
     public void GenerateXml_WithCompleteInterface ()
     {
-      var mixinConfiguration = MixinConfiguration.BuildNew ()
-          .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ()
-          .AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ()
-          .AddMixin<CompleteInterfacesTestClass.MyMixin> ()
-          .BuildConfiguration ();
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<CompleteInterfacesTestClass.MyMixinTarget>()
+          .AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin>()
+          .AddMixin<CompleteInterfacesTestClass.MyMixin>()
+          .BuildConfiguration();
 
       var involvedType = new InvolvedType (typeof (CompleteInterfacesTestClass.MyMixinTarget));
       var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (CompleteInterfacesTestClass.MyMixinTarget));
@@ -77,7 +78,7 @@ namespace MixinXRef.UnitTests
       var reportGenerator = CreateReportGenerator (involvedType);
       var memberReportGenerator = new MemberReportGenerator (typeof (CompleteInterfacesTestClass.ICMyMixinTargetMyMixin), null, _outputFormatter);
 
-      var output = reportGenerator.GenerateXml ();
+      var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
           "Interfaces",
@@ -86,17 +87,17 @@ namespace MixinXRef.UnitTests
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "ICMyMixinTargetMyMixin"),
+              new XAttribute ("name", "CompleteInterfacesTestClass.ICMyMixinTargetMyMixin"),
               new XAttribute ("is-complete-interface", true),
-              memberReportGenerator.GenerateXml (),
+              memberReportGenerator.GenerateXml(),
               new XElement (
                   "ImplementedBy",
                   new XElement (
-                    "InvolvedType",
-                    new XAttribute ("ref", "0"))
-                )
+                      "InvolvedType",
+                      new XAttribute ("ref", "0"))
+                  )
               ));
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
@@ -109,12 +110,12 @@ namespace MixinXRef.UnitTests
           .BuildConfiguration();
 
       var involvedType = new InvolvedType (typeof (CompleteInterfacesTestClass.MyMixinTarget));
-      var classContext = mixinConfiguration.ClassContexts.GetWithInheritance(typeof(CompleteInterfacesTestClass.MyMixinTarget));
-      involvedType.ClassContext = new ReflectedObject(classContext);
+      var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (CompleteInterfacesTestClass.MyMixinTarget));
+      involvedType.ClassContext = new ReflectedObject (classContext);
 
       var reportGenerator = CreateReportGenerator (involvedType);
       var output = reportGenerator.GetCompleteInterfaces();
-      
+
       Assert.That (output, Is.EquivalentTo (classContext.CompleteInterfaces));
     }
 

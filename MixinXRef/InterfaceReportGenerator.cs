@@ -72,6 +72,7 @@ namespace MixinXRef
       return allCompleteInterfaces;
     }
 
+
     private Dictionary<Type, List<Type>> GetAllInterfaces ()
     {
       var allInterfaces = new Dictionary<Type, List<Type>>();
@@ -109,7 +110,7 @@ namespace MixinXRef
           new XAttribute ("id", _interfaceIdentifierGenerator.GetIdentifier (usedInterface)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
-          new XAttribute ("name", usedInterface.Name),
+          new XAttribute("name", _outputFormatter.GetShortName(usedInterface)),
           new XAttribute ("is-complete-interface", isCompleteInterface),
           new MemberReportGenerator (usedInterface, null, _outputFormatter).GenerateXml(),
           new XElement (
