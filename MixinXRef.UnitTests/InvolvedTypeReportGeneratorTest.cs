@@ -15,8 +15,6 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private ErrorAggregator<Exception> _configurationErrors;
-    private ErrorAggregator<Exception> _validationErrors;
     private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
     private IRemotionReflection _remotionReflection;
     private IOutputFormatter _outputFormatter;
@@ -27,8 +25,6 @@ namespace MixinXRef.UnitTests
     [SetUp]
     public void SetUp ()
     {
-      _configurationErrors = new ErrorAggregator<Exception>();
-      _validationErrors = new ErrorAggregator<Exception>();
       _remotionReflection = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
     }
@@ -37,7 +33,7 @@ namespace MixinXRef.UnitTests
     public void GenerateXml_NoInvolvedTypes ()
     {
       var reportGenerator = CreateReportGenerator (
-          new Assembly[0], new MixinConfiguration(), new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
+          new Assembly[0], new IdentifierGenerator<Type>(), new IdentifierGenerator<Type>());
       XElement output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement ("InvolvedTypes");
@@ -50,13 +46,10 @@ namespace MixinXRef.UnitTests
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
-      var mixinConfiguration = new MixinConfiguration();
-
       var involvedType1 = new InvolvedType (typeof (GenericTarget<,>));
 
       var reportGenerator = CreateReportGenerator (
           new Assembly[0],
-          mixinConfiguration,
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           involvedType1);
@@ -121,7 +114,6 @@ namespace MixinXRef.UnitTests
 
       InvolvedTypeReportGenerator reportGenerator = CreateReportGenerator (
           new Assembly[0],
-          mixinConfiguration,
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
           involvedType1,
@@ -146,7 +138,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("is-generic-definition", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, involvedType1 , _outputFormatter).
+              new MemberReportGenerator (involvedType1.Type, involvedType1, _outputFormatter).
                   GenerateXml(),
               new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
@@ -256,12 +248,9 @@ namespace MixinXRef.UnitTests
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
 
-      var mixinConfiguration = new MixinConfiguration();
-
       InvolvedTypeReportGenerator reportGenerator =
           CreateReportGenerator (
               new[] { typeof (InvolvedType).Assembly, typeof (InvolvedTypeReportGeneratorTest).Assembly, typeof (object).Assembly },
-              mixinConfiguration,
               interfaceIdentifierGenerator,
               attributeIdentifierGenerator,
               involvedType1,
@@ -329,9 +318,44 @@ namespace MixinXRef.UnitTests
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
+    [Test]
+    public void HasAlphabeticOrderingAttribute_False ()
+    {
+      var involvedType = new InvolvedType (typeof (object));
+      
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], new IdentifierGenerator<Type> (), new IdentifierGenerator<Type> ());
+
+      var output = reportGenerator.GetAlphabeticOrderingAttribute (involvedType);
+
+      Assert.That (output, Is.EqualTo (""));
+    }
+
+    [Test]
+    public void HasAlphabeticOrderingAttribute_True ()
+    {
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew().ForClass<UselessObject>().AddMixin<ClassWithAlphabeticOrderingAttribute>().BuildConfiguration();
+      var involvedType = new InvolvedType (typeof (ClassWithAlphabeticOrderingAttribute));
+      involvedType.TargetTypes.Add (
+          typeof (UselessObject),
+          new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (typeof (UselessObject), mixinConfiguration).Mixins[0]));
+
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0], new IdentifierGenerator<Type> (), new IdentifierGenerator<Type> ());
+
+      var output = reportGenerator.GetAlphabeticOrderingAttribute (involvedType);
+
+      Assert.That (output, Is.EqualTo ("AcceptsAlphabeticOrdering "));
+    }
+
+    private void SetTargetClassDefinition (InvolvedType involvedType, MixinConfiguration mixinConfiguration)
+    {
+      involvedType.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (involvedType.Type, mixinConfiguration));
+    }
+
     private InvolvedTypeReportGenerator CreateReportGenerator (
         Assembly[] referencedAssemblies,
-        MixinConfiguration mixinConfiguration,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         params InvolvedType[] involvedTypes)
@@ -353,11 +377,6 @@ namespace MixinXRef.UnitTests
           _remotionReflection,
           new OutputFormatter()
           );
-    }
-
-    private void SetTargetClassDefinition (InvolvedType involvedType, MixinConfiguration mixinConfiguration)
-    {
-      involvedType.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (involvedType.Type, mixinConfiguration));
     }
   }
 }

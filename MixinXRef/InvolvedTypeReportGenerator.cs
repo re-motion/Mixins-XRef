@@ -28,7 +28,7 @@ namespace MixinXRef
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
         IRemotionReflection remotionReflection,
         IOutputFormatter outputFormatter
-      )
+        )
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
@@ -71,9 +71,9 @@ namespace MixinXRef
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
-          _outputFormatter.CreateModifierMarkup("", _typeModifierUtility.GetTypeModifiers (realType)),
-          _summaryPicker.GetSummary(realType),
-          new MemberReportGenerator(realType, involvedType, _outputFormatter).GenerateXml(),
+          _outputFormatter.CreateModifierMarkup (GetAlphabeticOrderingAttribute(involvedType), _typeModifierUtility.GetTypeModifiers (realType)),
+          _summaryPicker.GetSummary (realType),
+          new MemberReportGenerator (realType, involvedType, _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (
               realType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
           new AttributeReferenceReportGenerator (
@@ -90,9 +90,24 @@ namespace MixinXRef
           );
     }
 
-    private string GetCSharpLikeNameForBaseType(Type type)
+    public string GetAlphabeticOrderingAttribute (InvolvedType involvedType)
     {
-      return type.BaseType == null ? "none" : _outputFormatter.GetFormattedTypeName(type.BaseType);
+      ArgumentUtility.CheckNotNull ("involvedType", involvedType);  
+
+      foreach (var mixinDefinition in involvedType.TargetTypes.Values)
+      {
+        if (mixinDefinition == null)
+          continue;
+
+        if (mixinDefinition.GetProperty ("AcceptsAlphabeticOrdering").To<bool>())
+          return "AcceptsAlphabeticOrdering ";
+      }
+      return "";
+    }
+
+    private string GetCSharpLikeNameForBaseType (Type type)
+    {
+      return type.BaseType == null ? "none" : _outputFormatter.GetFormattedTypeName (type.BaseType);
     }
   }
 }

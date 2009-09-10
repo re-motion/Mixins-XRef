@@ -64,8 +64,8 @@
     <Compile Include="AttributeReportGeneratorTest.cs" />
     <Compile Include="ConfigurationErrorReportGeneratorTest.cs" />
     <Compile Include="ErrorAggregatorTest.cs" />
-    <Compile Include="explore\MemberOverrideWithInheritanceTest.cs" />
     <Compile Include="explore\SimpleMemberOverrideTest.cs" />
+    <Compile Include="explore\MemberOverrideWithInheritanceTest.cs" />
     <Compile Include="formatting\OutputFormatterTest.cs" />
     <Compile Include="FullReportGeneratorTest.cs" />
     <Compile Include="IdentifierPopulatorTest.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="TargetReferenceReportGeneratorTest.cs" />
     <Compile Include="TestDomain\BaseClassWithProperty.cs" />
     <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
+    <Compile Include="TestDomain\ClassWithAlphabeticOrderingAttribute.cs" />
     <Compile Include="TestDomain\ClassWithAttributeFieldParam.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\ClassWithProperty.cs" />
