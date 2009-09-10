@@ -7,8 +7,6 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests
 {
@@ -75,7 +73,7 @@ namespace MixinXRef.UnitTests
           new XElement (
               "Mixin",
               new XAttribute ("ref", "0"),
-              new XAttribute("index", "0"),
+              new XAttribute ("index", "0"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin1"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject (mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).
