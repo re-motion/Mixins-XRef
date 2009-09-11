@@ -27,7 +27,7 @@
 <xsl:template name="attributeDetail">
 	<h1><xsl:value-of select="@name" /></h1><h2><a href="../attribute_index.html">[Involved Attribute]</a></h2>
 	
-	<div>
+	<div class="fromAssembly">
 		from assembly 
 		<xsl:call-template name="GenerateAssemblyLink">
 			<xsl:with-param name="rootMCR" select="/" />

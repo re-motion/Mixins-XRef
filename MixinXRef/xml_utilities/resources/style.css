@@ -105,6 +105,16 @@ tbody tr.odd td {
 	vertical-align: top;
 }
 
+.emptyText
+{
+  padding: 5px 0 5px 0;
+}
+
+.fromAssembly
+{
+   margin-bottom: 8px;
+}
+
 /* signature and modifier markup */
 span.Keyword, span.Name, span.Text, span.Type, span.ParameterName {
 	font-size: 15px;

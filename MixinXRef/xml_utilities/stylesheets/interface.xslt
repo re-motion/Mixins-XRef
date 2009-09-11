@@ -28,7 +28,7 @@
 <xsl:template name="interfaceDetail">
 	<h1><xsl:value-of select="@name" /></h1><h2><a href="../interface_index.html">[Involved Interface]</a></h2>
 
-	<div>
+	<div class="fromAssembly">
 		from assembly 
 		<xsl:call-template name="GenerateAssemblyLink">
 			<xsl:with-param name="rootMCR" select="/" />
