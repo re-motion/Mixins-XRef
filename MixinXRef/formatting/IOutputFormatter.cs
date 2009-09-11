@@ -6,8 +6,7 @@ namespace MixinXRef.Formatting
 {
   public interface IOutputFormatter
   {
-    string GetFormattedTypeName (Type type);
-    string GetShortName (Type type);
+    string GetShortFormattedTypeName (Type type);
 
     XElement CreateModifierMarkup (string attributes, string keywords);
 

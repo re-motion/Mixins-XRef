@@ -81,7 +81,7 @@ namespace MixinXRef
           new XAttribute ("id", _attributeIdentifierGenerator.GetIdentifier (attribute)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (attribute.Assembly)),
           new XAttribute ("namespace", attribute.Namespace),
-          new XAttribute ("name", _outputFormatter.GetShortName(attribute)),
+          new XAttribute ("name", _outputFormatter.GetShortFormattedTypeName(attribute)),
           new XElement (
               "AppliedTo",
               from appliedToType in allAttributes[attribute]

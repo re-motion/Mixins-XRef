@@ -60,7 +60,7 @@ namespace MixinXRef
           new XAttribute ("index", "n/a"),
           new XAttribute ("relation", mixinContext.GetProperty ("MixinKind")),
           // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
-          new XAttribute ("instance-name", _outputFormatter.GetFormattedTypeName (mixinType))
+          new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinType))
           );
 
       if (_involvedType.HasTargetClassDefintion)
@@ -68,7 +68,7 @@ namespace MixinXRef
         var mixinDefinition = _involvedType.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
         // set more specific name for mixin references
-        mixinElement.SetAttributeValue ("instance-name", _outputFormatter.GetFormattedTypeName (mixinDefinition.GetProperty ("Type").To<Type>()));
+        mixinElement.SetAttributeValue ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinDefinition.GetProperty ("Type").To<Type>()));
         // set mixin index
         mixinElement.SetAttributeValue ("index", mixinDefinition.GetProperty ("MixinIndex").To<int>());
 

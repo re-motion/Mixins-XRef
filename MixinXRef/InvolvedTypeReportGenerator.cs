@@ -65,7 +65,7 @@ namespace MixinXRef
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
           new XAttribute ("namespace", realType.Namespace),
-          new XAttribute ("name", _outputFormatter.GetFormattedTypeName (realType)),
+          new XAttribute ("name", _outputFormatter.GetShortFormattedTypeName (realType)),
           new XAttribute ("base", GetCSharpLikeNameForBaseType (realType)),
           new XAttribute ("base-ref", (realType.BaseType == null ? "none" : _involvedTypeIdentifierGenerator.GetIdentifier (realType.BaseType))),
           new XAttribute ("is-target", involvedType.IsTarget),
@@ -107,7 +107,7 @@ namespace MixinXRef
 
     private string GetCSharpLikeNameForBaseType (Type type)
     {
-      return type.BaseType == null ? "none" : _outputFormatter.GetFormattedTypeName (type.BaseType);
+      return type.BaseType == null ? "none" : _outputFormatter.GetShortFormattedTypeName (type.BaseType);
     }
   }
 }

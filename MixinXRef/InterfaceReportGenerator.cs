@@ -110,7 +110,7 @@ namespace MixinXRef
           new XAttribute ("id", _interfaceIdentifierGenerator.GetIdentifier (usedInterface)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
-          new XAttribute("name", _outputFormatter.GetShortName(usedInterface)),
+          new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(usedInterface)),
           new XAttribute ("is-complete-interface", isCompleteInterface),
           new MemberReportGenerator (usedInterface, null, _outputFormatter).GenerateXml(),
           new XElement (

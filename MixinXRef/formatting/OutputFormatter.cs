@@ -8,6 +8,23 @@ namespace MixinXRef.Formatting
 {
   public class OutputFormatter : IOutputFormatter
   {
+    public string GetFormattedNestedTypeName (Type type)
+    {
+      if (type.FullName == null)
+        return type.Name;
+
+      var nestedTypeName = new StringBuilder();
+
+      var nestedIndex = type.FullName.IndexOf ('+');
+      var nestingType = type.FullName.Substring (0, nestedIndex);
+      var nestedType = type.FullName.Substring (nestedIndex);
+
+      nestedTypeName.Append ( nestingType.Substring (nestingType.LastIndexOf ('.')+1) );
+      nestedTypeName.Append ( nestedType.Replace("+", "."));
+      
+      return nestedTypeName.ToString();
+    }
+
     public string GetFormattedTypeName (Type type)
     {
       if (!type.IsGenericType)
@@ -18,7 +35,8 @@ namespace MixinXRef.Formatting
 
       if (type.IsNested)
       {
-        typeName = type.FullName.Substring (0, type.FullName.IndexOf ('`'));
+        typeName = (type.FullName.Substring (0, type.FullName.IndexOf ('`'))).Substring (typeName.LastIndexOf ('.') + 1);
+
         var index = type.FullName.IndexOf ('+');
         if (index > 0)
         {
@@ -37,7 +55,7 @@ namespace MixinXRef.Formatting
         if (i != 0)
           result.Append (", ");
 
-        result.Append (GetShortName (genericArguments[i]));
+        result.Append (GetShortFormattedTypeName (genericArguments[i]));
       }
       result.Append (">");
       result.Append (nestedTypeName);
@@ -62,49 +80,45 @@ namespace MixinXRef.Formatting
       return modifiers;
     }
 
-    public string GetShortName (Type type)
+    public string GetShortFormattedTypeName (Type type)
     {
       var name = type.Name;
 
-      var index = name.LastIndexOf ('.');
+      if (type.IsGenericType)
+        return GetFormattedTypeName (type);
 
-      if (index == -1)
+      if (type.IsNested)
+        return GetFormattedNestedTypeName (type);
+
+      switch (name)
       {
-        switch (name)
-        {
-          case "Boolean":
-            return "bool";
-          case "Int16":
-            return "short";
-          case "Int32":
-            return "int";
-          case "Int64":
-            return "long";
-          case "Single":
-            return "float";
-          case "UInt16":
-            return "ushort";
-          case "UInt32":
-            return "uint";
-          case "UInt64":
-            return "ulong";
-          case "Byte":
-          case "Char":
-          case "Decimal":
-          case "Double":
-          case "SByte":
-          case "String":
-          case "Void":
-            return name.ToLower();
-          default:
-            return GetFormattedTypeName (type);
-        }
+        case "Boolean":
+          return "bool";
+        case "Int16":
+          return "short";
+        case "Int32":
+          return "int";
+        case "Int64":
+          return "long";
+        case "Single":
+          return "float";
+        case "UInt16":
+          return "ushort";
+        case "UInt32":
+          return "uint";
+        case "UInt64":
+          return "ulong";
+        case "Byte":
+        case "Char":
+        case "Decimal":
+        case "Double":
+        case "SByte":
+        case "String":
+        case "Void":
+          return name.ToLower();
+        default:
+          return type.Name;
       }
-
-      var shortParameterName = name.Substring (
-          index, name.Length - index);
-
-      return shortParameterName;
     }
 
     public void AddParameterMarkup (ParameterInfo[] parameterInfos, XElement signatureElement)
@@ -195,7 +209,7 @@ namespace MixinXRef.Formatting
           nestedTypeMarkup.Add (CreateElement ("Text", ":"));
         else
           nestedTypeMarkup.Add (CreateElement ("Text", ","));
-        nestedTypeMarkup.Add (CreateElement ("Type", GetShortName (inheritance[i])));
+        nestedTypeMarkup.Add (CreateElement ("Type", GetShortFormattedTypeName (inheritance[i])));
       }
 
       return nestedTypeMarkup;
@@ -222,8 +236,8 @@ namespace MixinXRef.Formatting
         return null;
 
       if (type.IsPrimitive || type == typeof (string) || type == typeof (void))
-        return CreateElement ("Keyword", GetShortName (type));
-      return CreateElement ("Type", GetShortName (type));
+        return CreateElement ("Keyword", GetShortFormattedTypeName (type));
+      return CreateElement ("Type", GetShortFormattedTypeName (type));
     }
 
     private XElement CreateElement (string elementName, string content)
