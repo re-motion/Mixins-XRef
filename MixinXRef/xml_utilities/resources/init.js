@@ -112,6 +112,8 @@ function prepareCollapsing() {
     if (cookie == undefined) {
         $("caption:contains('Mixins')").addClass("visible");
         $("caption:contains('Attributes')").addClass("visible");
+        $("caption:contains('Implementing')").addClass("visible");
+        $("caption:contains('Used')").addClass("visible");
         $(".treeHeader:contains('Targets')").addClass("visible");
         saveCookie();
     }
