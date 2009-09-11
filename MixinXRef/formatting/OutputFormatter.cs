@@ -18,25 +18,23 @@ namespace MixinXRef.Formatting
       var nestedIndex = type.FullName.IndexOf ('+');
       var nestingType = type.FullName.Substring (0, nestedIndex);
       var nestedType = type.FullName.Substring (nestedIndex);
-
+      
       nestedTypeName.Append ( nestingType.Substring (nestingType.LastIndexOf ('.')+1) );
       nestedTypeName.Append ( nestedType.Replace("+", "."));
-      
+
       return nestedTypeName.ToString();
     }
 
-    public string GetFormattedTypeName (Type type)
+    public string GetFormattedGenericTypeName (Type type)
     {
-      if (!type.IsGenericType)
-        return type.Name;
-
       var typeName = "";
       var nestedTypeName = "";
 
       if (type.IsNested)
       {
-        typeName = (type.FullName.Substring (0, type.FullName.IndexOf ('`'))).Substring (typeName.LastIndexOf ('.') + 1);
-
+        typeName = (type.FullName.Substring (0, type.FullName.IndexOf ('`')));
+        typeName = typeName.Substring (typeName.LastIndexOf ('.') + 1);
+        
         var index = type.FullName.IndexOf ('+');
         if (index > 0)
         {
@@ -82,10 +80,12 @@ namespace MixinXRef.Formatting
 
     public string GetShortFormattedTypeName (Type type)
     {
+      ArgumentUtility.CheckNotNull ("type", type);
+
       var name = type.Name;
 
       if (type.IsGenericType)
-        return GetFormattedTypeName (type);
+        return GetFormattedGenericTypeName (type);
 
       if (type.IsNested)
         return GetFormattedNestedTypeName (type);

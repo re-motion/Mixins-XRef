@@ -21,17 +21,34 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetFormattedTypeName_NormalType ()
+    public void GetShortFormattedTypeName_NormalType ()
     {
-      var output = _outputFormatter.GetFormattedTypeName (typeof (UselessObject));
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (UselessObject));
 
       Assert.That (output, Is.EqualTo ("UselessObject"));
     }
 
     [Test]
+    public void GetShortFormattedTypeName_SimpeType ()
+    {
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (int));
+
+      Assert.That (output, Is.EqualTo ("int"));
+    }
+
+    [Test]
+    public void GetShortFormattedTypeName_GenericDefinition ()
+    {
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (GenericTarget<,>));
+      var expectedOutput = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<,>));
+
+      Assert.That (output, Is.EqualTo (expectedOutput));
+    }
+
+    [Test]
     public void GetFormattedTypeName_GenericDefinition ()
     {
-      var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<,>));
+      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<,>));
 
       Assert.That (output, Is.EqualTo ("GenericTarget<TParameter1, TParameter2>"));
     }
@@ -39,7 +56,7 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetFormattedTypeName_GenericType ()
     {
-      var output = _outputFormatter.GetFormattedTypeName (typeof (GenericTarget<string, int>));
+      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<string, int>));
 
       Assert.That (output, Is.EqualTo ("GenericTarget<string, int>"));
     }
@@ -47,13 +64,21 @@ namespace MixinXRef.UnitTests.formatting
     [Test]
     public void GetFormattedTypeName_ContainsGenericArguments ()
     {
-      var output = _outputFormatter.GetFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
+      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
       Assert.That (output, Is.EqualTo ("Dictionary<TKey, int>"));
     }
 
     public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
     {
+    }
+
+    [Test]
+    public void GetFormattedNestedTypeName ()
+    {
+      var output = _outputFormatter.GetFormattedNestedTypeName (typeof (MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
+
+      Assert.That (output, Is.EqualTo ("MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance"));
     }
 
     [Test]
