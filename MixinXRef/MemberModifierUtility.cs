@@ -6,7 +6,7 @@ namespace MixinXRef
 {
   public class MemberModifierUtility
   {
-    private TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
+    private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
 
     public bool IsOverriddenMember (MemberInfo memberInfo)
     {
@@ -85,7 +85,9 @@ namespace MixinXRef
         modifiers = "private";
         
         // method is explicit interface
-        if (methodFieldOrConstructor is MethodInfo && ((MethodInfo) methodFieldOrConstructor).IsHideBySig)
+        if (methodFieldOrConstructor is MethodInfo && 
+          ((MethodInfo) methodFieldOrConstructor).IsHideBySig && 
+          methodFieldOrConstructor.Name.Contains("."))
           return "";
       }
 

@@ -154,11 +154,7 @@ namespace MixinXRef.Formatting
       ArgumentUtility.CheckNotNull ("returnType", returnType);
       ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-      if (methodName.Contains ("+"))
-      {
-        Console.Out.WriteLine ("");
-      }
-      else if (methodName.Contains ("."))
+     if (methodName.Contains ("."))
       {
         var parts = methodName.Split ('.');
         var partCount = parts.Length;
