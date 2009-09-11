@@ -112,9 +112,9 @@ function prepareCollapsing() {
     if (cookie == undefined) {
         $("caption:contains('Mixins')").addClass("visible");
         $("caption:contains('Attributes')").addClass("visible");
-        $("caption:contains('Implementing')").addClass("visible");
-        $("caption:contains('Used')").addClass("visible");
-        $(".treeHeader:contains('Targets')").addClass("visible");
+        $(".treeHeader").addClass("visible");
+        if ($("h2 a").text() == "[Involved Interface]")
+            $("caption:contains('Members')").addClass("visible");
         saveCookie();
     }
 
