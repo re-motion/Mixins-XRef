@@ -110,6 +110,9 @@ function prepareCollapsing() {
     var cookie = $.cookie(cookieName);
 
     if (cookie == undefined) {
+        $("caption:contains('Mixins')").addClass("visible");
+        $("caption:contains('Attributes')").addClass("visible");
+        $(".treeHeader:contains('Targets')").addClass("visible");
         saveCookie();
     }
 
