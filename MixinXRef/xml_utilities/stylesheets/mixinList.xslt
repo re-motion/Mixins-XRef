@@ -34,6 +34,7 @@
 					<th>Interface Introductions</th>
 					<th>Attribute Introductions</th>
 					<th>Overriden Members</th>
+          <th>Introduced Member Visibility</th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -62,6 +63,7 @@
             <td>n/a</td>
             <td>n/a</td>
           </xsl:if>
+          <td>-</td>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -81,6 +83,8 @@
             <xsl:call-template name="mixinSpecificData">
               <xsl:with-param name="target" select="$target" />
             </xsl:call-template>
+
+            <td><xsl:value-of select="@introduced-member-visibility"/></td>
 					</tr>
 				</xsl:for-each>
 			</tbody>

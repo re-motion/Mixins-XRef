@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-11 09:59:05">
+<MixinXRefReport creation-time="2009-09-11 13:38:32">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -43,7 +43,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" index="n/a" relation="Extending" instance-name="ClassWithBookAttribute" />
+        <Mixin ref="1" index="n/a" relation="Extending" instance-name="ClassWithBookAttribute" introduced-member-visibility="Private" />
       </Mixins>
     </InvolvedType>
     <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
@@ -108,7 +108,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="1" index="0" relation="Extending" instance-name="ClassWithBookAttribute">
+        <Mixin ref="1" index="0" relation="Extending" instance-name="ClassWithBookAttribute" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions>
             <Attribute ref="0" />
@@ -137,12 +137,12 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="4" index="1" relation="Extending" instance-name="FullReportGeneratorTestClass">
+        <Mixin ref="4" index="1" relation="Extending" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="5" index="0" relation="Extending" instance-name="ClassWithAlphabeticOrderingAttribute">
+        <Mixin ref="5" index="0" relation="Extending" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -260,12 +260,12 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="4" index="1" relation="Extending" instance-name="FullReportGeneratorTestClass">
+        <Mixin ref="4" index="1" relation="Extending" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="5" index="0" relation="Extending" instance-name="ClassWithAlphabeticOrderingAttribute">
+        <Mixin ref="5" index="0" relation="Extending" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -292,7 +292,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="8" index="0" relation="Extending" instance-name="Mixin2">
+        <Mixin ref="8" index="0" relation="Extending" instance-name="Mixin2" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
@@ -357,7 +357,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="10" index="0" relation="Extending" instance-name="Mixin1">
+        <Mixin ref="10" index="0" relation="Extending" instance-name="Mixin1" introduced-member-visibility="Private">
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />

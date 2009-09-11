@@ -76,6 +76,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("index", "0"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin1"),
+              new XAttribute ("introduced-member-visibility", "Private"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject (mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).
                   GenerateXml(),
               new AttributeIntroductionReportGenerator (
@@ -117,13 +118,17 @@ namespace MixinXRef.UnitTests
               new XAttribute ("ref", "0"),
               new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
-              new XAttribute ("instance-name", "ClassWithBookAttribute")),
+              new XAttribute ("instance-name", "ClassWithBookAttribute"),
+              new XAttribute ("introduced-member-visibility", "Private")
+              ),
           new XElement (
               "Mixin",
               new XAttribute ("ref", "1"),
               new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
-              new XAttribute ("instance-name", "Mixin3"))
+              new XAttribute ("instance-name", "Mixin3"),
+              new XAttribute ("introduced-member-visibility", "Private")
+              )
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
