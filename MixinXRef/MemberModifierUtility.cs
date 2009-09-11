@@ -80,8 +80,14 @@ namespace MixinXRef
         modifiers = "protected internal";
       else if (methodFieldOrConstructorInfo.GetProperty ("IsAssembly").To<bool>())
         modifiers = "internal";
-      else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool> ())
+      {
         modifiers = "private";
+        
+        // method is explicit interface
+        if (methodFieldOrConstructor is MethodInfo && ((MethodInfo) methodFieldOrConstructor).IsHideBySig)
+          return "";
+      }
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {

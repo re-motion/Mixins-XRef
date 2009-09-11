@@ -110,12 +110,24 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetMemberModifiers_PubliOverriddenAndSealedMethod ()
+    public void GetMemberModifiers_PublicOverriddenAndSealedMethod ()
     {
       var memberInfo = typeof (SubModifierTestClass).GetMember ("PublicVirtualMethod")[0];
 
       var output = _memberModifierUtility.GetMemberModifiers (memberInfo);
       Assert.That (output, Is.EqualTo ("public sealed override"));
+    }
+
+    [Test]
+    public void GetMemberModifiers_ExplicitInterfaceWithParams ()
+    {
+      var methodInfo =
+          typeof (MemberSignatureTestClass).GetMethod ("MixinXRef.UnitTests.TestDomain.IExplicitInterface.Version",
+          BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+      var output = _memberModifierUtility.GetMemberModifiers (methodInfo);
+      
+      Assert.That (output, Is.EqualTo (""));
     }
 
     [Test]

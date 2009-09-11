@@ -87,12 +87,12 @@ namespace MixinXRef.UnitTests.formatting
       var output = _outputFormatter.CreateModifierMarkup ("attribute1 attribute2", "keyword1 keyword2");
       var expectedOutput = new XElement (
           "Modifiers",
-          new XElement("Text", "["),
-          new XElement("Type", "attribute1"),
-          new XElement("Text", "]"),
-          new XElement("Text", "["),
-          new XElement("Type", "attribute2"),
-          new XElement("Text", "]"),
+          new XElement ("Text", "["),
+          new XElement ("Type", "attribute1"),
+          new XElement ("Text", "]"),
+          new XElement ("Text", "["),
+          new XElement ("Type", "attribute2"),
+          new XElement ("Text", "]"),
           new XElement ("Keyword", "keyword1"),
           new XElement ("Keyword", "keyword2"));
 
@@ -147,6 +147,48 @@ namespace MixinXRef.UnitTests.formatting
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
+
+    [Test]
+    public void GetMemberSignature_ExplicitInterfaceWithParams ()
+    {
+      var methodInfo =
+          typeof (MemberSignatureTestClass).GetMethod (
+              "MixinXRef.UnitTests.TestDomain.IExplicitInterface.Version",
+              BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+      var output = _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters());
+
+      var expectedOutput = new XElement (
+          "Signature",
+          new XElement ("Keyword", "string"),
+          new XElement ("Name", "IExplicitInterface.Version"),
+          new XElement ("Text", "("),
+          new XElement ("Text", ")")
+          );
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    //[Test]
+    //public void GetMemberSignature_NestedExplicitInterfaceWithParams ()
+    //{
+    //  var methodInfo =
+    //      typeof (MemberSignatureTestClass).GetMethod (
+    //          "MixinXRef.UnitTests.TestDomain.IExplicitNestedInterface.Version",
+    //          BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+
+    //  var output = _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters ());
+
+    //  var expectedOutput = new XElement (
+    //      "Signature",
+    //      new XElement ("Keyword", "string"),
+    //      new XElement ("Name", "IExplicitInterface.Version"),
+    //      new XElement ("Text", "("),
+    //      new XElement ("Text", ")")
+    //      );
+
+    //  Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    //}
 
     [Test]
     public void CreateEventMarkup ()

@@ -1,10 +1,11 @@
 using System;
 using Remotion.Collections;
+using Remotion.Reflection;
 
 namespace MixinXRef.UnitTests.TestDomain
 {
-  
-  public class MemberSignatureTestClass : IDisposable
+
+  public class MemberSignatureTestClass : IExplicitInterface
   {
     protected MemberSignatureTestClass (int Param1, string Param2, Remotion.Reflection.ApplicationAssemblyFinderFilter Param3)
     {}
@@ -37,7 +38,9 @@ namespace MixinXRef.UnitTests.TestDomain
     }
 
     public interface INestedInterface : IDisposable, ICloneable
-    {}
+    {
+      float Calculate ();  
+    }
 
     public enum NestedEnumeration {}
 
@@ -55,6 +58,30 @@ namespace MixinXRef.UnitTests.TestDomain
 
     public long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam) { return 0; }
     protected MultiDictionary<string, int> _dictionary;
+
+    public interface INestedExplicitInterface : IExplicitInterface
+    {
+      
+    }
+
+    public class SubClass :IExplicitInterface
+    {
+      string IExplicitInterface.Version ()
+      {
+        throw new NotImplementedException();
+      }
+    }
+
+    // explicit interface
+    string IExplicitInterface.Version ()
+    {
+      throw new NotImplementedException();
+    }
   }
-  
+
+
+  public interface IExplicitInterface
+  {
+    string Version ();
+  }
 }
