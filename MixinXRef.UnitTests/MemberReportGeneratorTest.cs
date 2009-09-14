@@ -208,6 +208,41 @@ namespace MixinXRef.UnitTests
       Assert.That (output, Is.True);
     }
 
+    [Test]
+    public void GetOverrides_False ()
+    {
+      var reportGenerator = CreateMemberReportGenerator (typeof (object));
+      var memberInfo = typeof (object).GetMember ("ToString")[0];
+
+      var output = reportGenerator.GetOverrides (memberInfo);
+
+      Assert.That (output.ToString(), Is.EqualTo(new XElement("Overrides").ToString()));
+    }
+
+    [Test]
+    public void GetOverrides_True ()
+    {
+      var mixinType = typeof (MemberOverrideTestClass.Mixin1);
+      var targetType = typeof (MemberOverrideTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew ()
+              .ForClass<MemberOverrideTestClass.Target> ().AddMixin<MemberOverrideTestClass.Mixin1> ()
+              .BuildConfiguration ();
+      var involvedType = new InvolvedType (mixinType);
+      involvedType.TargetTypes.Add (
+          targetType, new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration).Mixins[mixinType]));
+      var reportGenerator = new MemberReportGenerator (mixinType, involvedType, _outputFormatter);
+
+      // OverriddenMethod
+      var memberInfo = mixinType.GetMember ("TemplateMethod")[0];
+      var output = reportGenerator.GetOverrides (memberInfo);
+      var expectedOutput = new XElement("Overrides",
+
+        new XElement ("Type", "MemberOverrideTestClass.Target"));
+      
+      Assert.That (output.ToString(), Is.EqualTo(expectedOutput.ToString()));
+    }
+
     private MemberReportGenerator CreateMemberReportGenerator (Type type)
     {
       return new MemberReportGenerator (type, new InvolvedType(type), _outputFormatter);

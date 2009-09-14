@@ -51,9 +51,9 @@ namespace MixinXRef
 
       // member is explicit interface implementation
       if (lastPoint != -1)
-        memberName = memberInfo.Name.Substring (lastPoint+1, memberInfo.Name.Length - lastPoint-1);
-      
-      var attributes = new StringBuilder ();
+        memberName = memberInfo.Name.Substring (lastPoint + 1, memberInfo.Name.Length - lastPoint - 1);
+
+      var attributes = new StringBuilder();
       if (_involvedType != null)
       {
         if (HasOverrideMixinAttribute (memberInfo))
@@ -113,6 +113,31 @@ namespace MixinXRef
       }
 
       return false;
+    }
+
+    public XElement GetOverrides (MemberInfo memberInfo)
+    {
+      var overrides = new XElement ("Overrides");
+
+      if (_involvedType.IsMixin)
+      {
+        foreach (var typeAndMixinDefinitionPair in _involvedType.TargetTypes)
+        {
+          if (typeAndMixinDefinitionPair.Value == null)
+            continue;
+
+          foreach (var mixinDefinition in (typeAndMixinDefinitionPair.Value.GetProperty ("TargetClass")).GetProperty ("Mixins"))
+          {
+            // compared with ToString because MemberInfo has no own implementation of Equals
+            var mixinMemberDefinition =
+                mixinDefinition.CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).
+                    SingleOrDefault();
+            if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", typeAndMixinDefinitionPair.Key).To<bool> ())
+              overrides.Add (new XElement ("Type", _outputFormatter.GetShortFormattedTypeName(typeAndMixinDefinitionPair.Key)));
+          }
+        }
+      }
+      return overrides;
     }
 
 
