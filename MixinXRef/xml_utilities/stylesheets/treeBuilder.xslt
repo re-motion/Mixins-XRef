@@ -38,7 +38,7 @@
 					<span title="{ ru:GetToolTip(/, .) }">
             <xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount(/, ., $allReferences) - 1"/>)
           </span>
-          <a href="{@id}.html" class="tree-link"> [link]</a>
+          <a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
 					
 					<!-- recursive call -->
 					<xsl:call-template name="inOrderTreeWalk">
@@ -50,7 +50,7 @@
           <span title="{ ru:GetToolTip(/, .) }">
             <xsl:value-of select="@name"/>
           </span>
-          <a href="{@id}.html" class="tree-link"> [link]</a>
+          <a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
           
 				</xsl:if>
 			</li>		
