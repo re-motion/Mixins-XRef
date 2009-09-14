@@ -17,7 +17,7 @@ label {
  	float: left;
 }
 
-/* for involved type page */
+/* for summary page */
 label {
 	min-width: 8.5em;
 }
@@ -144,6 +144,9 @@ span.ParameterName {
 }
 /* ':', ',' and unformatted text */
 span.Text {
+}
+/* explicit interface name */
+span.ExplicitInterfaceName {
 }
 
 /* treeview styles */
