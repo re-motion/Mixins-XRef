@@ -34,6 +34,7 @@
 					<th>Interface Introductions</th>
 					<th>Attribute Introductions</th>
 					<th>Overriden Members</th>
+          <th>Additional Dependencies</th>
           <th>Introduced Member Visibility</th>
 				</tr>
 			</thead>
@@ -64,6 +65,7 @@
             <td>n/a</td>
           </xsl:if>
           <td>-</td>
+          <td>-</td>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -84,6 +86,16 @@
               <xsl:with-param name="target" select="$target" />
             </xsl:call-template>
 
+            <!-- Additional Dependencies -->
+            <td>
+              <xsl:for-each select="AdditionalDependencies/Mixin">
+                <xsl:if test="position() != 1">, </xsl:if>
+                <xsl:call-template name="GenerateMixinReferenceLink">
+                  <xsl:with-param name="mixin" select="."/>
+                </xsl:call-template>
+              </xsl:for-each>
+            </td>
+            
             <td><xsl:value-of select="@introduced-member-visibility"/></td>
 					</tr>
 				</xsl:for-each>
@@ -136,7 +148,6 @@
     <td class="dubiosInvolvedType">n/a</td>
     <td class="dubiosInvolvedType">n/a</td>
   </xsl:if>
-  
 </xsl:template>
 
 </xsl:stylesheet>

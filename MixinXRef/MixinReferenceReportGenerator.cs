@@ -3,8 +3,6 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using Remotion.Mixins.Context;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -63,12 +61,15 @@ namespace MixinXRef
           new XAttribute ("relation", mixinContext.GetProperty ("MixinKind")),
           // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
           new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinType)),
-          new XAttribute ("introduced-member-visibility", mixinContext.GetProperty("IntroducedMemberVisibility"))
+          new XAttribute ("introduced-member-visibility", mixinContext.GetProperty ("IntroducedMemberVisibility")),
+          new AdditionalDependencyReportGenerator (
+              mixinContext.GetProperty ("ExplicitDependencies"), _involvedTypeIdentifierGenerator, _outputFormatter).GenerateXml()
           );
-      
+
       if (_involvedType.HasTargetClassDefintion)
       {
-        var mixinDefinition = _involvedType.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
+        var mixinDefinition = _involvedType.TargetClassDefintion.CallMethod (
+            "GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
         // set more specific name for mixin references
         mixinElement.SetAttributeValue ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinDefinition.GetProperty ("Type").To<Type>()));

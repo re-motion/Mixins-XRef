@@ -77,6 +77,8 @@ namespace MixinXRef.UnitTests
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin1"),
               new XAttribute ("introduced-member-visibility", "Private"),
+              // has no dependencies
+              new XElement ("AdditionalDependencies"),
               new InterfaceIntroductionReportGenerator (new ReflectedObject (mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).
                   GenerateXml(),
               new AttributeIntroductionReportGenerator (
@@ -119,7 +121,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "ClassWithBookAttribute"),
-              new XAttribute ("introduced-member-visibility", "Private")
+              new XAttribute ("introduced-member-visibility", "Private"),
+              // has no dependencies
+              new XElement ("AdditionalDependencies")
               ),
           new XElement (
               "Mixin",
@@ -127,7 +131,9 @@ namespace MixinXRef.UnitTests
               new XAttribute ("index", "n/a"),
               new XAttribute ("relation", "Extending"),
               new XAttribute ("instance-name", "Mixin3"),
-              new XAttribute ("introduced-member-visibility", "Private")
+              new XAttribute ("introduced-member-visibility", "Private"),
+              // has no dependencies
+              new XElement ("AdditionalDependencies")
               )
           );
 
