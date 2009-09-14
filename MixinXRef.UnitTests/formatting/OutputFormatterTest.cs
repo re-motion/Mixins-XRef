@@ -149,7 +149,7 @@ namespace MixinXRef.UnitTests.formatting
     }
 
     [Test]
-    public void GetMemberSignature_ExplicitInterfaceWithParams ()
+    public void GetMemberSignature_ExplicitInterfaceMethodImplementation ()
     {
       var methodInfo =
           typeof (MemberSignatureTestClass).GetMethod (
@@ -168,27 +168,6 @@ namespace MixinXRef.UnitTests.formatting
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
-
-    //[Test]
-    //public void GetMemberSignature_NestedExplicitInterfaceWithParams ()
-    //{
-    //  var methodInfo =
-    //      typeof (MemberSignatureTestClass).GetMethod (
-    //          "MixinXRef.UnitTests.TestDomain.IExplicitNestedInterface.Version",
-    //          BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-
-    //  var output = _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters ());
-
-    //  var expectedOutput = new XElement (
-    //      "Signature",
-    //      new XElement ("Keyword", "string"),
-    //      new XElement ("Name", "IExplicitInterface.Version"),
-    //      new XElement ("Text", "("),
-    //      new XElement ("Text", ")")
-    //      );
-
-    //  Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
-    //}
 
     [Test]
     public void CreateEventMarkup ()

@@ -154,14 +154,7 @@ namespace MixinXRef.Formatting
       ArgumentUtility.CheckNotNull ("returnType", returnType);
       ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-     if (methodName.Contains ("."))
-      {
-        var parts = methodName.Split ('.');
-        var partCount = parts.Length;
-        methodName = parts[partCount - 2] + "." + parts[partCount - 1];
-      }
-
-      return CreateMemberMarkup (null, returnType, methodName, parameterInfos);
+     return CreateMemberMarkup (null, returnType, methodName, parameterInfos);
     }
 
     public XElement CreateEventMarkup (string eventName, Type handlerType)
@@ -226,6 +219,13 @@ namespace MixinXRef.Formatting
     private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
     {
       var markup = new XElement ("Signature");
+
+      if (memberName.Contains ("."))
+      {
+        var parts = memberName.Split ('.');
+        var partCount = parts.Length;
+        memberName = parts[partCount - 2] + "." + parts[partCount - 1];
+      }
 
       markup.Add (CreateElement ("Keyword", prefix));
       markup.Add (CreateTypeOrKeywordElement (type));

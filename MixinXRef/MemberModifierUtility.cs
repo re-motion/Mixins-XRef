@@ -83,17 +83,10 @@ namespace MixinXRef
       else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool> ())
       {
         modifiers = "private";
-        
-        // method is explicit interface
-        if (methodFieldOrConstructor is MethodInfo && 
-          ((MethodInfo) methodFieldOrConstructor).IsHideBySig && 
-          methodFieldOrConstructor.Name.Contains("."))
-          return "";
       }
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {
-        
         if (methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>())
           modifiers += " abstract";
         else if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
@@ -106,6 +99,13 @@ namespace MixinXRef
             !methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() && 
             methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
+        
+        // explicit interface implementation
+        if (methodFieldOrConstructorInfo.GetProperty ("IsHideBySig").To<bool> () && 
+          methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool> () &&
+          methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool> () &&
+          methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool> () )
+          return "";
       }
 
       if (!(methodFieldOrConstructor is EventInfo) && methodFieldOrConstructorInfo.GetProperty ("IsStatic").To<bool> ())

@@ -1,6 +1,5 @@
 using System;
 using Remotion.Collections;
-using Remotion.Reflection;
 
 namespace MixinXRef.UnitTests.TestDomain
 {
@@ -70,6 +69,18 @@ namespace MixinXRef.UnitTests.TestDomain
       {
         throw new NotImplementedException();
       }
+
+      int IExplicitInterface.Count
+      {
+        get { throw new NotImplementedException(); }
+        set { throw new NotImplementedException(); }
+      }
+
+      event EventHandler IExplicitInterface.eventHandler
+      {
+        add { throw new NotImplementedException(); }
+        remove { throw new NotImplementedException(); }
+      }
     }
 
     // explicit interface
@@ -77,11 +88,25 @@ namespace MixinXRef.UnitTests.TestDomain
     {
       throw new NotImplementedException();
     }
+
+    int IExplicitInterface.Count
+    {
+      get { throw new NotImplementedException(); }
+      set { throw new NotImplementedException(); }
+    }
+
+    event EventHandler IExplicitInterface.eventHandler
+    {
+      add { throw new NotImplementedException(); }
+      remove { throw new NotImplementedException(); }
+    }
   }
 
 
   public interface IExplicitInterface
   {
     string Version ();
+    int Count { get; set; }
+    event EventHandler eventHandler;
   }
 }
