@@ -75,7 +75,7 @@ namespace MixinXRef
           _summaryPicker.GetSummary (realType),
           new MemberReportGenerator (realType, involvedType, _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (
-              realType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              involvedType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
           new AttributeReferenceReportGenerator (
               realType, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
           new MixinReferenceReportGenerator (

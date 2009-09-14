@@ -73,7 +73,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, null, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
@@ -140,7 +140,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, involvedType1, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
@@ -167,7 +167,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type, involvedType2, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2,
@@ -193,7 +193,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType3.Type),
               new MemberReportGenerator (involvedType3.Type, involvedType3, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType3.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType3, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType3,
@@ -220,7 +220,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType4.Type),
               new MemberReportGenerator (involvedType4.Type, involvedType4, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType4.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType4, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType4,
@@ -275,7 +275,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, involvedType1, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType1.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType1,
@@ -302,7 +302,7 @@ namespace MixinXRef.UnitTests
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type, involvedType1, _outputFormatter).
                   GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType2.Type, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
               new MixinReferenceReportGenerator (
                   involvedType2,
