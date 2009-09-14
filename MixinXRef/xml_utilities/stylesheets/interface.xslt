@@ -37,6 +37,10 @@
 		</xsl:call-template>
 	</div>
 
+  <xsl:if test="@is-complete-interface = true()">
+    <div>This interface is a complete interface.</div>
+  </xsl:if>
+
   <xsl:call-template name="memberList">
     <xsl:with-param name="members" select="Members/Member"/>
   </xsl:call-template>

@@ -109,6 +109,10 @@
 		<xsl:with-param name="keyName">interface</xsl:with-param>		
 		<xsl:with-param name="dir" select="concat($dir, '/interfaces/')"/>
 	</xsl:call-template>
+
+  <xsl:if test="@is-complete-interface = true()">
+    <span class="complete-interface-annotation">[CI]</span>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="GenerateAttributeLink">

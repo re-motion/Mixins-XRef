@@ -105,6 +105,12 @@ tbody tr.odd td {
 	vertical-align: top;
 }
 
+.complete-interface-annotation
+{
+  font-size: 70%;
+	vertical-align: top;
+}
+
 .emptyText
 {
   padding: 5px 0 5px 0;

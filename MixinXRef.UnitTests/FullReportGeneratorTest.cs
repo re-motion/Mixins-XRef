@@ -63,6 +63,9 @@ namespace MixinXRef.UnitTests
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .ForClass<UselessObject> ().AddMixin<FullReportGeneratorTestClass> ().AddMixin<ClassWithAlphabeticOrderingAttribute>()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
+          .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ()
+          .AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ()
+          .AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration();
 
       var involvedTypes = new InvolvedTypeFinder (
@@ -81,7 +84,7 @@ namespace MixinXRef.UnitTests
           ProgramTest.GetRemotionReflection(),
           new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
-
+      
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       // the creation time of the validiation file is different from the creation time of the generated report

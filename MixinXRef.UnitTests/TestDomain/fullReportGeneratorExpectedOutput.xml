@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-14 11:24:29">
+<MixinXRefReport creation-time="2009-09-14 12:51:21">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -16,6 +16,8 @@
       <InvolvedType ref="8" />
       <InvolvedType ref="9" />
       <InvolvedType ref="10" />
+      <InvolvedType ref="11" />
+      <InvolvedType ref="12" />
     </Assembly>
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
@@ -396,6 +398,76 @@
         <Target ref="9" />
       </Targets>
     </InvolvedType>
+    <InvolvedType id="11" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="A">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>A</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>MyMixinTarget</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <Interfaces />
+      <Attributes />
+      <Mixins>
+        <Mixin ref="12" index="n/a" relation="Extending" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="Private">
+          <AdditionalDependencies />
+        </Mixin>
+      </Mixins>
+    </InvolvedType>
+    <InvolvedType id="12" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="B">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>B</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>MyMixin</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <Interfaces />
+      <Attributes />
+      <Targets>
+        <Target ref="11" />
+      </Targets>
+    </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
     <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
@@ -418,6 +490,37 @@
         <InvolvedType ref="9" />
       </ImplementedBy>
     </Interface>
+    <Interface id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
+      <Members>
+        <Member type="Method" name="A">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>A</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="B">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>B</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <ImplementedBy>
+        <InvolvedType ref="11" />
+      </ImplementedBy>
+    </Interface>
   </Interfaces>
   <Attributes>
     <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
@@ -431,6 +534,14 @@
       </AppliedTo>
     </Attribute>
   </Attributes>
-  <ConfigurationErrors />
+  <ConfigurationErrors>
+    <Exception type="Remotion.Mixins.ConfigurationException">
+      <Message><![CDATA[The dependency ICMyMixinTargetMyMixin (mixins  applied to class MixinXRef.UnitTests.TestDomain.CompleteInterfacesTestClass+MyMixinTarget) is not fulfilled - public or protected method B could not be found on the base class.]]></Message>
+      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 55
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 39
+   at MixinXRef.Reflection.RemotionReflection08.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\RemotionReflection08.cs:line 54
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 79]]></StackTrace>
+    </Exception>
+  </ConfigurationErrors>
   <ValidationErrors />
 </MixinXRefReport>
