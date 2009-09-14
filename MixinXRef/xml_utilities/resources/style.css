@@ -11,10 +11,15 @@ a {
 	text-decoration: none;
 }
 
-/* for summary and involved type page */
+/* for involved type page */
 label {
 	min-width: 7em;
  	float: left;
+}
+
+/* for involved type page */
+label {
+	min-width: 8.5em;
 }
 
 /* horizontal navigation bar */

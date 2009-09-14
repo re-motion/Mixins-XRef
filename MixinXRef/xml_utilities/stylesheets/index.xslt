@@ -12,12 +12,20 @@
       <xsl:value-of select="ru:GetOverallAssemblyCount(/)"/>
     </div>
     <div>
-      <label>Target classes:</label>
+      <label>Mixins:</label>
+      <xsl:value-of select="ru:GetOverallMixinCount(/)"/>
+    </div>
+    <div>
+      <label>Target Classes:</label>
       <xsl:value-of select="ru:GetOverallTargetClassCount(/)"/>
     </div>
     <div>
-      <label>Mixins:</label>
-      <xsl:value-of select="ru:GetOverallMixinCount(/)"/>
+      <label>Involved Interfaces:</label>
+      <xsl:value-of select="count( /MixinXRefReport/Interfaces/Interface )"/>
+    </div>
+    <div>
+      <label>Involved Attributes:</label>
+      <xsl:value-of select="count( /MixinXRefReport/Attributes/Attribute )"/>
     </div>
   </p>
 	
