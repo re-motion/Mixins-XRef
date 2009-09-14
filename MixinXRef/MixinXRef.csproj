@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalDependencyReportGenerator.cs" />
     <Compile Include="ArgumentUtility.cs" />
     <Compile Include="AssemblyBuilder.cs" />
     <Compile Include="AssemblyReportGenerator.cs" />
