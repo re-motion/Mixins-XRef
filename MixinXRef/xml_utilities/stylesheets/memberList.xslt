@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns="http://www.w3.org/1999/xhtml" xmlns:ru="http://www.rubicon-it.com"
 	exclude-result-prefixes="xs fn ru">
-	
+ 
 <xsl:template name="memberList">
 	<xsl:param name="members"/>
 	
@@ -50,9 +50,17 @@
 		</tbody>
 	</table>
 </xsl:template>
-	
-<xsl:template match="Keyword | Name |  Type | Text | ParameterName">
-	<span class="{name(.)}"><xsl:value-of select="."/></span>
-</xsl:template>
 
+
+<!-- without strip-space, each span would be created in an own line. -->
+<xsl:strip-space elements="Modifiers Signature" />
+  
+<xsl:template match="Keyword | Type | Text | Name | ParameterName | ExplicitInterfaceName" >
+	<span class="{name(.)}"><xsl:value-of select="."/>
+    <xsl:if test=". != '(' and . != '[' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']'">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+  </span>
+</xsl:template>
+  
 </xsl:stylesheet>

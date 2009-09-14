@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-14 12:51:21">
+<MixinXRefReport creation-time="2009-09-14 14:53:31">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -426,7 +426,9 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
+      <Interfaces>
+        <Interface ref="1" />
+      </Interfaces>
       <Attributes />
       <Mixins>
         <Mixin ref="12" index="n/a" relation="Extending" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="Private">

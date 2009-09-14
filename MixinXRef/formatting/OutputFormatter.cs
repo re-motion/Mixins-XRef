@@ -220,15 +220,18 @@ namespace MixinXRef.Formatting
     {
       var markup = new XElement ("Signature");
 
+
+      markup.Add (CreateElement ("Keyword", prefix));
+      markup.Add (CreateTypeOrKeywordElement (type));
+
       if (memberName.Contains ("."))
       {
         var parts = memberName.Split ('.');
         var partCount = parts.Length;
-        memberName = parts[partCount - 2] + "." + parts[partCount - 1];
+        memberName = parts[partCount - 1];
+        markup.Add (CreateElement ("ExplicitInterfaceName", parts[partCount - 2] + "."));
       }
-
-      markup.Add (CreateElement ("Keyword", prefix));
-      markup.Add (CreateTypeOrKeywordElement (type));
+      
       markup.Add (CreateElement ("Name", memberName));
 
       if (parameterInfos != null)

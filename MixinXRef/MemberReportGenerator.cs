@@ -114,10 +114,18 @@ namespace MixinXRef
     {
       if (memberInfo.MemberType == MemberTypes.Method)
       {
-        var methodName = memberInfo.Name;
         var methodInfo = memberInfo as MethodInfo;
         if (methodInfo == null)
           return false;
+
+        var methodName = methodInfo.Name;
+        // only explicit interface implementations contain a '.'
+        if (methodName.Contains ('.'))
+        {
+          var parts = methodName.Split ('.');
+          var partCount = parts.Length;
+          methodName = parts[partCount - 1];
+        }
 
         return (
                    methodInfo.IsSpecialName &&
