@@ -46,8 +46,14 @@ namespace MixinXRef
 
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
-      var attributes = new StringBuilder();
+      var lastPoint = memberInfo.Name.LastIndexOf ('.');
+      var memberName = memberInfo.Name;
 
+      // member is explicit interface implementation
+      if (lastPoint != -1)
+        memberName = memberInfo.Name.Substring (lastPoint+1, memberInfo.Name.Length - lastPoint-1);
+      
+      var attributes = new StringBuilder ();
       if (_involvedType != null)
       {
         if (HasOverrideMixinAttribute (memberInfo))
@@ -60,7 +66,7 @@ namespace MixinXRef
       return new XElement (
           "Member",
           new XAttribute ("type", memberInfo.MemberType),
-          new XAttribute ("name", memberInfo.Name),
+          new XAttribute ("name", memberName),
           _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
           _memberSignatureUtility.GetMemberSignatur (memberInfo)
           );
