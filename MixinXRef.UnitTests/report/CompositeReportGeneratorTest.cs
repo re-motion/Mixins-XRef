@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Linq;
 using MixinXRef.Report;
+using MixinXRef.UnitTests.Stub;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 

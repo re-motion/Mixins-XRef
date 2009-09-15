@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 

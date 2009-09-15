@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Report
 {

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using MixinXRef.Reflection.Remotion;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection
 {
@@ -21,6 +23,7 @@ namespace MixinXRef.Reflection
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 
+      // TODO: more generic version detection
       var versionString = remotionAssembly.GetName().Version.ToString();
 
       switch (versionString)

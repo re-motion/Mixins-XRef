@@ -1,8 +1,9 @@
 using System;
 using System.Xml.Linq;
-using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 

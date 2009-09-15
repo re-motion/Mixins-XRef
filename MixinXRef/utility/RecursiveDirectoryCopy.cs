@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace MixinXRef
+namespace MixinXRef.Utility
 {
   public static class RecursiveDirectoryCopy
   {

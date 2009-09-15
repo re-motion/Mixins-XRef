@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using Remotion.Text;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Utility
 {
   [TestFixture]
   public class IdentifierGeneratorTest
@@ -45,7 +44,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetIdentifier2_ForExistingValue()
+    public void GetIdentifier2_ForExistingValue ()
     {
       var identifierGenerator = new IdentifierGenerator<string>();
 
@@ -53,17 +52,17 @@ namespace MixinXRef.UnitTests
 
       var output = identifierGenerator.GetIdentifier ("test-value", "does not matter");
 
-      Assert.That(output, Is.EqualTo(expectedOuput));
+      Assert.That (output, Is.EqualTo (expectedOuput));
     }
 
     [Test]
-    public void GetIdentifier2_ForNonExistingValue()
+    public void GetIdentifier2_ForNonExistingValue ()
     {
       var identifierGenerator = new IdentifierGenerator<string>();
 
-      var output = identifierGenerator.GetIdentifier("test-value", "default value if not present");
+      var output = identifierGenerator.GetIdentifier ("test-value", "default value if not present");
 
-      Assert.That(output, Is.EqualTo("default value if not present"));
+      Assert.That (output, Is.EqualTo ("default value if not present"));
     }
   }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;

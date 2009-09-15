@@ -1,6 +1,6 @@
 using System;
 
-namespace MixinXRef
+namespace MixinXRef.Utility
 {
   public interface IIdentifierGenerator<T>
   {

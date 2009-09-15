@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;

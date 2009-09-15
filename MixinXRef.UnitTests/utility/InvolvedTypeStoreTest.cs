@@ -1,11 +1,9 @@
-// Copyright (C) 2005 - 2009 rubicon informationstechnologie gmbh
-// All rights reserved.
-//
 using System;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Utility
 {
   [TestFixture]
   public class InvolvedTypeStoreTest
@@ -21,8 +19,8 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetOrCreateValue_EmptyStore ()
     {
-      var involvedType = _involvedTypeStore.GetOrCreateValue (typeof(object));
-      
+      var involvedType = _involvedTypeStore.GetOrCreateValue (typeof (object));
+
       var expectedInvolvedType = new InvolvedType (typeof (object));
       Assert.That (involvedType, Is.EqualTo (expectedInvolvedType));
     }
@@ -41,7 +39,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void ToArray_EmptyStore ()
     {
-      Assert.That (_involvedTypeStore.ToArray (), Is.EqualTo (new InvolvedType[0]));
+      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (new InvolvedType[0]));
     }
 
     [Test]
@@ -51,7 +49,7 @@ namespace MixinXRef.UnitTests
       var involvedType2 = _involvedTypeStore.GetOrCreateValue (typeof (string));
       var expectedType = new[] { involvedType1, involvedType2 };
 
-      Assert.That (_involvedTypeStore.ToArray (), Is.EqualTo (expectedType));
+      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (expectedType));
     }
   }
 }

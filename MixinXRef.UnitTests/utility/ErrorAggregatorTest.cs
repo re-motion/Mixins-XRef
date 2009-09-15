@@ -1,9 +1,10 @@
 using System;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using System.Linq;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Utility
 {
   [TestFixture]
   public class ErrorAggregatorTest

@@ -1,10 +1,11 @@
 using System;
 using System.Reflection;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Reflection
 {
   [TestFixture]
   public class TypeModifierUtilityTest

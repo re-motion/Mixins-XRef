@@ -1,8 +1,9 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.Utility;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public class MemberModifierUtility
   {

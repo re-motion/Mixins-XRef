@@ -1,9 +1,10 @@
 using System;
 using System.IO;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Utility
 {
   [TestFixture]
   public class RecursiveDirectoryCopyTest

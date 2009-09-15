@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MixinXRef
+namespace MixinXRef.Utility
 {
   public class ErrorAggregator<TException>
   {

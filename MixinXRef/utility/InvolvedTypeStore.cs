@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MixinXRef
+namespace MixinXRef.Utility
 {
   public class InvolvedTypeStore
   {

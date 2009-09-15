@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Report
 {

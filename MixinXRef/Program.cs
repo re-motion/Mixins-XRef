@@ -4,7 +4,9 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
+using MixinXRef.Utility;
 
 namespace MixinXRef
 {

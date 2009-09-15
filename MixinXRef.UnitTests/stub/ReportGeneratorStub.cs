@@ -2,7 +2,7 @@ using System;
 using System.Xml.Linq;
 using MixinXRef.Report;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Stub
 {
   public class ReportGeneratorStub : IReportGenerator
   {

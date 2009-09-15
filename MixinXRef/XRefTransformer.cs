@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using MixinXRef.Utility;
 
 namespace MixinXRef
 {

@@ -2,8 +2,9 @@ using System;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
+using MixinXRef.Utility;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public class MemberSignatureUtility
   {

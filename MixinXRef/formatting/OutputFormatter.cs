@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Formatting
 {

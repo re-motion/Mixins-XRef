@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Report
 {

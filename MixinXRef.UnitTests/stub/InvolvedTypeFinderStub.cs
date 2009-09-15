@@ -1,6 +1,6 @@
 using System;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Stub
 {
   public class InvolvedTypeFinderStub : IInvolvedTypeFinder
   {

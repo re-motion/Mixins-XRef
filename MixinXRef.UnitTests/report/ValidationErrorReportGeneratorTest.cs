@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Linq;
 using MixinXRef.Report;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins.Validation;

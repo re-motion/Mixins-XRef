@@ -1,10 +1,11 @@
 using System;
 using System.Reflection;
+using MixinXRef.Reflection;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests
+namespace MixinXRef.UnitTests.Reflection
 {
   [TestFixture]
   public class MemberModifierUtilityTest
@@ -123,7 +124,7 @@ namespace MixinXRef.UnitTests
     {
       var methodInfo =
           typeof (MemberSignatureTestClass).GetMethod ("MixinXRef.UnitTests.TestDomain.IExplicitInterface.Version",
-          BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                                                       BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
       var output = _memberModifierUtility.GetMemberModifiers (methodInfo);
       

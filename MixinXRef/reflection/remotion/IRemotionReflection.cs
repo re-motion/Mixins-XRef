@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Reflection.Remotion
 {
   public interface IRemotionReflection
   {
@@ -11,7 +11,7 @@ namespace MixinXRef.Reflection
     bool IsInfrastructureType (Type type);
 
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
-    ReflectedObject BuildConfigurationFromAssemblies(Assembly[] assemblies);
+    ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);
 
     Assembly FindRemotionAssembly (Assembly[] assemblies);
   }

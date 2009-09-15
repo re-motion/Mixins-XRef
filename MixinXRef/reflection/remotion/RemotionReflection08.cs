@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Reflection.Remotion
 {
   public class RemotionReflection08 : IRemotionReflection
   {
     private readonly Assembly _remotionAssembly;
 
-    public RemotionReflection08(Assembly remotionAssembly)
+    public RemotionReflection08 (Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 
@@ -58,8 +59,8 @@ namespace MixinXRef.Reflection
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
-      var declarativeConfigurationBuilderType = _remotionAssembly.GetType("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
-      return ReflectedObject.CallMethod(declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
+      var declarativeConfigurationBuilderType = _remotionAssembly.GetType ("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
+      return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
     }
 
     public Assembly FindRemotionAssembly (Assembly[] assemblies)
@@ -67,6 +68,6 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
       return assemblies.SingleOrDefault (a => a.GetName().Name == "Remotion");
-    }    
+    }
   }
 }

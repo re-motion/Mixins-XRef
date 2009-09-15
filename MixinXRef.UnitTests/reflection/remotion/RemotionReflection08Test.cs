@@ -1,5 +1,6 @@
 using System;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -9,7 +10,7 @@ using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
 
-namespace MixinXRef.UnitTests.Reflection
+namespace MixinXRef.UnitTests.Reflection.Remotion
 {
   [TestFixture]
   public class RemotionReflection08Test

@@ -6,6 +6,7 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;

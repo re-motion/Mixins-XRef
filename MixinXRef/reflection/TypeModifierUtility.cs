@@ -1,6 +1,6 @@
 using System;
 
-namespace MixinXRef
+namespace MixinXRef.Reflection
 {
   public class TypeModifierUtility
   {
@@ -18,7 +18,7 @@ namespace MixinXRef
         modifiers = "internal";
       else if (type.IsNestedPrivate)
         modifiers = "private";
-      // non nested internal class - no own flag?
+          // non nested internal class - no own flag?
       else if (type.IsNotPublic)
         modifiers = "internal";
       

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace MixinXRef
+namespace MixinXRef.Utility
 {
   public class TimingScope : IDisposable
   {

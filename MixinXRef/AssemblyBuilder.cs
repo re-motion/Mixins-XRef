@@ -2,7 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
+using MixinXRef.Utility;
 
 namespace MixinXRef
 {
