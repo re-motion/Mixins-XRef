@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="reflection\remotion\RemotionReflection09.cs" />
     <Compile Include="report\AdditionalDependencyReportGenerator.cs" />
     <Compile Include="utility\ArgumentUtility.cs" />
     <Compile Include="AssemblyBuilder.cs" />
