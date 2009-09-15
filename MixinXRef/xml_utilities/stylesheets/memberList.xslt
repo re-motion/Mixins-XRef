@@ -26,6 +26,9 @@
 				<th>Type</th>
         <th>Modifiers</th>
         <th>Signature</th>
+        <xsl:if test="exists($members/Overrides)">
+          <th>Overrides</th>  
+        </xsl:if>
 			</tr>
 		</thead>
 		<tfoot>
@@ -34,6 +37,9 @@
 				<td>-</td>
         <td>-</td>
         <td>-</td>
+        <xsl:if test="exists($members/Overrides)">
+          <td>-</td>
+        </xsl:if>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -45,6 +51,16 @@
 						<xsl:apply-templates select="Modifiers" />
 					</td>
 				  <td><xsl:apply-templates select="Signature" /></td>
+          <xsl:if test="exists($members/Overrides)">
+            <td>
+              <xsl:for-each select="$members/Overrides/Mixin">
+                <xsl:if test="position() != 1">, </xsl:if>
+                <xsl:call-template name="GenerateMixinReferenceLink">
+                  <xsl:with-param name="mixin" select="." />
+                </xsl:call-template>
+              </xsl:for-each>
+            </td>
+          </xsl:if>
 				</tr>
 			</xsl:for-each>
 		</tbody>

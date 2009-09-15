@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -18,8 +17,11 @@ namespace MixinXRef
     private readonly MemberSignatureUtility _memberSignatureUtility;
 
 
-    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, IIdentifierGenerator<Type> involvedTypeIdentifierGeneratorOrNull,
-      IOutputFormatter outputFormatter)
+    public MemberReportGenerator (
+        Type type,
+        InvolvedType involvedTypeOrNull,
+        IIdentifierGenerator<Type> involvedTypeIdentifierGeneratorOrNull,
+        IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       // may be null
@@ -37,13 +39,14 @@ namespace MixinXRef
 
     public XElement GenerateXml ()
     {
-      // TODO: find a better way to remove private modifiers
       return new XElement (
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
           where memberInfo.DeclaringType == _type &&
                 !IsSpecialName (memberInfo) &&
-                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private")
+                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private") &&
+                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("internal")
+
           select CreateMemberElement (memberInfo)
           );
     }
@@ -91,8 +94,9 @@ namespace MixinXRef
       {
         // compared with ToString because MemberInfo has no own implementation of Equals
         var mixinMemberDefinition =
-            mixinDefinition.CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).
-                SingleOrDefault();
+            mixinDefinition.CallMethod ("GetAllMembers")
+            .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
+
         if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
           return true;
       }
@@ -129,24 +133,28 @@ namespace MixinXRef
 
       var overrides = new XElement ("Overrides");
 
+      // TODO: how can it be, that a target class definition has the same member info twice?
+      // TODO: change back to SingleOrDefault when fixed
       var memberDefinition =
-            _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers").Where (
-                mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
+          _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
+          .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).FirstOrDefault();
 
-
-      // TargetClassDefinition.GetAllMembers() does not return the constructor; memberDefinition would be null
-      if (memberInfo.MemberType == MemberTypes.Constructor)
+      // TODO: check why it's possible that the memberDefinition is null 
+      // TargetClassDefinition.GetAllMembers doesn't contain same members as type.GetMembers
+      if (memberDefinition == null)
         return overrides;
 
-        foreach (var overrideDefinition in memberDefinition.GetProperty("Overrides"))
-        {
-          var type = overrideDefinition.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type>();
-          overrides.Add (new XElement ("Mixin",
-            new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
-            new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
-            ));  
-        }
-      
+      foreach (var overrideDefinition in memberDefinition.GetProperty ("Overrides"))
+      {
+        var type = overrideDefinition.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type>();
+        overrides.Add (
+            new XElement (
+                "Mixin",
+                new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
+                new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
+                ));
+      }
+
       return overrides;
     }
 
