@@ -73,7 +73,7 @@ namespace MixinXRef
           new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
           _outputFormatter.CreateModifierMarkup (GetAlphabeticOrderingAttribute(involvedType), _typeModifierUtility.GetTypeModifiers (realType)),
           _summaryPicker.GetSummary (realType),
-          new MemberReportGenerator (realType, involvedType, _outputFormatter).GenerateXml(),
+          new MemberReportGenerator (realType, involvedType, _involvedTypeIdentifierGenerator,  _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (
               involvedType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
           new AttributeReferenceReportGenerator (

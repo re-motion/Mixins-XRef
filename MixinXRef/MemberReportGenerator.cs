@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
+using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
@@ -11,20 +12,24 @@ namespace MixinXRef
   {
     private readonly Type _type;
     private readonly InvolvedType _involvedType;
+    private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IOutputFormatter _outputFormatter;
     private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
     private readonly MemberSignatureUtility _memberSignatureUtility;
 
 
-    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, IOutputFormatter outputFormatter)
+    public MemberReportGenerator (Type type, InvolvedType involvedTypeOrNull, IIdentifierGenerator<Type> involvedTypeIdentifierGeneratorOrNull,
+      IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       // may be null
       // ArgumentUtility.CheckNotNull ("involvedTypeOrNull", involvedTypeOrNull);
+      // ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGeneratorOrNull", involvedTypeIdentifierGeneratorOrNull);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _type = type;
       _involvedType = involvedTypeOrNull;
+      _involvedTypeIdentifierGenerator = involvedTypeIdentifierGeneratorOrNull;
       _outputFormatter = outputFormatter;
       _memberSignatureUtility = new MemberSignatureUtility (outputFormatter);
     }
@@ -50,7 +55,8 @@ namespace MixinXRef
       var memberName = memberInfo.Name;
 
       // member is explicit interface implementation
-      if (lastPoint != -1)
+      // greater 0 because ".ctor" would be changed to "ctor"
+      if (lastPoint > 0)
         memberName = memberInfo.Name.Substring (lastPoint + 1, memberInfo.Name.Length - lastPoint - 1);
 
       var attributes = new StringBuilder();
@@ -68,7 +74,8 @@ namespace MixinXRef
           new XAttribute ("type", memberInfo.MemberType),
           new XAttribute ("name", memberName),
           _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
-          _memberSignatureUtility.GetMemberSignatur (memberInfo)
+          _memberSignatureUtility.GetMemberSignatur (memberInfo),
+          GetOverrides (memberInfo)
           );
     }
 
@@ -117,26 +124,29 @@ namespace MixinXRef
 
     public XElement GetOverrides (MemberInfo memberInfo)
     {
+      if (_involvedType == null || !_involvedType.HasTargetClassDefintion)
+        return null;
+
       var overrides = new XElement ("Overrides");
 
-      if (_involvedType.IsMixin)
-      {
-        foreach (var typeAndMixinDefinitionPair in _involvedType.TargetTypes)
-        {
-          if (typeAndMixinDefinitionPair.Value == null)
-            continue;
+      var memberDefinition =
+            _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers").Where (
+                mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
 
-          foreach (var mixinDefinition in (typeAndMixinDefinitionPair.Value.GetProperty ("TargetClass")).GetProperty ("Mixins"))
-          {
-            // compared with ToString because MemberInfo has no own implementation of Equals
-            var mixinMemberDefinition =
-                mixinDefinition.CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).
-                    SingleOrDefault();
-            if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", typeAndMixinDefinitionPair.Key).To<bool> ())
-              overrides.Add (new XElement ("Type", _outputFormatter.GetShortFormattedTypeName(typeAndMixinDefinitionPair.Key)));
-          }
+
+      // TargetClassDefinition.GetAllMembers() does not return the constructor; memberDefinition would be null
+      if (memberInfo.MemberType == MemberTypes.Constructor)
+        return overrides;
+
+        foreach (var overrideDefinition in memberDefinition.GetProperty("Overrides"))
+        {
+          var type = overrideDefinition.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type>();
+          overrides.Add (new XElement ("Mixin",
+            new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
+            new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
+            ));  
         }
-      }
+      
       return overrides;
     }
 
