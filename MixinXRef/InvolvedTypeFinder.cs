@@ -3,7 +3,6 @@ using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Utility;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef
 {
