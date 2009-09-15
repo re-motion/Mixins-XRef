@@ -37,11 +37,11 @@
     </Reference>
     <Reference Include="Remotion, Version=1.11.20.13, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MixinXRef\lib\Remotion.dll</HintPath>
+      <HintPath>lib\Remotion.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Interfaces, Version=1.11.20.13, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MixinXRef\lib\Remotion.Interfaces.dll</HintPath>
+      <HintPath>lib\Remotion.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Mixins.Persistent.Signed, Version=0.0.0.0, Culture=neutral, PublicKeyToken=a621a9e7e5c32e69, processorArchitecture=MSIL" />
     <Reference Include="System" />
