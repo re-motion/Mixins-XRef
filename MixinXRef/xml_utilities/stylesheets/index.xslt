@@ -6,7 +6,7 @@
 <xsl:template name="index">
 	<h1>Mixin Documentation Summary </h1> <h2> @<xsl:value-of select="/MixinXRefReport/@creation-time" /></h2>
 	
-	<p>
+	<div class="message">
     <div>
       <label>Assemblies:</label>
       <xsl:value-of select="ru:GetOverallAssemblyCount(/)"/>
@@ -27,7 +27,7 @@
       <label>Involved Attributes:</label>
       <xsl:value-of select="count( /MixinXRefReport/Attributes/Attribute )"/>
     </div>
-  </p>
+  </div>
 	
 	<p>Use one of the index pages to start browsing. Hold down [Shift] to sort multiple columns.</p>
 	
