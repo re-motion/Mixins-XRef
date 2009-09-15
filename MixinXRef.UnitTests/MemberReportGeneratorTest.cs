@@ -133,7 +133,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("name", "TemplateMethod"),
               _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
               _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0]),
-              new XElement("Overrides")
+              new XElement ("Overrides")
               ),
           new XElement (
               "Member",
@@ -141,7 +141,7 @@ namespace MixinXRef.UnitTests
               new XAttribute ("name", "OverriddenMethod"),
               _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("OverriddenMethod", typeof (void), new ParameterInfo[0]),
-              reportGenerator.GetOverrides(memberInfo)
+              reportGenerator.GetOverrides (memberInfo)
               ),
           new XElement (
               "Member",
@@ -214,7 +214,7 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetOverrides_False ()
+    public void GetOverrides_InvolvedTypeNull ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (object), null);
       var memberInfo = typeof (object).GetMember ("ToString")[0];
@@ -225,12 +225,13 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
-    public void GetOverrides_ForTargetTrue ()
+    public void GetOverrides_NoOverrides ()
     {
-      var mixinType = typeof (MemberOverrideTestClass.Mixin1);
-      var targetType = typeof (MemberOverrideTestClass.Target);
+      var targetType = typeof (TargetClass1);
       var mixinConfiguration =
-          MixinConfiguration.BuildNew().ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>().BuildConfiguration();
+          MixinConfiguration.BuildNew()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
+          .BuildConfiguration();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
       var involvedType = new InvolvedType (targetType)
                          {
@@ -238,9 +239,33 @@ namespace MixinXRef.UnitTests
                              ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First())
                          };
 
-      var reportGenerator = CreateMemberReportGenerator (mixinType, involvedType);
+      var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
 
-      var memberInfo = mixinType.GetMember ("OverriddenMethod")[0];
+      var memberInfo = targetType.GetMember ("Dispose")[0];
+      var output = reportGenerator.GetOverrides (memberInfo);
+      var expectedOutput = new XElement ("Overrides");
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GetOverrides_WithOverrides ()
+    {
+      var targetType = typeof (MemberOverrideTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew()
+          .ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>()
+          .BuildConfiguration();
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
+      var involvedType = new InvolvedType (targetType)
+                         {
+                             TargetClassDefintion = targetClassDefinition,
+                             ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First())
+                         };
+
+      var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
+
+      var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
       var output = reportGenerator.GetOverrides (memberInfo);
       var expectedOutput =
           new XElement (
