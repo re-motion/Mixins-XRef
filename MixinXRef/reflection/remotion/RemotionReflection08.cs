@@ -15,7 +15,7 @@ namespace MixinXRef.Reflection.Remotion
 
       _remotionAssembly = remotionAssembly;
     }
-
+     
     public bool IsNonApplicationAssembly (Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);

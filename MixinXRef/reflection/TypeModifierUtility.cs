@@ -21,7 +21,7 @@ namespace MixinXRef.Reflection
           // non nested internal class - no own flag?
       else if (type.IsNotPublic)
         modifiers = "internal";
-      
+
       if (type.IsAbstract)
         modifiers += " abstract";
       else if (type.IsSealed)

@@ -34,7 +34,7 @@ namespace MixinXRef.Reflection
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;
           return _outputFormatter.CreateEventMarkup (eventInfo.Name, eventInfo.EventHandlerType);
-          
+
         case MemberTypes.Field:
           var fieldInfo = (FieldInfo) memberInfo;
           return _outputFormatter.CreateFieldMarkup (fieldInfo.Name, fieldInfo.FieldType);

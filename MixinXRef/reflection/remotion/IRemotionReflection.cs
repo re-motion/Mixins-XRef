@@ -12,7 +12,7 @@ namespace MixinXRef.Reflection.Remotion
 
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
     ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);
-
+    
     Assembly FindRemotionAssembly (Assembly[] assemblies);
   }
 }

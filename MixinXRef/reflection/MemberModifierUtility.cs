@@ -1,6 +1,5 @@
 using System;
 using System.Reflection;
-using MixinXRef.Reflection;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection
