@@ -19,16 +19,16 @@ namespace MixinXRef
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null)
       {
-        return IsOverriddenMethod (propertyInfo.GetGetMethod (true)) ||
-               IsOverriddenMethod (propertyInfo.GetSetMethod (true));
+        return IsOverriddenMethod (propertyInfo.GetGetMethod (true))
+               || IsOverriddenMethod (propertyInfo.GetSetMethod (true));
       }
 
       var eventInfo = memberInfo as EventInfo;
       if (eventInfo != null)
       {
-        return IsOverriddenMethod (eventInfo.GetAddMethod (true)) ||
-               IsOverriddenMethod (eventInfo.GetRaiseMethod (true)) ||
-               IsOverriddenMethod (eventInfo.GetRemoveMethod (true));
+        return IsOverriddenMethod (eventInfo.GetAddMethod (true))
+               || IsOverriddenMethod (eventInfo.GetRaiseMethod (true))
+               || IsOverriddenMethod (eventInfo.GetRemoveMethod (true));
       }
 
       return false;
@@ -54,7 +54,7 @@ namespace MixinXRef
           return GetMethodModifiers (eventInfo.GetAddMethod (true), memberInfo);
 
         case MemberTypes.NestedType:
-          return _typeModifierUtility.GetTypeModifiers ((Type)memberInfo);
+          return _typeModifierUtility.GetTypeModifiers ((Type) memberInfo);
 
         case MemberTypes.Custom:
         case MemberTypes.TypeInfo:
@@ -80,39 +80,37 @@ namespace MixinXRef
         modifiers = "protected internal";
       else if (methodFieldOrConstructorInfo.GetProperty ("IsAssembly").To<bool>())
         modifiers = "internal";
-      else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool> ())
-      {
+      else if (methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>())
         modifiers = "private";
-      }
 
       if (methodFieldOrConstructor is MethodInfo || methodFieldOrConstructor is PropertyInfo || methodFieldOrConstructor is EventInfo)
       {
         if (methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>())
           modifiers += " abstract";
-        else if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() &&
-            (!methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>() || IsOverriddenMember (memberInfoForOverride)))
+        else if (methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>()
+                 && (!methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>() || IsOverriddenMember (memberInfoForOverride)))
           modifiers += " sealed";
         if (IsOverriddenMember (memberInfoForOverride))
           modifiers += " override";
-        if (!IsOverriddenMember (memberInfoForOverride) &&
-            !methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool> () && 
-            !methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>() && 
-            methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
+        if (!IsOverriddenMember (memberInfoForOverride)
+            && !methodFieldOrConstructorInfo.GetProperty ("IsAbstract").To<bool>()
+            && !methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>()
+            && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           modifiers += " virtual";
-        
+
         // explicit interface implementation
-        if (methodFieldOrConstructorInfo.GetProperty ("IsHideBySig").To<bool> () && 
-          methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool> () &&
-          methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool> () &&
-          methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool> () )
+        if (methodFieldOrConstructorInfo.GetProperty ("IsHideBySig").To<bool>()
+            && methodFieldOrConstructorInfo.GetProperty ("IsPrivate").To<bool>()
+            && methodFieldOrConstructorInfo.GetProperty ("IsFinal").To<bool>()
+            && methodFieldOrConstructorInfo.GetProperty ("IsVirtual").To<bool>())
           return "";
       }
 
-      if (!(methodFieldOrConstructor is EventInfo) && methodFieldOrConstructorInfo.GetProperty ("IsStatic").To<bool> ())
-          modifiers += " static";
+      if (!(methodFieldOrConstructor is EventInfo) && methodFieldOrConstructorInfo.GetProperty ("IsStatic").To<bool>())
+        modifiers += " static";
 
-      if (methodFieldOrConstructor is FieldInfo && ((FieldInfo)methodFieldOrConstructor).IsInitOnly)
-         modifiers += " readonly" ;
+      if (methodFieldOrConstructor is FieldInfo && ((FieldInfo) methodFieldOrConstructor).IsInitOnly)
+        modifiers += " readonly";
 
       return modifiers;
     }

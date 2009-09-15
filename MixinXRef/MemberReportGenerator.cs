@@ -42,11 +42,10 @@ namespace MixinXRef
       return new XElement (
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-          where memberInfo.DeclaringType == _type &&
-                !IsSpecialName (memberInfo) &&
-                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private") &&
-                !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("internal")
-
+          where memberInfo.DeclaringType == _type
+                && !IsSpecialName (memberInfo)
+                && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private")
+                && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("internal")
           select CreateMemberElement (memberInfo)
           );
     }
@@ -95,7 +94,7 @@ namespace MixinXRef
         // compared with ToString because MemberInfo has no own implementation of Equals
         var mixinMemberDefinition =
             mixinDefinition.CallMethod ("GetAllMembers")
-            .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
+                .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
 
         if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
           return true;
@@ -117,8 +116,8 @@ namespace MixinXRef
           continue;
 
         var targetMemberDefinition = typeAndMixinDefinitionPair.Value.GetProperty ("TargetClass")
-            .CallMethod ("GetAllMembers").Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString())
-            .SingleOrDefault();
+            .CallMethod ("GetAllMembers")
+            .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
         if (targetMemberDefinition != null && targetMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
           return true;
       }
@@ -137,7 +136,7 @@ namespace MixinXRef
       // TODO: change back to SingleOrDefault when fixed
       var memberDefinition =
           _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-          .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).FirstOrDefault();
+              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).FirstOrDefault();
 
       // TODO: check why it's possible that the memberDefinition is null 
       // TargetClassDefinition.GetAllMembers doesn't contain same members as type.GetMembers
@@ -152,7 +151,8 @@ namespace MixinXRef
                 "Mixin",
                 new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
                 new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
-                ));
+                )
+            );
       }
 
       return overrides;
@@ -176,15 +176,14 @@ namespace MixinXRef
           methodName = parts[partCount - 1];
         }
 
-        return (
-                   methodInfo.IsSpecialName &&
-                   (
-                       methodName.StartsWith ("add_") ||
-                       methodName.StartsWith ("remove_") ||
-                       methodName.StartsWith ("get_") ||
-                       methodName.StartsWith ("set_")
-                   )
-               );
+        return
+            (methodInfo.IsSpecialName
+             && (methodName.StartsWith ("add_")
+                 || methodName.StartsWith ("remove_")
+                 || methodName.StartsWith ("get_")
+                 || methodName.StartsWith ("set_")
+                )
+            );
       }
       return false;
     }
