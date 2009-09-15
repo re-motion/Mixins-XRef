@@ -63,11 +63,12 @@ namespace MixinXRef.UnitTests.Report
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          // creates validation error
+          .ForClass<Mixin3> ().AddMixin<Mixin3> ()
           .ForClass<UselessObject> ().AddMixin<FullReportGeneratorTestClass> ().AddMixin<ClassWithAlphabeticOrderingAttribute>()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
-          .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ()
-          .AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ()
-          .AddMixin<CompleteInterfacesTestClass.MyMixin> ()
+          // creates configuration error
+          .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ().AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ().AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration();
 
       var involvedTypes = new InvolvedTypeFinder (
