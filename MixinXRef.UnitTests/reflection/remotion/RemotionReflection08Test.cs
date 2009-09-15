@@ -9,6 +9,7 @@ using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
+using System.Linq;
 
 namespace MixinXRef.UnitTests.Reflection.Remotion
 {
@@ -86,7 +87,12 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
       var reflectedOutput = _remotionReflection.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
       var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass2), mixinConfiguration);
 
-      Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.EqualTo (expectedOutput));
+      // is only true because target class definition gets cached!
+      Assert.That(reflectedOutput.To<TargetClassDefinition>(), Is.SameAs(expectedOutput));
+
+      // TargetClassDefinition has no overriden equals
+      var classContext = mixinConfiguration.ClassContexts.First();
+      Assert.That(new TargetClassDefinition(classContext), Is.Not.EqualTo(new TargetClassDefinition(classContext)));
     }
 
     [Test]
