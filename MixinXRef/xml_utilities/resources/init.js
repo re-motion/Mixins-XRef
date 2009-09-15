@@ -98,7 +98,7 @@ function setSelectedIndexClass() {
 }
 
 function onIndexSite() {
-    return location.href.indexOf("index.html") != -1;
+    return location.href.indexOf("_index.html") != -1;
 }
 
 function prepareCollapsing() {
@@ -147,12 +147,12 @@ function prepareCollapsing() {
                 $(this).addClass(classArray[n]);
 
                 if (classArray[n] == "hidden") {
-                    $(".treeview").hide();
+                    $(this).parent().next(".treeview").hide();
                 }
 
-                $(".treeHeader").click(function() {
-                    $(".treeHeader").toggleClass("visible").toggleClass("hidden");
-                    $(".treeview").toggle();
+                $(this).click(function() {
+                    $(this).toggleClass("visible").toggleClass("hidden");
+                    $(this).parent().next(".treeview").toggle();
                     saveCookie();
                 });
             }

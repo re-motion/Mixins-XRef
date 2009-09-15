@@ -19,10 +19,10 @@ namespace MixinXRef.Report
     {
       var validationErrors = new XElement ("ValidationErrors");
 
-      foreach (var Exception in _errorAggregator.Exceptions)
+      foreach (var exception in _errorAggregator.Exceptions)
       {
-        var topLevelExceptionElement = new RecursiveExceptionReportGenerator (Exception).GenerateXml();
-        var validationLog = new ReflectedObject (Exception).GetProperty ("ValidationLog");
+        var topLevelExceptionElement = new RecursiveExceptionReportGenerator (exception).GenerateXml();
+        var validationLog = new ReflectedObject (exception).GetProperty ("ValidationLog");
 
         topLevelExceptionElement.Add (
             new XElement (

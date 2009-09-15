@@ -17,11 +17,33 @@ label {
  	float: left;
 }
 
+.involvedType-interfaceLinkList {
+  margin: 0 0 0 7em;
+}
+
 /* for summary page */
-label {
+body > div label  {
 	min-width: 8.5em;
 }
 
+/* for exceptions on summary page */
+body > div > fieldset > div > label {
+	min-width: 11em;
+}
+
+.message{
+  margin-top: 10px;
+}
+
+.errorMessage {
+  margin-left: 10px;
+}
+
+pre{
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 /* horizontal navigation bar */
 #navigation {
 	margin-top:0;
@@ -57,7 +79,7 @@ fieldset {
 	padding-top: 0px;
 	margin: 0px;
 	margin-top: 4px;
-	margin-bottom: 4px;
+	margin-bottom: 10px;
 }
 
 fieldset legend {
@@ -71,10 +93,6 @@ fieldset legend {
 	
 	border: gray 1px dashed;
 	background-color: #E7E7E7;
-}
-
-.involvedType-interfaceLinkList {
-  margin: 0 0 0 7em;
 }
 
 /* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */ 

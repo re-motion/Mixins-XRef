@@ -65,6 +65,7 @@ namespace MixinXRef.UnitTests.Report
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           // creates validation error
           .ForClass<Mixin3> ().AddMixin<Mixin3> ()
+          .ForClass<MemberModifierTestClass> ().AddMixin<MemberModifierTestClass> ()
           .ForClass<UselessObject> ().AddMixin<FullReportGeneratorTestClass> ().AddMixin<ClassWithAlphabeticOrderingAttribute>()
           .ForClass (typeof (GenericTarget<,>)).AddMixin<ClassWithBookAttribute>()
           // creates configuration error
