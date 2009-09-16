@@ -32,6 +32,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
       Assert.That (output, Is.False);
     }
 
+    // TODO: new remotion version doesn't contain any NonApplicationAssemblies
     //[Test]
     //public void IsNonApplicationAssembly_True()
     //{
