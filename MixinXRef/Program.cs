@@ -25,8 +25,20 @@ namespace MixinXRef
       var outputDirectory = Path.Combine (args[1], "MixinDoc");
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
+      if (args.Length == 3)
+      {
+        var customRemotionReflector = args[2];
 
+        program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory, customRemotionReflector));
+
+        if (program._remotionReflector.GetType().AssemblyQualifiedName != customRemotionReflector)
+          Console.WriteLine ("Your custom RemotionReflector '{0}' could not be found.", customRemotionReflector);
+      }
+      else
+        program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
+      
+      Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
+      
       if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
 
@@ -43,7 +55,7 @@ namespace MixinXRef
         // copy resources folder
         new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
 
-        var elapsed = new DateTime() + (DateTime.Now - startTime);    // TimeSpan does not implement IFormattable, but DateTime does!
+        var elapsed = new DateTime() + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
         Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1:mm:ss}.", outputDirectory, elapsed);
       }
 
@@ -74,9 +86,9 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("arguments", arguments);
 
-      if (arguments.Length != 2)
+      if (arguments.Length != 2 && arguments.Length != 3)
       {
-        _output.WriteLine ("usage: mixinxref <assemblyDirectory> <outputDirectory>");
+        _output.WriteLine("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName]");
         return -1;
       }
 
