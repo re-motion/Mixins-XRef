@@ -13,6 +13,8 @@ namespace MixinXRef
   {
     private static int Main (string[] args)
     {
+      var startTime = DateTime.Now;
+
       var program = new Program (Console.In, Console.Out, new OutputFormatter());
 
       var argumentCheckResult = program.CheckArguments (args);
@@ -32,6 +34,7 @@ namespace MixinXRef
       if (assemblies == null)
         return (-4);
 
+      Console.WriteLine ("Generating MixinDoc ... time to get some coffee ;-)");
       program.SaveXmlDocument (assemblies, xmlFile);
 
       var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
@@ -39,9 +42,14 @@ namespace MixinXRef
       {
         // copy resources folder
         new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
-        Console.WriteLine ("Mixin Documentation successfully generated to '{0}'", assemblyDirectory);
+
+        var elapsed = new DateTime() + (DateTime.Now - startTime);    // TimeSpan does not implement IFormattable, but DateTime does!
+        Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1:mm:ss}.", outputDirectory, elapsed);
       }
-      Console.ReadLine();
+
+      Console.Write ("Press any key to continue ...");
+      Console.ReadKey (true);
+
       return (transformerExitCode);
     }
 
@@ -93,7 +101,7 @@ namespace MixinXRef
 
       if (Directory.Exists (outputDirectory))
       {
-        _output.WriteLine ("Output directory '{0}' does already exist", outputDirectory);
+        _output.WriteLine ("Output directory '{0}' does already exist.", outputDirectory);
         _output.Write ("Do you want override the directory and including files? [y/N] ");
 
         var userInput = _input.ReadLine();

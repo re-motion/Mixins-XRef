@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests
     }
 
     public const string _userPromptOnExistingOutputDirectory =
-        "Output directory 'existingOutputDirectory' does already exist\r\nDo you want override the directory and including files? [y/N] ";
+        "Output directory 'existingOutputDirectory' does already exist.\r\nDo you want override the directory and including files? [y/N] ";
 
     private Program _program;
     private TextWriter _standardOutput;
