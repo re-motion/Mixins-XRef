@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-09-15 13:39:20">
+<MixinXRefReport creation-time="2009-09-16 11:39:31">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -763,10 +763,10 @@
   <ConfigurationErrors>
     <Exception type="Remotion.Mixins.ConfigurationException">
       <Message><![CDATA[The dependency ICMyMixinTargetMyMixin (mixins  applied to class MixinXRef.UnitTests.TestDomain.CompleteInterfacesTestClass+MyMixinTarget) is not fulfilled - public or protected method B could not be found on the base class.]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 40
-   at MixinXRef.Reflection.Remotion.RemotionReflection08.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\remotion\RemotionReflection08.cs:line 55
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 81]]></StackTrace>
+      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 55
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 80]]></StackTrace>
     </Exception>
   </ConfigurationErrors>
   <ValidationErrors>
@@ -776,10 +776,10 @@ MixinXRef.UnitTests.TestDomain.Mixin3 (MixinXRef.UnitTests.TestDomain.Mixin3):
 Error: A mixin is applied to itself.
 Error: A mixin is applied to one of its base types.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 40
-   at MixinXRef.Reflection.Remotion.RemotionReflection08.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\remotion\RemotionReflection08.cs:line 55
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 81]]></StackTrace>
+      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 55
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 80]]></StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -792,10 +792,10 @@ Error: A mixin for which a concrete subtype must be generated is not derived fro
 MixinXRef.UnitTests.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.TestDomain.MemberModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 40
-   at MixinXRef.Reflection.Remotion.RemotionReflection08.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\remotion\RemotionReflection08.cs:line 55
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 81]]></StackTrace>
+      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 55
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 80]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -806,10 +806,10 @@ Error: A mixin for which a concrete subtype must be generated is not derived fro
 MixinXRef.UnitTests.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.TestDomain.SubModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\ReflectedObject.cs:line 40
-   at MixinXRef.Reflection.Remotion.RemotionReflection08.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\reflection\remotion\RemotionReflection08.cs:line 55
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 81]]></StackTrace>
+      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 55
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type) in C:\Development\Remotion-Contrib\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 80]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
   </ValidationErrors>
