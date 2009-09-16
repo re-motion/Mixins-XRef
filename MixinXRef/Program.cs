@@ -24,7 +24,7 @@ namespace MixinXRef
       var outputDirectory = Path.Combine (args[1], "MixinDoc");
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      program.SetRemotionReflection(new RemotionReflectorFactory(assemblyDirectory).RemotionReflection);
+      program.SetRemotionReflection(new RemotionReflectorFactory().Create(assemblyDirectory));
 
       if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
