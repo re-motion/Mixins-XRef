@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
@@ -24,7 +23,7 @@ namespace MixinXRef
       var outputDirectory = Path.Combine (args[1], "MixinDoc");
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      program.SetRemotionReflection(new RemotionReflectorFactory().Create(assemblyDirectory));
+      program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
 
       if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
@@ -35,11 +34,7 @@ namespace MixinXRef
 
       program.SaveXmlDocument (assemblies, xmlFile);
 
-      int transformerExitCode;
-      using (new TimingScope ("GenerateHtmlFromXml"))
-      {
-        transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
-      }
+      var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
       if (transformerExitCode == 0)
       {
         // copy resources folder
@@ -122,7 +117,7 @@ namespace MixinXRef
       }
 
       var remotionAssembly = _remotionReflector.FindRemotionAssembly (assemblies);
-      if (remotionAssembly == null) 
+      if (remotionAssembly == null)
       {
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
         return null;
@@ -136,38 +131,21 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
-      using (new TimingScope ("Complete SaveXmlDocument"))
-      {
-        ReflectedObject mixinConfiguration;
-        using (new TimingScope ("BuildConfigurationFromAssemblies"))
-        {
-          mixinConfiguration = _remotionReflector.BuildConfigurationFromAssemblies (assemblies);
-        }
+      var mixinConfiguration = _remotionReflector.BuildConfigurationFromAssemblies (assemblies);
+      var configurationErrors = new ErrorAggregator<Exception>();
+      var validationErrors = new ErrorAggregator<Exception>();
+      var involvedTypes =
+          new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflector).FindInvolvedTypes();
 
-        var configurationErrors = new ErrorAggregator<Exception>();
-        var validationErrors = new ErrorAggregator<Exception>();
-        InvolvedType[] involvedTypes;
-        using (new TimingScope ("FindInvolvedTypes"))
-        {
-          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflector).FindInvolvedTypes();
-        }
+      var reportGenerator = new FullReportGenerator (
+          assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
 
-        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
+      var outputDocument = reportGenerator.GenerateXmlDocument();
 
-        XDocument outputDocument;
-        using (new TimingScope ("GenerateXmlDocument"))
-        {
-          outputDocument = reportGenerator.GenerateXmlDocument();
-        }
-
-        using (new TimingScope ("Save"))
-        {
-          outputDocument.Save (xmlFile);
-        }
-      }
+      outputDocument.Save (xmlFile);
     }
 
-    public void SetRemotionReflection(IRemotionReflector remotionReflector)
+    public void SetRemotionReflector (IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 

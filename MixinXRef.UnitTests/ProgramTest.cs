@@ -32,7 +32,7 @@ namespace MixinXRef.UnitTests
       _outputFormatter = new OutputFormatter();
 
       _program = new Program (new StringReader (""), _standardOutput, _outputFormatter);
-      _program.SetRemotionReflection (_remotionReflector);
+      _program.SetRemotionReflector (_remotionReflector);
     }
 
 

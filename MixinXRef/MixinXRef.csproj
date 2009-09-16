@@ -87,7 +87,6 @@
     <Compile Include="Reflection\RemotionReflectorFactory.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="Report\TargetReferenceReportGenerator.cs" />
-    <Compile Include="Utility\TimingScope.cs" />
     <Compile Include="Reflection\TypeModifierUtility.cs" />
     <Compile Include="Report\ValidationErrorReportGenerator.cs" />
     <Compile Include="XRefTransformer.cs" />
