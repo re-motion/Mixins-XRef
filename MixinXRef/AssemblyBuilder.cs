@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,15 +11,15 @@ namespace MixinXRef
   public class AssemblyBuilder
   {
     private readonly string _assemblyDirectory;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
 
-    public AssemblyBuilder (string assemblyDirectory, IRemotionReflection remotionReflection)
+    public AssemblyBuilder (string assemblyDirectory, IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _assemblyDirectory = Path.GetFullPath (assemblyDirectory);
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
 
       // register assembly reference resolver
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
@@ -26,19 +27,14 @@ namespace MixinXRef
 
     public Assembly[] GetAssemblies ()
     {
-      // get all assemblies
-      string[] dlls = Directory.GetFiles (_assemblyDirectory, "*.dll");
-      string[] exes = Directory.GetFiles (_assemblyDirectory, "*.exe");
+      var assemblies = new List<Assembly>();
 
-      string[] assemblyFiles = new string[dlls.Length + exes.Length];
-      dlls.CopyTo (assemblyFiles, 0);
-      exes.CopyTo (assemblyFiles, dlls.Length);
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll"))
+        assemblies.Add (Assembly.LoadFile (assemblyFile));
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe"))
+        assemblies.Add (Assembly.LoadFile (assemblyFile));
 
-      var assemblies = new Assembly[assemblyFiles.Length];
-      for (int i = 0; i < assemblyFiles.Length; i++)
-        assemblies[i] = Assembly.LoadFile (assemblyFiles[i]);
-
-      return assemblies.Where (a => !_remotionReflection.IsNonApplicationAssembly(a)).ToArray();
+      return assemblies.Where (a => !_remotionReflector.IsNonApplicationAssembly (a)).ToArray();
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
