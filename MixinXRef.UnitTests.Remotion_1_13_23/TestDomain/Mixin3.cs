@@ -1,8 +1,10 @@
 using System;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests.Remotion_1_13_23.TestDomain
 {
-  public class TargetClass1 : IDisposable
+  [Extends (typeof(TargetClass2))]
+  public class Mixin3 : IDisposable
   {
     public void Dispose ()
     {

@@ -60,14 +60,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\RemotionReflectorFactoryTest.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_23_Test.cs" />
+    <Compile Include="Report\FullReportGeneratorTest.cs" />
+    <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
+    <Compile Include="TestDomain\ClassWithAlphabeticOrderingAttribute.cs" />
+    <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
+    <Compile Include="TestDomain\CompleteInterfacesTestClass.cs" />
+    <Compile Include="TestDomain\FullReportGeneratorTestClass.cs" />
+    <Compile Include="TestDomain\GenericTarget.cs" />
+    <Compile Include="TestDomain\MemberModifierTestClass.cs" />
+    <Compile Include="TestDomain\MemberSignatureTestClass.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
+    <Compile Include="TestDomain\Mixin2.cs" />
+    <Compile Include="TestDomain\Mixin3.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
+    <Compile Include="TestDomain\TargetClass2.cs" />
+    <Compile Include="TestDomain\UselessObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDomain\fullReportGeneratorExpectedOutput.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
