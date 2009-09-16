@@ -12,20 +12,20 @@ namespace MixinXRef.Report
     // MultiDefinitionCollection<Type, AttributeIntroductionDefinition> _attributeIntroductionDefinitions
     private readonly ReflectedObject _attributeIntroductionDefinitions;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
 
     public AttributeIntroductionReportGenerator (
         ReflectedObject attributeIntroductionDefinitions,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        IRemotionReflection remotionReflection)
+        IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("attributeIntroductionDefinitions", attributeIntroductionDefinitions);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _attributeIntroductionDefinitions = attributeIntroductionDefinitions;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
     }
 
     public XElement GenerateXml ()
@@ -33,7 +33,7 @@ namespace MixinXRef.Report
       return new XElement (
           "AttributeIntroductions",
           from introducedAttribute in _attributeIntroductionDefinitions
-          where !_remotionReflection.IsInfrastructureType (introducedAttribute.GetProperty("AttributeType").To<Type>())
+          where !_remotionReflector.IsInfrastructureType (introducedAttribute.GetProperty("AttributeType").To<Type>())
           select GenerateAttributeReferanceElement(introducedAttribute.GetProperty("AttributeType").To<Type>()));
     }
 

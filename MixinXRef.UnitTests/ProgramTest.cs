@@ -11,9 +11,9 @@ namespace MixinXRef.UnitTests
   [TestFixture]
   public class ProgramTest
   {
-    public static IRemotionReflection GetRemotionReflection()
+    public static IRemotionReflector GetRemotionReflection()
     {
-      return new RemotionReflection08(typeof(TargetClassDefinitionUtility).Assembly);
+      return new RemotionReflector_1_11_20(typeof(TargetClassDefinitionUtility).Assembly);
     }
 
     public const string _userPromptOnExistingOutputDirectory =
@@ -21,18 +21,18 @@ namespace MixinXRef.UnitTests
 
     private Program _program;
     private TextWriter _standardOutput;
-    private IRemotionReflection _remotionReflection;
+    private IRemotionReflector _remotionReflector;
     private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
     {
       _standardOutput = new StringWriter();
-      _remotionReflection = ProgramTest.GetRemotionReflection();
+      _remotionReflector = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
 
       _program = new Program (new StringReader (""), _standardOutput, _outputFormatter);
-      _program.SetRemotionReflection (_remotionReflection);
+      _program.SetRemotionReflection (_remotionReflector);
     }
 
 
@@ -168,7 +168,7 @@ namespace MixinXRef.UnitTests
       Assert.That (Directory.Exists (assemblyDirectory), Is.True);
 
       var output = _program.GetAssemblies (assemblyDirectory);
-      var expectedOutput = new AssemblyBuilder (assemblyDirectory, _remotionReflection).GetAssemblies();
+      var expectedOutput = new AssemblyBuilder (assemblyDirectory, _remotionReflector).GetAssemblies();
 
       Assert.That (output, Is.EqualTo (expectedOutput));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));

@@ -11,18 +11,18 @@ namespace MixinXRef.Report
   {
     private readonly InvolvedType _involvedType;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
 
     public InterfaceReferenceReportGenerator (
-        InvolvedType involvedType, IIdentifierGenerator<Type> interfaceIdentifierGenerator, IRemotionReflection remotionReflection)
+        InvolvedType involvedType, IIdentifierGenerator<Type> interfaceIdentifierGenerator, IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("involvedType", involvedType);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _involvedType = involvedType;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
     }
 
     public XElement GenerateXml ()
@@ -30,7 +30,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Interfaces",
           from implementedInterface in GetAllInterfaces()
-          where !_remotionReflection.IsInfrastructureType (implementedInterface)
+          where !_remotionReflector.IsInfrastructureType (implementedInterface)
           select GenerateInterfaceReference (implementedInterface)
           );
     }

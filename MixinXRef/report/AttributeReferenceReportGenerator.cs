@@ -13,18 +13,18 @@ namespace MixinXRef.Report
   {
     private readonly Type _type;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
 
     public AttributeReferenceReportGenerator (
-        Type type, IIdentifierGenerator<Type> attributeIdentifierGenerator, IRemotionReflection remotionReflection)
+        Type type, IIdentifierGenerator<Type> attributeIdentifierGenerator, IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("type", type);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _type = type;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
     }
 
     public XElement GenerateXml ()
@@ -32,7 +32,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Attributes",
           from attribute in CustomAttributeData.GetCustomAttributes (_type)
-          where !_remotionReflection.IsInfrastructureType (attribute.Constructor.DeclaringType)
+          where !_remotionReflector.IsInfrastructureType (attribute.Constructor.DeclaringType)
           select GenerateAttributeReference (attribute)
           );
     }

@@ -14,7 +14,7 @@ namespace MixinXRef.Report
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     public MixinReferenceReportGenerator (
@@ -22,7 +22,7 @@ namespace MixinXRef.Report
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        IRemotionReflection remotionReflection,
+        IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter
         )
     {
@@ -30,14 +30,14 @@ namespace MixinXRef.Report
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedType = involvedType;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
     }
 
@@ -83,7 +83,7 @@ namespace MixinXRef.Report
                 GenerateXml());
         mixinElement.Add (
             new AttributeIntroductionReportGenerator (
-                mixinDefinition.GetProperty ("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflection).GenerateXml());
+                mixinDefinition.GetProperty ("AttributeIntroductions"), _attributeIdentifierGenerator, _remotionReflector).GenerateXml());
         mixinElement.Add (
             new MemberOverrideReportGenerator (mixinDefinition.CallMethod ("GetAllOverrides")).GenerateXml());
       }

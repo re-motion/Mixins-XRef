@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using MixinXRef.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins.Context;
@@ -32,18 +31,15 @@ namespace MixinXRef.UnitTests
       File.Copy (@"TestDomain\Remotion.Mixins.Persistent.Signed.dll", Path.Combine (assemblyDirectory, "Remotion.Mixins.Persistent.Signed.dll"));
 
       // load assemblies from directory
-      var assemblyBuilder = new AssemblyBuilder(assemblyDirectory, ProgramTest.GetRemotionReflection());
-      var output = assemblyBuilder.GetAssemblies ();
+      var assemblyBuilder = new AssemblyBuilder (assemblyDirectory, ProgramTest.GetRemotionReflection());
+      var output = assemblyBuilder.GetAssemblies();
 
       // *.ddl in alphabetic order, then *.exe in alphabetic order
       //  { "nunit.framework.dll", "Remotion.dll", "MixinXRef.exe" }
       var expectedOutput = new[] { typeof (Assert).Assembly, typeof (ClassContext).Assembly, typeof (InvolvedType).Assembly };
 
       for (int i = 0; i < expectedOutput.Length; i++)
-      {
-        Assert.That (AssemblyName.ReferenceMatchesDefinition (output[i].GetName (), expectedOutput[i].GetName ()), Is.True);
-      }
-
+        Assert.That (AssemblyName.ReferenceMatchesDefinition (output[i].GetName(), expectedOutput[i].GetName()), Is.True);
     }
   }
 }

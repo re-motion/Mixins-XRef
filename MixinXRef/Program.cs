@@ -24,7 +24,7 @@ namespace MixinXRef
       var outputDirectory = Path.Combine (args[1], "MixinDoc");
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      program.SetRemotionReflection(new RemotionVersionDetector(assemblyDirectory).RemotionReflection);
+      program.SetRemotionReflection(new RemotionReflectorFactory(assemblyDirectory).RemotionReflection);
 
       if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
         return (0);
@@ -53,7 +53,7 @@ namespace MixinXRef
 
     private readonly TextReader _input;
     private readonly TextWriter _output;
-    private IRemotionReflection _remotionReflection;
+    private IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     public Program (TextReader input, TextWriter output, IOutputFormatter outputFormatter)
@@ -114,14 +114,14 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var assemblies = new AssemblyBuilder (assemblyDirectory, _remotionReflection).GetAssemblies();
+      var assemblies = new AssemblyBuilder (assemblyDirectory, _remotionReflector).GetAssemblies();
       if (assemblies.Length == 0)
       {
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
         return null;
       }
 
-      var remotionAssembly = _remotionReflection.FindRemotionAssembly (assemblies);
+      var remotionAssembly = _remotionReflector.FindRemotionAssembly (assemblies);
       if (remotionAssembly == null) 
       {
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
@@ -141,7 +141,7 @@ namespace MixinXRef
         ReflectedObject mixinConfiguration;
         using (new TimingScope ("BuildConfigurationFromAssemblies"))
         {
-          mixinConfiguration = _remotionReflection.BuildConfigurationFromAssemblies (assemblies);
+          mixinConfiguration = _remotionReflector.BuildConfigurationFromAssemblies (assemblies);
         }
 
         var configurationErrors = new ErrorAggregator<Exception>();
@@ -149,10 +149,10 @@ namespace MixinXRef
         InvolvedType[] involvedTypes;
         using (new TimingScope ("FindInvolvedTypes"))
         {
-          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflection).FindInvolvedTypes();
+          involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflector).FindInvolvedTypes();
         }
 
-        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflection, _outputFormatter);
+        var reportGenerator = new FullReportGenerator (assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
 
         XDocument outputDocument;
         using (new TimingScope ("GenerateXmlDocument"))
@@ -167,11 +167,11 @@ namespace MixinXRef
       }
     }
 
-    public void SetRemotionReflection(IRemotionReflection remotionReflection)
+    public void SetRemotionReflection(IRemotionReflector remotionReflector)
     {
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
     }
   }
 }

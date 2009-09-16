@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.UnitTests.TestDomain;
@@ -9,26 +10,25 @@ using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
-using System.Linq;
 
 namespace MixinXRef.UnitTests.Reflection.Remotion
 {
   [TestFixture]
-  public class RemotionReflection08Test
+  public class RemotionReflector_1_11_20_Test
   {
-    private IRemotionReflection _remotionReflection;
+    private IRemotionReflector _remotionReflector;
 
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflection = ProgramTest.GetRemotionReflection();
+      _remotionReflector = new RemotionReflector_1_11_20 (typeof (TargetClassDefinitionUtility).Assembly);
     }
 
     [Test]
     public void IsNonApplicationAssembly_False ()
     {
       var assembly = typeof (IDisposable).Assembly;
-      var output = _remotionReflection.IsNonApplicationAssembly (assembly);
+      var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 
       Assert.That (output, Is.False);
     }
@@ -38,7 +38,7 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     {
       // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is NonApplicationAssembly
       var assembly = typeof (SafeContext).Assembly;
-      var output = _remotionReflection.IsNonApplicationAssembly (assembly);
+      var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 
       Assert.That (output, Is.True);
     }
@@ -48,8 +48,8 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     {
       var configurationException = new ConfigurationException ("configurationException");
 
-      var outputTrue = _remotionReflection.IsConfigurationException (configurationException);
-      var outputFalse = _remotionReflection.IsConfigurationException (new Exception());
+      var outputTrue = _remotionReflector.IsConfigurationException (configurationException);
+      var outputFalse = _remotionReflector.IsConfigurationException (new Exception());
 
       Assert.That (outputTrue, Is.True);
       Assert.That (outputFalse, Is.False);
@@ -60,8 +60,8 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     {
       var validationException = new ValidationException (new DefaultValidationLog());
 
-      var outputTrue = _remotionReflection.IsValidationException (validationException);
-      var outputFalse = _remotionReflection.IsValidationException (new Exception());
+      var outputTrue = _remotionReflector.IsValidationException (validationException);
+      var outputFalse = _remotionReflector.IsValidationException (new Exception());
 
       Assert.That (outputTrue, Is.True);
       Assert.That (outputFalse, Is.False);
@@ -70,8 +70,8 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [Test]
     public void IsInfrastructurType ()
     {
-      var outputTrue = _remotionReflection.IsInfrastructureType (typeof (IInitializableMixin));
-      var outputFalse = _remotionReflection.IsInfrastructureType (typeof (IDisposable));
+      var outputTrue = _remotionReflector.IsInfrastructureType (typeof (IInitializableMixin));
+      var outputFalse = _remotionReflector.IsInfrastructureType (typeof (IDisposable));
 
       Assert.That (outputTrue, Is.True);
       Assert.That (outputFalse, Is.False);
@@ -84,26 +84,26 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
 
-      var reflectedOutput = _remotionReflection.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
+      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
       var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass2), mixinConfiguration);
 
       // is only true because target class definition gets cached!
-      Assert.That(reflectedOutput.To<TargetClassDefinition>(), Is.SameAs(expectedOutput));
+      Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.SameAs (expectedOutput));
 
       // TargetClassDefinition has no overriden equals
       var classContext = mixinConfiguration.ClassContexts.First();
-      Assert.That(new TargetClassDefinition(classContext), Is.Not.EqualTo(new TargetClassDefinition(classContext)));
+      Assert.That (new TargetClassDefinition (classContext), Is.Not.EqualTo (new TargetClassDefinition (classContext)));
     }
 
     [Test]
-    public void BuildConfigurationFromAssemblies()
+    public void BuildConfigurationFromAssemblies ()
     {
-      var assemblies = new[] { typeof(TargetClass1).Assembly, typeof(object).Assembly };
+      var assemblies = new[] { typeof (TargetClass1).Assembly, typeof (object).Assembly };
 
-      var reflectedOuput = _remotionReflection.BuildConfigurationFromAssemblies (assemblies);
-      var expectedOutput = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies(assemblies);
+      var reflectedOuput = _remotionReflector.BuildConfigurationFromAssemblies (assemblies);
+      var expectedOutput = DeclarativeConfigurationBuilder.BuildConfigurationFromAssemblies (assemblies);
 
-      Assert.That(reflectedOuput.To<MixinConfiguration>().ClassContexts, Is.EqualTo(expectedOutput.ClassContexts));
+      Assert.That (reflectedOuput.To<MixinConfiguration>().ClassContexts, Is.EqualTo (expectedOutput.ClassContexts));
     }
 
     [Test]
@@ -112,22 +112,19 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
       var remotionAssembly = typeof (TargetClassDefinitionUtility).Assembly;
       var assemblies = new[] { typeof (object).Assembly, remotionAssembly };
 
-      var output = _remotionReflection.FindRemotionAssembly (assemblies);
+      var output = _remotionReflector.FindRemotionAssembly (assemblies);
 
       Assert.That (output, Is.EqualTo (remotionAssembly));
     }
 
     [Test]
-    public void FindRemotionAssembly_FindNone()
+    public void FindRemotionAssembly_FindNone ()
     {
-      var assemblies = new[] { typeof(object).Assembly };
+      var assemblies = new[] { typeof (object).Assembly };
 
-      var output = _remotionReflection.FindRemotionAssembly(assemblies);
+      var output = _remotionReflector.FindRemotionAssembly (assemblies);
 
-      Assert.That(output, Is.Null);
+      Assert.That (output, Is.Null);
     }
-
-
-
   }
 }

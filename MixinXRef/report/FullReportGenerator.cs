@@ -17,7 +17,7 @@ namespace MixinXRef.Report
     private readonly ReflectedObject _mixinConfiguration;
     private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
     private string _creationTime;
 
@@ -27,7 +27,7 @@ namespace MixinXRef.Report
         ReflectedObject mixinConfiguration,
         ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
-        IRemotionReflection remotionReflection,
+        IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
@@ -35,7 +35,7 @@ namespace MixinXRef.Report
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _assemblies = assemblies;
@@ -43,7 +43,7 @@ namespace MixinXRef.Report
       _mixinConfiguration = mixinConfiguration;
       _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
     }
 
@@ -84,21 +84,21 @@ namespace MixinXRef.Report
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter);
       var interfaceReport = new InterfaceReportGenerator (
           _involvedTypes,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           interfaceIdentiferGenerator,
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter);
       var attributeReport = new AttributeReportGenerator (
           _involvedTypes,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           attributeIdentiferGenerator,
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (_configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors);

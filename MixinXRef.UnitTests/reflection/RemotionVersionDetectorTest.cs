@@ -14,16 +14,16 @@ namespace MixinXRef.UnitTests.Reflection
     public void Constructor ()
     {
       // assumption: assemblyDirectory is correct and RemotionAssembly is named 'Remotion.dll'
-      var remotionVersionDetector = new RemotionVersionDetector (".");
+      var remotionVersionDetector = new RemotionReflectorFactory (".");
       var output = remotionVersionDetector.RemotionReflection;
 
-      Assert.That(output, Is.InstanceOfType(typeof(RemotionReflection08)));
+      Assert.That(output, Is.InstanceOfType(typeof(RemotionReflector_1_11_20)));
     }
 
     [Test]
     public void DetectVersion_Unrecognized ()
     {
-      var remotionVersionDetector = new RemotionVersionDetector (".");
+      var remotionVersionDetector = new RemotionReflectorFactory (".");
       try
       {
         remotionVersionDetector.DetectVersion (typeof (object).Assembly);
@@ -38,12 +38,12 @@ namespace MixinXRef.UnitTests.Reflection
     [Test]
     public void DetectVersion_RemotionReflection08 ()
     {
-      var remotionVersionDetector = new RemotionVersionDetector (".");
+      var remotionVersionDetector = new RemotionReflectorFactory (".");
       var assemblyVar = typeof (TargetClassDefinitionUtility).Assembly;
       var output = remotionVersionDetector.DetectVersion (assemblyVar);
 
       Assert.That (assemblyVar.GetName().Version.ToString(), Is.EqualTo ("1.11.20.13"));
-      Assert.That (output, Is.InstanceOfType (typeof (RemotionReflection08)));
+      Assert.That (output, Is.InstanceOfType (typeof (RemotionReflector_1_11_20)));
     }
   }
 }

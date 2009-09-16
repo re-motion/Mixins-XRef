@@ -6,11 +6,11 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection
 {
-  public class RemotionVersionDetector
+  public class RemotionReflectorFactory
   {
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflection;
 
-    public RemotionVersionDetector (string assemblyDirectory)
+    public RemotionReflectorFactory (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
@@ -19,7 +19,7 @@ namespace MixinXRef.Reflection
       _remotionReflection = DetectVersion (remotionAssembly);
     }
 
-    public IRemotionReflection DetectVersion (Assembly remotionAssembly)
+    public IRemotionReflector DetectVersion(Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 
@@ -29,7 +29,7 @@ namespace MixinXRef.Reflection
       switch (versionString)
       {
         case "1.11.20.13":
-          return new RemotionReflection08 (remotionAssembly);
+          return new RemotionReflector_1_11_20 (remotionAssembly);
         case "1.13.23.2":
           return null;
 
@@ -38,7 +38,7 @@ namespace MixinXRef.Reflection
       }
     }
 
-    public IRemotionReflection RemotionReflection
+    public IRemotionReflector RemotionReflection
     {
       get { return _remotionReflection; }
     }

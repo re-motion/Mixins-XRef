@@ -15,7 +15,7 @@ namespace MixinXRef.Report
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     public InterfaceReportGenerator (
@@ -23,21 +23,21 @@ namespace MixinXRef.Report
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
-        IRemotionReflection remotionReflection,
+        IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
     }
 
@@ -50,7 +50,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces.Keys
-          where !_remotionReflection.IsInfrastructureType (usedInterface)
+          where !_remotionReflector.IsInfrastructureType (usedInterface)
           select GenerateInterfaceElement (usedInterface, allInterfaces, completeInterfaces.Contains(usedInterface))
           );
     }

@@ -15,7 +15,7 @@ namespace MixinXRef.Report
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     public AttributeReportGenerator (
@@ -23,7 +23,7 @@ namespace MixinXRef.Report
         IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        IRemotionReflection remotionReflection,
+        IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter
         )
     {
@@ -31,14 +31,14 @@ namespace MixinXRef.Report
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
     }
 
@@ -61,7 +61,7 @@ namespace MixinXRef.Report
         foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
         {
           var attributeType = attribute.GetType();
-          if (!_remotionReflection.IsInfrastructureType (attributeType))
+          if (!_remotionReflector.IsInfrastructureType (attributeType))
           {
             if (!allAttributes.ContainsKey (attributeType))
               allAttributes.Add (attributeType, new List<Type>());

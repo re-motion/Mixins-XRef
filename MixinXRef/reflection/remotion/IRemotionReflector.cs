@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace MixinXRef.Reflection.Remotion
 {
-  public interface IRemotionReflection
+  public interface IRemotionReflector
   {
     bool IsNonApplicationAssembly (Assembly assembly);
     bool IsConfigurationException (Exception exception);

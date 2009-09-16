@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="reflection\remotion\RemotionReflection09Test.cs" />
+    <Compile Include="reflection\remotion\RemotionReflector_1_13_23_Test.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
   </ItemGroup>

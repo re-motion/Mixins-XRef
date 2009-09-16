@@ -13,27 +13,27 @@ namespace MixinXRef
     private readonly Assembly[] _assemblies;
     private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
 
     public InvolvedTypeFinder (
         ReflectedObject mixinConfiguration,
         Assembly[] assemblies,
         ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
-        IRemotionReflection remotionReflection
+        IRemotionReflector remotionReflector
         )
     {
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _mixinConfiguration = mixinConfiguration;
       _assemblies = assemblies;
       _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
     }
 
     public InvolvedType[] FindInvolvedTypes ()
@@ -77,13 +77,13 @@ namespace MixinXRef
       try
       {
         // may throw ConfigurationException or ValidationException
-        return _remotionReflection.GetTargetClassDefinition (type, _mixinConfiguration);
+        return _remotionReflector.GetTargetClassDefinition (type, _mixinConfiguration);
       }
       catch (Exception configurationOrValidationException)
       {
-        if (_remotionReflection.IsConfigurationException (configurationOrValidationException))
+        if (_remotionReflector.IsConfigurationException (configurationOrValidationException))
           _configurationErrors.AddException (configurationOrValidationException);
-        else if (_remotionReflection.IsValidationException (configurationOrValidationException))
+        else if (_remotionReflector.IsValidationException (configurationOrValidationException))
           _validationErrors.AddException (configurationOrValidationException);
         else
           throw;

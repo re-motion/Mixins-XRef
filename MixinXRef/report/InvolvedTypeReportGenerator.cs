@@ -16,7 +16,7 @@ namespace MixinXRef.Report
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _attributeIdentifierGenerator;
-    private readonly IRemotionReflection _remotionReflection;
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker();
@@ -28,7 +28,7 @@ namespace MixinXRef.Report
         IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
         IIdentifierGenerator<Type> interfaceIdentifierGenerator,
         IIdentifierGenerator<Type> attributeIdentifierGenerator,
-        IRemotionReflection remotionReflection,
+        IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter
         )
     {
@@ -37,7 +37,7 @@ namespace MixinXRef.Report
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("attributeIdentifierGenerator", attributeIdentifierGenerator);
-      ArgumentUtility.CheckNotNull ("remotionReflection", remotionReflection);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
       _involvedTypes = involvedTypes;
@@ -45,7 +45,7 @@ namespace MixinXRef.Report
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _attributeIdentifierGenerator = attributeIdentifierGenerator;
-      _remotionReflection = remotionReflection;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
     }
 
@@ -77,15 +77,15 @@ namespace MixinXRef.Report
           _summaryPicker.GetSummary (realType),
           new MemberReportGenerator (realType, involvedType, _involvedTypeIdentifierGenerator, _outputFormatter).GenerateXml(),
           new InterfaceReferenceReportGenerator (
-              involvedType, _interfaceIdentifierGenerator, _remotionReflection).GenerateXml(),
+              involvedType, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
           new AttributeReferenceReportGenerator (
-              realType, _attributeIdentifierGenerator, _remotionReflection).GenerateXml(),
+              realType, _attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
           new MixinReferenceReportGenerator (
               involvedType,
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
-              _remotionReflection,
+              _remotionReflector,
               _outputFormatter).GenerateXml(),
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()

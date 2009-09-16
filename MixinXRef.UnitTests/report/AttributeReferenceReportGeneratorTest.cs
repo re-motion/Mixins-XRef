@@ -13,19 +13,19 @@ namespace MixinXRef.UnitTests.Report
   public class AttributeReferenceReportGeneratorTest
   {
     private IdentifierGenerator<Type> _identifierGenerator;
-    private IRemotionReflection _remotionReflection;
+    private IRemotionReflector _remotionReflector;
 
     [SetUp]
     public void SetUp ()
     {
       _identifierGenerator = new IdentifierGenerator<Type>();
-      _remotionReflection = ProgramTest.GetRemotionReflection();
+      _remotionReflector = ProgramTest.GetRemotionReflection();
     }
 
     [Test]
     public void GenerateXml_ZeroAttributes ()
     {
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(UselessObject), _identifierGenerator, _remotionReflection);
+      var reportGenerator = new AttributeReferenceReportGenerator(typeof(UselessObject), _identifierGenerator, _remotionReflector);
 
       var output = reportGenerator.GenerateXml();
 
@@ -38,7 +38,7 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_WithAttributes ()
     {
       // Mixin2 has SerializableAttribute, SerializableAttribute has no parameters
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(Mixin2), _identifierGenerator, _remotionReflection);
+      var reportGenerator = new AttributeReferenceReportGenerator(typeof(Mixin2), _identifierGenerator, _remotionReflector);
 
       var output = reportGenerator.GenerateXml();
 
@@ -54,7 +54,7 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_WithAttributesWithParameters ()
     {
       // ClassWithBookAttribute has the following attribute: [Book (1, Title = "C# in depth")]
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithBookAttribute), _identifierGenerator, _remotionReflection);
+      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithBookAttribute), _identifierGenerator, _remotionReflector);
 
       var output = reportGenerator.GenerateXml();
 
@@ -84,7 +84,7 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_WithAttributesWithFieldParameter ()
     {
       // ClassWithAttributeFieldParam has the following attribute: [FieldParam(new[] { "AttributeParam1", "AttributeParam2"})]
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithAttributeFieldParam), _identifierGenerator, _remotionReflection);
+      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithAttributeFieldParam), _identifierGenerator, _remotionReflector);
 
       var output = reportGenerator.GenerateXml();
 

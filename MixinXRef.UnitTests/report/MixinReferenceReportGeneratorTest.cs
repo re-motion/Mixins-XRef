@@ -16,13 +16,13 @@ namespace MixinXRef.UnitTests.Report
   [TestFixture]
   public class MixinReferenceReportGeneratorTest
   {
-    private IRemotionReflection _remotionReflection;
+    private IRemotionReflector _remotionReflector;
     private IOutputFormatter _outputFormatter;
 
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflection = ProgramTest.GetRemotionReflection();
+      _remotionReflector = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
     }
 
@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests.Report
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter
           );
 
@@ -62,7 +62,7 @@ namespace MixinXRef.UnitTests.Report
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter
           );
 
@@ -112,7 +112,7 @@ namespace MixinXRef.UnitTests.Report
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
-          _remotionReflection,
+          _remotionReflector,
           _outputFormatter);
 
       var output = reportGenerator.GenerateXml();

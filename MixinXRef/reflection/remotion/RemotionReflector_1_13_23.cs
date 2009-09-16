@@ -5,11 +5,11 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection.Remotion
 {
-  public class RemotionReflection09 : IRemotionReflection
+  public class RemotionReflector_1_13_23 : IRemotionReflector
   {
     private readonly Assembly _remotionAssembly;
 
-    public RemotionReflection09 (Assembly remotionAssembly)
+    public RemotionReflector_1_13_23 (Assembly remotionAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
 

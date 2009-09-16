@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="reflection\remotion\RemotionReflection09.cs" />
+    <Compile Include="reflection\remotion\RemotionReflector_1_13_23.cs" />
     <Compile Include="report\AdditionalDependencyReportGenerator.cs" />
     <Compile Include="utility\ArgumentUtility.cs" />
     <Compile Include="AssemblyBuilder.cs" />
@@ -66,7 +66,7 @@
     <Compile Include="formatting\IOutputFormatter.cs" />
     <Compile Include="reflection\MemberModifierUtility.cs" />
     <Compile Include="reflection\MemberSignatureUtility.cs" />
-    <Compile Include="reflection\remotion\IRemotionReflection.cs" />
+    <Compile Include="reflection\remotion\IRemotionReflector.cs" />
     <Compile Include="report\IReportGenerator.cs" />
     <Compile Include="utility\IIdentifierGenerator.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
@@ -83,8 +83,8 @@
     <Compile Include="utility\RecursiveDirectoryCopy.cs" />
     <Compile Include="report\RecursiveExceptionReportGenerator.cs" />
     <Compile Include="reflection\ReflectedObject.cs" />
-    <Compile Include="reflection\remotion\RemotionReflection08.cs" />
-    <Compile Include="reflection\RemotionVersionDetector.cs" />
+    <Compile Include="reflection\remotion\RemotionReflector_1_11_20.cs" />
+    <Compile Include="reflection\RemotionReflectorFactory.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="report\TargetReferenceReportGenerator.cs" />
     <Compile Include="utility\TimingScope.cs" />

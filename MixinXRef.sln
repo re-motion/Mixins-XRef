@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef", "MixinXRef\Mixi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests", "MixinXRef.UnitTests\MixinXRef.UnitTests.csproj", "{D9D6A235-C449-46F8-80DE-0315A7226ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Remotion09", "MixinXRef.UnitTests.Remotion09\MixinXRef.UnitTests.Remotion09.csproj", "{DF50C935-15CA-4FB6-B0CB-FCA1785166D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Remotion_1_13_23", "MixinXRef.UnitTests.Remotion09\MixinXRef.UnitTests.Remotion_1_13_23.csproj", "{DF50C935-15CA-4FB6-B0CB-FCA1785166D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

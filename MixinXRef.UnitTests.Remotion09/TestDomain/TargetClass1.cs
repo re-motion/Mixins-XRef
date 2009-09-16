@@ -1,6 +1,6 @@
 using System;
 
-namespace MixinXRef.UnitTests.Remotion09.TestDomain
+namespace MixinXRef.UnitTests.Remotion_1_13_23.TestDomain
 {
   public class TargetClass1
   {
