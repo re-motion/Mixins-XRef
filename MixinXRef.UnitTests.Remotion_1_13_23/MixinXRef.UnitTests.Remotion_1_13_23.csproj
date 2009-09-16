@@ -8,8 +8,8 @@
     <ProjectGuid>{DF50C935-15CA-4FB6-B0CB-FCA1785166D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixinXRef.UnitTests.Remotion09</RootNamespace>
-    <AssemblyName>MixinXRef.UnitTests.Remotion09</AssemblyName>
+    <RootNamespace>MixinXRef.UnitTests.Remotion_1_13_23</RootNamespace>
+    <AssemblyName>MixinXRef.UnitTests.Remotion_1_13_23</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
