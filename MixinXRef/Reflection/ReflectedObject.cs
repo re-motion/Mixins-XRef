@@ -105,7 +105,7 @@ namespace MixinXRef.Reflection
           yield return new ReflectedObject (item);
       }
       else
-        throw new NotSupportedException (String.Format ("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
+        throw new NotSupportedException (string.Format ("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
     }
 
     IEnumerator IEnumerable.GetEnumerator ()

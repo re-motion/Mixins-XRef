@@ -77,7 +77,7 @@ namespace MixinXRef.Report
 
       var valueCollection = (ReadOnlyCollection<CustomAttributeTypedArgument>) argumentValue;
 
-      StringBuilder concatenatedValues = new StringBuilder ("{");
+      var concatenatedValues = new StringBuilder ("{");
       for (int i = 0; i < valueCollection.Count; i++)
       {
         if (i != 0)

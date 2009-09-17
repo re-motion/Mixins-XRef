@@ -55,7 +55,7 @@ namespace MixinXRef.Report
 
     public XDocument GenerateXmlDocument ()
     {
-      CompositeReportGenerator compositeReportGenerator = CreateCompositeReportGenerator();
+      var compositeReportGenerator = CreateCompositeReportGenerator();
 
       var result = compositeReportGenerator.GenerateXml();
 

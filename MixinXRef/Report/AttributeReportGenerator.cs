@@ -61,15 +61,15 @@ namespace MixinXRef.Report
         foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
         {
           var attributeType = attribute.GetType();
-          if (!_remotionReflector.IsInfrastructureType (attributeType))
-          {
-            if (!allAttributes.ContainsKey (attributeType))
-              allAttributes.Add (attributeType, new List<Type>());
+          if (_remotionReflector.IsInfrastructureType (attributeType))
+            continue;
 
-            var values = allAttributes[attributeType];
-            if (!values.Contains (involvedType.Type))
-              values.Add (involvedType.Type);
-          }
+          if (!allAttributes.ContainsKey (attributeType))
+            allAttributes.Add (attributeType, new List<Type>());
+
+          var values = allAttributes[attributeType];
+          if (!values.Contains (involvedType.Type))
+            values.Add (involvedType.Type);
         }
       }
       return allAttributes;

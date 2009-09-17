@@ -46,7 +46,7 @@ namespace MixinXRef.Formatting
       else
         typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
 
-      StringBuilder result = new StringBuilder (typeName);
+      var result = new StringBuilder (typeName);
       result.Append ("<");
       var genericArguments = type.GetGenericArguments();
       for (int i = 0; i < genericArguments.Length; i++)

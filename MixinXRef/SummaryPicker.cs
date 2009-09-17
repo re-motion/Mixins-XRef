@@ -28,8 +28,8 @@ namespace MixinXRef
       var xmlDocument = XDocument.Load (documentationFileName);
 
       // search for member
-      string searchName = "T:" + type.FullName;
-      string xpath = String.Format ("//member[@name = '{0}']/summary", searchName);
+      var searchName = "T:" + type.FullName;
+      var xpath = string.Format ("//member[@name = '{0}']/summary", searchName);
       var summary = xmlDocument.XPathSelectElement (xpath);
 
       // xpath expression returned no result

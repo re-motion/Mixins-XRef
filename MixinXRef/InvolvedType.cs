@@ -102,7 +102,7 @@ namespace MixinXRef
 
     public override string ToString ()
     {
-      return String.Format ("{0}, isTarget: {1}, isMixin: {2}, # of targets: {3}", _realType, IsTarget, IsMixin, _targetTypes.Count);
+      return string.Format ("{0}, isTarget: {1}, isMixin: {2}, # of targets: {3}", _realType, IsTarget, IsMixin, _targetTypes.Count);
     }
 
 
