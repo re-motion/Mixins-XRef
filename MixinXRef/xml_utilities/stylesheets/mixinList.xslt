@@ -48,15 +48,15 @@
           <xsl:if test="$target/@is-generic-definition = false()">
 					  <td>
               <xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/Interface/@ref) )"/>
-              (non-distinct: <xsl:value-of select="count($mixinRefs/InterfaceIntroductions/Interface/@ref)"/>)
+              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/InterfaceIntroductions/Interface/@ref)"/>)
             </td>
 					  <td>
               <xsl:value-of select="count( distinct-values( $mixinRefs/AttributeIntroductions/Attribute/@ref) )"/>
-              (non-distinct: <xsl:value-of select="count($mixinRefs/AttributeIntroductions/Attribute/@ref)"/>)
+              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/AttributeIntroductions/Attribute/@ref)"/>)
             </td>
 					  <td>
               <xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/Member/@name) )"/>
-              (non-distinct: <xsl:value-of select="count($mixinRefs/MemberOverrides/Member/@name)"/>)
+              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/MemberOverrides/Member/@name)"/>)
             </td>
           </xsl:if>
           <xsl:if test="$target/@is-generic-definition = true()">

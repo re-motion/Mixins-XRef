@@ -22,6 +22,42 @@ function initTableSorter() {
         $("#overlay").hide();
     });
 
+    // add parser through the tablesorter addParser method 
+    $.tablesorter.addParser({
+        // set a unique id 
+        id: 'modifiers',
+        is: function(s) {
+            // return false so this parser is not auto detected 
+            return false;
+        },
+        format: function(s) {
+
+            var index = 0;
+            // format your data for normalization
+            if (s.indexOf("public") != -1)
+                index = 0;
+            if (s.indexOf("protected internal") != -1)
+                index = 10;
+            if (s.indexOf("protected") != -1)
+                index = 20;
+            if (s.indexOf("internal") != -1)
+                index = 30;
+            if (s.indexOf("private") != -1)
+                index = 40;
+
+            if (s.indexOf("abstract") != -1)
+                index += 1;
+            if (s.indexOf("virtual") != -1)
+                index += 2;
+            if (s.indexOf("virtual") != -1)
+                index += 3;
+
+            return index;
+        },
+        // set type, either numeric or text 
+        type: 'numeric'
+    });
+
     /* get all tables */
     var ts = $("table");
     var tablesorterCookieJar = $.cookieJar('tablesorter', {
@@ -50,20 +86,40 @@ function initTableSorter() {
         if (jQuery.browser.msie)
             widgetSetting = ['cookie', 'zebra'];
 
-        /* init tablesorter */
-        $(this).tablesorter({
-            widthFixed: true,
-            widgets: widgetSetting
-        });
-
+        var caption = $(this).find("caption").html().substring(0, 7);
+        if (caption == "Members") {
+            /* init tablesorter */
+            $(this).tablesorter({
+                widthFixed: true,
+                widgets: widgetSetting,
+                textExtraction: function(node) {
+                    if ($(node).find("span.Name").text() != "")
+                        return ($(node).find("span.Name").text());
+                    if ($(node).find("span.Keyword").text() != "")
+                        return ($(node).find("span.Keyword").text()); 
+                    return $(node).text();
+                },
+                headers:
+                {
+                    2: { sorter: 'modifiers' }
+                }
+            });
+        }
+        else {
+            /* init tablesorter */
+            $(this).tablesorter({
+                widthFixed: true,
+                widgets: widgetSetting
+            });
+        }
         var rowCount = $(this).find("tbody tr").length;
         /* pager: only on index sites with a table with more than 30 rows */
         if (rowCount >= 20 && onIndexSite()) {
-			/* register event handler on dropdown-box */
+            /* register event handler on dropdown-box */
             $("div.pager select.pagesize").bind("change", function() {
                 tablesorterCookieJar.set(getCookieName() + '_pagesize', $(this).attr("value"));
             });
-			/* page size */
+            /* page size */
             var pageSize = tablesorterCookieJar.get(getCookieName() + '_pagesize');
             if (pageSize == undefined) pageSize = 20;
             $("div.pager select.pagesize").attr("value", pageSize);
@@ -73,16 +129,16 @@ function initTableSorter() {
                 var tableId = ($("table").attr("id"));
                 tablesorterCookieJar.set(tableId + "_currentPage", newPageNr);
             });
-			
-			/* current page */
-			var currentPage = tablesorterCookieJar.get(this.id + "_currentPage");
-			if (currentPage == undefined) currentPage = 0;
+
+            /* current page */
+            var currentPage = tablesorterCookieJar.get(this.id + "_currentPage");
+            if (currentPage == undefined) currentPage = 0;
 
             $(this).tablesorterPager({
                 container: $(".pager"),
-				positionFixed: false,
+                positionFixed: false,
                 size: pageSize,
-				page: currentPage
+                page: currentPage
             });
         } else {
             $(".pager").hide();
