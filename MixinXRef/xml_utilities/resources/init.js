@@ -47,7 +47,7 @@ function initTableSorter() {
 
             if (s.indexOf("abstract") != -1)
                 index += 1;
-            if (s.indexOf("virtual") != -1)
+            if (s.indexOf("override") != -1)
                 index += 2;
             if (s.indexOf("virtual") != -1)
                 index += 3;
