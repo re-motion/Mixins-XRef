@@ -32,8 +32,9 @@ function initTableSorter() {
         },
         format: function(s) {
 
-            var index = 0;
-            // format your data for normalization
+            // default for empty element => explicit interface
+            var index = -1;
+
             if (s.indexOf("public") != -1)
                 index = 0;
             if (s.indexOf("protected internal") != -1)
