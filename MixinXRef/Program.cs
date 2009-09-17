@@ -26,14 +26,15 @@ namespace MixinXRef
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
       if (args.Length == 3)
-      {
-        var customRemotionReflector = args[2];
-
-        program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory, customRemotionReflector));
-
-        if (program._remotionReflector.GetType().AssemblyQualifiedName != customRemotionReflector)
-          Console.WriteLine ("Your custom RemotionReflector '{0}' could not be found.", customRemotionReflector);
-      }
+        try
+        {
+          program.SetRemotionReflector (new RemotionReflectorFactory ().Create (assemblyDirectory, args[2]));
+        }
+        catch (Exception fileNotFoundOrTypeLoadException)
+        {
+          Console.WriteLine (fileNotFoundOrTypeLoadException.Message);
+          return -5;
+        }
       else
         program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
       

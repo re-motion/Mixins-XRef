@@ -12,7 +12,10 @@ namespace MixinXRef.Reflection
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      return CreateInstance (assemblyDirectory, null);
+      var remotionAssembly = GetRemotionAssembly (assemblyDirectory);
+      var remotionReflectorType = DetectVersion (remotionAssembly);
+
+      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssembly);
     }
 
     public IRemotionReflector Create (string assemblyDirectory, string customRemotionReflectorAssemblyQualifiedName)
@@ -20,29 +23,26 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
       ArgumentUtility.CheckNotNull ("customRemotionReflectorAssemblyQualifiedName", customRemotionReflectorAssemblyQualifiedName);
 
-      var remotionReflectionType = Type.GetType (customRemotionReflectorAssemblyQualifiedName);
+      var remotionAssembly = GetRemotionAssembly(assemblyDirectory);
+      var remotionReflectorType = Type.GetType (customRemotionReflectorAssemblyQualifiedName, true, false);
 
-      return CreateInstance (assemblyDirectory, remotionReflectionType);
+      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssembly);
     }
 
-    private IRemotionReflector CreateInstance (string assemblyDirectory, Type remotionReflectionType)
+    private Assembly GetRemotionAssembly (string assemblyDirectory)
     {
       var fullAssemblyPath = Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll"));
-      var remotionAssembly = Assembly.LoadFile (fullAssemblyPath);
-
-      remotionReflectionType = remotionReflectionType ?? DetectVersion (remotionAssembly);
-
-      return (IRemotionReflector) Activator.CreateInstance (remotionReflectionType, remotionAssembly);
+      return Assembly.LoadFile (fullAssemblyPath);
     }
 
     private Type DetectVersion (Assembly remotionAssembly)
     {
       // TODO: more generic version detection
       var version = remotionAssembly.GetName().Version;
-
-      if (version.Major == 1 && version.Minor == 13 && version.Build == 23)
+      
+      if (version.CompareTo(new Version(1,13,23)) >= 0)
         return typeof (RemotionReflector_1_13_23);
-      if (version.Major == 1 && version.Minor == 11 && version.Build == 20)
+      if (version.CompareTo (new Version (1, 11, 20)) >= 0)
         return typeof (RemotionReflector_1_11_20);
 
       throw new NotSupportedException (string.Format ("The remotion assembly version '{0}' is not supported.", version));
