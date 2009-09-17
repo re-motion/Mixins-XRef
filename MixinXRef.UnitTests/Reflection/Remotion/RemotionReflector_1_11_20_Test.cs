@@ -36,7 +36,7 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [Test]
     public void IsNonApplicationAssembly_True ()
     {
-      // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is NonApplicationAssembly
+      // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is a "NonApplicationAssembly"
       var assembly = typeof (SafeContext).Assembly;
       var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 

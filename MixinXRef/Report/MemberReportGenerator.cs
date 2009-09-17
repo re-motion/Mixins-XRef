@@ -134,14 +134,16 @@ namespace MixinXRef.Report
 
       var overrides = new XElement ("Overrides");
 
-      // TODO: how can it be, that a target class definition has the same member info twice?
-      // TODO: change back to SingleOrDefault when fixed
+      // TODO: (1) how can it be, that a target class definition has the same member info twice?
+      // when fixed: change back to Single()
       var memberDefinition =
           _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).FirstOrDefault();
+              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString())
+              .FirstOrDefault();
 
-      // TODO: check why it's possible that the memberDefinition is null 
-      // TargetClassDefinition.GetAllMembers doesn't contain same members as type.GetMembers
+      // TODO: (2) check why it's possible that the memberDefinition is null (through 'OrDefault', exception otherwise) 
+      // TargetClassDefinition.GetAllMembers doesn't contain same members as Type.GetMembers ?!
+      // when fixed: remove 'OrDefault'
       if (memberDefinition == null)
         return overrides;
 

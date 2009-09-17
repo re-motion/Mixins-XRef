@@ -32,11 +32,11 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
       Assert.That (output, Is.False);
     }
 
-    // TODO: new remotion version doesn't contain any NonApplicationAssemblies
+    // TODO: (3) new remotion version doesn't contain any NonApplicationAssemblies
     //[Test]
     //public void IsNonApplicationAssembly_True()
     //{
-    //  // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is NonApplicationAssembly
+    //  // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is a NonApplicationAssembly
     //  var assembly = typeof(SafeContext).Assembly;
     //  var output = _remotionReflector.IsNonApplicationAssembly(assembly);
 
