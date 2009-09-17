@@ -149,7 +149,8 @@
 
 
 <xsl:template match="InvolvedType/summary/*">
-	<b>
+  <xsl:text> </xsl:text>
+  <b>
 		<xsl:value-of select="."/>
 		<xsl:value-of select="substring(@*, 3)"/>
 	</b>

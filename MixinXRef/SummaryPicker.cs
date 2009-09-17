@@ -17,8 +17,9 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("type", type);
 
       // get path and filename of xml summary
-      var documentationFileName = Path.GetFileNameWithoutExtension (type.Assembly.Location) + ".xml";
+      var documentationFileName = Path.ChangeExtension (type.Assembly.Location, ".xml");
 
+      
       // check if xml document exists
       if (!File.Exists (documentationFileName))
         return s_noSummary;
