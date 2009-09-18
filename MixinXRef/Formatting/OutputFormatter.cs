@@ -220,41 +220,6 @@ namespace MixinXRef.Formatting
       return nestedTypeMarkup;
     }
 
-    private void CreateSeperatedGenericTypeElements(string typeName, XElement markup)
-    {
-      var startIndex = typeName.IndexOf ('<');
-      if (startIndex != -1)
-      {
-        var endIndex = typeName.LastIndexOf ('>');
-        var before = typeName.Substring (0, startIndex);
-        var inside = typeName.Substring (startIndex + 1, endIndex - startIndex - 1);
-        var after = endIndex + 2 >= typeName.Length ? null : typeName.Substring (endIndex + 1, typeName.Length - endIndex);
-        CreateSeperatedGenericTypeElements (before, markup);
-        markup.Add (CreateElement ("Text", "<"));
-        CreateSeperatedGenericTypeElements (inside, markup);
-        markup.Add (CreateElement ("Text", ">"));
-        if (after != null)
-        {
-          markup.Add (CreateElement ("Text", ","));
-          CreateSeperatedGenericTypeElements (after, markup);
-        }
-      }
-      else
-      {
-        var names = typeName.Split (new []{", "}, StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < names.Length; i++)
-        {
-          if(i!=0)
-            markup.Add (CreateElement ("Text", ","));
-
-          if (char.IsUpper (names[i][0]))
-            markup.Add (CreateElement ("Type", typeName));
-          else
-            markup.Add (CreateElement ("Keyword", typeName));
-        }
-      }
-    }
-
     private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
     {
       var markup = new XElement ("Signature");
@@ -262,13 +227,7 @@ namespace MixinXRef.Formatting
 
       markup.Add (CreateElement ("Keyword", prefix));
 
-      var typeName = type != null ? GetShortFormattedTypeName (type) : "";
-      if (typeName.Contains ("<"))
-      {
-        CreateSeperatedGenericTypeElements (typeName, markup);
-      }
-      else
-        markup.Add (CreateTypeOrKeywordElement (type));
+      markup.Add (CreateTypeOrKeywordElement (type));
 
       if (memberName.Contains ("."))
       {
