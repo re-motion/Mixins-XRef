@@ -55,6 +55,7 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
+    // TODO: (5) test breaks, if output 'fullReportGeneratorExpectedOutput.xml' is not generated on same machine
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
