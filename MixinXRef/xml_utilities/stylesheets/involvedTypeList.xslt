@@ -27,7 +27,7 @@
 	<xsl:param name="caption" />
 
   <xsl:variable name="isTargetList" select="count( $involvedTypes[@is-target = true()] ) = count( $involvedTypes ) " />
-  <xsl:variable name="isMixinList" select="count( $involvedTypes[@is-mixin = true()] ) = count( $involvedTypes ) " />
+  <xsl:variable name="isMixinList" select=" not( $isTargetList ) " />
   
 	<table>
 		<caption><xsl:value-of select="$caption" />&#160;(<xsl:value-of select="count( $involvedTypes )" />)</caption>

@@ -115,7 +115,7 @@ tbody tr.odd td {
 /* warning for unused mixins (target = false AND mixin = false) */
 .unusedMixinClass, table tbody tr.unusedMixinClass td 
 {
-	background-color: #CCE3CE !IMPORTANT;
+	background-color: #E0CEE0 !IMPORTANT;
 }
 
 

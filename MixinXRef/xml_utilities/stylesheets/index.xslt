@@ -15,12 +15,12 @@
       <label>Mixins:</label>
       <xsl:value-of select="ru:GetOverallMixinCount(/)"/>
     </div>
-    <div class="dubiosInvolvedType">
-      <label>Mixed Mixins:</label>
+    <div>
+      <label class="dubiosInvolvedType" >Mixed Mixins:</label>
       <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = true() and @is-mixin = true()] )"/>
     </div>
-    <div class="unusedMixinClass">
-      <label>Non Applied Mixins:</label>
+    <div>
+      <label class="unusedMixinClass" >Non Applied Mixins:</label>
       <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = false() and @is-mixin = false()] )"/>
     </div>
     <div>
