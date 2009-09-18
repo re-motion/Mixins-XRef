@@ -12,10 +12,10 @@ namespace MixinXRef.Reflection
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var remotionAssembly = GetRemotionAssembly (assemblyDirectory);
-      var remotionReflectorType = DetectVersion (remotionAssembly);
+      var remotionAssemblies = GetRemotionAssemblies(assemblyDirectory);
+      var remotionReflectorType = DetectVersion (remotionAssemblies[0]);
 
-      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssembly);
+      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssemblies);
     }
 
     public IRemotionReflector Create (string assemblyDirectory, string customRemotionReflectorAssemblyQualifiedName)
@@ -23,16 +23,19 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
       ArgumentUtility.CheckNotNull ("customRemotionReflectorAssemblyQualifiedName", customRemotionReflectorAssemblyQualifiedName);
 
-      var remotionAssembly = GetRemotionAssembly(assemblyDirectory);
+      var remotionAssemblies = GetRemotionAssemblies(assemblyDirectory);
       var remotionReflectorType = Type.GetType (customRemotionReflectorAssemblyQualifiedName, true, false);
 
-      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssembly);
+      return (IRemotionReflector) Activator.CreateInstance (remotionReflectorType, remotionAssemblies);
     }
 
-    private Assembly GetRemotionAssembly (string assemblyDirectory)
+    private Assembly[] GetRemotionAssemblies (string assemblyDirectory)
     {
-      var fullAssemblyPath = Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll"));
-      return Assembly.LoadFile (fullAssemblyPath);
+      var remotionAssemblies = new Assembly[2];
+      remotionAssemblies[0] = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
+      remotionAssemblies[1] = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.Interfaces.dll")));
+
+      return remotionAssemblies;
     }
 
     private Type DetectVersion (Assembly remotionAssembly)

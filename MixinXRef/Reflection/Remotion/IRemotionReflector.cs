@@ -9,6 +9,7 @@ namespace MixinXRef.Reflection.Remotion
     bool IsConfigurationException (Exception exception);
     bool IsValidationException (Exception exception);
     bool IsInfrastructureType (Type type);
+    bool IsInheritedFromMixin (Type type);
 
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
     ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);

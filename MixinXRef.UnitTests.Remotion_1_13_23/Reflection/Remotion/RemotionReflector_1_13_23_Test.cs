@@ -20,7 +20,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new RemotionReflector_1_13_23 (typeof (TargetClassDefinitionFactory).Assembly);
+      _remotionReflector = new RemotionReflector_1_13_23 (typeof (TargetClassDefinitionFactory).Assembly, typeof(Mixin<>).Assembly);
     }
 
     [Test]
@@ -76,6 +76,23 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
       Assert.That (outputTrue, Is.True);
       Assert.That (outputFalse, Is.False);
     }
+
+    [Test]
+    public void IsInheritedFromMixin()
+    {
+      var outputTrue1 = _remotionReflector.IsInheritedFromMixin(typeof(Mixin<>));
+      // Mixin<,> inherits from Mixin<>
+      var outputTrue2 = _remotionReflector.IsInheritedFromMixin(typeof(Mixin<,>));
+      // MemberOverrideWithInheritanceTest.CustomMixin inherits from Mixin<>
+      var outputTrue3 = _remotionReflector.IsInheritedFromMixin(typeof(CompleteInterfacesTestClass.MyMixin));
+      var outputFalse = _remotionReflector.IsInheritedFromMixin((typeof(object)));
+
+      Assert.That(outputTrue1, Is.True);
+      Assert.That(outputTrue2, Is.True);
+      Assert.That(outputTrue3, Is.True);
+      Assert.That(outputFalse, Is.False);
+    }
+
 
     [Test]
     public void GetTargetClassDefinition ()

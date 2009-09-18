@@ -26,7 +26,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
     {
       _configurationErros = new ErrorAggregator<Exception> ();
       _validatonErrors = new ErrorAggregator<Exception> ();
-      _remotionReflector = new RemotionReflector_1_13_23 (typeof (TargetClassDefinitionFactory).Assembly);
+      _remotionReflector = new RemotionReflector_1_13_23(typeof(TargetClassDefinitionFactory).Assembly, typeof(Mixin<>).Assembly);
     }
 
     [Test]

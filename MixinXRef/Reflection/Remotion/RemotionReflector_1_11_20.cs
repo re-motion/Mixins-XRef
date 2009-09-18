@@ -7,16 +7,19 @@ namespace MixinXRef.Reflection.Remotion
 {
   public class RemotionReflector_1_11_20 : IRemotionReflector
   {
-    private readonly Assembly _remotionAssembly;
+    protected readonly Assembly _remotionAssembly;
+    protected readonly Assembly _remotionInterfaceAssembly;
 
-    public RemotionReflector_1_11_20 (Assembly remotionAssembly)
+    public RemotionReflector_1_11_20 (Assembly remotionAssembly, Assembly remotionInterfaceAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
+      ArgumentUtility.CheckNotNull ("remotionInterfaceAssembly", remotionInterfaceAssembly);
 
       _remotionAssembly = remotionAssembly;
+      _remotionInterfaceAssembly = remotionInterfaceAssembly;
     }
-     
-    public bool IsNonApplicationAssembly (Assembly assembly)
+
+    public virtual bool IsNonApplicationAssembly(Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);
 
@@ -25,28 +28,37 @@ namespace MixinXRef.Reflection.Remotion
               attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
     }
 
-    public bool IsConfigurationException (Exception exception)
+    public virtual bool IsConfigurationException(Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
       return exception.GetType().FullName == "Remotion.Mixins.ConfigurationException";
     }
 
-    public bool IsValidationException (Exception exception)
+    public virtual bool IsValidationException(Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
       return exception.GetType().FullName == "Remotion.Mixins.Validation.ValidationException";
     }
 
-    public bool IsInfrastructureType (Type type)
+    public virtual bool IsInfrastructureType(Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
       return type.Assembly.GetName().Name == "Remotion.Interfaces";
     }
 
-    public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
+    public virtual bool IsInheritedFromMixin(Type type)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+
+      var mixinBaseType = _remotionInterfaceAssembly.GetType ("Remotion.Mixins.IInitializableMixin", true);
+      return mixinBaseType.IsAssignableFrom (type);
+    }
+
+
+    public virtual ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -55,15 +67,15 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }
 
-    public ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies)
+    public virtual ReflectedObject BuildConfigurationFromAssemblies(Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
-      var declarativeConfigurationBuilderType = _remotionAssembly.GetType ("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
+      var declarativeConfigurationBuilderType = _remotionAssembly.GetType("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
       return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
     }
 
-    public Assembly FindRemotionAssembly (Assembly[] assemblies)
+    public virtual Assembly FindRemotionAssembly(Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 

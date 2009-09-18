@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.UnitTests.Explore;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -51,7 +52,7 @@ namespace MixinXRef.UnitTests
       expectedType2.TargetTypes.Add (
           typeof (TargetClass1), expectedType1.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
-      Assert.That (involvedTypes, Is.EqualTo (new[] { expectedType1, expectedType2 }));
+      Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2)));
     }
 
     [Test]
@@ -81,7 +82,8 @@ namespace MixinXRef.UnitTests
       expectedType4.TargetTypes.Add (
           typeof (TargetClass2), expectedType3.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
-      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3, expectedType4 }));
+      Assert.That (
+          involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3, expectedType4)));
     }
 
     [Test]
@@ -108,7 +110,7 @@ namespace MixinXRef.UnitTests
       var expectedType3 = new InvolvedType (typeof (Mixin2));
       expectedType3.TargetTypes.Add (typeof (Mixin1), expectedType2.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
-      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
+      Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3)));
     }
 
     [Test]
@@ -136,7 +138,7 @@ namespace MixinXRef.UnitTests
           typeof (ClassInheritsFromUselessObject), expectedType2.TargetClassDefintion.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
 
-      Assert.That (involvedTypes, Is.EquivalentTo (new[] { expectedType1, expectedType2, expectedType3 }));
+      Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3)));
     }
 
     [Test]
@@ -222,6 +224,23 @@ namespace MixinXRef.UnitTests
     private ReflectedObject CreateTargetClassDefintion<ForType> (MixinConfiguration mixinConfiguration)
     {
       return new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (typeof (ForType), mixinConfiguration));
+    }
+
+    private InvolvedType[] GetAdditonalAssemblyInvolvedTypes (params InvolvedType[] explicitInvolvedTypes)
+    {
+      var implicitInvolvedTypes = new []
+                                  {
+                                      new InvolvedType(typeof(CompleteInterfacesTestClass.MyMixin)),
+                                      new InvolvedType(typeof(MemberOverrideWithInheritanceTest.CustomMixin)),
+                                      new InvolvedType(typeof(SimpleMemberOverrideTest.TemplateMixin)),
+                                      new InvolvedType(typeof(MemberOverrideTestClass.Mixin1)),
+                                  };
+
+      var allInvolvedTypes = new InvolvedType[explicitInvolvedTypes.Length + implicitInvolvedTypes.Length];
+      explicitInvolvedTypes.CopyTo (allInvolvedTypes, 0);
+      implicitInvolvedTypes.CopyTo (allInvolvedTypes, explicitInvolvedTypes.Length);
+
+      return allInvolvedTypes;
     }
   }
 }

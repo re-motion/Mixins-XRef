@@ -54,17 +54,21 @@ namespace MixinXRef
             foreach (var mixinContext in classContext.GetProperty ("Mixins"))
             {
               var mixinType = mixinContext.GetProperty ("MixinType").To<Type>();
-              involvedTypes.GetOrCreateValue(mixinType).TargetTypes.Add(
-                  classContext.GetProperty("Type").To<Type>(), GetMixinDefiniton(mixinType, targetClassDefinition));
+              involvedTypes.GetOrCreateValue (mixinType).TargetTypes.Add (
+                  classContext.GetProperty ("Type").To<Type>(), GetMixinDefiniton (mixinType, targetClassDefinition));
             }
           }
+
+          // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
+          if (_remotionReflector.IsInheritedFromMixin (type) && !_remotionReflector.IsInfrastructureType (type))
+            involvedTypes.GetOrCreateValue (type);
         }
       }
 
       return involvedTypes.ToArray();
     }
 
-    public ReflectedObject GetMixinDefiniton(Type mixinType, ReflectedObject targetClassDefinition)
+    public ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)
     {
       return targetClassDefinition == null ? null : targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinType);
     }

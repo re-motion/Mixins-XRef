@@ -10,14 +10,17 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
   public class CustomRemotionReflector : IRemotionReflector
   {
     private readonly Assembly _remotionAssembly;
+    private readonly Assembly _remotionInterfaceAssembly;
 
-    public CustomRemotionReflector (Assembly remotionAssembly)
+    public CustomRemotionReflector(Assembly remotionAssembly, Assembly remotionInterfaceAssembly)
     {
       ArgumentUtility.CheckNotNull ("remotionAssembly", remotionAssembly);
+      ArgumentUtility.CheckNotNull ("remotionInterfaceAssembly", remotionInterfaceAssembly);
 
       _remotionAssembly = remotionAssembly;
+      _remotionInterfaceAssembly = remotionInterfaceAssembly;
     }
-     
+
     public bool IsNonApplicationAssembly (Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);
@@ -47,6 +50,15 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 
       return type.Assembly.GetName().Name == "Remotion.Interfaces";
     }
+
+    public bool IsInheritedFromMixin (Type type)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+
+      var mixinBaseType = _remotionInterfaceAssembly.GetType ("Remotion.Mixins.IInitializableMixin", true);
+      return mixinBaseType.IsAssignableFrom (type);
+    }
+
 
     public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
     {

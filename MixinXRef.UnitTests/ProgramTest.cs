@@ -13,7 +13,7 @@ namespace MixinXRef.UnitTests
   {
     public static IRemotionReflector GetRemotionReflection()
     {
-      return new RemotionReflector_1_11_20(typeof(TargetClassDefinitionUtility).Assembly);
+      return new RemotionReflector_1_11_20(typeof(TargetClassDefinitionUtility).Assembly, typeof(Mixin<>).Assembly);
     }
 
     public const string _userPromptOnExistingOutputDirectory =
