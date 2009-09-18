@@ -47,16 +47,13 @@
 
           <xsl:if test="$target/@is-generic-definition = false()">
 					  <td>
-              <xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/Interface/@ref) )"/>
-              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/InterfaceIntroductions/Interface/@ref)"/>)
+              <xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/Interface/@ref) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/InterfaceIntroductions/Interface/@ref)"/>)
             </td>
 					  <td>
-              <xsl:value-of select="count( distinct-values( $mixinRefs/AttributeIntroductions/Attribute/@ref) )"/>
-              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/AttributeIntroductions/Attribute/@ref)"/>)
+              <xsl:value-of select="count( distinct-values( $mixinRefs/AttributeIntroductions/Attribute/@ref) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/AttributeIntroductions/Attribute/@ref)"/>)
             </td>
 					  <td>
-              <xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/Member/@name) )"/>
-              (non-distinct:&#160;<xsl:value-of select="count($mixinRefs/MemberOverrides/Member/@name)"/>)
+              <xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/Member/@name) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/MemberOverrides/Member/@name)"/>)
             </td>
           </xsl:if>
           <xsl:if test="$target/@is-generic-definition = true()">
@@ -64,7 +61,9 @@
             <td>n/a</td>
             <td>n/a</td>
           </xsl:if>
-          <td>-</td>
+          <td>
+            <xsl:value-of select="count( distinct-values( $mixinRefs/AdditionalDependencies/Mixin/@ref) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/AdditionalDependencies/Mixin/@ref)"/>)
+          </td>
           <td>-</td>
 				</tr>
 			</tfoot>
