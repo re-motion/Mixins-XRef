@@ -112,6 +112,13 @@ tbody tr.odd td {
 	background-color: #E3D1A2 !IMPORTANT;
 }
 
+/* warning for unused mixins (target = false AND mixin = false) */
+.unusedMixinClass, table tbody tr.unusedMixinClass td 
+{
+	background-color: #CCE3CE !IMPORTANT;
+}
+
+
 /* colors for errorList on index site */
 .errorList-errorsFound {
 	background-color: #FFACAC;

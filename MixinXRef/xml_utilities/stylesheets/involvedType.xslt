@@ -26,7 +26,7 @@
 <xsl:template name ="involvedTypeMixin">
   <xsl:call-template name="involvedTypeList">
     <xsl:with-param name="rootMCR" select="/" />
-    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@is-mixin = true() ]" />
+    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ @is-mixin = true() or ( @is-mixin = false() and @is-target = false() ) ]" />
     <xsl:with-param name="dir">.</xsl:with-param>
     <xsl:with-param name="caption">Mixins</xsl:with-param>
     <xsl:with-param name="emptyText">No&#160;Mixins</xsl:with-param>
@@ -108,7 +108,7 @@
       <xsl:value-of select="count( Targets/Target )"/>
     </div>
 		
-		<xsl:if test="@is-generic-definition = true()">
+		<xsl:if test="@is-generic-definition = true() and @is-target = true()">
 			<div><span class="dubiosInvolvedType">This type is a generic definition. Therefore detailed Mixin information is not available.</span></div>
 		</xsl:if>
 		
@@ -154,6 +154,7 @@
 		<xsl:value-of select="."/>
 		<xsl:value-of select="substring(@*, 3)"/>
 	</b>
+  <xsl:text> </xsl:text>
 </xsl:template>
 
 <xsl:template name="involvedTypeBaseLink">

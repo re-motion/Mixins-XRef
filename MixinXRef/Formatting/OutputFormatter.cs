@@ -31,6 +31,10 @@ namespace MixinXRef.Formatting
       var typeName = "";
       var nestedTypeName = "";
 
+      // is not really a generic type name
+      if (!type.Name.Contains("`"))
+        return type.Name;
+
       if (type.IsNested)
       {
         typeName = (type.FullName.Substring (0, type.FullName.IndexOf ('`')));

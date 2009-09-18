@@ -61,7 +61,7 @@
 		</tfoot>
 		<tbody>
 			<xsl:for-each select="$involvedTypes">
-				<tr class="{ ru:getDubiosInvolvedTypeClass(.) }">
+				<tr class="{ ru:getDubiosInvolvedTypeClass(.) } { ru:getUnusedMixinClass(.) }">
 					<td><xsl:value-of select="@namespace"/></td>
 					<td>
 						<xsl:call-template name="GenerateInvolvedTypeLink">
