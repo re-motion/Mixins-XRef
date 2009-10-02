@@ -138,12 +138,10 @@ namespace MixinXRef.Report
       // when fixed: change back to Single()
       var memberDefinition =
           _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString())
+              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString () == memberInfo.ToString ())
               .FirstOrDefault();
 
-      // TODO: (2) check why it's possible that the memberDefinition is null (through 'OrDefault', exception otherwise) 
-      // TargetClassDefinition.GetAllMembers doesn't contain same members as Type.GetMembers ?!
-      // when fixed: remove 'OrDefault'
+      // When MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty Overrides element. 
       if (memberDefinition == null)
         return overrides;
 

@@ -281,6 +281,61 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
+    [Test]
+    public void GetOverrides_WithOverrides_ForMemberInBaseClass ()
+    {
+      var targetType = typeof (BaseMemberOverrideTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew ()
+              .ForClass<BaseMemberOverrideTestClass.Target> ().AddMixin<BaseMemberOverrideTestClass.Mixin1> ()
+              .BuildConfiguration ();
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
+      var involvedType = new InvolvedType (targetType)
+      {
+        TargetClassDefintion = targetClassDefinition,
+        ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
+      };
+
+      var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
+
+      var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
+      var output = reportGenerator.GetOverrides (memberInfo);
+      var expectedOutput =
+          new XElement (
+              "Overrides",
+              new XElement (
+                  "Mixin",
+                  new XAttribute ("ref", 0),
+                  new XAttribute ("instance-name", "BaseMemberOverrideTestClass.Mixin1")
+                  ));
+
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
+
+     [Test]
+    public void GetOverrides_WithoutOverrides_ForMemberHiddenByDerivedClass ()
+    {
+      var targetType = typeof (HiddenMemberTestClass.Target);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew ()
+              .ForClass<HiddenMemberTestClass.Target> ().AddMixin<HiddenMemberTestClass.Mixin1> ()
+              .BuildConfiguration ();
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
+      var involvedType = new InvolvedType (targetType)
+      {
+        TargetClassDefintion = targetClassDefinition,
+        ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
+      };
+
+      var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
+
+      var memberInfo = targetType.GetMember ("HiddenMethod")[0];
+      var output = reportGenerator.GetOverrides (memberInfo);
+      var expectedOutput = new XElement ("Overrides");
+
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
+
     private MemberReportGenerator CreateMemberReportGenerator (Type mixinType, InvolvedType involvedType)
     {
       return new MemberReportGenerator (mixinType, involvedType, new IdentifierGenerator<Type>(), _outputFormatter);

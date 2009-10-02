@@ -57,6 +57,7 @@ namespace MixinXRef.UnitTests.Report
 
     // TODO: (5) test breaks, if output 'fullReportGeneratorExpectedOutput.xml' is not generated on same machine
     [Test]
+    [Ignore ("TODO: Find a way to write this test without it breaking on other machines.")]
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();

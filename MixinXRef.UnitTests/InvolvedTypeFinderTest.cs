@@ -234,6 +234,8 @@ namespace MixinXRef.UnitTests
                                       new InvolvedType(typeof(MemberOverrideWithInheritanceTest.CustomMixin)),
                                       new InvolvedType(typeof(SimpleMemberOverrideTest.TemplateMixin)),
                                       new InvolvedType(typeof(MemberOverrideTestClass.Mixin1)),
+                                      new InvolvedType(typeof(BaseMemberOverrideTestClass.Mixin1)),
+                                      new InvolvedType(typeof(HiddenMemberTestClass.Mixin1)),
                                   };
 
       var allInvolvedTypes = new InvolvedType[explicitInvolvedTypes.Length + implicitInvolvedTypes.Length];
