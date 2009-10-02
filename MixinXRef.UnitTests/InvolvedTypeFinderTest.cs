@@ -228,6 +228,8 @@ namespace MixinXRef.UnitTests
 
     private InvolvedType[] GetAdditonalAssemblyInvolvedTypes (params InvolvedType[] explicitInvolvedTypes)
     {
+      // This list contains all mixins in this test assembly defined for other tests.
+      // When a new mixin is defined, it must be added to the list.
       var implicitInvolvedTypes = new []
                                   {
                                       new InvolvedType(typeof(CompleteInterfacesTestClass.MyMixin)),
