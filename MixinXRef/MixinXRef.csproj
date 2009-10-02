@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reflection\MemberInfoEqualityUtility.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_23.cs" />
     <Compile Include="Report\AdditionalDependencyReportGenerator.cs" />
     <Compile Include="Utility\ArgumentUtility.cs" />

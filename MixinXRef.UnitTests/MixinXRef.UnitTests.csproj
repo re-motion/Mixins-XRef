@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reflection\MemberInfoEqualityUtilityTest.cs" />
     <Compile Include="Report\AdditionalDependencyReportGeneratorTest.cs" />
     <Compile Include="TestDomain\BaseMemberOverrideTestClass.cs" />
     <Compile Include="TestDomain\HiddenMemberTestClass.cs" />
