@@ -138,8 +138,8 @@ namespace MixinXRef.Report
       // when fixed: change back to Single()
       var memberDefinition =
           _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-              .Where (mdb => mdb.GetProperty ("MemberInfo").ToString () == memberInfo.ToString ())
-              .FirstOrDefault();
+              .Where (mdb => MemberInfoEqualityUtility.MemberEquals(mdb.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
+              .SingleOrDefault();
 
       // When MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty Overrides element. 
       if (memberDefinition == null)
