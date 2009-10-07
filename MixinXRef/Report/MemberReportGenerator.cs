@@ -91,23 +91,27 @@ namespace MixinXRef.Report
       if (!_involvedType.HasTargetClassDefintion)
         return false;
 
-      foreach (var mixinDefinition in _involvedType.TargetClassDefintion.GetProperty ("Mixins"))
+      foreach (var mixinDefinition in _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers"))
       {
-        // compared with ToString because MemberInfo has no own implementation of Equals
-        var mixinMemberDefinition =
-            mixinDefinition.CallMethod ("GetAllMembers")
-                .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
+        var baseAsMember = mixinDefinition.GetProperty ("BaseAsMember");
+        if (baseAsMember == null)
+          continue;
 
-        if (mixinMemberDefinition != null && mixinMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
-          return true;
+        var overrideCollection = baseAsMember.GetProperty ("Overrides");
+
+        foreach (var memberDefinitionBase in overrideCollection)
+        {
+          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo> (), memberInfo))
+            return true;
+        }
       }
+
       return false;
     }
 
     public bool HasOverrideTargetAttribute (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
-
 
       if (!_involvedType.IsMixin)
         return false;
@@ -117,11 +121,13 @@ namespace MixinXRef.Report
         if (typeAndMixinDefinitionPair.Value == null)
           continue;
 
-        var targetMemberDefinition = typeAndMixinDefinitionPair.Value.GetProperty ("TargetClass")
-            .CallMethod ("GetAllMembers")
-            .Where (mdb => mdb.GetProperty ("MemberInfo").ToString() == memberInfo.ToString()).SingleOrDefault();
-        if (targetMemberDefinition != null && targetMemberDefinition.GetProperty ("Overrides").CallMethod ("ContainsKey", _type).To<bool>())
-          return true;
+        var overrideCollection = typeAndMixinDefinitionPair.Value.CallMethod ("GetAllOverrides");
+
+        foreach (var memberDefinitionBase in overrideCollection)
+        {
+          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo> (), memberInfo))
+            return true;
+        }
       }
 
       return false;
@@ -138,7 +144,7 @@ namespace MixinXRef.Report
       // when fixed: change back to Single()
       var memberDefinition =
           _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-              .Where (mdb => MemberInfoEqualityUtility.MemberEquals(mdb.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
+              .Where (mdb => MemberInfoEqualityUtility.MemberEquals (mdb.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
               .SingleOrDefault();
 
       // When MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty Overrides element. 
