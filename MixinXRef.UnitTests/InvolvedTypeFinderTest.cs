@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
-using MixinXRef.UnitTests.Explore;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -40,7 +40,8 @@ namespace MixinXRef.UnitTests
     public void FindInvolvedTypes_WithOneTarget ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
-      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (Mixin1).Assembly });
+      var assembly = typeof (Mixin1).Assembly;
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { assembly });
 
       var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
 
@@ -228,19 +229,18 @@ namespace MixinXRef.UnitTests
 
     private InvolvedType[] GetAdditonalAssemblyInvolvedTypes (params InvolvedType[] explicitInvolvedTypes)
     {
-      // This list contains all mixins in this test assembly defined for other tests.
-      // When a new mixin is defined, it must be added to the list.
-      var implicitInvolvedTypes = new []
-                                  {
-                                      new InvolvedType(typeof(CompleteInterfacesTestClass.MyMixin)),
-                                      new InvolvedType(typeof(MemberOverrideWithInheritanceTest.CustomMixin)),
-                                      new InvolvedType(typeof(SimpleMemberOverrideTest.TemplateMixin)),
-                                      new InvolvedType(typeof(MemberOverrideTestClass.Mixin1)),
-                                      new InvolvedType(typeof(BaseMemberOverrideTestClass.Mixin1)),
-                                      new InvolvedType(typeof(HiddenMemberTestClass.Mixin1)),
-                                  };
+      var implicitInvolvedTypes = new List<InvolvedType>();
+      var remotionReflector = ProgramTest.GetRemotionReflection();
+      var assembly = typeof (Mixin1).Assembly;
 
-      var allInvolvedTypes = new InvolvedType[explicitInvolvedTypes.Length + implicitInvolvedTypes.Length];
+      foreach (var type in assembly.GetTypes())
+      {
+        // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
+        if (remotionReflector.IsInheritedFromMixin (type) && !remotionReflector.IsInfrastructureType (type))
+          implicitInvolvedTypes.Add (new InvolvedType (type));
+      }
+
+      var allInvolvedTypes = new InvolvedType[explicitInvolvedTypes.Length + implicitInvolvedTypes.Count];
       explicitInvolvedTypes.CopyTo (allInvolvedTypes, 0);
       implicitInvolvedTypes.CopyTo (allInvolvedTypes, explicitInvolvedTypes.Length);
 
