@@ -99,7 +99,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
       // the creation time of the validiation file is different from the creation time of the generated report
       expectedOutput.Root.FirstAttribute.Value = reportGenerator.CreationTime;
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.ToString ().ToLower (), Is.EqualTo (expectedOutput.ToString ().ToLower ()));
     }
   }
 }
