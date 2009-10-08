@@ -3,10 +3,10 @@ using System.Linq;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.UnitTests.Explore;
+using MixinXRef.UnitTests.NonApplicationAssembly;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using Remotion.Context.MixedTypes;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
@@ -38,7 +38,7 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     public void IsNonApplicationAssembly_True ()
     {
       // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is a "NonApplicationAssembly"
-      var assembly = typeof (SafeContext).Assembly;
+      var assembly = typeof (ClassForNonApplicationAssembly).Assembly;
       var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 
       Assert.That (output, Is.True);

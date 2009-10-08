@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
+using MixinXRef.UnitTests.NonApplicationAssembly;
 using MixinXRef.UnitTests.Remotion_1_13_23.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -33,15 +34,14 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
     }
 
     // TODO: (3) new remotion version doesn't contain any NonApplicationAssemblies
-    //[Test]
-    //public void IsNonApplicationAssembly_True()
-    //{
-    //  // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is a NonApplicationAssembly
-    //  var assembly = typeof(SafeContext).Assembly;
-    //  var output = _remotionReflector.IsNonApplicationAssembly(assembly);
+    [Test]
+    public void IsNonApplicationAssembly_True ()
+    {
+      var assembly = typeof (ClassForNonApplicationAssembly).Assembly;
+      var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 
-    //  Assert.That(output, Is.True);
-    //}
+      Assert.That (output, Is.True);
+    }
 
     [Test]
     public void IsConfigurationException ()

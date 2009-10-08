@@ -134,13 +134,17 @@
     <Compile Include="XRefTransformerTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">
+      <Project>{4D5710EA-E79A-484A-A9A2-2572571274D7}</Project>
+      <Name>MixinXRef.UnitTests.NonApplicationAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestDomain\Remotion.Mixins.Persistent.Signed.dll">
+    <Content Include="TestDomain\MixinXRef.UnitTests.NonApplicationAssembly.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

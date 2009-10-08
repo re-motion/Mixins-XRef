@@ -28,7 +28,7 @@ namespace MixinXRef.UnitTests
         File.Copy (file, Path.Combine (assemblyDirectory, file));
 
       // add a NonApplicationAssembly manually from bin\Debug\TestDomain
-      File.Copy (@"TestDomain\Remotion.Mixins.Persistent.Signed.dll", Path.Combine (assemblyDirectory, "Remotion.Mixins.Persistent.Signed.dll"));
+      File.Copy (@"TestDomain\MixinXRef.UnitTests.NonApplicationAssembly.dll", Path.Combine (assemblyDirectory, "MixinXRef.UnitTests.NonApplicationAssembly.dll"));
 
       // load assemblies from directory
       var assemblyBuilder = new AssemblyBuilder (assemblyDirectory, ProgramTest.GetRemotionReflection());
