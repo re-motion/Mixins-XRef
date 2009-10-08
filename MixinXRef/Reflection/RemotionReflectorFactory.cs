@@ -40,7 +40,6 @@ namespace MixinXRef.Reflection
 
     private Type DetectVersion (Assembly remotionAssembly)
     {
-      // TODO: (4) better / more generic version detection
       var version = remotionAssembly.GetName().Version;
       
       if (version.CompareTo(new Version(1,13,23)) >= 0)
