@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Report;
+using MixinXRef.UnitTests.Stub;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -55,9 +56,7 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    // TODO: (5) test breaks, if output 'fullReportGeneratorExpectedOutput.xml' is not generated on same machine
     [Test]
-    [Ignore ("TODO: Find a way to write this test without it breaking on other machines.")]
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();
@@ -74,7 +73,7 @@ namespace MixinXRef.UnitTests.Report
           .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ().AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ().AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinder (
+      var involvedTypes = new InvolvedTypeFinderStub (
           new ReflectedObject (mixinConfiguration),
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,
@@ -90,7 +89,7 @@ namespace MixinXRef.UnitTests.Report
           ProgramTest.GetRemotionReflection(),
           new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
-      
+
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       // the creation time of the validiation file is different from the creation time of the generated report

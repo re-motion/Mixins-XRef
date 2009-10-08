@@ -6,6 +6,7 @@ using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.Remotion_1_13_23.TestDomain;
+using MixinXRef.UnitTests.Stub;
 using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -60,7 +61,6 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
     }
 
     [Test]
-    [Ignore ("TODO: Find a way to write this test without it breaking on other machines.")]
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", _remotionReflector).GetAssemblies ();
@@ -77,7 +77,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
           .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ().AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ().AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration ();
 
-      var involvedTypes = new InvolvedTypeFinder (
+      var involvedTypes = new InvolvedTypeFinderStub (
           new ReflectedObject (mixinConfiguration),
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,
