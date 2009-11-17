@@ -114,8 +114,6 @@ namespace MixinXRef
         return -3;
       }
 
-      Console.ReadLine();
-
       return 0;
     }
 
