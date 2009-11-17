@@ -41,8 +41,9 @@
 
         <xsl:if test="$isMixinList">
 				  <th>applied to # Targets</th>
-        </xsl:if>  
+        </xsl:if>
         
+        <th>Base</th>
 				<th>Assembly</th>
 			</tr>
 		</thead>
@@ -56,6 +57,7 @@
         <xsl:if test="$isMixinList">
           <td>-</td>
         </xsl:if>
+        <td>-</td>
 				<td><xsl:value-of select="count( distinct-values( $involvedTypes/@assembly-ref ) )" /></td>
 			</tr>
 		</tfoot>
@@ -76,6 +78,20 @@
           <xsl:if test="$isMixinList">
 				    <td><xsl:value-of select="count( Targets/Target )"/></td>
           </xsl:if>
+          <td>
+            <xsl:if test="@base-ref = 'none'">
+              <xsl:value-of  select="@base"/>
+            </xsl:if>
+
+            <xsl:if test="@base-ref != 'none'">
+              <xsl:variable name="base-ref" select="base-ref"/>
+              <xsl:call-template name="GenerateInvolvedTypeLink">
+                <xsl:with-param name="rootMCR" select="$rootMCR" />
+                <xsl:with-param name="involvedTypeId" select="@base-ref" />
+                <xsl:with-param name="dir" select="$dir" />
+              </xsl:call-template>
+            </xsl:if>
+          </td>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />
