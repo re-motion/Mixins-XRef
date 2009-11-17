@@ -87,6 +87,7 @@ namespace MixinXRef.UnitTests
       Directory.Delete (outputDirectory);
     }
 
+    [Ignore("refactor or remove test")]
     [Test]
     public void CreateOrOverrideOutputDirectory_ExistingDirectory_EndOfFileOnStandardInput ()
     {
@@ -105,6 +106,7 @@ namespace MixinXRef.UnitTests
       Directory.Delete (outputDirectory);
     }
 
+    [Ignore ("refactor or remove test")]
     [Test]
     public void CreateOrOverrideOutputDirectory_ExistingDirectory_UserDeniesOverride ()
     {
@@ -125,6 +127,7 @@ namespace MixinXRef.UnitTests
       Directory.Delete (outputDirectory);
     }
 
+    [Ignore ("refactor or remove test")]
     [Test]
     public void CreateOrOverrideOutputDirectory_ExistingDirectory_UserAllowsOverride ()
     {

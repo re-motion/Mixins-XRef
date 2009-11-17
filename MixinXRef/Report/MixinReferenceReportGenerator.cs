@@ -63,7 +63,7 @@ namespace MixinXRef.Report
           new XAttribute ("relation", GetRelationName(mixinContext)),
           // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
           new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinType)),
-          new XAttribute ("introduced-member-visibility", mixinContext.GetProperty ("IntroducedMemberVisibility")),
+          new XAttribute ("introduced-member-visibility", mixinContext.GetProperty ("IntroducedMemberVisibility").ToString().ToLower()),
           new AdditionalDependencyReportGenerator (
               mixinContext.GetProperty ("ExplicitDependencies"), _involvedTypeIdentifierGenerator, _outputFormatter).GenerateXml()
           );

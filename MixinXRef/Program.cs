@@ -114,6 +114,8 @@ namespace MixinXRef
         return -3;
       }
 
+      Console.ReadLine();
+
       return 0;
     }
 
@@ -124,10 +126,11 @@ namespace MixinXRef
       if (Directory.Exists (outputDirectory))
       {
         _output.WriteLine ("Output directory '{0}' does already exist.", outputDirectory);
-        _output.Write ("Do you want to override the directory and including files? [y/N] ");
+        _output.WriteLine ("Aborting operation");
+        //_output.Write ("Do you want to override the directory and including files? [y/N] ");
 
-        var userInput = _input.ReadLine();
-        if (userInput == null || !userInput.ToLower().StartsWith ("y"))
+        //var userInput = _input.ReadLine();
+        //if (userInput == null || !userInput.ToLower().StartsWith ("y"))
           return 1;
       }
       Directory.CreateDirectory (outputDirectory);

@@ -94,8 +94,9 @@
                 </xsl:call-template>
               </xsl:for-each>
             </td>
-            
-            <td><xsl:value-of select="@introduced-member-visibility"/></td>
+            <td>
+              <span class="Keyword"><xsl:value-of select="@introduced-member-visibility"/></span>
+            </td>
 					</tr>
 				</xsl:for-each>
 			</tbody>
