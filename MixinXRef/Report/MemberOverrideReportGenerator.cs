@@ -23,11 +23,11 @@ namespace MixinXRef.Report
     {
       return new XElement (
           "MemberOverrides",
-          from overridenMember in _memberDefinitions
-          select GenerateOverridenMemberElement (overridenMember));
+          from overriddenMember in _memberDefinitions
+          select GenerateOverriddenMemberElement (overriddenMember));
     }
 
-    private XElement GenerateOverridenMemberElement(ReflectedObject overriddenMember)
+    private XElement GenerateOverriddenMemberElement(ReflectedObject overriddenMember)
     {
       return new XElement (
           "Member",

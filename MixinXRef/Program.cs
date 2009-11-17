@@ -6,6 +6,7 @@ using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
 using MixinXRef.Utility;
+using System.Diagnostics;
 
 namespace MixinXRef
 {
@@ -47,25 +48,33 @@ namespace MixinXRef
       if (assemblies == null)
         return (-4);
 
-      Console.WriteLine ("Generating MixinDoc ... time to get some coffee ;-)");
+      Console.WriteLine ("Generating MixinDoc");
+      Console.Write ("  Generating XML ... ");
       program.SaveXmlDocument (assemblies, xmlFile);
+      Console.WriteLine (GetElapsedTime(startTime));
 
+      Console.Write ("  Applying XSLT ... ");
       var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
-      if (transformerExitCode == 0)
+      if (transformerExitCode != 0)
       {
-        // copy resources folder
-        new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
-
-        var elapsed = new DateTime() + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
-        Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1:mm:ss}.", outputDirectory, elapsed);
+        Console.Error.WriteLine ("Error applying XSLT (code {0})", transformerExitCode);
+        return transformerExitCode;
       }
+      Console.WriteLine (GetElapsedTime (startTime));
 
-      Console.Write ("Press any key to continue ...");
-      Console.ReadKey (true);
+      // copy resources folder
+      new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
 
-      return (transformerExitCode);
+      Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1}.", outputDirectory, GetElapsedTime (startTime));
+
+      return 0;
     }
 
+    private static string GetElapsedTime (DateTime startTime)
+    {
+      DateTime elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
+      return elapsed.ToString ("mm:ss");
+    }
 
     private readonly TextReader _input;
     private readonly TextWriter _output;
@@ -115,7 +124,7 @@ namespace MixinXRef
       if (Directory.Exists (outputDirectory))
       {
         _output.WriteLine ("Output directory '{0}' does already exist.", outputDirectory);
-        _output.Write ("Do you want override the directory and including files? [y/N] ");
+        _output.Write ("Do you want to override the directory and including files? [y/N] ");
 
         var userInput = _input.ReadLine();
         if (userInput == null || !userInput.ToLower().StartsWith ("y"))

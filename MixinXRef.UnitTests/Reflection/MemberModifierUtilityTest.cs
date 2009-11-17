@@ -29,7 +29,7 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    public void IsOverridenMember_Property ()
+    public void IsOverriddenMember_Property ()
     {
       var basePropertyInfo = typeof (BaseClassWithProperty).GetProperty ("PropertyName");
       var subPropertyInfo = typeof (ClassWithProperty).GetProperty ("PropertyName");

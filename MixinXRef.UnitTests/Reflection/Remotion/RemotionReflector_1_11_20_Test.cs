@@ -108,7 +108,7 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
       // is only true because target class definition gets cached!
       Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.SameAs (expectedOutput));
 
-      // TargetClassDefinition has no overriden equals
+      // TargetClassDefinition has no overridden equals
       var classContext = mixinConfiguration.ClassContexts.First();
       Assert.That (new TargetClassDefinition (classContext), Is.Not.EqualTo (new TargetClassDefinition (classContext)));
     }

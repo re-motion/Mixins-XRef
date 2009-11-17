@@ -33,7 +33,7 @@
 					<th>Relation</th>
 					<th>Interface Introductions</th>
 					<th>Attribute Introductions</th>
-					<th>Overriden Members</th>
+					<th>Overridden Members</th>
           <th>Additional Dependencies</th>
           <th>Introduced Member Visibility</th>
 				</tr>

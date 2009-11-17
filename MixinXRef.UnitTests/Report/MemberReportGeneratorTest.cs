@@ -78,7 +78,7 @@ namespace MixinXRef.UnitTests.Report
     }
 
     [Test]
-    public void GenerateXml_PropertyWithoutGetAndSet_Overriden ()
+    public void GenerateXml_PropertyWithoutGetAndSet_Overridden ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (ClassWithProperty), new InvolvedType (typeof (ClassWithProperty)));
 

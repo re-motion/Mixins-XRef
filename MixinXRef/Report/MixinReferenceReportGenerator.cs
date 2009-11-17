@@ -60,7 +60,7 @@ namespace MixinXRef.Report
           "Mixin",
           new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (mixinType)),
           new XAttribute ("index", "n/a"),
-          new XAttribute ("relation", mixinContext.GetProperty ("MixinKind")),
+          new XAttribute ("relation", GetRelationName(mixinContext)),
           // property MixinType on mixinContext always return the generic type definition, not the type of the actual instance
           new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (mixinType)),
           new XAttribute ("introduced-member-visibility", mixinContext.GetProperty ("IntroducedMemberVisibility")),
@@ -89,6 +89,13 @@ namespace MixinXRef.Report
       }
 
       return mixinElement;
+    }
+
+    private string GetRelationName (ReflectedObject mixinContext)
+    {
+      if (mixinContext.GetProperty ("MixinKind").ToString ().Equals ("Extending"))
+        return "Extends";
+      return "Used by";
     }
   }
 }
