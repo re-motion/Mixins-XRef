@@ -53,7 +53,7 @@
 				  <td><xsl:apply-templates select="Signature" /></td>
           <xsl:if test="exists($members/Overrides)">
             <td>
-              <xsl:for-each select="$members/Overrides/Mixin">
+              <xsl:for-each select="Overrides/Mixin">
                 <xsl:if test="position() != 1">, </xsl:if>
                 <xsl:call-template name="GenerateMixinReferenceLink">
                   <xsl:with-param name="mixin" select="." />
