@@ -67,6 +67,7 @@
     <div>
       <label>Modifiers:</label>
       <xsl:apply-templates select="Modifiers" />
+      <div class="clean"/>
     </div>
     <div>
       <label>Namespace:</label>
@@ -87,11 +88,12 @@
 	<div>
     <label>Interfaces:</label>
     <p class="involvedType-interfaceLinkList">
-		<xsl:for-each select="Interfaces/Interface/@ref">
+		<xsl:for-each select="Interfaces/Interface">
+      <xsl:sort select="/MixinXRefReport/Interfaces/Interface[@id = current()/@ref]/@name"/>
 			<xsl:if test="position() != 1">, </xsl:if>
 			<xsl:call-template name="GenerateInterfaceLink">
 				<xsl:with-param name="rootMCR" select="/" />
-				<xsl:with-param name="interfaceId" select="." />
+				<xsl:with-param name="interfaceId" select="@ref" />
 				<xsl:with-param name="dir">..</xsl:with-param>
 			</xsl:call-template>			
 		</xsl:for-each>

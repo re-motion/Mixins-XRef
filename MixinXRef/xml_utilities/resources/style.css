@@ -21,6 +21,11 @@ label {
   margin: 0 0 0 7em;
 }
 
+.clean
+{
+	clear: both;
+}
+
 /* for summary page */
 body > div label  {
 	min-width: 8.5em;
