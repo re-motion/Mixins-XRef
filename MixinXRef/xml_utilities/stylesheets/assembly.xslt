@@ -47,7 +47,9 @@
     <tfoot>
       <tr>
         <td>
+          <!--
           <xsl:value-of select="ru:GetOverallAssemblyCount(/)" />
+          -->
         </td>
         <td>-</td>
         <td>
@@ -64,6 +66,7 @@
     </tfoot>
     <tbody>
       <xsl:for-each select="//Assemblies/Assembly">
+        <xsl:if test="count( ru:GetInvolvedTypesForAssembly(/, @id) ) > 0">
         <tr>
           <td>
             <xsl:call-template name="GenerateAssemblyLink">
@@ -88,7 +91,7 @@
             <xsl:value-of select="@location"/>
           </td>
         </tr>
-
+        </xsl:if>
         <!-- generate assembly detail site for current assembly -->
         <xsl:call-template name="assemblyDetailSite" />
       </xsl:for-each>
