@@ -17,8 +17,15 @@
   </xsl:call-template>
 
   <xsl:for-each select="/MixinXRefReport/InvolvedTypes/InvolvedType" >
+    <xsl:variable name="classTypeName" select="if( @is-target = true() and @is-mixin = true() ) then 'Mixed Mixin'
+                else if ( @is-target = true() ) then 'Target Class'
+                else 'Mixin' "/>
+    
 		<!-- generate involved type detail site -->
-	<xsl:call-template name="involvedTypeDetailSite" />	
+    <xsl:call-template name="involvedTypeDetailSite">
+      <xsl:with-param name="title" select="@name" />
+      <xsl:with-param name="type" select="$classTypeName" />
+    </xsl:call-template>	
 	</xsl:for-each>
 </xsl:template>
 
@@ -45,8 +52,11 @@
 
   
 <xsl:template name="involvedTypeDetailSite">
+  <xsl:param name="title" />
+  <xsl:param name="type" />
 	<xsl:call-template name="htmlSite">
-			<xsl:with-param name="siteTitle">Involved Class Detail</xsl:with-param>
+			<xsl:with-param name="siteTitle"><xsl:value-of select="$title"/> (<xsl:value-of select="$type"/>)
+    </xsl:with-param>
 			<xsl:with-param name="siteFileName">involvedTypes/<xsl:value-of select="@id"/>.html</xsl:with-param>
 			<xsl:with-param name="bodyContentTemplate">involvedTypeDetail</xsl:with-param>
 	</xsl:call-template>

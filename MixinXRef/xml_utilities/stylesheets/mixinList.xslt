@@ -137,8 +137,8 @@
     <td>
       <xsl:for-each select="MemberOverrides/Member">
         <xsl:sort select="@name" />
-        <xsl:if test="position() != 1">, </xsl:if>
-        <xsl:value-of select="@name"/><span class="small-method-type">[<xsl:value-of select="@type"/>]</span>
+        <xsl:if test="position() != 1"> <br/> </xsl:if>
+        <a href="#{@name}"><xsl:value-of select="@name"/></a><span class="small-method-type">[<xsl:value-of select="@type"/>]</span>
       </xsl:for-each>
     </td>
   </xsl:if>

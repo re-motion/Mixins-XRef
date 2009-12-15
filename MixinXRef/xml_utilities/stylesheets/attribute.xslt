@@ -12,13 +12,17 @@
 
 	<xsl:for-each select="/MixinXRefReport/Attributes/Attribute" >
 		<!-- generate interface detail site for each interface -->
-		<xsl:call-template name="attributeDetailSite" />	
+    <xsl:call-template name="attributeDetailSite">
+      <xsl:with-param name="title" select="@name" />
+    </xsl:call-template>
+    
 	</xsl:for-each>
 </xsl:template>
 
 <xsl:template name="attributeDetailSite">
+  <xsl:param name="title" />
 	<xsl:call-template name="htmlSite">
-			<xsl:with-param name="siteTitle">Attribute Detail</xsl:with-param>
+			<xsl:with-param name="siteTitle"><xsl:value-of select="$title"/> (Attribute)</xsl:with-param>
 			<xsl:with-param name="siteFileName">attributes/<xsl:value-of select="@id"/>.html</xsl:with-param>
 			<xsl:with-param name="bodyContentTemplate">attributeDetail</xsl:with-param>
 	</xsl:call-template>

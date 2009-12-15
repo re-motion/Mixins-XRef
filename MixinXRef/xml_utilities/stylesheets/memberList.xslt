@@ -19,39 +19,41 @@
 <xsl:param name="members"/>
 
 	<table>
-		<caption>Members&#160;(<xsl:value-of select="count( $members )"/>)</caption>
+		<caption>Declared&#160;Members&#160;(<xsl:value-of select="count( $members[@is-declared-by-this-class = true()] )"/>)</caption>
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>Type</th>
         <th>Modifiers</th>
         <th>Signature</th>
-        <xsl:if test="exists($members/Overrides)">
-          <th>Overrides</th>  
+        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
+          <th>Overridden By</th>  
         </xsl:if>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td><xsl:value-of select="count( $members )"/></td>
+				<td><xsl:value-of select="count( $members[@is-declared-by-this-class = true()] )"/></td>
 				<td>-</td>
         <td>-</td>
         <td>-</td>
-        <xsl:if test="exists($members/Overrides)">
+        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
           <td>-</td>
         </xsl:if>
 			</tr>
 		</tfoot>
 		<tbody>
-			<xsl:for-each select="$members">
+			<xsl:for-each select="$members[@is-declared-by-this-class = true()] ">
 				<tr>
-					<td><xsl:value-of select="@name"/></td>
+          <td id="{@name}">
+            <xsl:value-of select="@name"/>
+          </td>
 					<td><xsl:value-of select="@type"/></td>
 					<td>
 						<xsl:apply-templates select="Modifiers" />
 					</td>
 				  <td><xsl:apply-templates select="Signature" /></td>
-          <xsl:if test="exists($members/Overrides)">
+          <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
             <td>
               <xsl:for-each select="Overrides/Mixin">
                 <xsl:if test="position() != 1">, </xsl:if>
@@ -65,6 +67,67 @@
 			</xsl:for-each>
 		</tbody>
 	</table>
+  
+  <xsl:if test="count( $members[@is-declared-by-this-class = false()] ) > 0">
+  <table>
+    <caption>
+      Base&#160;Members&#160;overridden&#160;by&#160;mixins&#160;(<xsl:value-of select="count( $members[@is-declared-by-this-class = false()] )"/>)
+    </caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Modifiers</th>
+        <th>Signature</th>
+        <xsl:if test="exists($members[@is-declared-by-this-class = false()]/Overrides)">
+          <th>Overridden By</th>
+        </xsl:if>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td>
+          <xsl:value-of select="count( $members[@is-declared-by-this-class = false()] )"/>
+        </td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <xsl:if test="exists($members[@is-declared-by-this-class = false()]/Overrides)">
+          <td>-</td>
+        </xsl:if>
+      </tr>
+    </tfoot>
+    <tbody>
+      <xsl:for-each select="$members[@is-declared-by-this-class = false()] ">
+        <tr>
+          <td id="{@name}">
+            <xsl:value-of select="@name"/>
+          </td>
+          <td>
+            <xsl:value-of select="@type"/>
+          </td>
+          <td>
+            <xsl:apply-templates select="Modifiers" />
+          </td>
+          <td>
+            <xsl:apply-templates select="Signature" />
+          </td>
+          <xsl:if test="exists($members/Overrides)">
+            <td>
+              <xsl:for-each select="Overrides/Mixin">
+                <xsl:if test="position() != 1"> <br/> </xsl:if>
+                <xsl:call-template name="GenerateMixinReferenceLink">
+                  <xsl:with-param name="mixin" select="." />
+                </xsl:call-template>
+              </xsl:for-each>
+            </td>
+          </xsl:if>
+        </tr>
+      </xsl:for-each>
+    </tbody>
+  </table>
+  </xsl:if>
+  
 </xsl:template>
 
 

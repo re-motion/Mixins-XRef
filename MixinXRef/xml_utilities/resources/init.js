@@ -5,6 +5,16 @@ $(document).ready(function() {
     initTreeView();
 
     prepareCollapsing();
+
+    if (document.location.hash) {
+        highlight(document.location.hash);
+    }
+
+    $('a[href*=#]').click(function() {
+        var elemId = '#' + $(this).attr('href').split('#')[1];
+        highlight(elemId);
+    });
+
 });
 
 function getCookieName() {
@@ -97,7 +107,7 @@ function initTableSorter() {
                     if ($(node).find("span.Name").text() != "")
                         return ($(node).find("span.Name").text());
                     if ($(node).find("span.Keyword").text() != "")
-                        return ($(node).find("span.Keyword").text()); 
+                        return ($(node).find("span.Keyword").text());
                     return $(node).text();
                 },
                 headers:
@@ -169,6 +179,7 @@ function prepareCollapsing() {
     if (cookie == undefined) {
         $("caption:contains('Mixins')").addClass("visible");
         $("caption:contains('Attributes')").addClass("visible");
+        $("caption:contains('Members')").addClass("visible");
         $(".treeHeader").addClass("visible");
         if ($("h2 a").text() == "[Involved Interface]")
             $("caption:contains('Members')").addClass("visible");
@@ -236,4 +247,14 @@ function initTreeView() {
         persist: "cookie",
         cookieId: getCookieName() + "_treeview"
     });
+}
+
+function highlight(elemId) {
+    var elem = $(elemId);
+    var color = $(elemId).css("background-color");
+    
+    elem.animate({ backgroundColor: '#ffffaa' }, 1500);
+    $(elemId).nextAll("td").animate({ backgroundColor: '#ffffaa' }, 1500);
+    setTimeout(function() { $(elemId).animate({ backgroundColor: color }, 3000) }, 1000);
+    setTimeout(function() { $(elemId).nextAll("td").animate({ backgroundColor: color }, 3000) }, 1000);
 }
