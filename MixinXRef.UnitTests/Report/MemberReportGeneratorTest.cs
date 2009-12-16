@@ -119,6 +119,55 @@ namespace MixinXRef.UnitTests.Report
     }
 
     [Test]
+    public void GenerateXml_TargetClassWithOverriddenBaseClassMember ()
+    {
+      var type = typeof (InheritatedTargetClass);
+      var mixinConfiguration =
+          MixinConfiguration.BuildNew ().ForClass<InheritatedTargetClass> ().AddMixin<MixinOverridesTargetClassMember> ().BuildConfiguration ();
+      var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+      var involvedType = new InvolvedType (type);
+      involvedType.TargetClassDefintion = targetClassDefinition;
+      var memberInfo = type.GetMember ("MyBaseClassMethod")[0];
+
+      var reportGenerator = CreateMemberReportGenerator (type, involvedType);
+
+      var output = reportGenerator.GenerateXml ();
+      var expectedOutput = new XElement (
+          "Members",
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "MyNewMethod"),
+              new XAttribute ("is-declared-by-this-class", true),
+              _outputFormatter.CreateModifierMarkup ("", "public virtual"),
+              _outputFormatter.CreateMethodMarkup ("MyNewMethod", typeof (void), new ParameterInfo[0]),
+              new XElement ("Overrides")
+              ),
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "MyBaseClassMethod"),
+              new XAttribute ("is-declared-by-this-class", false),
+              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreateMethodMarkup ("MyBaseClassMethod", typeof (void), new ParameterInfo[0]),
+              reportGenerator.GetOverrides (memberInfo)
+              ),
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Constructor),
+              new XAttribute ("name", ".ctor"),
+              new XAttribute ("is-declared-by-this-class", true),
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("InheritatedTargetClass", new ParameterInfo[0]),
+              new XElement ("Overrides")
+              )
+          );
+
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
+
+
+    [Test]
     public void GenerateXml ()
     {
       var type = typeof (MemberOverrideTestClass.Target);

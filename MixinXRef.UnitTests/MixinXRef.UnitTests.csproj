@@ -62,6 +62,7 @@
     <Compile Include="Report\AdditionalDependencyReportGeneratorTest.cs" />
     <Compile Include="TestDomain\BaseMemberOverrideTestClass.cs" />
     <Compile Include="TestDomain\HiddenMemberTestClass.cs" />
+    <Compile Include="TestDomain\TargetClassWithOverriddenBaseClassMember.cs" />
     <Compile Include="Utility\ArgumentUtilityTest.cs" />
     <Compile Include="AssemblyBuilderTest.cs" />
     <Compile Include="Report\AttributeReferenceReportGeneratorTest.cs" />
