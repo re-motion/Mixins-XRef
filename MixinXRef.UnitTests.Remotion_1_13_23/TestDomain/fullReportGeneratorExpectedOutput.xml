@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-11-17 12:18:46">
+<MixinXRefReport creation-time="2009-12-16 08:33:09">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.1.0.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy2" version="2.1.0.0" location="./Castle.DynamicProxy2.dll" />
@@ -34,7 +34,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -69,7 +69,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="ProtectedMethod">
+        <Member type="Method" name="ProtectedMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -80,7 +80,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -90,7 +90,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Property" name="Property">
+        <Member type="Property" name="Property" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -99,7 +99,7 @@
             <Name>Property</Name>
           </Signature>
         </Member>
-        <Member type="Field" name="_stringField">
+        <Member type="Field" name="_stringField" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -108,7 +108,7 @@
             <Name>_stringField</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="FullReportGeneratorNestedClass">
+        <Member type="NestedType" name="FullReportGeneratorNestedClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -136,7 +136,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -160,7 +160,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -185,7 +185,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -215,7 +215,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicMethod">
+        <Member type="Method" name="PublicMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -226,7 +226,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicVirtualMethod">
+        <Member type="Method" name="PublicVirtualMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>virtual</Keyword>
@@ -238,7 +238,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicAbstractMethod">
+        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -250,7 +250,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -261,7 +261,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -271,7 +271,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Property" name="ProtectedProperty">
+        <Member type="Property" name="ProtectedProperty" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -280,7 +280,7 @@
             <Name>ProtectedProperty</Name>
           </Signature>
         </Member>
-        <Member type="Field" name="_readonlyField">
+        <Member type="Field" name="_readonlyField" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>readonly</Keyword>
@@ -290,7 +290,7 @@
             <Name>_readonlyField</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="NestedStaticClass">
+        <Member type="NestedType" name="NestedStaticClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -300,7 +300,7 @@
             <Name>NestedStaticClass</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="NestedClass">
+        <Member type="NestedType" name="NestedClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -330,7 +330,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -341,7 +341,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -371,7 +371,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="B">
+        <Member type="Method" name="B" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -382,7 +382,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -405,7 +405,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="A">
+        <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -416,7 +416,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -443,7 +443,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -455,7 +455,7 @@
           </Signature>
           <Overrides />
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -489,7 +489,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicAbstractMethod">
+        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -502,7 +502,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicVirtualMethod">
+        <Member type="Method" name="PublicVirtualMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>sealed</Keyword>
@@ -515,7 +515,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -542,7 +542,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -554,7 +554,7 @@
           </Signature>
           <Overrides />
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -585,7 +585,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -608,7 +608,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -637,7 +637,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -662,7 +662,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -695,7 +695,7 @@
   <Interfaces>
     <Interface id="0" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -718,7 +718,7 @@
     </Interface>
     <Interface id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.Remotion_1_13_23.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
       <Members>
-        <Member type="Method" name="A">
+        <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -730,7 +730,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="B">
+        <Member type="Method" name="B" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>

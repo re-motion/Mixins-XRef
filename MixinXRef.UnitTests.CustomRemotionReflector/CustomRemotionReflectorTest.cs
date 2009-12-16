@@ -36,8 +36,8 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       mixinXRef.WaitForExit ();
 
       var exitCode = mixinXRef.ExitCode;
-
-      Directory.Delete (Path.GetFullPath (@".\MixinDoc"));
+      
+      // Directory.Delete (Path.GetFullPath (@".\MixinDoc"));
 
       Assert.That (exitCode, Is.EqualTo (0));
       Assert.That (output.StartsWith ("RemotionReflector 'MixinXRef.UnitTests.CustomRemotionReflector.CustomRemotionReflector' is used."), Is.True);

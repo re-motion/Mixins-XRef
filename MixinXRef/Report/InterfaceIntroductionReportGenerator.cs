@@ -28,14 +28,22 @@ namespace MixinXRef.Report
       return new XElement (
           "InterfaceIntroductions",
           from introducedInterface in _interfaceIntroductionDefinitions
-          select GenerateInterfaceReferanceElement (introducedInterface.GetProperty ("InterfaceType").To<Type>()));
+          select GenerateInterfaceReferenceElement (introducedInterface.GetProperty ("InterfaceType").To<Type>()));
     }
 
-    private XElement GenerateInterfaceReferanceElement (Type introducedInterface)
+    private XElement GenerateInterfaceReferenceElement (Type introducedInterface)
     {
+      /*
+      MixinDefinition ab;
+      ab.InterfaceIntroductions[0].IntroducedMethods[0].Visibility;
+      ab.InterfaceIntroductions[0].IntroducedMethods[0].Name;
+      ab.InterfaceIntroductions[0].IntroducedProperties;
+      ab.InterfaceIntroductions[0].IntroducedEvents
+      */
       return new XElement (
           "Interface",
           new XAttribute ("ref", _interfaceIdentifierGenerator.GetIdentifier (introducedInterface))
+          //, GenerateMemberIntroductions
           );
     }
   }

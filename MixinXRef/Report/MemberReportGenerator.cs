@@ -44,7 +44,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-          where memberInfo.DeclaringType == _type
+          where memberInfo.DeclaringType.IsAssignableFrom(_type)
                 && !IsSpecialName (memberInfo)
                 && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private")
                 && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("internal")
@@ -73,14 +73,32 @@ namespace MixinXRef.Report
           attributes.Append ("OverrideTarget ");
       }
 
-      return new XElement (
-          "Member",
-          new XAttribute ("type", memberInfo.MemberType),
-          new XAttribute ("name", memberName),
-          _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
-          _memberSignatureUtility.GetMemberSignatur (memberInfo),
-          GetOverrides (memberInfo)
-          );
+      var overrides = GetOverrides (memberInfo);
+
+      if (memberInfo.DeclaringType == _type || IsOverriddenBaseClassMember (memberInfo, overrides))
+      {
+        return new XElement (
+            "Member",
+            new XAttribute ("type", memberInfo.MemberType),
+            new XAttribute ("name", memberName),
+            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type),
+            _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
+            _memberSignatureUtility.GetMemberSignatur (memberInfo),
+            overrides
+            );
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    private bool IsOverriddenBaseClassMember (MemberInfo memberInfo, XElement overrides)
+    {
+      if (overrides == null)
+        return false;
+      
+      return !(memberInfo.DeclaringType != _type && overrides.ToString() == new XElement("Overrides").ToString());
     }
 
     public bool HasOverrideMixinAttribute (MemberInfo memberInfo)

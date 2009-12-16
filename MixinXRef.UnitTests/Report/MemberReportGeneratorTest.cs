@@ -47,6 +47,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public abstract"),
               _outputFormatter.CreateMethodMarkup ("Dispose", typeof (void), new ParameterInfo[0])
               )
@@ -69,6 +70,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public"),
               _outputFormatter.CreateConstructorMarkup ("UselessObject", new ParameterInfo[0])
               )
@@ -91,6 +93,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "DoSomething"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public override"),
               _outputFormatter.CreateMethodMarkup ("DoSomething", typeof (void), new ParameterInfo[0])
               ),
@@ -98,6 +101,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public"),
               _outputFormatter.CreateConstructorMarkup ("ClassWithProperty", new ParameterInfo[0])
               ),
@@ -105,6 +109,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public override"),
               _outputFormatter.CreatePropertyMarkup ("PropertyName", typeof (string))
               )
@@ -133,6 +138,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "TemplateMethod"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
               _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0]),
               new XElement ("Overrides")
@@ -141,6 +147,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "OverriddenMethod"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("OverriddenMethod", typeof (void), new ParameterInfo[0]),
               reportGenerator.GetOverrides (memberInfo)
@@ -149,6 +156,7 @@ namespace MixinXRef.UnitTests.Report
               "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
+              new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public"),
               _outputFormatter.CreateConstructorMarkup ("Target", new ParameterInfo[0]),
               new XElement ("Overrides")

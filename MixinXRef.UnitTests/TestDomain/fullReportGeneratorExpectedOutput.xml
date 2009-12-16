@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2009-11-17 11:45:26">
+<MixinXRefReport creation-time="2009-12-16 08:26:25">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -39,7 +39,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -54,13 +54,13 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="Private">
+        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="Private">
+        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -74,7 +74,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="ProtectedMethod">
+        <Member type="Method" name="ProtectedMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -85,7 +85,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -95,7 +95,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Property" name="Property">
+        <Member type="Property" name="Property" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -104,7 +104,7 @@
             <Name>Property</Name>
           </Signature>
         </Member>
-        <Member type="Field" name="_stringField">
+        <Member type="Field" name="_stringField" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -113,7 +113,7 @@
             <Name>_stringField</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="FullReportGeneratorNestedClass">
+        <Member type="NestedType" name="FullReportGeneratorNestedClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -141,7 +141,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -165,7 +165,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="DoSomething">
+        <Member type="Method" name="DoSomething" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>virtual</Keyword>
@@ -177,7 +177,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="AlgorithmMethod">
+        <Member type="Method" name="AlgorithmMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -188,7 +188,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -210,7 +210,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -224,7 +224,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="5" index="n/a" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="Private">
+        <Mixin ref="5" index="n/a" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -235,7 +235,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -265,7 +265,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicMethod">
+        <Member type="Method" name="PublicMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -276,7 +276,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicVirtualMethod">
+        <Member type="Method" name="PublicVirtualMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>virtual</Keyword>
@@ -288,7 +288,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicAbstractMethod">
+        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -300,7 +300,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -311,7 +311,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -321,7 +321,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Property" name="ProtectedProperty">
+        <Member type="Property" name="ProtectedProperty" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -330,7 +330,7 @@
             <Name>ProtectedProperty</Name>
           </Signature>
         </Member>
-        <Member type="Field" name="_readonlyField">
+        <Member type="Field" name="_readonlyField" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>readonly</Keyword>
@@ -340,7 +340,7 @@
             <Name>_readonlyField</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="NestedStaticClass">
+        <Member type="NestedType" name="NestedStaticClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -350,7 +350,7 @@
             <Name>NestedStaticClass</Name>
           </Signature>
         </Member>
-        <Member type="NestedType" name="NestedClass">
+        <Member type="NestedType" name="NestedClass" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -365,7 +365,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="Private">
+        <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -380,7 +380,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -400,7 +400,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="OverriddenMethod">
+        <Member type="Method" name="OverriddenMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -411,7 +411,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -431,7 +431,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="TemplateMethod">
+        <Member type="Method" name="TemplateMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>virtual</Keyword>
@@ -443,7 +443,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="OverriddenMethod">
+        <Member type="Method" name="OverriddenMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -454,7 +454,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -474,7 +474,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -485,7 +485,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -501,7 +501,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="10" index="n/a" relation="Extends" instance-name="Mixin3" introduced-member-visibility="Private">
+        <Mixin ref="10" index="n/a" relation="Extends" instance-name="Mixin3" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -515,7 +515,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="B">
+        <Member type="Method" name="B" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -526,7 +526,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -549,7 +549,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="A">
+        <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -560,7 +560,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -576,7 +576,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="11" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="Private">
+        <Mixin ref="11" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -587,7 +587,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -599,7 +599,7 @@
           </Signature>
           <Overrides />
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -616,7 +616,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="5" index="0" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="Private">
+        <Mixin ref="5" index="0" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions>
@@ -633,7 +633,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="PublicAbstractMethod">
+        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -646,7 +646,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicVirtualMethod">
+        <Member type="Method" name="PublicVirtualMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>sealed</Keyword>
@@ -659,7 +659,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>protected</Keyword>
           </Modifiers>
@@ -675,7 +675,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="Private">
+        <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -686,7 +686,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -698,7 +698,7 @@
           </Signature>
           <Overrides />
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -715,7 +715,7 @@
       </Interfaces>
       <Attributes />
       <Mixins>
-        <Mixin ref="16" index="0" relation="Extends" instance-name="Mixin1" introduced-member-visibility="Private">
+        <Mixin ref="16" index="0" relation="Extends" instance-name="Mixin1" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -729,7 +729,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -752,7 +752,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -767,7 +767,7 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="18" index="0" relation="Extends" instance-name="Mixin2" introduced-member-visibility="Private">
+        <Mixin ref="18" index="0" relation="Extends" instance-name="Mixin2" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -781,7 +781,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -806,7 +806,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="WriteType">
+        <Member type="Method" name="WriteType" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>virtual</Keyword>
@@ -818,7 +818,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -838,7 +838,7 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Constructor" name=".ctor">
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
           </Modifiers>
@@ -853,13 +853,13 @@
       <Interfaces />
       <Attributes />
       <Mixins>
-        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="Private">
+        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="Private">
+        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -871,7 +871,7 @@
   <Interfaces>
     <Interface id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.IAlgorithm" is-complete-interface="false">
       <Members>
-        <Member type="Method" name="AlgorithmMethod">
+        <Member type="Method" name="AlgorithmMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -890,7 +890,7 @@
     </Interface>
     <Interface id="1" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
       <Members>
-        <Member type="Method" name="Dispose">
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -913,7 +913,7 @@
     </Interface>
     <Interface id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
       <Members>
-        <Member type="Method" name="A">
+        <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
@@ -925,7 +925,7 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="B">
+        <Member type="Method" name="B" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
             <Keyword>abstract</Keyword>
