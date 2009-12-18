@@ -17,7 +17,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       Directory.CreateDirectory (Path.GetFullPath (@".\MixinDoc"));
 
       var assemblyDir = Path.GetFullPath (@".");
-      var outputDir = Path.GetFullPath (@".");
+      var outputDir = Path.GetFullPath (@"CustomReflectorOutput");
 
       var mixinXRef = new Process ();
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";
@@ -47,7 +47,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     public void UseCustomRemotionReflector_NonExistingType ()
     {
       var assemblyDir = Path.GetFullPath (@".");
-      var outputDir = Path.GetFullPath (@".");
+      var outputDir = Path.GetFullPath (@"CustomReflectorOutput");
 
       var mixinXRef = new Process ();
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";
@@ -77,7 +77,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     public void UseCustomRemotionReflector_NonExistingAssembly ()
     {
       var assemblyDir = Path.GetFullPath (@".");
-      var outputDir = Path.GetFullPath (@".");
+      var outputDir = Path.GetFullPath (@"CustomReflectorOutput");
 
       var mixinXRef = new Process ();
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";

@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
       var arguments = new[] { "twoParametersRequired" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-1));
-      Assert.That(_standardOutput.ToString(), Is.EqualTo("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName]\r\n"));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]\r\nQuitting MixinXRef\r\n"));
     }
 
     [Test]
@@ -51,101 +51,67 @@ namespace MixinXRef.UnitTests
       var arguments = new[] { "invalidAssemblyDirectory", "doesNotMatter" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-2));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo ("Input directory 'invalidAssemblyDirectory' does not exist\r\n"));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Input directory 'invalidAssemblyDirectory' does not exist\r\nQuitting MixinXRef\r\n"));
     }
 
     [Test]
-    public void CheckArguments_InvalidOutputDirectory ()
+    public void CheckArguments_OutputDoesNotExist ()
     {
+      var arguments = new[] { ".", "newOutputDirectory" };
+      var output = _program.CheckArguments (arguments);
+      Assert.That (output, Is.EqualTo (0));
+    }
+
+    [Test]
+    public void CheckArguments_OutputDirectoryNotEmpty ()
+    {
+      Directory.CreateDirectory ("invalidOutputDirectory");
+      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
+
       var arguments = new[] { ".", "invalidOutputDirectory" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-3));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo ("Output directory 'invalidOutputDirectory' does not exist\r\n"));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'invalidOutputDirectory' is not empty\r\nQuitting MixinXRef\r\n"));
+    }
+
+    [Test]
+    public void CheckArguments_OutputDirectoryNotEmptyWithForce_1 ()
+    {
+      Directory.CreateDirectory ("invalidOutputDirectory");
+      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
+
+      var arguments = new[] { ".", "invalidOutputDirectory", "-force" };
+      var output = _program.CheckArguments (arguments);
+      Assert.That (output, Is.EqualTo (0));
+    }
+
+    [Test]
+    public void CheckArguments_OutputDirectoryNotEmptyWithForce_2 ()
+    {
+      Directory.CreateDirectory ("invalidOutputDirectory");
+      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
+
+      var arguments = new[] { ".", "invalidOutputDirectory", "customReflector", "-force" };
+      var output = _program.CheckArguments (arguments);
+      Assert.That (output, Is.EqualTo (0));
+    }
+
+    [Test]
+    public void CheckArguments_OutputDirectoryContainsInvalidCharacter ()
+    {
+      var arguments = new[] { ".", "does<NotMatter" };
+      var output = _program.CheckArguments (arguments);
+      Assert.That (output, Is.EqualTo (-4));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'does<NotMatter' contains invalid characters\r\nQuitting MixinXRef\r\n"));
     }
 
     [Test]
     public void CheckArguments_ValidDirectories ()
     {
-      var arguments = new[] { ".", "." };
+      var arguments = new[] { ".", "MixinDoc" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (0));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
-    }
-
-    [Test]
-    public void CreateOrOverrideOutputDirectory_NonExistingDirectory ()
-    {
-      const string outputDirectory = "nonExistingOutputDirectory";
-
-      Assert.That (Directory.Exists (outputDirectory), Is.False);
-      var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
-
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-      Assert.That (output, Is.EqualTo (0));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
-
-      Directory.Delete (outputDirectory);
-    }
-
-    [Ignore("refactor or remove test")]
-    [Test]
-    public void CreateOrOverrideOutputDirectory_ExistingDirectory_EndOfFileOnStandardInput ()
-    {
-      const string outputDirectory = "existingOutputDirectory";
-
-      Directory.CreateDirectory (outputDirectory);
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-
-      // _standardInput is empty -> readLine retrieves null because EOF is reached
-      var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
-
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-      Assert.That (output, Is.EqualTo (1));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo (_userPromptOnExistingOutputDirectory));
-
-      Directory.Delete (outputDirectory);
-    }
-
-    [Ignore ("refactor or remove test")]
-    [Test]
-    public void CreateOrOverrideOutputDirectory_ExistingDirectory_UserDeniesOverride ()
-    {
-      const string outputDirectory = "existingOutputDirectory";
-
-      Directory.CreateDirectory (outputDirectory);
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-
-      // setup input "n" for No
-      _program = new Program (new StringReader ("n"), _standardOutput, _outputFormatter);
-
-      var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
-
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-      Assert.That (output, Is.EqualTo (1));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo (_userPromptOnExistingOutputDirectory));
-
-      Directory.Delete (outputDirectory);
-    }
-
-    [Ignore ("refactor or remove test")]
-    [Test]
-    public void CreateOrOverrideOutputDirectory_ExistingDirectory_UserAllowsOverride ()
-    {
-      const string outputDirectory = "existingOutputDirectory";
-
-      Directory.CreateDirectory (outputDirectory);
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-
-      // setup input "YES" for Yes
-      _program = new Program (new StringReader ("YES"), _standardOutput, _outputFormatter);
-
-      var output = _program.CreateOrOverrideOutputDirectory (outputDirectory);
-
-      Assert.That (Directory.Exists (outputDirectory), Is.True);
-      Assert.That (output, Is.EqualTo (0));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo (_userPromptOnExistingOutputDirectory));
-
-      Directory.Delete (outputDirectory);
     }
 
     [Test]

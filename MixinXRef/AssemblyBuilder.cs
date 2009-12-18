@@ -30,9 +30,18 @@ namespace MixinXRef
       var assemblies = new List<Assembly>();
 
       foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll"))
-        assemblies.Add (Assembly.LoadFile (assemblyFile));
+      {
+        var loadedAssembly = LoadAssembly (assemblyFile);
+        if (loadedAssembly != null)
+          assemblies.Add (loadedAssembly);
+      }
+      
       foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe"))
-        assemblies.Add (Assembly.LoadFile (assemblyFile));
+      {
+        var loadedAssembly = LoadAssembly (assemblyFile);
+        if (loadedAssembly != null)
+          assemblies.Add (loadedAssembly);
+      }
 
       return assemblies.Where (a => !_remotionReflector.IsNonApplicationAssembly (a)).ToArray();
     }
@@ -44,6 +53,29 @@ namespace MixinXRef
       AssemblyName assemblyName = new AssemblyName (args.Name);
       return
           AppDomain.CurrentDomain.GetAssemblies().Where (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName())).SingleOrDefault();
+    }
+
+    private Assembly LoadAssembly (string assemblyFile)
+    {
+        try
+        {
+          return Assembly.LoadFile (assemblyFile);
+          
+        }
+        catch (FileNotFoundException fileNotFoundException)
+        {
+          Console.Out.WriteLine (fileNotFoundException.Message);
+        }
+        catch (FileLoadException fileLoadException)
+        {
+          Console.Out.WriteLine (fileLoadException.Message);
+        }
+        catch (BadImageFormatException badImageFormatException)
+        {
+          Console.Out.WriteLine (badImageFormatException.Message);
+        }
+
+      return null;
     }
   }
 }

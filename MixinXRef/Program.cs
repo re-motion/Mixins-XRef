@@ -6,7 +6,6 @@ using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
 using MixinXRef.Utility;
-using System.Diagnostics;
 
 namespace MixinXRef
 {
@@ -23,10 +22,13 @@ namespace MixinXRef
         return (argumentCheckResult);
 
       var assemblyDirectory = args[0];
-      var outputDirectory = Path.Combine (args[1], "MixinDoc");
+      var outputDirectory = Path.GetFullPath (args[1]);
       var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
 
-      if (args.Length == 3)
+      if (!Directory.Exists (outputDirectory))
+        Directory.CreateDirectory (outputDirectory);
+
+      if (ArgumentsContainCustomReflector(args))
         try
         {
           program.SetRemotionReflector (new RemotionReflectorFactory ().Create (assemblyDirectory, args[2]));
@@ -40,9 +42,6 @@ namespace MixinXRef
         program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
       
       Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
-      
-      if (program.CreateOrOverrideOutputDirectory (outputDirectory) != 0)
-        return (0);
 
       var assemblies = program.GetAssemblies (assemblyDirectory);
       if (assemblies == null)
@@ -70,12 +69,6 @@ namespace MixinXRef
       return 0;
     }
 
-    private static string GetElapsedTime (DateTime startTime)
-    {
-      DateTime elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
-      return elapsed.ToString ("mm:ss");
-    }
-
     private readonly TextReader _input;
     private readonly TextWriter _output;
     private IRemotionReflector _remotionReflector;
@@ -96,42 +89,40 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("arguments", arguments);
 
-      if (arguments.Length != 2 && arguments.Length != 3)
+      var forceOverride = false;
+
+      if (arguments.Length == 3 && arguments[2].ToLower().Equals ("-force"))
+        forceOverride = true;
+      if (arguments.Length == 4 && arguments[3].ToLower ().Equals ("-force"))
+        forceOverride = true;
+
+      if (arguments.Length < 2 || arguments.Length > 4)
       {
-        _output.WriteLine("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName]");
+        _output.WriteLine("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]");
+        _output.WriteLine ("Quitting MixinXRef");
         return -1;
       }
 
       if (!Directory.Exists (arguments[0]))
       {
         _output.WriteLine ("Input directory '{0}' does not exist", arguments[0]);
+        _output.WriteLine ("Quitting MixinXRef");
         return -2;
       }
 
-      if (!Directory.Exists (arguments[1]))
+      if (Directory.Exists (arguments[1]) && !IsEmptyDirectory (arguments[1]) && forceOverride == false)
       {
-        _output.WriteLine ("Output directory '{0}' does not exist", arguments[1]);
+        _output.WriteLine ("Output directory '{0}' is not empty", arguments[1]);
+        _output.WriteLine ("Quitting MixinXRef");
         return -3;
       }
 
-      return 0;
-    }
-
-    public int CreateOrOverrideOutputDirectory (string outputDirectory)
-    {
-      ArgumentUtility.CheckNotNull ("outputDirectory", outputDirectory);
-
-      if (Directory.Exists (outputDirectory))
+      if (arguments[1].IndexOfAny(Path.GetInvalidPathChars()) >= 0)
       {
-        _output.WriteLine ("Output directory '{0}' does already exist.", outputDirectory);
-        _output.WriteLine ("Aborting operation");
-        //_output.Write ("Do you want to override the directory and including files? [y/N] ");
-
-        //var userInput = _input.ReadLine();
-        //if (userInput == null || !userInput.ToLower().StartsWith ("y"))
-          return 1;
+        _output.WriteLine ("Output directory '{0}' contains invalid characters", arguments[1]);
+        _output.WriteLine ("Quitting MixinXRef");
+        return -4;
       }
-      Directory.CreateDirectory (outputDirectory);
 
       return 0;
     }
@@ -181,6 +172,25 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _remotionReflector = remotionReflector;
+    }
+
+    private bool IsEmptyDirectory (string path)
+    {
+      return Directory.GetFiles (path).Length == 0 && Directory.GetDirectories (path).Length == 0;
+    }
+
+    private static bool ArgumentsContainCustomReflector (string[] arguments)
+    {
+      if ((arguments.Length == 3 && !arguments[2].ToLower ().Equals ("-force")) || arguments.Length == 4)
+        return true;
+      else
+        return false;
+    }
+
+    private static string GetElapsedTime (DateTime startTime)
+    {
+      DateTime elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
+      return elapsed.ToString ("mm:ss");
     }
   }
 }

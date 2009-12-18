@@ -89,7 +89,7 @@ namespace MixinXRef.UnitTests.Report
           ProgramTest.GetRemotionReflection(),
           new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
-
+      
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
 
       // the creation time of the validiation file is different from the creation time of the generated report
