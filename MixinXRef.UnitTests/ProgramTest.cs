@@ -63,6 +63,16 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
+    public void CheckArguments_OutputDoesExistAndIsEmpty ()
+    {
+      Directory.CreateDirectory ("emptyDir");
+
+      var arguments = new[] { ".", "emptyDir" };
+      var output = _program.CheckArguments (arguments);
+      Assert.That (output, Is.EqualTo (0));
+    }
+
+    [Test]
     public void CheckArguments_OutputDirectoryNotEmpty ()
     {
       Directory.CreateDirectory ("invalidOutputDirectory");
