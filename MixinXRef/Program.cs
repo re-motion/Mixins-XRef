@@ -45,7 +45,7 @@ namespace MixinXRef
 
       var assemblies = program.GetAssemblies (assemblyDirectory);
       if (assemblies == null)
-        return (-4);
+        return (-6);
 
       Console.WriteLine ("Generating MixinDoc");
       Console.Write ("  Generating XML ... ");

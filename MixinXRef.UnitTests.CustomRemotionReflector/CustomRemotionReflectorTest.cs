@@ -22,7 +22,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       var mixinXRef = new Process ();
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";
       mixinXRef.StartInfo.Arguments = assemblyDir + " " + outputDir + " "
-                                      + "\"MixinXRef.UnitTests.CustomRemotionReflector.CustomRemotionReflector, MixinXRef.UnitTests.CustomRemotionReflector\"";
+                                      + "\"MixinXRef.UnitTests.CustomRemotionReflector.CustomRemotionReflector, MixinXRef.UnitTests.CustomRemotionReflector\" -force";
       mixinXRef.StartInfo.RedirectStandardError = true;
       mixinXRef.StartInfo.RedirectStandardOutput = true;
       mixinXRef.StartInfo.RedirectStandardInput = true;
@@ -53,7 +53,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";
 
       mixinXRef.StartInfo.Arguments = assemblyDir + " " + outputDir + " "
-                                      + "\"Namespace.NonExistingType, MixinXRef.UnitTests.CustomRemotionReflector\"";
+                                      + "\"Namespace.NonExistingType, MixinXRef.UnitTests.CustomRemotionReflector\" -force";
       mixinXRef.StartInfo.RedirectStandardError = true;
       mixinXRef.StartInfo.RedirectStandardOutput = true;
       mixinXRef.StartInfo.RedirectStandardInput = true;
@@ -83,7 +83,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       mixinXRef.StartInfo.FileName = @".\MixinXRef.exe";
 
       mixinXRef.StartInfo.Arguments = assemblyDir + " " + outputDir + " "
-                                      + "\"MixinXRef.UnitTests.CustomRemotionReflector.CustomRemotionReflector, NonExistingAssembly\"";
+                                      + "\"MixinXRef.UnitTests.CustomRemotionReflector.CustomRemotionReflector, NonExistingAssembly\" -force";
       mixinXRef.StartInfo.RedirectStandardError = true;
       mixinXRef.StartInfo.RedirectStandardOutput = true;
       mixinXRef.StartInfo.RedirectStandardInput = true;
