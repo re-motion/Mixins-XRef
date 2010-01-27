@@ -66,7 +66,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
 	
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.4.min.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>
 	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
