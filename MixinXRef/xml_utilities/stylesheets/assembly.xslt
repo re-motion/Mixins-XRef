@@ -30,10 +30,7 @@
 </xsl:template>
 
 <xsl:template name="assemblyTable">
-  <table>
-    <caption>
-      Analyzed&#160;assemblies&#160;(<xsl:value-of select="ru:GetOverallAssemblyCount(/)" />)
-    </caption>
+  <table cellpadding="0" cellspacing="0" border="0" class="display assemblyDataTable">
     <thead>
       <tr>
         <th>Name</th>

@@ -65,16 +65,27 @@
 	<xsl:param name="dir" />
 	
 	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
-	
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.4.min.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
-	<script type="text/javascript" src="{$dir}/resources/javascript/jquery.treeview.js"></script>
-  <script type="text/javascript" src="./resources/javascript/jquery.tablesorter.pager.js"></script>
-  <script type="text/javascript" src="../resources/javascript/jquery.color.js"></script>
+  <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/table_jui.css" />
+    
+  <script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="{$dir}/resources/javascript/jquery.dataTables.js"></script>
+  
+  <xsl:if test="$dir = '.'">
+    <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.custom.css" />
+  </xsl:if>
+  <xsl:if test="$dir = '..'">
+    <!--
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.pager.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
+    -->
+    <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.simple.css" />
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.treeview.js"></script>
+    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.color.js"></script>
+  </xsl:if>
 
   <script type="text/javascript" src="{$dir}/resources/init.js"></script>
 </xsl:template>

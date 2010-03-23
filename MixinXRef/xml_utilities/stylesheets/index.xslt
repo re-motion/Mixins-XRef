@@ -9,31 +9,45 @@
 	<div class="message">
     <div>
       <label>Assemblies:</label>
-      <xsl:value-of select="ru:GetOverallAssemblyCount(/)"/>
+      <div class="labelValues">
+        <xsl:value-of select="ru:GetOverallAssemblyCount(/)"/>
+      </div>
     </div>
     <div>
       <label>Mixins:</label>
+      <div class="labelValues">
       <xsl:value-of select="ru:GetOverallMixinCount(/)"/>
+      </div>
     </div>
-    <div>
-      <label class="dubiosInvolvedType" >Mixed Mixins:</label>
-      <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = true() and @is-mixin = true()] )"/>
+    <div class="dubiosInvolvedType">
+      <label>Mixed Mixins:</label>
+      <div class="labelValues">
+        <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = true() and @is-mixin = true()] )"/>
+      </div>
     </div>
-    <div>
-      <label class="unusedMixinClass" >Non Applied Mixins:</label>
-      <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = false() and @is-mixin = false()] )"/>
+    <div class="unusedMixinClass">
+      <label>Non Applied Mixins:</label>
+      <div class="labelValues">
+        <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = false() and @is-mixin = false()] )"/>
+      </div>
     </div>
     <div>
       <label>Target Classes:</label>
+      <div class="labelValues">
       <xsl:value-of select="ru:GetOverallTargetClassCount(/)"/>
+      </div>
     </div>
     <div>
       <label>Involved Interfaces:</label>
-      <xsl:value-of select="count( /MixinXRefReport/Interfaces/Interface )"/>
+      <div class="labelValues">
+        <xsl:value-of select="count( /MixinXRefReport/Interfaces/Interface )"/>
+      </div>
     </div>
     <div>
       <label>Involved Attributes:</label>
-      <xsl:value-of select="count( /MixinXRefReport/Attributes/Attribute )"/>
+      <div class="labelValues">
+        <xsl:value-of select="count( /MixinXRefReport/Attributes/Attribute )"/>
+      </div>
     </div>
   </div>
 	

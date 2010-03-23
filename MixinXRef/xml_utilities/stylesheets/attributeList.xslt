@@ -21,9 +21,13 @@
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="attributes" />
 	<xsl:param name="dir" />
-	
-		<table>
-			<caption>Attributes&#160;(<xsl:value-of select="count( $attributes )" />)</caption>
+
+  <table cellpadding="0" cellspacing="0" border="0" class="display attributeDataTable">
+    <xsl:if test="$dir = '..'">
+      <caption>
+        Attributes&#160;(<xsl:value-of select="count( $attributes )" />)
+      </caption>
+    </xsl:if>
 			<thead>
 				<tr>
 					<th>Namespace</th>

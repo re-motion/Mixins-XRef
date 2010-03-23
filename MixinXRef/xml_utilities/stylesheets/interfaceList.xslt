@@ -21,9 +21,13 @@
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="interfaces" />
 	<xsl:param name="dir" />
-	
-	<table>
-		<caption>Interfaces&#160;(<xsl:value-of select="count( $interfaces )" />)</caption>
+
+  <table cellpadding="0" cellspacing="0" border="0" class="display interfaceDataTable">
+    <xsl:if test="$dir = '..'">
+      <caption>
+        Interfaces&#160;(<xsl:value-of select="count( $interfaces )" />)
+      </caption>
+    </xsl:if>
 		<thead>
 			<tr>
 				<th>Namespace</th>

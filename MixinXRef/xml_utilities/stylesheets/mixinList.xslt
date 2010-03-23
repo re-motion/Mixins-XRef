@@ -23,7 +23,7 @@
 	
 	<xsl:variable name="mixins" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains($mixinRefs/@ref, @id) ]" />
 	
-		<table>
+		<table cellpadding="0" cellspacing="0" border="0" class="mixinTable display">
 			<caption>Mixins&#160;(<xsl:value-of select="count( $mixins )" />)</caption>
 			<thead>
 				<tr>

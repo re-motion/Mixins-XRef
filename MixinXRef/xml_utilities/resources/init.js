@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     initTableSorter();
+
     setSelectedIndexClass();
     initTreeView();
 
@@ -14,7 +15,6 @@ $(document).ready(function() {
         var elemId = '#' + $(this).attr('href').split('#')[1];
         highlight(elemId);
     });
-
 });
 
 function getCookieName() {
@@ -24,136 +24,286 @@ function getCookieName() {
     return file_name.substring(mixinDoc + 9, firstQuestionMark).replace("/", "_");
 }
 
+
+function extractModifier(node) {
+    if ($(node).find("span.Name").text() != "")
+        return ($(node).find("span.Name").text());
+    if ($(node).find("span.Keyword").text() != "")
+        return ($(node).find("span.Keyword").text());
+    return $(node).text();
+}
+
+function calculateModifierSorting(node) {
+
+    var s = extractModifier(node);
+
+    var index = -1;
+
+    if (s.indexOf("public") != -1)
+        index = 0;
+    if (s.indexOf("protected internal") != -1)
+        index = 10;
+    if (s.indexOf("protected") != -1)
+        index = 20;
+    if (s.indexOf("internal") != -1)
+        index = 30;
+    if (s.indexOf("private") != -1)
+        index = 40;
+
+    if (s.indexOf("abstract") != -1)
+        index += 1;
+    if (s.indexOf("override") != -1)
+        index += 2;
+    if (s.indexOf("virtual") != -1)
+        index += 3;
+
+    return index;
+}
+
+jQuery.fn.dataTableExt.oSort['modifier-visibility-asc'] = function(a, b) {
+    var x = calculateModifierSorting(a);
+    var y = calculateModifierSorting(b);
+
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+};
+
+jQuery.fn.dataTableExt.oSort['modifier-visibility-desc'] = function(a, b) {
+    var x = calculateModifierSorting(a);
+    var y = calculateModifierSorting(b);
+
+    return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+};
+
+jQuery.fn.dataTableExt.oSort['signature-asc'] = function(a, b) {
+    var x = $(a).find("span.Name").text();
+    var y = $(b).find("span.Name").text();
+
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+};
+
+jQuery.fn.dataTableExt.oSort['signature-desc'] = function(a, b) {
+    var x = $(a).find("span.Name").text();
+    var y = $(b).find("span.Name").text();
+
+    return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+};
+
 function initTableSorter() {
-    //assign the sortStart event 
-    $("table").bind("sortStart", function() {
-        $("#overlay").show();
-    }).bind("sortEnd", function() {
-        $("#overlay").hide();
+
+        $('.assemblyDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+			"aaSorting": [[0, 'asc'], [1, 'asc']],
+			"aoColumns": [
+				{ "sType": "html" },
+				null,
+				null,
+				null,
+				null,
+				null
+			],
+        });
+
+    if (location.href.indexOf("assemblies") != -1) {
+        $('.indexDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+			"aaSorting": [[0, 'asc'], [1, 'asc']],
+			"aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" },
+				{ "sType": "html" }
+			]			
+        });
+		
+		$('.interfaceDataTable, .attributeDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+			"aaSorting": [[0, 'asc'], [1, 'asc']],
+			"aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" }
+			]			
+        });
+    }
+    else {
+        $('.indexDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+			"aaSorting": [[0, 'asc'], [1, 'asc']],
+			"aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" },
+				{ "sType": "html" }
+			],
+        });
+		
+		$('.interfaceDataTable, .attributeDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+			"aaSorting": [[0, 'asc'], [1, 'asc']],
+			"aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" }
+			],
+        });
+    }
+
+    if (onIndexSite())
+        $('.fg-toolbar').width($('.indexDataTable, .interfaceDataTable, .attributeDataTable, .assemblyDataTable').width() - 12);
+
+    $('.mixinTable').dataTable({
+        "bStateSave": true,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "aaSorting": [[0, 'asc'], [1, 'asc']],
+        "aoColumns": [
+			null,
+			{ "sType": "html" },
+			null,
+			null,
+			{ "sType": "html" },
+			{ "sType": "html" },
+			{ "sType": "html" },
+			{ "sType": "html" },
+			null
+		]
     });
 
-    // add parser through the tablesorter addParser method 
-    $.tablesorter.addParser({
-        // set a unique id 
-        id: 'modifiers',
-        is: function(s) {
-            // return false so this parser is not auto detected 
-            return false;
-        },
-        format: function(s) {
-
-            // default for empty element => explicit interface
-            var index = -1;
-
-            if (s.indexOf("public") != -1)
-                index = 0;
-            if (s.indexOf("protected internal") != -1)
-                index = 10;
-            if (s.indexOf("protected") != -1)
-                index = 20;
-            if (s.indexOf("internal") != -1)
-                index = 30;
-            if (s.indexOf("private") != -1)
-                index = 40;
-
-            if (s.indexOf("abstract") != -1)
-                index += 1;
-            if (s.indexOf("override") != -1)
-                index += 2;
-            if (s.indexOf("virtual") != -1)
-                index += 3;
-
-            return index;
-        },
-        // set type, either numeric or text 
-        type: 'numeric'
+    $('.dataTable').dataTable({
+        "bStateSave": true,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "aaSorting": [[0, 'asc'], [1, 'asc']],
+        "aoColumns": [
+			null,
+			{ "sType": "html" },
+			null,
+			{ "sType": "html" },
+			{ "sType": "html" }
+		]
     });
 
-    /* get all tables */
-    var ts = $("table");
-    var tablesorterCookieJar = $.cookieJar('tablesorter', {
-        cookie: { path: '/' }
+    $('.attributeTable').dataTable({
+        "bStateSave": true,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "aaSorting": [[0, 'asc'], [1, 'asc']],
+        "aoColumns": [
+			null,
+			{ "sType": "html" },
+			null,
+			{ "sType": "html" },
+			null
+		]
     });
 
-    /* set unique id for each table */
-    ts.each(function(n) {
-        this.id = getCookieName() + "_table_" + n;
-
-        var sortList = tablesorterCookieJar.get(this.id);
-
-        if (sortList == undefined) {
-            var sortList = [[0, 0], [1, 0]];
-            tablesorterCookieJar.set(this.id, sortList);
-        }
+    $('.argumentTable').dataTable({
+        "bStateSave": true,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false
     });
 
-    ts.each(function() {
+    if ($('.declaredMembersDataTable').find('th').length == 5) {
+        $('.declaredMembersDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aoColumns": [
+			null,
+			null,
+			{ "sType": "modifier-visibility" },
+			{ "sType": "signature" },
+			{ "sType": "html" }
+		]
 
-        if ($(this).hasClass("noSorting"))
-            return;
+        });
+    }
+    else {
+        $('.declaredMembersDataTable').dataTable({
+            "bStateSave": true,
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aoColumns": [
+			null,
+			null,
+			{ "sType": "modifier-visibility" },
+			{ "sType": "signature" }
+		]
 
-        var widgetSetting = ['cookie'];
-        /* css3 selector 'nth-child()' with IE? - no way */
-        if (jQuery.browser.msie)
-            widgetSetting = ['cookie', 'zebra'];
+        });
+    }
 
-        var caption = $(this).find("caption").html().substring(0, 7);
-        if (caption == "Members") {
-            /* init tablesorter */
-            $(this).tablesorter({
-                widthFixed: true,
-                widgets: widgetSetting,
-                textExtraction: function(node) {
-                    if ($(node).find("span.Name").text() != "")
-                        return ($(node).find("span.Name").text());
-                    if ($(node).find("span.Keyword").text() != "")
-                        return ($(node).find("span.Keyword").text());
-                    return $(node).text();
-                },
-                headers:
-                {
-                    2: { sorter: 'modifiers' }
-                }
-            });
-        }
-        else {
-            /* init tablesorter */
-            $(this).tablesorter({
-                widthFixed: true,
-                widgets: widgetSetting
-            });
-        }
-        var rowCount = $(this).find("tbody tr").length;
-        /* pager: only on index sites with a table with more than 30 rows */
-        if (rowCount >= 20 && onIndexSite()) {
-            /* register event handler on dropdown-box */
-            $("div.pager select.pagesize").bind("change", function() {
-                tablesorterCookieJar.set(getCookieName() + '_pagesize', $(this).attr("value"));
-            });
-            /* page size */
-            var pageSize = tablesorterCookieJar.get(getCookieName() + '_pagesize');
-            if (pageSize == undefined) pageSize = 20;
-            $("div.pager select.pagesize").attr("value", pageSize);
-            /* allow the user to enter the page side by hand */
-            $("form").bind("submit", function() {
-                var newPageNr = parseInt($("div.pager input.pagedisplay").attr("value")) - 1;
-                var tableId = ($("table").attr("id"));
-                tablesorterCookieJar.set(tableId + "_currentPage", newPageNr);
-            });
+    $('.overriddenBaseMembersDataTable').dataTable({
+        "bStateSave": true,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "aoColumns": [
+			null,
+			null,
+			{ "sType": "modifier-visibility" },
+			{ "sType": "signature" },
+			null
+		]
 
-            /* current page */
-            var currentPage = tablesorterCookieJar.get(this.id + "_currentPage");
-            if (currentPage == undefined) currentPage = 0;
-
-            $(this).tablesorterPager({
-                container: $(".pager"),
-                positionFixed: false,
-                size: pageSize,
-                page: currentPage
-            });
-        } else {
-            $(".pager").hide();
-        }
     });
 }
 
@@ -165,7 +315,7 @@ function setSelectedIndexClass() {
 }
 
 function onIndexSite() {
-    return location.href.indexOf("_index.html") != -1;
+    return location.href.indexOf("index.html") != -1;
 }
 
 function prepareCollapsing() {
@@ -176,7 +326,7 @@ function prepareCollapsing() {
     var cookieName = getCookieName();
     var cookie = $.cookie(cookieName);
 
-    if (cookie == undefined) {
+    if (cookie == undefined || cookie == null) {
         $("caption:contains('Mixins')").addClass("visible");
         $("caption:contains('Attributes')").addClass("visible");
         $("caption:contains('Members')").addClass("visible");
@@ -187,6 +337,9 @@ function prepareCollapsing() {
     }
 
     var cookieValue = $.cookie(cookieName);
+    if (cookieValue == null || cookieValue == "")
+        return;
+
     var classArray = cookieValue.split(",");
 
     $("caption, .treeHeader").each(function(n) {
@@ -210,20 +363,20 @@ function prepareCollapsing() {
         } else { // tagname = DIV           
 
             // internet explorer doesn't like collapsing of trees
-            if (!jQuery.browser.msie) {
+            // if (!jQuery.browser.msie) {
 
-                $(this).addClass(classArray[n]);
+            $(this).addClass(classArray[n]);
 
-                if (classArray[n] == "hidden") {
-                    $(this).parent().next(".treeview").hide();
-                }
-
-                $(this).click(function() {
-                    $(this).toggleClass("visible").toggleClass("hidden");
-                    $(this).parent().next(".treeview").toggle();
-                    saveCookie();
-                });
+            if (classArray[n] == "hidden") {
+                $('#treeViewID').children().hide();
             }
+
+            $(this).click(function() {
+                $(this).toggleClass("visible").toggleClass("hidden");
+                $('#treeViewID').children().toggle();
+                saveCookie();
+            });
+            //}
         }
     });
 }
@@ -242,7 +395,11 @@ function saveCookie() {
 }
 
 function initTreeView() {
-    $("ul:nth-of-type(2)").treeview({
+
+    if (onIndexSite())
+        return;
+
+    $("#treeViewID").children().treeview({
         collapsed: true,
         persist: "cookie",
         cookieId: getCookieName() + "_treeview"
@@ -251,8 +408,8 @@ function initTreeView() {
 
 function highlight(elemId) {
     var elem = $(elemId);
-    var color = $(elemId).css("background-color");
-    
+    var color = $(elemId).parent().css("background-color");
+
     elem.animate({ backgroundColor: '#ffffaa' }, 1500);
     $(elemId).nextAll("td").animate({ backgroundColor: '#ffffaa' }, 1500);
     setTimeout(function() { $(elemId).animate({ backgroundColor: color }, 3000) }, 1000);

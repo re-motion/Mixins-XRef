@@ -11,10 +11,25 @@ a {
 	text-decoration: none;
 }
 
+a:link { color: #336699;}
+a:visited { color: #336699; }
+
+
+ #navigation  a {
+	font-family: Cambria;
+	font-weight:bold;
+	color: #336699;
+}
+
 /* for involved type page */
 label {
 	min-width: 7em;
  	float: left;
+}
+
+.labelValues
+{
+	text-align: right;
 }
 
 .involvedType-interfaceLinkList {
@@ -38,6 +53,7 @@ body > div > fieldset > div > label {
 
 .message{
   margin-top: 10px;
+  width: 200px;
 }
 
 .errorMessage {
@@ -100,19 +116,24 @@ fieldset legend {
 	background-color: #E7E7E7;
 }
 
-/* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) */ 
+/* highlight odd rows - DO NOT USE tablesorter: zebra widget (performance issues) 
 tbody tr:nth-child(2n) td {
 	background-color: #F0F0F6;
-}
-/* tr.odd -> zebra for IE, do not define in same rule (',') */ 
+} 
+/* tr.odd -> zebra for IE, do not define in same rule (',')
 tbody tr.odd td {
 	background-color: #F0F0F6;
-}
+} */
 
 /* warning for generic target classes and "mixed mixins" */
 /* so much specifier for "tr.dubiosInvolvedType td" to gain higher priority, still does not work */
 /* use !IMPORTANT to do the trick */
 .dubiosInvolvedType, table tbody tr.dubiosInvolvedType td 
+{
+	background-color: #E3D1A2 !IMPORTANT;
+}
+
+.myTempType
 {
 	background-color: #E3D1A2 !IMPORTANT;
 }
@@ -131,6 +152,7 @@ tbody tr.odd td {
 
 .errorList-noErrors {
 	background-color: #CBE6C6;
+	width:700px;
 }
 
 
@@ -274,8 +296,11 @@ table caption, .treeHeader, .emptyText {
 
 /* tables */
 table {
+/*
 	background-color: #CDCDCD;
+	
 	margin:10px 0pt 15px;
+	*/
 	text-align:left;	
 	font-size: 16px;
 
@@ -328,7 +353,7 @@ table .noSorting thead tr th {
 table tbody td {
 	color: #3D3D3D;
 	padding: 3px;
-	background-color: #FFF;
+/*	background-color: #FFF; */
 	vertical-align: top;
 }
 

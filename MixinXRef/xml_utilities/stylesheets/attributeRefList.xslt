@@ -21,8 +21,8 @@
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="attributeRefs" />
 	<xsl:param name="dir" />
-	
-		<table>
+
+  <table cellpadding="0" cellspacing="0" border="0" class="attributeTable display">
 			<caption>Applied&#160;Attributes&#160;(<xsl:value-of select="count( $attributeRefs )" />)</caption>
 			<thead>
 				<tr>
@@ -81,7 +81,7 @@
 	<xsl:param name="rootMCR" />	
 	<xsl:param name="arguments" />
 
-	<table class="noSorting">
+	<table cellpadding="0" cellspacing="0" border="0" class="display argumentTable">
 		<caption>Arguments&#160;(<xsl:value-of select="count( $arguments )" />)</caption>
 		<thead>
 			<tr>

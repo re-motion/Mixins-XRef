@@ -87,10 +87,11 @@
 				</xsl:otherwise>
 			</xsl:choose>
 
+      <!--
       <xsl:if test="$dir = '.'">
         <div class="pager">
           <form action="">
-            <div> <!-- w3c conform! -->
+            <div>
               <img src="{$dir}/resources/images/first.png" class="first" alt="First"/> 
               <img src="{$dir}/resources/images/prev.png" class="prev" alt="Previous"/> 
               <input type="text" class="pagedisplay" size="8"/> 
@@ -108,8 +109,8 @@
           </form>
         </div>
       </xsl:if>
-      
-		</xsl:if>
+      -->
+  </xsl:if>
 		
 </xsl:template>
 

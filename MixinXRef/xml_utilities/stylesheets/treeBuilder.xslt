@@ -8,12 +8,13 @@
   <xsl:param name="allReferences" />
 
 		<div><span class="treeHeader"><xsl:value-of select="$caption" /></span></div>
-		
+
+  <div id="treeViewID">
 		<xsl:call-template name="inOrderTreeWalk">
 			<xsl:with-param name="rootTypes" select="$rootTypes" />
       <xsl:with-param name="allReferences" select="$allReferences" />
 		</xsl:call-template>
-	
+  </div>
 </xsl:template>
 
 <xsl:function name="ru:GetRecursiveTreeCount">
