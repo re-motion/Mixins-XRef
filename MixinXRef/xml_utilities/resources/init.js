@@ -19,9 +19,8 @@ $(document).ready(function() {
 
 function getCookieName() {
     var file_name = document.location.href;
-    var firstQuestionMark = (file_name.indexOf("?") == -1) ? file_name.length : file_name.indexOf("?");
-    var mixinDoc = file_name.lastIndexOf("MixinDoc/");
-    return file_name.substring(mixinDoc + 9, firstQuestionMark).replace("/", "_");
+    var tmp = file_name.split("/");
+	return tmp[tmp.length-2] + "_" + (tmp[tmp.length-1].split("."))[0];
 }
 
 
@@ -409,9 +408,10 @@ function initTreeView() {
 function highlight(elemId) {
     var elem = $(elemId);
     var color = $(elemId).parent().css("background-color");
-
-    elem.animate({ backgroundColor: '#ffffaa' }, 1500);
-    $(elemId).nextAll("td").animate({ backgroundColor: '#ffffaa' }, 1500);
-    setTimeout(function() { $(elemId).animate({ backgroundColor: color }, 3000) }, 1000);
+	var elementColor = $(elemId).css("background-color");
+	
+    elem.animate({ backgroundColor: '#ffff66' }, 1500);
+    $(elemId).nextAll("td").animate({ backgroundColor: '#ffff66' }, 1500);
+    setTimeout(function() { $(elemId).animate({ backgroundColor: elementColor }, 3000) }, 1000);
     setTimeout(function() { $(elemId).nextAll("td").animate({ backgroundColor: color }, 3000) }, 1000);
 }

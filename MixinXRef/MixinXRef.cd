@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MixinXRef.AssemblyBuilder" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAQAAAAAAQAAgAAAAAAAAA=</HashCode>
+      <FileName>AssemblyBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.InvolvedType" Collapsed="true">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQCAAAgAAAAEgAAAAAAAEACEAJIggQAAAAAAAAA=</HashCode>
+      <FileName>InvolvedType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.InvolvedTypeFinder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAUAAAAAAAAAQAAAAAQACAAAAAAAAAAIAAAAgA=</HashCode>
+      <FileName>InvolvedTypeFinder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Program" Collapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAAAAAAAIAAAAAEAAAAIARABAAAAAAAAAABAEAAIA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.SummaryPicker" Collapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>SummaryPicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.XRefTransformer" Collapsed="true">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAgAAAIAEAAAAAIAAAAAA=</HashCode>
+      <FileName>XRefTransformer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Formatting.OutputFormatter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgECAAAAAQAAAgDAAAQAAAgAIAAACAAABABAAAAAAA=</HashCode>
+      <FileName>Formatting\OutputFormatter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Reflection.MemberInfoEqualityUtility" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Reflection\MemberInfoEqualityUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Reflection.MemberModifierUtility" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAACAAAAAAAAAEAAACAgAAA=</HashCode>
+      <FileName>Reflection\MemberModifierUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Reflection.MemberSignatureUtility" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Reflection\MemberSignatureUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Reflection.ReflectedObject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAIAAAAAAAABAEgAIAQAAAAAAIEMAEAAAAEAAAAIA=</HashCode>
+      <FileName>Reflection\ReflectedObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Reflection.RemotionReflectorFactory" Collapsed="true">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Reflection\RemotionReflectorFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Reflection.TypeModifierUtility" Collapsed="true">
+    <Position X="3.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Reflection\TypeModifierUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAEAABAAAAAAAAAAEABAAQACEAAAAEAAAAAAAA=</HashCode>
+      <FileName>Reflection\Remotion\RemotionReflector_1_11_20.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Reflection\Remotion\RemotionReflector_1_13_23.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Report.AdditionalDependencyReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Report\AdditionalDependencyReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.AssemblyReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAgAAAKAAAAAAAAIAAAAAAAAAAgI=</HashCode>
+      <FileName>Report\AssemblyReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.AttributeIntroductionReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAACARAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Report\AttributeIntroductionReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.AttributeReferenceReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAACAQAQAAAQAAgAAAACAAAAA=</HashCode>
+      <FileName>Report\AttributeReferenceReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.AttributeReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQKAQAAAAgAIAgAAAAAAAAgA=</HashCode>
+      <FileName>Report\AttributeReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.CompositeReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\CompositeReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.ConfigurationErrorReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\ConfigurationErrorReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.FullReportGenerator" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAQAAAAAAAAAAAAAIAQACAAAAQAAAAAogAAEAA=</HashCode>
+      <FileName>Report\FullReportGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Report.InterfaceIntroductionReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAAAAAAAAQAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\InterfaceIntroductionReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.InterfaceReferenceReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAQAACAQAAAAAAAAAAAAEAAAAAQ=</HashCode>
+      <FileName>Report\InterfaceReferenceReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.InterfaceReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAIAAAAAAKAQAAAAAAIAAAAAEAAAAhA=</HashCode>
+      <FileName>Report\InterfaceReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.InvolvedTypeReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAABAAAAAAAAAAAACKASAAAAAEIAgAAIAAAAAkA=</HashCode>
+      <FileName>Report\InvolvedTypeReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.MemberOverrideReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Report\MemberOverrideReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.MemberReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAACAQBAAIAAKAAAAAAAAAAAAAAIAAAAgY=</HashCode>
+      <FileName>Report\MemberReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.MixinReferenceReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAABAAAAAAKAQAAAAAAAAgAAAAAAAAgQ=</HashCode>
+      <FileName>Report\MixinReferenceReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.RecursiveExceptionReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAACAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\RecursiveExceptionReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.TargetReferenceReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAIAAAAAAAAAAAAAAEAAgA=</HashCode>
+      <FileName>Report\TargetReferenceReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Report.ValidationErrorReportGenerator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\ValidationErrorReportGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Utility.ArgumentUtility" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ArgumentUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Utility.ErrorAggregator&lt;TException&gt;" Collapsed="true">
+    <Position X="7.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACJAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ErrorAggregator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Utility.IdentifierGenerator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAEAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IdentifierGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Utility.IdentifierPopulator&lt;T&gt;" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IdentifierPopulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Utility.InvolvedTypeStore" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIAAAAABAAAA=</HashCode>
+      <FileName>Utility\InvolvedTypeStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MixinXRef.Utility.ReadonlyIdentifierGenerator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Utility\ReadonlyIdentifierGenerator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MixinXRef.Utility.RecursiveDirectoryCopy" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Utility\RecursiveDirectoryCopy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MixinXRef.IInvolvedTypeFinder" Collapsed="true">
+    <Position X="5.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>IInvolvedTypeFinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MixinXRef.Formatting.IOutputFormatter" Collapsed="true">
+    <Position X="7.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgECAAAAAQAAAACAAAAAAAAAAAAACAAABABAAAAAAA=</HashCode>
+      <FileName>Formatting\IOutputFormatter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MixinXRef.Reflection.Remotion.IRemotionReflector" Collapsed="true">
+    <Position X="9" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAEAAAAAAAAAAAAAAABAAQACEAAAAEAAAAAAAA=</HashCode>
+      <FileName>Reflection\Remotion\IRemotionReflector.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MixinXRef.Report.IReportGenerator" Collapsed="true">
+    <Position X="10.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Report\IReportGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MixinXRef.Utility.IIdentifierGenerator&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\IIdentifierGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

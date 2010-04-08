@@ -63,7 +63,8 @@
 
 <xsl:template name="includeResources">
 	<xsl:param name="dir" />
-	
+  
+  <link rel="shortcut icon" type="image/x-icon" href="{$dir}/resources/images/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="{$dir}/resources/style.css" />
   <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/table_jui.css" />
     
@@ -74,12 +75,6 @@
     <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.custom.css" />
   </xsl:if>
   <xsl:if test="$dir = '..'">
-    <!--
-    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.cookie.js"></script>
-    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.tablesorter.pager.js"></script>
-    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookiejar.js"></script>
-    -->
     <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.simple.css" />
     <script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
     <script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>

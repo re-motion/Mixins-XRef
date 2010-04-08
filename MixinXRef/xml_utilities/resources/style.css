@@ -41,6 +41,11 @@ label {
 	clear: both;
 }
 
+.additionalInformation
+{
+	width: 700px;
+}
+
 /* for summary page */
 body > div label  {
 	min-width: 8.5em;
