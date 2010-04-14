@@ -101,7 +101,7 @@ function initTableSorter() {
 				null,
 				null,
 				null
-			],
+			]
         });
 
     if (location.href.indexOf("assemblies") != -1) {
@@ -154,7 +154,7 @@ function initTableSorter() {
 				null,
 				{ "sType": "html" },
 				{ "sType": "html" }
-			],
+			]
         });
 		
 		$('.interfaceDataTable, .attributeDataTable').dataTable({
@@ -167,7 +167,7 @@ function initTableSorter() {
 				{ "sType": "html" },
 				null,
 				{ "sType": "html" }
-			],
+			]
         });
     }
 
@@ -263,7 +263,6 @@ function initTableSorter() {
 			{ "sType": "signature" },
 			{ "sType": "html" }
 		]
-
         });
     }
     else {
@@ -282,7 +281,6 @@ function initTableSorter() {
 			{ "sType": "modifier-visibility" },
 			{ "sType": "signature" }
 		]
-
         });
     }
 
@@ -302,7 +300,6 @@ function initTableSorter() {
 			{ "sType": "signature" },
 			null
 		]
-
     });
 }
 
