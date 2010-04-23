@@ -42,12 +42,21 @@
 
 	<xsl:call-template name="treeBuilder">
 		<xsl:with-param name="caption">Used&#160;On&#160;(<xsl:value-of select="count( AppliedTo/InvolvedType )" />)</xsl:with-param>
-		<!-- point for recursion: get all involved classes which implements this interface
+		<!-- point for recursion: get all involved classes which implements this attribute
 				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes  -->
 		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Attributes/Attribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType /@ref, @base-ref))]" />
     <xsl:with-param name="allReferences" select="AppliedTo/InvolvedType/@ref" />
   </xsl:call-template>
 
+  <!--  //TODO: verify if this statement is correct  -->
+  <xsl:if test="@assembly-ref = 'none' and count( AppliedTo/InvolvedType ) != count(/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Attributes/Attribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType /@ref, @base-ref))])">
+    <p class="additionalInformation">
+      <em>Additional Information: </em><br/>
+      If the number of used attributes doesn't match the elements in the tree, it's not (necessarily) a mistake. 
+      This can happen, if the attribute is from an external assembly and the class, where this attribute is first applied to is not an involved type (neither a mixin, nor a target class), e.g. a class of System.Web.
+    </p>
+  </xsl:if>
+  
   <xsl:call-template name="memberList">
     <xsl:with-param name="members" select="Members/Member"/>
   </xsl:call-template>
