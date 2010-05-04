@@ -22,5 +22,12 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
 
+    public override bool IsNonApplicationAssembly (Assembly assembly)
+    {
+      ArgumentUtility.CheckNotNull ("assembly", assembly);
+
+      return assembly.GetCustomAttributes (false).Any (
+          attribute => attribute.GetType ().FullName == "Remotion.Reflection.TypeDiscovery.NonApplicationAssemblyAttribute");
+    }
   }
 }
