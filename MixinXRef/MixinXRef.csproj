@@ -228,15 +228,6 @@
     <Content Include="xml_utilities\resources\javascript\jquery.json.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.tablesorter.cookie.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.tablesorter.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.tablesorter.pager.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="xml_utilities\resources\javascript\jquery.treeview.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
