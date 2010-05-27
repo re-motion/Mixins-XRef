@@ -219,13 +219,7 @@
     <Content Include="xml_utilities\resources\javascript\jquery.cookie.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.cookiejar.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.dataTables.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.json.js">
+    <Content Include="xml_utilities\resources\javascript\jquery.dataTables.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="xml_utilities\resources\javascript\jquery.treeview.js">

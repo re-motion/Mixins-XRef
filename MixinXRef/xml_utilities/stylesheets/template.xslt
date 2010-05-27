@@ -69,14 +69,13 @@
   <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/table_jui.css" />
     
   <script type="text/javascript" src="{$dir}/resources/javascript/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript" src="{$dir}/resources/javascript/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{$dir}/resources/javascript/jquery.dataTables.min.js"></script>
   
   <xsl:if test="$dir = '.'">
     <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.custom.css" />
   </xsl:if>
   <xsl:if test="$dir = '..'">
     <link rel="stylesheet" type="text/css" href="{$dir}/resources/css/jquery-ui-1.7.2.simple.css" />
-    <script type="text/javascript" src="{$dir}/resources/javascript/jquery.json.js"></script>
     <script type="text/javascript" src="{$dir}/resources/javascript/jquery.cookie.js"></script>
     <script type="text/javascript" src="{$dir}/resources/javascript/jquery.treeview.js"></script>
     <script type="text/javascript" src="{$dir}/resources/javascript/jquery.color.js"></script>
