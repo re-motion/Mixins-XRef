@@ -1,17 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using MixinXRef.Utility;
 
 namespace MixinXRef
 {
   public class XRefTransformer
   {
-    // stylesheet path
-    private const string _xsltStyleSheetPath = @"xml_utilities\main.xslt";
-    // xslt processor path
-    private const string xsltProcessorPath = @"xml_utilities\saxon\Transform.exe";
-
     private readonly string _xmlInputFile;
     private readonly string _outputDirectory;
 
@@ -26,9 +22,17 @@ namespace MixinXRef
 
     public int GenerateHtmlFromXml ()
     {
+      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
+      
+      // stylesheet path
+      var xsltStyleSheetPath = Path.Combine (xRefPath, @"xml_utilities\main.xslt");
+
+      // xslt processor path      
+      var xsltProcessorPath = Path.Combine (xRefPath, @"xml_utilities\saxon\Transform.exe");
+
       // dummy output file - will not be created, just to trick saxon
       var mainOutputFile = Path.Combine (_outputDirectory, "dummy.html");
-      var arguments = String.Format ("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, _xsltStyleSheetPath, mainOutputFile);
+      var arguments = String.Format ("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, xsltStyleSheetPath, mainOutputFile);
 
       var xsltProcessor = new Process();
       xsltProcessor.StartInfo.FileName = xsltProcessorPath;

@@ -28,19 +28,21 @@ namespace MixinXRef
       if (!Directory.Exists (outputDirectory))
         Directory.CreateDirectory (outputDirectory);
 
-      if (ArgumentsContainCustomReflector(args))
+      if (ArgumentsContainCustomReflector (args))
+      {
         try
         {
-          program.SetRemotionReflector (new RemotionReflectorFactory ().Create (assemblyDirectory, args[2]));
+          program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory, args[2]));
         }
         catch (Exception fileNotFoundOrTypeLoadException)
         {
           Console.WriteLine (fileNotFoundOrTypeLoadException.Message);
           return -5;
         }
+      }
       else
         program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
-      
+
       Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
 
       var assemblies = program.GetAssemblies (assemblyDirectory);
@@ -50,7 +52,7 @@ namespace MixinXRef
       Console.WriteLine ("Generating MixinDoc");
       Console.Write ("  Generating XML ... ");
       program.SaveXmlDocument (assemblies, xmlFile);
-      Console.WriteLine (GetElapsedTime(startTime));
+      Console.WriteLine (GetElapsedTime (startTime));
 
       Console.Write ("  Applying XSLT ... ");
       var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
@@ -62,7 +64,8 @@ namespace MixinXRef
       Console.WriteLine (GetElapsedTime (startTime));
 
       // copy resources folder
-      new DirectoryInfo (@"xml_utilities\resources").CopyTo (Path.Combine (outputDirectory, "resources"));
+      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
+      new DirectoryInfo (Path.Combine (xRefPath, @"xml_utilities\resources")).CopyTo (Path.Combine (outputDirectory, "resources"));
 
       Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1}.", outputDirectory, GetElapsedTime (startTime));
 
@@ -93,12 +96,12 @@ namespace MixinXRef
 
       if (arguments.Length == 3 && arguments[2].ToLower().Equals ("-force"))
         forceOverride = true;
-      if (arguments.Length == 4 && arguments[3].ToLower ().Equals ("-force"))
+      if (arguments.Length == 4 && arguments[3].ToLower().Equals ("-force"))
         forceOverride = true;
 
       if (arguments.Length < 2 || arguments.Length > 4)
       {
-        _output.WriteLine("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]");
+        _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]");
         _output.WriteLine ("Quitting MixinXRef");
         return -1;
       }
@@ -117,7 +120,7 @@ namespace MixinXRef
         return -3;
       }
 
-      if (arguments[1].IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+      if (arguments[1].IndexOfAny (Path.GetInvalidPathChars()) >= 0)
       {
         _output.WriteLine ("Output directory '{0}' contains invalid characters", arguments[1]);
         _output.WriteLine ("Quitting MixinXRef");
@@ -181,7 +184,7 @@ namespace MixinXRef
 
     private static bool ArgumentsContainCustomReflector (string[] arguments)
     {
-      if ((arguments.Length == 3 && !arguments[2].ToLower ().Equals ("-force")) || arguments.Length == 4)
+      if ((arguments.Length == 3 && !arguments[2].ToLower().Equals ("-force")) || arguments.Length == 4)
         return true;
       else
         return false;
@@ -189,7 +192,7 @@ namespace MixinXRef
 
     private static string GetElapsedTime (DateTime startTime)
     {
-      DateTime elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
+      DateTime elapsed = new DateTime() + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
       return elapsed.ToString ("mm:ss");
     }
   }
