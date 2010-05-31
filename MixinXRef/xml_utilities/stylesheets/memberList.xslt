@@ -45,9 +45,17 @@
 		<tbody>
 			<xsl:for-each select="$members[@is-declared-by-this-class = true()] ">
 				<tr>
-          <td id="{@name}">
-            <xsl:value-of select="@name"/>
-          </td>
+          <!-- to be XHTML conform -->
+          <xsl:if test = "@name = '.ctor'">
+            <td id="Constructor">
+              <xsl:value-of select="@name"/>
+            </td>
+          </xsl:if>
+          <xsl:if test = "@name != '.ctor'">
+            <td id="{@name}">
+              <xsl:value-of select="@name"/>
+            </td>
+          </xsl:if>
 					<td><xsl:value-of select="@type"/></td>
 					<td>
 						<xsl:apply-templates select="Modifiers" />
