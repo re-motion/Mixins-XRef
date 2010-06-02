@@ -1,6 +1,6 @@
 using System;
 
-namespace Remotion.Reflection
+namespace Remotion.Reflection.TypeDiscovery
 {
   public class NonApplicationAssemblyAttribute : Attribute
   {
