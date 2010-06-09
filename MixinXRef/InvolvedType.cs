@@ -95,7 +95,7 @@ namespace MixinXRef
       Rotate (ref hashCode);
       hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode();
       Rotate (ref hashCode);
-      hashCode ^= _targetTypes.Sum (typeAndMixinDefintionPair => typeAndMixinDefintionPair.GetHashCode());
+      hashCode ^= _targetTypes.Aggregate (0, (current, typeAndMixinDefintionPair) => current ^ typeAndMixinDefintionPair.GetHashCode());
 
       return hashCode;
     }
