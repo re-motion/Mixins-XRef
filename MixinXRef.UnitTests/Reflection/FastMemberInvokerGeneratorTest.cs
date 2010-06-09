@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
@@ -60,7 +61,7 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    [ExpectedException (typeof (ArgumentException), ExpectedMessage = "Method 'Foo' not found on type 'System.String'.\r\nParameter name: memberName")]
+    [ExpectedException (typeof (MissingMethodException), ExpectedMessage = "Method 'Foo' not found on type 'System.String'.")]
     public void GetFastMethodInvoker_ForNonExistingMethod ()
     {
       var instance = "stringContent";
@@ -71,7 +72,7 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    [ExpectedException (typeof (ArgumentException), ExpectedMessage = "Overload of method 'GetHashCode' not found on type 'System.String'.\r\nParameter name: memberName")]
+    [ExpectedException (typeof (MissingMethodException), ExpectedMessage = "Overload of method 'GetHashCode' not found on type 'System.String'.")]
     public void GetFastMethodInvoker_ForExistingMethod_WithInvalidSignature ()
     {
       var instance = "stringContent";
@@ -82,17 +83,19 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
-    public void GetFastPropertyInvoker_ForInstanceProperty ()
+    [ExpectedException (typeof (NotSupportedException), ExpectedMessage = "Void methods are not supported.")]
+    public void GetFastMethodInvoker_ForVoidMethod ()
     {
-      var instance = "stringContent";
-      var invoker = _generator.GetFastPropertyInvoker (
+      var instance = new TargetDoSomething();
+      var invoker = _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "Length",
-          Type.EmptyTypes, BindingFlags.Public | BindingFlags.Instance);
+          "DoSomething",
+          Type.EmptyTypes,
+          BindingFlags.Public | BindingFlags.Instance);
 
       var output = invoker (instance, new object[0]);
 
-      Assert.That (output, Is.EqualTo (13));
+      Assert.That (output, Is.Null);
     }
   }
 }

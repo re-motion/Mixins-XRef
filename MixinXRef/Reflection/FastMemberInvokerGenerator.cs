@@ -8,15 +8,6 @@ namespace MixinXRef.Reflection
 {
   public class FastMemberInvokerGenerator
   {
-    public Func<object, object[], object> GetFastPropertyInvoker (Type declaringType, string memberName, Type[] argumentTypes, BindingFlags bindingFlags)
-    {
-      ArgumentUtility.CheckNotNull ("declaringType", declaringType);
-      ArgumentUtility.CheckNotNull ("memberName", memberName);
-      ArgumentUtility.CheckNotNull ("argumentTypes", argumentTypes);
-
-      return GetFastMethodInvoker (declaringType, "get_" + memberName, argumentTypes, bindingFlags);
-    }
-
     public Func<object, object[], object> GetFastMethodInvoker(Type declaringType, string memberName, Type[] argumentTypes, BindingFlags bindingFlags)
     {
       ArgumentUtility.CheckNotNull ("declaringType", declaringType);
@@ -26,16 +17,19 @@ namespace MixinXRef.Reflection
       var overloads = (MethodBase[]) declaringType.GetMember (memberName, MemberTypes.Method, bindingFlags);
 
       if (overloads.Length == 0)
-        throw new ArgumentException (string.Format ("Method '{0}' not found on type '{1}'.", memberName, declaringType), "memberName");
+        throw new MissingMethodException (string.Format ("Method '{0}' not found on type '{1}'.", memberName, declaringType));
 
       var method = (MethodInfo) Type.DefaultBinder.SelectMethod (bindingFlags, overloads, argumentTypes, null);
       if (method == null)
-        throw new ArgumentException (string.Format ("Overload of method '{0}' not found on type '{1}'.", memberName, declaringType), "memberName");
+        throw new MissingMethodException (string.Format ("Overload of method '{0}' not found on type '{1}'.", memberName, declaringType));
       return CreateDelegateForMethod (method);
     }
 
     private Func<object, object[], object> CreateDelegateForMethod (MethodInfo methodInfo)
     {
+      if (methodInfo.ReturnType == typeof (void))
+        throw new NotSupportedException ("Void methods are not supported.");
+
       var instanceParameter = Expression.Parameter (typeof (object), "instance");
       var argsParameter = Expression.Parameter (typeof (object[]), "args");
 
@@ -47,11 +41,6 @@ namespace MixinXRef.Reflection
 
       var lambda = Expression.Lambda<Func<object, object[], object>> (convertedCallResult, instanceParameter, argsParameter);
       return lambda.Compile ();
-    }
-
-    private Func<object, object[], object> CreateDelegateForProperty (PropertyInfo propertyInfo)
-    {
-      throw new NotImplementedException ();
     }
   }
 }

@@ -72,7 +72,7 @@ namespace MixinXRef.Reflection.Remotion
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
       var declarativeConfigurationBuilderType = _remotionAssembly.GetType("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
-      return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
+      return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", new object[] { assemblies });
     }
 
     public virtual Assembly FindRemotionAssembly(Assembly[] assemblies)

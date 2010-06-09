@@ -62,23 +62,5 @@ namespace MixinXRef.Reflection
 
       return invoker;
     }
-
-    public Func<object, object[], object> GetOrCreateFastPropertyInvoker (
-        Type declaringType,
-        string propertyName,
-        Type[] argumentTypes,
-        BindingFlags bindingFlags)
-    {
-      Func<object, object[], object> invoker;
-
-      var key = new CacheKey (declaringType, propertyName, argumentTypes);
-      if (!_cache.TryGetValue (key, out invoker))
-      {
-        invoker = _generator.GetFastPropertyInvoker (declaringType, propertyName, argumentTypes, bindingFlags);
-        _cache.Add (key, invoker);
-      }
-
-      return invoker;
-    }
   }
 }

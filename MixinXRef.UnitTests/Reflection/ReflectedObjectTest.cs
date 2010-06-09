@@ -58,6 +58,7 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
+    [ExpectedException (typeof (NotSupportedException), ExpectedMessage = "Void methods are not supported.")]
     public void CallMethod_ExistingMethod_Void ()
     {
       // TargetDoSomething has method: public void DoSomething()
@@ -87,7 +88,7 @@ namespace MixinXRef.UnitTests.Reflection
       }
       catch (MissingMethodException missingMethodException)
       {
-        Assert.That (missingMethodException.Message, Is.EqualTo ("Method 'System.String.nonExistingMethod' not found."));
+        Assert.That (missingMethodException.Message, Is.EqualTo ("Method 'nonExistingMethod' not found on type 'System.String'."));
       }
     }
 
@@ -112,7 +113,7 @@ namespace MixinXRef.UnitTests.Reflection
       }
       catch (MissingMethodException missingMethodException)
       {
-        Assert.That (missingMethodException.Message, Is.EqualTo ("Method 'System.String.nonExistingProperty' not found."));
+        Assert.That (missingMethodException.Message, Is.EqualTo ("Method 'get_nonExistingProperty' not found on type 'System.String'."));
       }
     }
 

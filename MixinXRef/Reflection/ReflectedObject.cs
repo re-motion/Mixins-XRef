@@ -9,6 +9,8 @@ namespace MixinXRef.Reflection
 {
   public class ReflectedObject : IEnumerable<ReflectedObject>
   {
+    private static readonly FastMemberInvokerCache s_cache = new FastMemberInvokerCache();
+
     private readonly object _wrappedObject;
 
     public ReflectedObject (object wrappedObject)
@@ -20,7 +22,6 @@ namespace MixinXRef.Reflection
 
       _wrappedObject = wrappedObject;
     }
-
 
     public static ReflectedObject Create (Assembly assembly, string fullName, params object[] parameters)
     {
@@ -37,47 +38,12 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
-      return InvokeMember (type, methodName, BindingFlags.InvokeMethod, null, parameters);
-    }
-
-
-    private static ReflectedObject InvokeMember (
-        Type wrappedObjectType, string memberName, BindingFlags memberType, object wrappedObject, object[] parameters)
-    {
-      try
-      {
-        var returnValue = wrappedObjectType.InvokeMember(memberName, memberType, null, wrappedObject, UnWrapParameters(parameters));
-        return returnValue == null ? null : new ReflectedObject(returnValue);
-      }
-      catch (TargetInvocationException targetInvocationException)
-      {
-        throw targetInvocationException.InnerException;
-      }
-    }
-
-    private static object UnWrapInstance(object instance)
-    {
-      var reflectedInstance = instance as ReflectedObject;
-
-      return reflectedInstance == null ? instance : reflectedInstance.To<object>();
-    }
-
-    private static object[] UnWrapParameters (object[] parameters)
-    {
-      if (parameters == null)
-        return null;
-
-      for (int i = 0; i < parameters.Length; i++)
-      {
-        parameters[i] = UnWrapInstance (parameters[i]);
-      }
-      return parameters;
-    }
-
-
-    public T To<T> ()
-    {
-      return (T) _wrappedObject;
+      var unwrappedParameters = UnWrapParameters (parameters);
+      var argumentTypes = unwrappedParameters.Select (obj => obj.GetType ()).ToArray ();
+      var invoker = s_cache.GetOrCreateFastMethodInvoker (type, methodName, argumentTypes, BindingFlags.Public | BindingFlags.Static);
+      
+      var returnValue = invoker (null, unwrappedParameters);
+      return returnValue == null ? null : new ReflectedObject (returnValue);
     }
 
     public ReflectedObject CallMethod (string methodName, params object[] parameters)
@@ -85,14 +51,24 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
-      return InvokeMember (_wrappedObject.GetType(), methodName, BindingFlags.InvokeMethod, _wrappedObject, parameters);
+      var unwrappedParameters = UnWrapParameters (parameters);
+      var argumentTypes = unwrappedParameters.Select (obj => obj.GetType ()).ToArray ();
+      var invoker = s_cache.GetOrCreateFastMethodInvoker (_wrappedObject.GetType(), methodName, argumentTypes, BindingFlags.Public | BindingFlags.Instance);
+
+      var returnValue = invoker (_wrappedObject, unwrappedParameters);
+      return returnValue == null ? null : new ReflectedObject (returnValue);
     }
 
     public ReflectedObject GetProperty (string propertyName)
     {
       ArgumentUtility.CheckNotNull ("propertyName", propertyName);
 
-      return InvokeMember (_wrappedObject.GetType(), propertyName, BindingFlags.GetProperty, _wrappedObject, null);
+      return CallMethod ("get_" + propertyName);
+    }
+
+    public T To<T> ()
+    {
+      return (T) _wrappedObject;
     }
 
     public IEnumerator<ReflectedObject> GetEnumerator ()
@@ -131,6 +107,25 @@ namespace MixinXRef.Reflection
     public override int GetHashCode()
     {
       return _wrappedObject.GetHashCode();
+    }
+
+    private static object UnWrapInstance (object instance)
+    {
+      var reflectedInstance = instance as ReflectedObject;
+
+      return reflectedInstance == null ? instance : reflectedInstance.To<object> ();
+    }
+
+    private static object[] UnWrapParameters (object[] parameters)
+    {
+      if (parameters == null)
+        return null;
+
+      for (int i = 0; i < parameters.Length; i++)
+      {
+        parameters[i] = UnWrapInstance (parameters[i]);
+      }
+      return parameters;
     }
   }
 }

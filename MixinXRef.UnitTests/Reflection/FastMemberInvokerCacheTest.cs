@@ -93,37 +93,5 @@ namespace MixinXRef.UnitTests.Reflection
 
       Assert.That (invoker2, Is.SameAs (invoker1));
     }
-
-    [Test]
-    public void GetFastPropertyInvoker ()
-    {
-      var instance = "stringContent";
-      var invoker = _cache.GetOrCreateFastPropertyInvoker (
-          instance.GetType (),
-          "Length",
-          Type.EmptyTypes,
-          BindingFlags.Public | BindingFlags.Instance);
-
-      var output = invoker (instance, new object[0]);
-
-      Assert.That (output, Is.EqualTo (13));
-    }
-
-    [Test]
-    public void GetFastPropertyInvoker_Twice ()
-    {
-      var invoker1 = _cache.GetOrCreateFastPropertyInvoker (
-          typeof (string),
-          "Length",
-          Type.EmptyTypes,
-          BindingFlags.Public | BindingFlags.Instance);
-      var invoker2 = _cache.GetOrCreateFastPropertyInvoker (
-          typeof (string),
-          "Length",
-          Type.EmptyTypes,
-          BindingFlags.Public | BindingFlags.Instance);
-
-      Assert.That (invoker2, Is.SameAs (invoker1));
-    }
   }
 }
