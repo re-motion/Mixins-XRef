@@ -45,15 +45,18 @@ namespace MixinXRef
 
       Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
 
+      Console.WriteLine ("Generating MixinDoc");
+      
       var assemblies = program.GetAssemblies (assemblyDirectory);
       if (assemblies == null)
         return (-6);
-
-      Console.WriteLine ("Generating MixinDoc");
+      
+      var xmlStartTime = DateTime.Now;
       Console.Write ("  Generating XML ... ");
       program.SaveXmlDocument (assemblies, xmlFile);
-      Console.WriteLine (GetElapsedTime (startTime));
+      Console.WriteLine (GetElapsedTime (xmlStartTime));
 
+      var xslStartTime = DateTime.Now;
       Console.Write ("  Applying XSLT ... ");
       var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
       if (transformerExitCode != 0)
@@ -61,7 +64,7 @@ namespace MixinXRef
         Console.Error.WriteLine ("Error applying XSLT (code {0})", transformerExitCode);
         return transformerExitCode;
       }
-      Console.WriteLine (GetElapsedTime (startTime));
+      Console.WriteLine (GetElapsedTime (xslStartTime));
 
       // copy resources folder
       var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
