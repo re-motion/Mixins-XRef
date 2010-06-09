@@ -28,8 +28,8 @@ namespace MixinXRef.Reflection
       public override int GetHashCode ()
       {
         return _declaringType.GetHashCode () 
-            ^ _memberName.GetHashCode () 
-            ^ _argumentTypes.Aggregate (0, (current, type) => current ^ type.GetHashCode());
+            ^ _memberName.GetHashCode ()
+            ^ _argumentTypes.Length;
       }
 
       public override bool Equals (object obj)
@@ -37,6 +37,7 @@ namespace MixinXRef.Reflection
         var other = (CacheKey) obj;
         return _declaringType == other._declaringType
             && _memberName == other._memberName
+            && _argumentTypes.Length == other._argumentTypes.Length
             && _argumentTypes.SequenceEqual (other._argumentTypes);
       }
     }
