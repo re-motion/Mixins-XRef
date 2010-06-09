@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reflection\FastMemberInvokerCacheTest.cs" />
+    <Compile Include="Reflection\FastMemberInvokerGeneratorTest.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtilityTest.cs" />
     <Compile Include="Report\AdditionalDependencyReportGeneratorTest.cs" />
     <Compile Include="TestDomain\BaseMemberOverrideTestClass.cs" />
