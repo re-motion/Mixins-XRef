@@ -46,7 +46,7 @@ namespace MixinXRef.UnitTests.Report
               new XElement (
                   "AppliedTo",
                   new XElement (
-                      "InvolvedType",
+                      "InvolvedType-Reference",
                       new XAttribute ("ref", "0")
                       )
                   )
@@ -75,7 +75,7 @@ namespace MixinXRef.UnitTests.Report
               new XElement (
                   "AppliedTo",
                   new XElement (
-                      "InvolvedType",
+                      "InvolvedType-Reference",
                       new XAttribute ("ref", "0")
                       )
                   )

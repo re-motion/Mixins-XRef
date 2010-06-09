@@ -52,10 +52,10 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute("name", _assembly1.GetName().Name),
               new XAttribute("version", _assembly1.GetName().Version),
               new XAttribute ("location", "./" + Path.GetFileName (_assembly1.Location)),
-              new XElement ("InvolvedType", new XAttribute ("ref", "0")),
-              new XElement ("InvolvedType", new XAttribute ("ref", "1")),
-              new XElement ("InvolvedType", new XAttribute ("ref", "2")),
-              new XElement ("InvolvedType", new XAttribute ("ref", "3"))
+              new XElement ("InvolvedType-Reference", new XAttribute ("ref", "0")),
+              new XElement ("InvolvedType-Reference", new XAttribute ("ref", "1")),
+              new XElement ("InvolvedType-Reference", new XAttribute ("ref", "2")),
+              new XElement ("InvolvedType-Reference", new XAttribute ("ref", "3"))
               ));
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

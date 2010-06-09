@@ -49,11 +49,11 @@
   </xsl:call-template>
 
   <xsl:call-template name="treeBuilder">
-		<xsl:with-param name="caption">Implementing&#160;Classes&#160;(<xsl:value-of select="count( ImplementedBy/InvolvedType )" />)</xsl:with-param>
+		<xsl:with-param name="caption">Implementing&#160;Classes&#160;(<xsl:value-of select="count( ImplementedBy/InvolvedType-Reference )" />)</xsl:with-param>
 		<!-- starting point for recursion: get all involved classes which implements this interface 
 				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes -->
-		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Interfaces/Interface/@ref, current()/@id)) and not(ru:contains(current()/ImplementedBy/InvolvedType /@ref, @base-ref))]" />
-    <xsl:with-param name="allReferences" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains(Interfaces/Interface/@ref, current()/@id) ]/@id" />
+		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(ImplementedInterfaces/ImplementedInterface/@ref, current()/@id)) and not(ru:contains(current()/ImplementedBy/InvolvedType-Reference /@ref, @base-ref))]" />
+    <xsl:with-param name="allReferences" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ ru:contains(ImplementedInterfaces/ImplementedInterface/@ref, current()/@id) ]/@id" />
 	</xsl:call-template>
   
 </xsl:template>

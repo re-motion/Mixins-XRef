@@ -30,7 +30,7 @@ namespace MixinXRef.Report
     public XElement GenerateXml ()
     {
       return new XElement (
-          "Attributes",
+          "HasAttributes",
           from attribute in CustomAttributeData.GetCustomAttributes (_type)
           where !_remotionReflector.IsInfrastructureType (attribute.Constructor.DeclaringType)
           select GenerateAttributeReference (attribute)
@@ -40,7 +40,7 @@ namespace MixinXRef.Report
     private XElement GenerateAttributeReference (CustomAttributeData attribute)
     {
       var attributeElement = new XElement (
-          "Attribute", new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (attribute.Constructor.DeclaringType)));
+          "HasAttribute", new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (attribute.Constructor.DeclaringType)));
 
       for (int i = 0; i < attribute.ConstructorArguments.Count; i++)
       {

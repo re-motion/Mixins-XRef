@@ -26,7 +26,7 @@
 				<th>Type</th>
         <th>Modifiers</th>
         <th>Signature</th>
-        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
+        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin-Reference)">
           <th>Overridden By</th>  
         </xsl:if>
 			</tr>
@@ -37,7 +37,7 @@
 				<td>-</td>
         <td>-</td>
         <td>-</td>
-        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
+        <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin-Reference)">
           <td>-</td>
         </xsl:if>
 			</tr>
@@ -61,9 +61,9 @@
 						<xsl:apply-templates select="Modifiers" />
 					</td>
 				  <td><xsl:apply-templates select="Signature" /></td>
-          <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin)">
+          <xsl:if test="exists($members[@is-declared-by-this-class = true()]/Overrides/Mixin-Reference)">
             <td>
-              <xsl:for-each select="Overrides/Mixin">
+              <xsl:for-each select="Overrides/Mixin-Reference">
                 <xsl:if test="position() != 1">, </xsl:if>
                 <xsl:call-template name="GenerateMixinReferenceLink">
                   <xsl:with-param name="mixin" select="." />
@@ -122,7 +122,7 @@
           </td>
           <xsl:if test="exists($members/Overrides)">
             <td>
-              <xsl:for-each select="Overrides/Mixin">
+              <xsl:for-each select="Overrides/Mixin-Reference">
                 <xsl:if test="position() != 1"> <br/> </xsl:if>
                 <xsl:call-template name="GenerateMixinReferenceLink">
                   <xsl:with-param name="mixin" select="." />

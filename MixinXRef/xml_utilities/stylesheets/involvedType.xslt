@@ -98,7 +98,7 @@
 	<div>
     <label>Interfaces:</label>
     <p class="involvedType-interfaceLinkList">
-		<xsl:for-each select="Interfaces/Interface">
+		<xsl:for-each select="ImplementedInterfaces/ImplementedInterface">
       <xsl:sort select="/MixinXRefReport/Interfaces/Interface[@id = current()/@ref]/@name"/>
 			<xsl:if test="position() != 1">, </xsl:if>
 			<xsl:call-template name="GenerateInterfaceLink">
@@ -108,7 +108,7 @@
 			</xsl:call-template>			
 		</xsl:for-each>
     </p>
-    <xsl:if test="empty(Interfaces/Interface)">-</xsl:if>
+    <xsl:if test="empty(ImplementedInterfaces/ImplementedInterface)">-</xsl:if>
     </div>
     <div>
       <label>Mixins applied:</label>
@@ -148,7 +148,7 @@
 	
 	<xsl:call-template name="attributeRefList">
 		<xsl:with-param name="rootMCR" select="/" />
-    <xsl:with-param name="attributeRefs" select="Attributes/Attribute"/>
+    <xsl:with-param name="attributeRefs" select="HasAttributes/HasAttribute"/>
 		<xsl:with-param name="dir">..</xsl:with-param>
 	</xsl:call-template>
 			

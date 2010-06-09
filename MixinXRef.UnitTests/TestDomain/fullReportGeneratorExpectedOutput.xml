@@ -1,36 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2010-05-04 12:32:30">
+<MixinXRefReport creation-time="2010-06-07 14:52:20">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
     <Assembly id="2" name="log4net" version="1.2.10.0" location="./log4net.dll" />
     <Assembly id="3" name="MixinXRef.UnitTests" version="1.0.0.0" location="./MixinXRef.UnitTests.dll">
-      <InvolvedType ref="0" />
-      <InvolvedType ref="1" />
-      <InvolvedType ref="2" />
-      <InvolvedType ref="3" />
-      <InvolvedType ref="4" />
-      <InvolvedType ref="5" />
-      <InvolvedType ref="6" />
-      <InvolvedType ref="7" />
-      <InvolvedType ref="8" />
-      <InvolvedType ref="9" />
-      <InvolvedType ref="10" />
-      <InvolvedType ref="11" />
-      <InvolvedType ref="12" />
-      <InvolvedType ref="13" />
-      <InvolvedType ref="14" />
-      <InvolvedType ref="15" />
-      <InvolvedType ref="16" />
-      <InvolvedType ref="17" />
-      <InvolvedType ref="18" />
-      <InvolvedType ref="19" />
-      <InvolvedType ref="20" />
+      <InvolvedType-Reference ref="0" />
+      <InvolvedType-Reference ref="1" />
+      <InvolvedType-Reference ref="2" />
+      <InvolvedType-Reference ref="3" />
+      <InvolvedType-Reference ref="4" />
+      <InvolvedType-Reference ref="5" />
+      <InvolvedType-Reference ref="6" />
+      <InvolvedType-Reference ref="7" />
+      <InvolvedType-Reference ref="8" />
+      <InvolvedType-Reference ref="9" />
+      <InvolvedType-Reference ref="10" />
+      <InvolvedType-Reference ref="11" />
+      <InvolvedType-Reference ref="12" />
+      <InvolvedType-Reference ref="13" />
+      <InvolvedType-Reference ref="14" />
+      <InvolvedType-Reference ref="15" />
+      <InvolvedType-Reference ref="16" />
+      <InvolvedType-Reference ref="17" />
+      <InvolvedType-Reference ref="18" />
+      <InvolvedType-Reference ref="19" />
+      <InvolvedType-Reference ref="20" />
     </Assembly>
-    <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
-    <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
-    <Assembly id="6" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
-    <Assembly id="7" name="MixinXRef" version="1.1.0.0" location="./MixinXRef.exe" />
+    <Assembly id="4" name="MixinXRef.UnitTests.NonApplicationAssembly" version="1.0.0.0" location="./MixinXRef.UnitTests.NonApplicationAssembly.dll" />
+    <Assembly id="5" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
+    <Assembly id="6" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
+    <Assembly id="7" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
+    <Assembly id="8" name="MixinXRef" version="1.1.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="20" is-target="true" is-mixin="false" is-generic-definition="false">
@@ -51,8 +52,8 @@
           <Overrides />
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Mixins>
         <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -125,8 +126,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Targets>
         <Target ref="0" />
         <Target ref="20" />
@@ -152,8 +153,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Targets>
         <Target ref="0" />
         <Target ref="20" />
@@ -199,10 +200,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="0" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="0" />
+      </ImplementedInterfaces>
+      <HasAttributes />
     </InvolvedType>
     <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <Modifiers>
@@ -221,8 +222,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Mixins>
         <Mixin ref="5" index="n/a" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -246,13 +247,13 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes>
-        <Attribute ref="0">
+      <ImplementedInterfaces />
+      <HasAttributes>
+        <HasAttribute ref="0">
           <Argument kind="constructor" type="Int32" name="id" value="1337" />
           <Argument kind="named" type="String" name="Title" value="C# in depth" />
-        </Attribute>
-      </Attributes>
+        </HasAttribute>
+      </HasAttributes>
       <Targets>
         <Target ref="4" />
         <Target ref="13" />
@@ -360,10 +361,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="1" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="1" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -391,8 +392,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
     </InvolvedType>
     <InvolvedType id="8" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberOverrideTestClass.Mixin1" base="Mixin&lt;MemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
       <Modifiers>
@@ -434,8 +435,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
     </InvolvedType>
     <InvolvedType id="9" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BaseMemberOverrideTestClass.Mixin1" base="Mixin&lt;BaseMemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
       <Modifiers>
@@ -465,8 +466,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
     </InvolvedType>
     <InvolvedType id="10" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin3" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
       <Modifiers>
@@ -496,10 +497,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="1" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="1" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="10" index="n/a" relation="Extends" instance-name="Mixin3" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -537,8 +538,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Targets>
         <Target ref="12" />
       </Targets>
@@ -571,10 +572,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="2" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="2" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="11" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -611,16 +612,16 @@
           <Overrides />
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="1" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="1" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="5" index="0" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions>
-            <Attribute ref="0" />
+            <IntroducedAttribute ref="0" />
           </AttributeIntroductions>
           <MemberOverrides />
         </Mixin>
@@ -670,10 +671,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="1" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="1" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="6" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -710,10 +711,10 @@
           <Overrides />
         </Member>
       </Members>
-      <Interfaces>
-        <Interface ref="1" />
-      </Interfaces>
-      <Attributes />
+      <ImplementedInterfaces>
+        <ImplementedInterface ref="1" />
+      </ImplementedInterfaces>
+      <HasAttributes />
       <Mixins>
         <Mixin ref="16" index="0" relation="Extends" instance-name="Mixin1" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -740,8 +741,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Targets>
         <Target ref="15" />
       </Targets>
@@ -764,8 +765,8 @@
           <Overrides />
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Mixins>
         <Mixin ref="18" index="0" relation="Extends" instance-name="Mixin2" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -792,10 +793,10 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes>
-        <Attribute ref="1" />
-      </Attributes>
+      <ImplementedInterfaces />
+      <HasAttributes>
+        <HasAttribute ref="1" />
+      </HasAttributes>
       <Targets>
         <Target ref="17" />
       </Targets>
@@ -829,8 +830,8 @@
           </Signature>
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
     </InvolvedType>
     <InvolvedType id="20" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="UselessObject" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
@@ -850,8 +851,8 @@
           <Overrides />
         </Member>
       </Members>
-      <Interfaces />
-      <Attributes />
+      <ImplementedInterfaces />
+      <HasAttributes />
       <Mixins>
         <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
@@ -885,7 +886,7 @@
         </Member>
       </Members>
       <ImplementedBy>
-        <InvolvedType ref="3" />
+        <InvolvedType-Reference ref="3" />
       </ImplementedBy>
     </Interface>
     <Interface id="1" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
@@ -904,11 +905,11 @@
         </Member>
       </Members>
       <ImplementedBy>
-        <InvolvedType ref="6" />
-        <InvolvedType ref="10" />
-        <InvolvedType ref="13" />
-        <InvolvedType ref="14" />
-        <InvolvedType ref="15" />
+        <InvolvedType-Reference ref="6" />
+        <InvolvedType-Reference ref="10" />
+        <InvolvedType-Reference ref="13" />
+        <InvolvedType-Reference ref="14" />
+        <InvolvedType-Reference ref="15" />
       </ImplementedBy>
     </Interface>
     <Interface id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
@@ -939,19 +940,19 @@
         </Member>
       </Members>
       <ImplementedBy>
-        <InvolvedType ref="12" />
+        <InvolvedType-Reference ref="12" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
     <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
-        <InvolvedType ref="5" />
+        <InvolvedType-Reference ref="5" />
       </AppliedTo>
     </Attribute>
     <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType ref="18" />
+        <InvolvedType-Reference ref="18" />
       </AppliedTo>
     </Attribute>
   </Attributes>

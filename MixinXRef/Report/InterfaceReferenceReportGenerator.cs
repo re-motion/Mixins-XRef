@@ -28,7 +28,7 @@ namespace MixinXRef.Report
     public XElement GenerateXml ()
     {
       return new XElement (
-          "Interfaces",
+          "ImplementedInterfaces",
           from implementedInterface in GetAllInterfaces()
           where !_remotionReflector.IsInfrastructureType (implementedInterface)
           select GenerateInterfaceReference (implementedInterface)
@@ -37,7 +37,7 @@ namespace MixinXRef.Report
 
     private XElement GenerateInterfaceReference (Type implementedInterface)
     {
-      return new XElement ("Interface", new XAttribute ("ref", _interfaceIdentifierGenerator.GetIdentifier (implementedInterface)));
+      return new XElement ("ImplementedInterface", new XAttribute ("ref", _interfaceIdentifierGenerator.GetIdentifier (implementedInterface)));
     }
 
     private HashSet<Type> GetAllInterfaces ()

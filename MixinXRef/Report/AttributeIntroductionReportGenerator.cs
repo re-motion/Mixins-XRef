@@ -40,7 +40,7 @@ namespace MixinXRef.Report
     private XElement GenerateAttributeReferanceElement (Type introducedAttribute)
     {
       return new XElement (
-          "Attribute",
+          "IntroducedAttribute",
           new XAttribute ("ref", _attributeIdentifierGenerator.GetIdentifier (introducedAttribute))
           );
     }

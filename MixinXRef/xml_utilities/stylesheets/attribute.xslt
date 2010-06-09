@@ -41,15 +41,15 @@
 	</div>
 
 	<xsl:call-template name="treeBuilder">
-		<xsl:with-param name="caption">Used&#160;On&#160;(<xsl:value-of select="count( AppliedTo/InvolvedType )" />)</xsl:with-param>
+		<xsl:with-param name="caption">Used&#160;On&#160;(<xsl:value-of select="count( AppliedTo/InvolvedType-Reference )" />)</xsl:with-param>
 		<!-- point for recursion: get all involved classes which implements this attribute
 				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes  -->
-		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Attributes/Attribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType /@ref, @base-ref))]" />
-    <xsl:with-param name="allReferences" select="AppliedTo/InvolvedType/@ref" />
+		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType-Reference /@ref, @base-ref))]" />
+    <xsl:with-param name="allReferences" select="AppliedTo/InvolvedType-Reference/@ref" />
   </xsl:call-template>
 
   <!--  //TODO: verify if this statement is correct  -->
-  <xsl:if test="@assembly-ref = 'none' and count( AppliedTo/InvolvedType ) != count(/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(Attributes/Attribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType /@ref, @base-ref))])">
+  <xsl:if test="@assembly-ref = 'none' and count( AppliedTo/InvolvedType-Reference ) != count(/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType-Reference /@ref, @base-ref))])">
     <p class="additionalInformation">
       <em>Additional Information: </em><br/>
       If the number of used attributes doesn't match the elements in the tree, it's not (necessarily) a mistake. 

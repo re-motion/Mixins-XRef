@@ -55,7 +55,7 @@
 							<xsl:with-param name="dir" select="$dir" />
 						</xsl:call-template>					
 					</td>
-					<td><xsl:value-of select="count( ImplementedBy/InvolvedType )" /></td>
+					<td><xsl:value-of select="count( ImplementedBy/InvolvedType-Reference )" /></td>
 					<td>
 						<xsl:call-template name="GenerateAssemblyLink">
 							<xsl:with-param name="rootMCR" select="$rootMCR" />

@@ -29,7 +29,7 @@ namespace MixinXRef.UnitTests.Report
 
       var output = reportGenerator.GenerateXml();
 
-      var expectedOutput = new XElement ("Attributes");
+      var expectedOutput = new XElement ("HasAttributes");
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
@@ -43,8 +43,8 @@ namespace MixinXRef.UnitTests.Report
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
-          "Attributes",
-          new XElement ("Attribute", new XAttribute ("ref", "0"))
+          "HasAttributes",
+          new XElement ("HasAttribute", new XAttribute ("ref", "0"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -59,9 +59,9 @@ namespace MixinXRef.UnitTests.Report
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
-          "Attributes",
+          "HasAttributes",
           new XElement (
-              "Attribute",
+              "HasAttribute",
               new XAttribute ("ref", "0"),
               new XElement (
                   "Argument",
@@ -89,9 +89,9 @@ namespace MixinXRef.UnitTests.Report
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
-          "Attributes",
+          "HasAttributes",
           new XElement (
-              "Attribute",
+              "HasAttribute",
               new XAttribute ("ref", "0"),
               new XElement (
                   "Argument",

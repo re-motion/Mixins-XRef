@@ -33,7 +33,7 @@ namespace MixinXRef.Report
           "AdditionalDependencies",
           from explicitDependencyType in _explicitDependencies
           select new XElement (
-              "Mixin",
+              "AdditionalDependency",
               new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (explicitDependencyType.To<Type>())),
               new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (explicitDependencyType.To<Type>()))
               )

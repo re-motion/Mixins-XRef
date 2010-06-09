@@ -55,7 +55,7 @@ namespace MixinXRef.UnitTests.Report
       var expectedOutput = new XElement (
           "InterfaceIntroductions",
           new XElement (
-              "Interface",
+              "IntroducedInterface",
               new XAttribute ("ref", "0")
               ));
 

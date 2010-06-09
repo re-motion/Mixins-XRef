@@ -54,7 +54,7 @@ namespace MixinXRef.UnitTests.Report
       var expectedOutput = new XElement (
           "AttributeIntroductions",
           new XElement (
-              "Attribute",
+              "IntroducedAttribute",
               new XAttribute ("ref", "0")
               ));
 

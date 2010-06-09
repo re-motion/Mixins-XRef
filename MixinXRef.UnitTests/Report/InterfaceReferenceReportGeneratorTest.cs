@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests.Report
 
       var output = reportGenerator.GenerateXml();
 
-      var expectedOutput = new XElement ("Interfaces");
+      var expectedOutput = new XElement ("ImplementedInterfaces");
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
@@ -36,8 +36,8 @@ namespace MixinXRef.UnitTests.Report
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
-          "Interfaces",
-          new XElement ("Interface", new XAttribute ("ref", "0"))
+          "ImplementedInterfaces",
+          new XElement ("ImplementedInterface", new XAttribute ("ref", "0"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -61,8 +61,8 @@ namespace MixinXRef.UnitTests.Report
       var output = reportGenerator.GenerateXml();
 
       var expectedOutput = new XElement (
-          "Interfaces",
-          new XElement ("Interface", new XAttribute ("ref", "0"))
+          "ImplementedInterfaces",
+          new XElement ("ImplementedInterface", new XAttribute ("ref", "0"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

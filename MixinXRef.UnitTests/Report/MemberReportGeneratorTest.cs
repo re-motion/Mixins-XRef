@@ -330,7 +330,7 @@ namespace MixinXRef.UnitTests.Report
           new XElement (
               "Overrides",
               new XElement (
-                  "Mixin",
+                  "Mixin-Reference",
                   new XAttribute ("ref", 0),
                   new XAttribute ("instance-name", "MemberOverrideTestClass.Mixin1")
                   ));
@@ -361,7 +361,7 @@ namespace MixinXRef.UnitTests.Report
           new XElement (
               "Overrides",
               new XElement (
-                  "Mixin",
+                  "Mixin-Reference",
                   new XAttribute ("ref", 0),
                   new XAttribute ("instance-name", "BaseMemberOverrideTestClass.Mixin1")
                   ));

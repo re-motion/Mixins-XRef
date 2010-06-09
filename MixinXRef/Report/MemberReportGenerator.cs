@@ -172,7 +172,7 @@ namespace MixinXRef.Report
         var type = overrideDefinition.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type>();
         overrides.Add (
             new XElement (
-                "Mixin",
+                "Mixin-Reference",
                 new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
                 new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
                 )

@@ -30,7 +30,7 @@ namespace MixinXRef.Report
     private XElement GenerateOverriddenMemberElement(ReflectedObject overriddenMember)
     {
       return new XElement (
-          "Member",
+          "OverriddenMember",
           new XAttribute ("type", overriddenMember.GetProperty("MemberType")),
           new XAttribute ("name", overriddenMember.GetProperty("Name"))
           );

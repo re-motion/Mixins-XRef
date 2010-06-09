@@ -54,7 +54,7 @@ namespace MixinXRef.UnitTests.Report
       var expectedOutput = new XElement (
           "MemberOverrides",
           new XElement (
-              "Member",
+              "OverriddenMember",
               new XAttribute ("type", "Method"),
               new XAttribute ("name", "DoSomething")
               ));

@@ -41,7 +41,7 @@ namespace MixinXRef.Report
       ab.InterfaceIntroductions[0].IntroducedEvents
       */
       return new XElement (
-          "Interface",
+          "IntroducedInterface",
           new XAttribute ("ref", _interfaceIdentifierGenerator.GetIdentifier (introducedInterface))
           //, GenerateMemberIntroductions
           );

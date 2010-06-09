@@ -55,11 +55,11 @@ namespace MixinXRef.UnitTests.Report
       var expectedOutput = new XElement (
           "AdditionalDependencies",
           new XElement (
-              "Mixin",
+              "AdditionalDependency",
               new XAttribute ("ref", "0"),
               new XAttribute ("instance-name", "AdditionalDependenciesTest.Mixin1")),
           new XElement (
-              "Mixin",
+              "AdditionalDependency",
               new XAttribute ("ref", "1"),
               new XAttribute ("instance-name", "AdditionalDependenciesTest.Mixin2"))
           );

@@ -50,11 +50,12 @@ namespace MixinXRef.Report
           new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
           new XAttribute ("name", assembly.GetName().Name),
           new XAttribute ("version", assembly.GetName().Version),
-          new XAttribute ("location", GetShortAssemblyLocation (assembly)),
+          new XAttribute ("location", GetShortAssemblyLocation (assembly))
+          ,
           from involvedType in involvedTypesForAssembly
           select
               new XElement (
-              "InvolvedType",
+              "InvolvedType-Reference",
               new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (involvedType.Type))
               )
           );

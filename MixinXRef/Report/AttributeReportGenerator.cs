@@ -88,7 +88,7 @@ namespace MixinXRef.Report
               from appliedToType in allAttributes[attribute]
               select
                   new XElement (
-                  "InvolvedType",
+                  "InvolvedType-Reference",
                   new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (appliedToType)))
               )
           );

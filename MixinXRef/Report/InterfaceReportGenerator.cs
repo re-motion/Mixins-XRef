@@ -118,7 +118,7 @@ namespace MixinXRef.Report
               from implementingType in allInterfaces[usedInterface]
               select
                   new XElement (
-                  "InvolvedType",
+                  "InvolvedType-Reference",
                   new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (implementingType)))
               )
           );
