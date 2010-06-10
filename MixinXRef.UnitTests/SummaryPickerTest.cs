@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
@@ -21,7 +22,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetSummary_ForNonExistingXmlFile ()
     {
-      var output = _summaryPicker.GetSummary (typeof (object));
+      var output = _summaryPicker.GetSummary (typeof (TargetClass1));
       var expectedOutput = _noSummary;
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
