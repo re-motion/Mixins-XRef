@@ -49,6 +49,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Attributes",
           from attribute in allAttributes.Keys
+          where _attributeIdentifierGenerator.GetIdentifier(attribute, "none") != "none"
           select GenerateAttributeElement (attribute, allAttributes));
     }
 
@@ -61,6 +62,7 @@ namespace MixinXRef.Report
         foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
         {
           var attributeType = attribute.GetType();
+
           if (_remotionReflector.IsInfrastructureType (attributeType))
             continue;
 

@@ -46,12 +46,10 @@ namespace MixinXRef.Report
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
           where memberInfo.DeclaringType.IsAssignableFrom(_type)
                 && !IsSpecialName (memberInfo)
-                && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("private")
-                && !_memberModifierUtility.GetMemberModifiers (memberInfo).Contains ("internal")
+                && !IsPrivateOrInternal(memberInfo)
           select CreateMemberElement (memberInfo)
           );
     }
-
 
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
@@ -91,14 +89,6 @@ namespace MixinXRef.Report
       {
         return null;
       }
-    }
-
-    private bool IsOverriddenBaseClassMember (MemberInfo memberInfo, XElement overrides)
-    {
-      if (overrides == null)
-        return false;
-      
-      return !(memberInfo.DeclaringType != _type && overrides.ToString() == new XElement("Overrides").ToString());
     }
 
     public bool HasOverrideMixinAttribute (MemberInfo memberInfo)
@@ -210,6 +200,20 @@ namespace MixinXRef.Report
             );
       }
       return false;
+    }
+
+    private bool IsPrivateOrInternal (MemberInfo memberInfo)
+    {
+      var memberModifiers = _memberModifierUtility.GetMemberModifiers (memberInfo);
+      return memberModifiers.Contains ("internal") || memberModifiers.Contains ("private");
+    }
+
+    private bool IsOverriddenBaseClassMember (MemberInfo memberInfo, XElement overrides)
+    {
+      if (overrides == null)
+        return false;
+
+      return !(memberInfo.DeclaringType != _type && overrides.ToString () == new XElement ("Overrides").ToString ());
     }
   }
 }
