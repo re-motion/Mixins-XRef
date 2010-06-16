@@ -42,8 +42,8 @@
 
 	<xsl:call-template name="simpleTreeBuilder">
 		<xsl:with-param name="caption">Used&#160;On&#160;(<xsl:value-of select="count( AppliedTo/InvolvedType-Reference )" />)</xsl:with-param>
-		<!-- point for recursion: get all involved classes which implements this attribute
-				and get rid of involved classes which base-ref points to a class which also implements that interface ==> only get root implementing classes  -->
+		<!-- rootTypes: get all involved classes which implements this attribute and get rid of involved classes which base-ref points to a class which also implements that interface 
+			==> only get root implementing classes  -->
 		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id)) and not(ru:contains(current()/AppliedTo/InvolvedType-Reference /@ref, @base-ref))]" />
 		<xsl:with-param name="nonRootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id)) and (ru:contains(current()/AppliedTo/InvolvedType-Reference /@ref, @base-ref))]" />
     <xsl:with-param name="allReferences" select="AppliedTo/InvolvedType-Reference/@ref" />

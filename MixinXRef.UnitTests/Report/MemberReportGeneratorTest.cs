@@ -10,6 +10,7 @@ using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
+using System.Xml.XPath;
 
 namespace MixinXRef.UnitTests.Report
 {
@@ -132,6 +133,7 @@ namespace MixinXRef.UnitTests.Report
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
       var output = reportGenerator.GenerateXml ();
+
       var expectedOutput = new XElement (
           "Members",
           new XElement (
@@ -150,7 +152,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-declared-by-this-class", false),
               _outputFormatter.CreateModifierMarkup ("", "public override"),
               _outputFormatter.CreateMethodMarkup ("MyBaseClassMethod", typeof (void), new ParameterInfo[0]),
-              reportGenerator.GetOverrides (memberInfo)
+              GenerateOverrides("0", "MixinOverridesTargetClassMember")
               ),
           new XElement (
               "Member",
@@ -166,6 +168,11 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
+    private XElement GenerateOverrides (string referenceID, string instanceName)
+    {
+      return new XElement ("Overrides", new XElement ("Mixin-Reference", new XAttribute("ref", referenceID), new XAttribute("instance-name", instanceName)));
+    }
+
 
     [Test]
     public void GenerateXml ()
@@ -176,7 +183,6 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
       var involvedType = new InvolvedType (type);
       involvedType.TargetClassDefintion = targetClassDefinition;
-      var memberInfo = type.GetMember ("OverriddenMethod")[0];
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
@@ -199,7 +205,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("OverriddenMethod", typeof (void), new ParameterInfo[0]),
-              reportGenerator.GetOverrides (memberInfo)
+              GenerateOverrides ("0", "MemberOverrideTestClass.Mixin1")
               ),
           new XElement (
               "Member",
@@ -219,10 +225,9 @@ namespace MixinXRef.UnitTests.Report
     public void HasOverrideMixinAttribute_False ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (object), new InvolvedType (typeof (object)));
-      var memberInfo = typeof (object).GetMember ("ToString")[0];
-      var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
+      var output = reportGenerator.GenerateXml ().XPathSelectElement ("Member[@name='ToString']").Element ("Modifiers").Element ("Type");
 
-      Assert.That (output, Is.False);
+      Assert.That (output, Is.Null);
     }
 
     [Test]
@@ -236,20 +241,18 @@ namespace MixinXRef.UnitTests.Report
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
-      var memberInfo = type.GetMember ("TemplateMethod")[0];
-      var output = reportGenerator.HasOverrideMixinAttribute (memberInfo);
+      var output = reportGenerator.GenerateXml ().XPathSelectElement ("Member[@name='TemplateMethod']").Element ("Modifiers").Element ("Type");
 
-      Assert.That (output, Is.True);
+      Assert.That (output.Value, Is.EqualTo ("OverrideMixin"));
     }
 
     [Test]
     public void HasOverrideTargetAttribute_False ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (object), new InvolvedType (typeof (object)));
-      var memberInfo = typeof (object).GetMember ("ToString")[0];
-      var output = reportGenerator.HasOverrideTargetAttribute (memberInfo);
+      var output = reportGenerator.GenerateXml ().XPathSelectElement ("Member[@name='ToString']").Element ("Modifiers").Element ("Type");
 
-      Assert.That (output, Is.False);
+      Assert.That (output, Is.Null);
     }
 
     [Test]
@@ -265,22 +268,19 @@ namespace MixinXRef.UnitTests.Report
       involvedType.TargetTypes.Add (
           targetType, new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration).Mixins[mixinType]));
       var reportGenerator = CreateMemberReportGenerator (mixinType, involvedType);
+      
+      var output = reportGenerator.GenerateXml ().XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Modifiers").Element ("Type");
 
-      var memberInfo = mixinType.GetMember ("OverriddenMethod")[0];
-      var output = reportGenerator.HasOverrideTargetAttribute (memberInfo);
-
-      Assert.That (output, Is.True);
+      Assert.That (output.Value, Is.EqualTo ("OverrideTarget"));
     }
 
     [Test]
-    public void GetOverrides_InvolvedTypeNull ()
+    public void name ()
     {
-      var reportGenerator = CreateMemberReportGenerator (typeof (object), null);
-      var memberInfo = typeof (object).GetMember ("ToString")[0];
+      var x = new XElement ("a");
+      var y = new XElement ("a");
 
-      var output = reportGenerator.GetOverrides (memberInfo);
-
-      Assert.That (output, Is.Null);
+      Assert.That (x.Value, Is.EqualTo (y.Value));
     }
 
     [Test]
@@ -300,11 +300,10 @@ namespace MixinXRef.UnitTests.Report
 
       var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
 
-      var memberInfo = targetType.GetMember ("Dispose")[0];
-      var output = reportGenerator.GetOverrides (memberInfo);
-      var expectedOutput = new XElement ("Overrides");
-
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      //var memberInfo = targetType.GetMember ("Dispose")[0];
+      var output = reportGenerator.GenerateXml();
+      
+      Assert.That (output.XPathSelectElement ("Member[@name='Dispose']").Element("Overrides").HasElements, Is.False);
     }
 
     [Test]
@@ -324,8 +323,11 @@ namespace MixinXRef.UnitTests.Report
 
       var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
 
-      var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
-      var output = reportGenerator.GetOverrides (memberInfo);
+      //var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
+      //var output = reportGenerator.GetOverrides (memberInfo);
+
+      var output = reportGenerator.GenerateXml();
+      
       var expectedOutput =
           new XElement (
               "Overrides",
@@ -335,7 +337,7 @@ namespace MixinXRef.UnitTests.Report
                   new XAttribute ("instance-name", "MemberOverrideTestClass.Mixin1")
                   ));
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Overrides").ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
     [Test]
@@ -355,8 +357,8 @@ namespace MixinXRef.UnitTests.Report
 
       var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
 
-      var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
-      var output = reportGenerator.GetOverrides (memberInfo);
+      //var memberInfo = targetType.GetMember ("OverriddenMethod")[0];
+      var output = reportGenerator.GenerateXml();
       var expectedOutput =
           new XElement (
               "Overrides",
@@ -366,7 +368,7 @@ namespace MixinXRef.UnitTests.Report
                   new XAttribute ("instance-name", "BaseMemberOverrideTestClass.Mixin1")
                   ));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Overrides").ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
      [Test]
@@ -385,12 +387,10 @@ namespace MixinXRef.UnitTests.Report
       };
 
       var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
-
-      var memberInfo = targetType.GetMember ("HiddenMethod")[0];
-      var output = reportGenerator.GetOverrides (memberInfo);
+      var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement ("Overrides");
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      Assert.That (output.XPathSelectElement ("Member[@name='HiddenMethod']").Element ("Overrides").HasElements, Is.False);
     }
 
     private MemberReportGenerator CreateMemberReportGenerator (Type mixinType, InvolvedType involvedType)

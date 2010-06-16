@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,6 +18,8 @@ namespace MixinXRef.Report
     private readonly IOutputFormatter _outputFormatter;
     private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
     private readonly MemberSignatureUtility _memberSignatureUtility;
+    private readonly Dictionary<MemberInfo, ReflectedObject> _memberDefinitionDictionary = new Dictionary<MemberInfo, ReflectedObject>();
+    private Dictionary<MemberInfo, ReflectedObject> _memberInfoToMemberDefinitionDictionary = new Dictionary<MemberInfo, ReflectedObject>();
 
 
     public MemberReportGenerator (
@@ -41,18 +44,32 @@ namespace MixinXRef.Report
 
     public XElement GenerateXml ()
     {
+      GetAllMembers();
+
       return new XElement (
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-          where memberInfo.DeclaringType.IsAssignableFrom(_type)
+          where memberInfo.DeclaringType.IsAssignableFrom (_type)
                 && !IsSpecialName (memberInfo)
-                && !IsPrivateOrInternal(memberInfo)
           select CreateMemberElement (memberInfo)
           );
     }
 
+    private void GetAllMembers ()
+    {
+      if (_involvedType == null || !_involvedType.HasTargetClassDefintion)
+        return;
+
+      _memberInfoToMemberDefinitionDictionary = _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
+          .ToDictionary (a => a.GetProperty ("MemberInfo").To<MemberInfo>(), a => a);
+    }
+
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
+      var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
+      if (IsPrivateOrInternal (memberModifier))
+        return null;
+
       var lastPoint = memberInfo.Name.LastIndexOf ('.');
       var memberName = memberInfo.Name;
 
@@ -62,16 +79,26 @@ namespace MixinXRef.Report
         memberName = memberInfo.Name.Substring (lastPoint + 1, memberInfo.Name.Length - lastPoint - 1);
 
       var attributes = new StringBuilder();
+      XElement overrides = null;
+
       if (_involvedType != null)
       {
-        if (HasOverrideMixinAttribute (memberInfo))
-          attributes.Append ("OverrideMixin ");
+        // check involvedType is a target
+        if (_involvedType.HasTargetClassDefintion)
+        {
+          var memberDefinitionBase = GetMemberDefinitionBase(memberInfo);
+          _memberDefinitionDictionary.Add (memberInfo, memberDefinitionBase);
 
-        if (HasOverrideTargetAttribute (memberInfo))
+          if (HasOverrideMixinAttribute (memberInfo))
+            attributes.Append ("OverrideMixin ");
+
+          overrides = GetOverrides (memberInfo);
+        }
+
+        if (_involvedType.IsMixin && HasOverrideTargetAttribute (memberInfo))
           attributes.Append ("OverrideTarget ");
       }
 
-      var overrides = GetOverrides (memberInfo);
 
       if (memberInfo.DeclaringType == _type || IsOverriddenBaseClassMember (memberInfo, overrides))
       {
@@ -80,49 +107,42 @@ namespace MixinXRef.Report
             new XAttribute ("type", memberInfo.MemberType),
             new XAttribute ("name", memberName),
             new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type),
-            _outputFormatter.CreateModifierMarkup (attributes.ToString(), _memberModifierUtility.GetMemberModifiers (memberInfo)),
+            _outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
             _memberSignatureUtility.GetMemberSignatur (memberInfo),
             overrides
             );
       }
-      else
-      {
-        return null;
-      }
+      return null;
     }
 
-    public bool HasOverrideMixinAttribute (MemberInfo memberInfo)
+    private ReflectedObject GetMemberDefinitionBase (MemberInfo memberInfo)
     {
-      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
+      var keyValuePair =
+          _memberInfoToMemberDefinitionDictionary
+              .Where (mdb => MemberInfoEqualityUtility.MemberEquals (mdb.Key, memberInfo))
+              .SingleOrDefault();
 
-      // means involved type is a target
-      if (!_involvedType.HasTargetClassDefintion)
-        return false;
-
-      foreach (var mixinDefinition in _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers"))
+      // performance optimization
+      if (keyValuePair.Key != null)
       {
-        var baseAsMember = mixinDefinition.GetProperty ("BaseAsMember");
-        if (baseAsMember == null)
-          continue;
-
-        var overrideCollection = baseAsMember.GetProperty ("Overrides");
-
-        foreach (var memberDefinitionBase in overrideCollection)
-        {
-          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo> (), memberInfo))
-            return true;
-        }
+        _memberInfoToMemberDefinitionDictionary.Remove (keyValuePair.Key);
       }
 
-      return false;
+      return keyValuePair.Value;
     }
 
-    public bool HasOverrideTargetAttribute (MemberInfo memberInfo)
+    private bool HasOverrideMixinAttribute (MemberInfo memberInfo)
     {
-      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
-
-      if (!_involvedType.IsMixin)
+      var memberDefinition = _memberDefinitionDictionary[memberInfo];
+      if (memberDefinition == null)
         return false;
+
+      var baseAsMember = memberDefinition.GetProperty ("BaseAsMember");
+      return (baseAsMember != null);
+    }
+
+    private bool HasOverrideTargetAttribute (MemberInfo memberInfo)
+    {
 
       foreach (var typeAndMixinDefinitionPair in _involvedType.TargetTypes)
       {
@@ -133,7 +153,7 @@ namespace MixinXRef.Report
 
         foreach (var memberDefinitionBase in overrideCollection)
         {
-          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo> (), memberInfo))
+          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
             return true;
         }
       }
@@ -141,19 +161,13 @@ namespace MixinXRef.Report
       return false;
     }
 
-    public XElement GetOverrides (MemberInfo memberInfo)
+    private XElement GetOverrides (MemberInfo memberInfo)
     {
-      if (_involvedType == null || !_involvedType.HasTargetClassDefintion)
-        return null;
-
       var overrides = new XElement ("Overrides");
 
-      var memberDefinition =
-          _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-              .Where (mdb => MemberInfoEqualityUtility.MemberEquals (mdb.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
-              .SingleOrDefault();
+      var memberDefinition = _memberDefinitionDictionary[memberInfo];
 
-      // When MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty Overrides element. 
+      // when MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty overrides element. 
       if (memberDefinition == null)
         return overrides;
 
@@ -171,7 +185,6 @@ namespace MixinXRef.Report
 
       return overrides;
     }
-
 
     private bool IsSpecialName (MemberInfo memberInfo)
     {
@@ -202,9 +215,8 @@ namespace MixinXRef.Report
       return false;
     }
 
-    private bool IsPrivateOrInternal (MemberInfo memberInfo)
+    private bool IsPrivateOrInternal (string memberModifiers)
     {
-      var memberModifiers = _memberModifierUtility.GetMemberModifiers (memberInfo);
       return memberModifiers.Contains ("internal") || memberModifiers.Contains ("private");
     }
 
@@ -213,7 +225,7 @@ namespace MixinXRef.Report
       if (overrides == null)
         return false;
 
-      return !(memberInfo.DeclaringType != _type && overrides.ToString () == new XElement ("Overrides").ToString ());
+      return !(memberInfo.DeclaringType != _type && overrides.HasElements == false);
     }
   }
 }
