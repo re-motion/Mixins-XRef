@@ -18,7 +18,7 @@ namespace MixinXRef.UnitTests.Report
     {
       // UselessObject has no attributes
       var involvedType = new InvolvedType (typeof (UselessObject));
-      var reportGenerator = CreateReportGenerator (involvedType);
+      var reportGenerator = CreateReportGenerator (new IdentifierGenerator<Type>(), involvedType);
 
       var output = reportGenerator.GenerateXml();
 
@@ -31,7 +31,10 @@ namespace MixinXRef.UnitTests.Report
     {
       // Mixin2 has Serializable attribute
       var involvedType = new InvolvedType (typeof (Mixin2));
-      var reportGenerator = CreateReportGenerator (involvedType);
+
+      var attributeIdentifier = new IdentifierGenerator<Type>();
+      attributeIdentifier.GetIdentifier (typeof (SerializableAttribute));
+      var reportGenerator = CreateReportGenerator (attributeIdentifier, involvedType);
 
       var output = reportGenerator.GenerateXml();
 
@@ -60,7 +63,10 @@ namespace MixinXRef.UnitTests.Report
     {
       // ClassWithNestedAttribute has 'ClassWithNestedAttribute.NestedAttribute' applied
       var involvedType = new InvolvedType (typeof (ClassWithNestedAttribute));
-      var reportGenerator = CreateReportGenerator (involvedType);
+
+      var attributeIdentifier = new IdentifierGenerator<Type>();
+      attributeIdentifier.GetIdentifier (typeof (ClassWithNestedAttribute.NestedAttribute));
+      var reportGenerator = CreateReportGenerator (attributeIdentifier, involvedType);
 
       var output = reportGenerator.GenerateXml();
 
@@ -85,13 +91,13 @@ namespace MixinXRef.UnitTests.Report
     }
 
 
-    private AttributeReportGenerator CreateReportGenerator (params InvolvedType[] involvedTypes)
+    private AttributeReportGenerator CreateReportGenerator (IdentifierGenerator<Type> attributeIdentifier, params InvolvedType[] involvedTypes)
     {
       return new AttributeReportGenerator (
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
-          new IdentifierGenerator<Type>(),
+          attributeIdentifier,
           ProgramTest.GetRemotionReflection(),
           new OutputFormatter());
     }

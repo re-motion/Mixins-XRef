@@ -49,7 +49,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Attributes",
           from attribute in allAttributes.Keys
-          // where _attributeIdentifierGenerator.GetIdentifier(attribute, "none") != "none"
+          where _attributeIdentifierGenerator.GetIdentifier(attribute, "none") != "none"
           select GenerateAttributeElement (attribute, allAttributes));
     }
 
