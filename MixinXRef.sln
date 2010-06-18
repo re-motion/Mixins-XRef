@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef", "MixinXRef\MixinXRef.csproj", "{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests", "MixinXRef.UnitTests\MixinXRef.UnitTests.csproj", "{D9D6A235-C449-46F8-80DE-0315A7226ECF}"
