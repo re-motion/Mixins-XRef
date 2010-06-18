@@ -59,9 +59,10 @@ namespace MixinXRef.Report
 
       foreach (var involvedType in _involvedTypes)
       {
-        foreach (var attribute in involvedType.Type.GetCustomAttributes (true))
+        foreach (var attribute in CustomAttributeData.GetCustomAttributes (involvedType.Type))
         {
-          var attributeType = attribute.GetType();
+          //var attributeType = attribute.GetType();
+          var attributeType = attribute.Constructor.DeclaringType;
 
           if (_remotionReflector.IsInfrastructureType (attributeType))
             continue;
