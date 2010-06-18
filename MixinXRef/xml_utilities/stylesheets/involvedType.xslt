@@ -136,8 +136,7 @@
 	<xsl:if test="@is-mixin = true()"> 
 		<xsl:call-template name="treeBuilder">
 		  <xsl:with-param name="caption">Targets&#160;(<xsl:value-of select="count( Targets/Target )" />)</xsl:with-param>
-			<!-- starting point for recursion: get all targets for this mixin and get rid of targets which base-ref points to another target of the same ==> only get root targets -->
-			<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id)) and not(ru:contains(current()/Targets/Target/@ref, @base-ref)) ]" />
+			<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id))]" />
       <xsl:with-param name="allReferences" select="Targets/Target/@ref" />
 		</xsl:call-template>
 		
