@@ -42,6 +42,7 @@ namespace MixinXRef.UnitTests.Stub
       var involvedTypes = new InvolvedTypeStore();
 
       Array.Sort (_assemblies, (assembly1, assembly2) => assembly1.ToString().CompareTo (assembly2.ToString()));
+      var classContexts = _mixinConfiguration.GetProperty ("ClassContexts");
 
       foreach (var assembly in _assemblies)
       {
@@ -50,10 +51,10 @@ namespace MixinXRef.UnitTests.Stub
         
         foreach (var type in types)
         {
-          var classContext = _mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", type);
+          var classContext = classContexts.CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
-            var targetClassDefinition = GetTargetClassDefinition (type);
+            var targetClassDefinition = GetTargetClassDefinition (type, classContext);
             involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
             involvedTypes.GetOrCreateValue (type).TargetClassDefintion = targetClassDefinition;
 
@@ -79,7 +80,7 @@ namespace MixinXRef.UnitTests.Stub
       return targetClassDefinition == null ? null : targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinType);
     }
 
-    public ReflectedObject GetTargetClassDefinition (Type type)
+    public ReflectedObject GetTargetClassDefinition (Type type, ReflectedObject classContext)
     {
       if (type.IsGenericTypeDefinition)
         return null;
@@ -87,7 +88,7 @@ namespace MixinXRef.UnitTests.Stub
       try
       {
         // may throw ConfigurationException or ValidationException
-        return _remotionReflector.GetTargetClassDefinition (type, _mixinConfiguration);
+        return _remotionReflector.GetTargetClassDefinition (type, _mixinConfiguration, classContext);
       }
       catch (Exception configurationOrValidationException)
       {

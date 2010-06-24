@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2010-06-16 08:39:42">
+<MixinXRefReport creation-time="2010-06-24 14:38:50">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -31,7 +31,7 @@
     <Assembly id="5" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="6" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
     <Assembly id="7" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
-    <Assembly id="8" name="MixinXRef" version="1.1.0.0" location="./MixinXRef.exe" />
+    <Assembly id="8" name="MixinXRef" version="1.2.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="20" is-target="true" is-mixin="false" is-generic-definition="false">
@@ -970,8 +970,8 @@
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
     </Exception>
   </ConfigurationErrors>
   <ValidationErrors>
@@ -991,8 +991,8 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -1007,8 +1007,8 @@ Error: A mixin is applied to one of its base types.
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -1025,8 +1025,8 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 67
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
   </ValidationErrors>

@@ -11,7 +11,7 @@ namespace MixinXRef.Reflection.Remotion
     bool IsInfrastructureType (Type type);
     bool IsInheritedFromMixin (Type type);
 
-    ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration);
+    ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext);
     ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);
     
     Assembly FindRemotionAssembly (Assembly[] assemblies);

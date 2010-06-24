@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2010-06-07 14:55:15">
+<MixinXRefReport creation-time="2010-06-24 14:42:30">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.1.0.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy2" version="2.1.0.0" location="./Castle.DynamicProxy2.dll" />
@@ -25,7 +25,7 @@
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.13.23.2" location="./Remotion.dll" />
     <Assembly id="6" name="Remotion.Interfaces" version="1.13.23.2" location="./Remotion.Interfaces.dll" />
-    <Assembly id="7" name="MixinXRef" version="1.1.0.0" location="./MixinXRef.exe" />
+    <Assembly id="7" name="MixinXRef" version="1.2.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Remotion_1_13_23.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="15" is-target="true" is-mixin="false" is-generic-definition="false">
@@ -763,9 +763,17 @@
   <ConfigurationErrors>
     <Exception type="Remotion.Mixins.ConfigurationException">
       <Message><![CDATA[The dependency ICMyMixinTargetMyMixin (mixins  applied to class MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.CompleteInterfacesTestClass+MyMixinTarget) is not fulfilled - public or protected method B could not be found on the base class.]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+      <StackTrace><![CDATA[   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.ConstructExceptionOnMemberNotFound(RequirementDefinitionBase requirement, String memberString) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 202
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.FindMethod(RequirementDefinitionBase requirement, MethodInfo interfaceMethod, UniqueDefinitionCollection`2 methods) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 164
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.ApplyWithDuckTyping(RequirementDefinitionBase requirement) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 142
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.Apply(RequirementDefinitionBase requirement) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 98
+   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.ApplyMethodRequirements(TargetClassDefinition classDefinition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\TargetClassDefinitionBuilder.cs:line 89
+   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.Build(ClassContext classContext) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\TargetClassDefinitionBuilder.cs:line 54
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 35
+   at lambda_method(ExecutionScope , Object , Object[] )
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 21
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
     </Exception>
   </ConfigurationErrors>
   <ValidationErrors>
@@ -779,9 +787,12 @@ Error: A mixin for which a concrete subtype must be generated is not derived fro
 MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.MemberModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+      <StackTrace><![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
+   at lambda_method(ExecutionScope , Object , Object[] )
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 21
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -790,9 +801,12 @@ MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.Mixin3 (MixinXRef.UnitTests.Remo
 Error: A mixin is applied to itself.
 Error: A mixin is applied to one of its base types.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+      <StackTrace><![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
+   at lambda_method(ExecutionScope , Object , Object[] )
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 21
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -803,9 +817,12 @@ Error: A mixin for which a concrete subtype must be generated is not derived fro
 MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.Remotion_1_13_23.TestDomain.SubModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
 ]]></Message>
-      <StackTrace><![CDATA[   at MixinXRef.Reflection.ReflectedObject.InvokeMember(Type wrappedObjectType, String memberName, BindingFlags memberType, Object wrappedObject, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 56
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 40
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
+      <StackTrace><![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
+   at lambda_method(ExecutionScope , Object , Object[] )
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 21
+   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
   </ValidationErrors>

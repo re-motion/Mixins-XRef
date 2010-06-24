@@ -39,15 +39,16 @@ namespace MixinXRef
     public InvolvedType[] FindInvolvedTypes ()
     {
       var involvedTypes = new InvolvedTypeStore();
+      var classContexts = _mixinConfiguration.GetProperty ("ClassContexts");
 
       foreach (var assembly in _assemblies)
       {
         foreach (var type in assembly.GetTypes())
         {
-          var classContext = _mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", type);
+          var classContext = classContexts.CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
-            var targetClassDefinition = GetTargetClassDefinition (type);
+            var targetClassDefinition = GetTargetClassDefinition (type, classContext);
             involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
             involvedTypes.GetOrCreateValue (type).TargetClassDefintion = targetClassDefinition;
 
@@ -73,7 +74,7 @@ namespace MixinXRef
       return targetClassDefinition == null ? null : targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinType);
     }
 
-    public ReflectedObject GetTargetClassDefinition (Type type)
+    public ReflectedObject GetTargetClassDefinition (Type type, ReflectedObject classContext)
     {
       if (type.IsGenericTypeDefinition)
         return null;
@@ -81,7 +82,7 @@ namespace MixinXRef
       try
       {
         // may throw ConfigurationException or ValidationException
-        return _remotionReflector.GetTargetClassDefinition (type, _mixinConfiguration);
+        return _remotionReflector.GetTargetClassDefinition (type, _mixinConfiguration, classContext);
       }
       catch (Exception configurationOrValidationException)
       {

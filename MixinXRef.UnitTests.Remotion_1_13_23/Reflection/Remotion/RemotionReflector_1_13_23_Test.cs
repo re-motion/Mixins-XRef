@@ -100,7 +100,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .BuildConfiguration();
 
-      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass1), new ReflectedObject (mixinConfiguration));
+      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass1), new ReflectedObject (mixinConfiguration), new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (typeof (TargetClass1))));
       var expectedOutput = TargetClassDefinitionFactory.CreateTargetClassDefinition (mixinConfiguration.ClassContexts.First());
 
       Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.InstanceOfType (typeof (TargetClassDefinition)));

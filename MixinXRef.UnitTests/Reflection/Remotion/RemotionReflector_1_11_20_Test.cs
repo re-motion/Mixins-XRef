@@ -103,8 +103,10 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
           .ForClass<TargetClass2>().AddMixin<Mixin2>()
           .BuildConfiguration();
 
-      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass2), new ReflectedObject (mixinConfiguration));
-      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetClass2), mixinConfiguration);
+      var targetType = typeof (TargetClass2);
+      var classContextForTargetType = new ReflectedObject(mixinConfiguration.ClassContexts.GetWithInheritance (targetType));
+      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (targetType, new ReflectedObject (mixinConfiguration), classContextForTargetType);
+      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration);
 
       // is only true because target class definition gets cached!
       Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.SameAs (expectedOutput));

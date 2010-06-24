@@ -60,7 +60,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     }
 
 
-    public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
+    public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);

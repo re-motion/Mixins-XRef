@@ -58,7 +58,7 @@ namespace MixinXRef.Reflection.Remotion
     }
 
 
-    public virtual ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
+    public virtual ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);

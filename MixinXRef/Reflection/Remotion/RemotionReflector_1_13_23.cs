@@ -12,12 +12,11 @@ namespace MixinXRef.Reflection.Remotion
         : base(remotionAssembly, remotionInterfaceAssembly) { }
 
 
-    public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration)
+    public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
 
-      var classContext = mixinConfiguration.GetProperty ("ClassContexts").CallMethod ("GetWithInheritance", targetType);
       var targetClassDefinitionFactoryType = _remotionAssembly.GetType("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
