@@ -136,7 +136,7 @@
 	<xsl:if test="@is-mixin = true()"> 
 		<xsl:call-template name="treeBuilder">
 		  <xsl:with-param name="caption">Targets&#160;(<xsl:value-of select="count( Targets/Target )" />)</xsl:with-param>
-			<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id))]" />
+			<xsl:with-param name="treeNodes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id))]" />
       <xsl:with-param name="allReferences" select="Targets/Target/@ref" />
 		</xsl:call-template>
 		

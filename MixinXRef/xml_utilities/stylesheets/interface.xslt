@@ -50,7 +50,7 @@
 
   <xsl:call-template name="treeBuilder">
 		<xsl:with-param name="caption">Implementing&#160;Classes&#160;(<xsl:value-of select="count( ImplementedBy/InvolvedType-Reference )" />)</xsl:with-param>
-		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(ImplementedInterfaces/ImplementedInterface/@ref, current()/@id))]" />
+		<xsl:with-param name="treeNodes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(ImplementedInterfaces/ImplementedInterface/@ref, current()/@id))]" />
     <xsl:with-param name="allReferences" select="ImplementedBy/InvolvedType-Reference/@ref" />
 	</xsl:call-template>
   

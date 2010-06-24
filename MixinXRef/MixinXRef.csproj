@@ -302,6 +302,7 @@
     </Content>
     <Content Include="xml_utilities\stylesheets\involvedType.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="xml_utilities\stylesheets\involvedTypeList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

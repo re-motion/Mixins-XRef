@@ -42,7 +42,7 @@
 
 	<xsl:call-template name="treeBuilder">
 		<xsl:with-param name="caption">Used&#160;On&#160;(<xsl:value-of select="count( AppliedTo/InvolvedType-Reference )" />)</xsl:with-param>
-		<xsl:with-param name="rootTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id))]" />
+		<xsl:with-param name="treeNodes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(HasAttributes/HasAttribute/@ref, current()/@id))]" />
     <xsl:with-param name="allReferences" select="AppliedTo/InvolvedType-Reference/@ref" />
   </xsl:call-template>
   
