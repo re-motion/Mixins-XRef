@@ -16,51 +16,45 @@
 			<xsl:with-param name="rootNodes" select="$treeNodes[not(ru:contains($allReferences, @base-ref))]" /> <!--  and  ru:contains($allReferences, @id) -->
       <!-- nonRootNodes = allTypes - treeNodes -->
 			<xsl:with-param name="nonRootNodes" select="$treeNodes[(ru:contains($allReferences, @base-ref))]" />
-      <xsl:with-param name="allReferences" select="$allReferences" />
 		</xsl:call-template>
   </div>
   
 </xsl:template>
 
-<xsl:function name="ru:GetRecursiveTreeCount">
-  <xsl:param name="rootMCR" />
-  <xsl:param name="currentNode" />
-  
-  <xsl:variable name="subTypes" select="$rootMCR[@base-ref = $currentNode/@id]" />
-  <xsl:copy-of select="sum( for $subType in $subTypes return ru:GetRecursiveTreeCount($rootMCR, $subType) ) + 1" />
-</xsl:function>
 
 <xsl:template name="buildTree">
 	<xsl:param name="rootNodes" />
 	<xsl:param name="nonRootNodes" />
-  <xsl:param name="allReferences" />
-	
+  	
 	<ul>	
 		<xsl:for-each select="$rootNodes">
-      <xsl:sort select="@name"/>
+		<xsl:sort select="@name"/>
 			<xsl:variable name="subTypes" select="$nonRootNodes[@base-ref = current()/@id]" />
 			<li>
-				<xsl:if test="exists($subTypes)">
-          <span title="{ ru:GetToolTip(/, .) }">
-            <!-- <xsl:variable name="abc" select="$rootNodes[@id != current()/@id]" /> [not(ru:contains($abc, @base-ref))] -->
-            <xsl:value-of select="@name"/> (<xsl:value-of select="ru:GetRecursiveTreeCount($nonRootNodes, .) - 1"/>)
-          </span>
-          <a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
+			
+				<xsl:if test="exists($subTypes)">							
+					<xsl:variable name="subTree">
+						<!-- recursive call -->
+						<xsl:call-template name="buildTree">
+							<xsl:with-param name="rootNodes" select="$subTypes" />
+							<xsl:with-param name="nonRootNodes" select="$nonRootNodes" />
+						</xsl:call-template>
+					</xsl:variable>				
 					
-					<!-- recursive call -->
-					<xsl:call-template name="buildTree">
-						<xsl:with-param name="rootNodes" select="$subTypes" />
-						<xsl:with-param name="nonRootNodes" select="$nonRootNodes" />
-						<xsl:with-param name="allReferences" select="$allReferences" />
-					</xsl:call-template>
+					<span title="{ ru:GetToolTip(/, .) }">					
+						<xsl:value-of select="@name"/> (<xsl:value-of select="count($subTree/descendant::*[not(child::*)]) div 2"/>)
+					</span>
+					<a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
+					<xsl:copy-of select="$subTree"/>					
 				</xsl:if>
+				
 				<xsl:if test="empty( $subTypes )">
-          <span title="{ ru:GetToolTip(/, .) }">
-            <xsl:value-of select="@name"/>
-          </span>
-          <a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
-          
+				  <span title="{ ru:GetToolTip(/, .) }">
+					<xsl:value-of select="@name"/>
+					</span>
+					<a href="../involvedTypes/{@id}.html" class="tree-link"> [link]</a>
 				</xsl:if>
+				
 			</li>		
 		</xsl:for-each>	
 	</ul>
