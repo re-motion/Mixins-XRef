@@ -21,37 +21,37 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       _remotionInterfaceAssembly = remotionInterfaceAssembly;
     }
 
-    public bool IsNonApplicationAssembly (Assembly assembly)
+    public virtual bool IsNonApplicationAssembly (Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);
 
       return
           assembly.GetCustomAttributes (false).Any (
-              attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
+              attribute => attribute.GetType ().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
     }
 
-    public bool IsConfigurationException (Exception exception)
+    public virtual bool IsConfigurationException (Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
-      return exception.GetType().FullName == "Remotion.Mixins.ConfigurationException";
+      return exception.GetType ().FullName == "Remotion.Mixins.ConfigurationException";
     }
 
-    public bool IsValidationException (Exception exception)
+    public virtual bool IsValidationException (Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
-      return exception.GetType().FullName == "Remotion.Mixins.Validation.ValidationException";
+      return exception.GetType ().FullName == "Remotion.Mixins.Validation.ValidationException";
     }
 
-    public bool IsInfrastructureType (Type type)
+    public virtual bool IsInfrastructureType (Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
-      return type.Assembly.GetName().Name == "Remotion.Interfaces";
+      return type.Assembly.GetName ().Name == "Remotion.Interfaces";
     }
 
-    public bool IsInheritedFromMixin (Type type)
+    public virtual bool IsInheritedFromMixin (Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
@@ -59,8 +59,7 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       return mixinBaseType.IsAssignableFrom (type);
     }
 
-
-    public ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
+    public virtual ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -69,19 +68,19 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }
 
-    public ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies)
+    public virtual ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
       var declarativeConfigurationBuilderType = _remotionAssembly.GetType ("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
-      return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", assemblies);
+      return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", new object[] { assemblies });
     }
 
-    public Assembly FindRemotionAssembly (Assembly[] assemblies)
+    public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
-      return assemblies.SingleOrDefault (a => a.GetName().Name == "Remotion");
+      return assemblies.SingleOrDefault (a => a.GetName ().Name == "Remotion");
     }
   }
 }
