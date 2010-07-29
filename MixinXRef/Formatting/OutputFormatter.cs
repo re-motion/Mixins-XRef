@@ -234,7 +234,8 @@ namespace MixinXRef.Formatting
         var parts = memberName.Split ('.');
         var partCount = parts.Length;
         memberName = parts[partCount - 1];
-        markup.Add (CreateElement ("ExplicitInterfaceName", parts[partCount - 2] + "."));
+        markup.Add (CreateElement ("ExplicitInterfaceName", parts[partCount - 2]));
+        markup.Add (CreateElement ("Text", "."));
       }
       
       markup.Add (CreateElement ("Name", memberName));

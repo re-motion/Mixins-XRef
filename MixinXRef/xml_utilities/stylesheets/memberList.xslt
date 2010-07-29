@@ -144,8 +144,10 @@
   
 <xsl:template match="Keyword | Type | Text | Name | ParameterName | ExplicitInterfaceName" >
 	<span class="{name(.)}"><xsl:value-of select="."/>
-    <xsl:if test=". != '(' and . != '[' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']'">
-      <xsl:text> </xsl:text>
+    <xsl:if test=". != '.'">
+      <xsl:if test=". != '(' and . != '[' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']'">
+        <xsl:text> </xsl:text>
+      </xsl:if>
     </xsl:if>
   </span>
 </xsl:template>
