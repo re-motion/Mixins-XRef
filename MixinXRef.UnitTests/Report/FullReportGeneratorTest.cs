@@ -32,7 +32,6 @@ namespace MixinXRef.UnitTests.Report
       var reportGenerator = new FullReportGenerator (
           new Assembly[0],
           new InvolvedType[0],
-          new ReflectedObject (new MixinConfiguration()),
           _configurationErros,
           _validatonErrors,
           ProgramTest.GetRemotionReflection(),
@@ -83,7 +82,6 @@ namespace MixinXRef.UnitTests.Report
       var reportGenerator = new FullReportGenerator (
           assemblies,
           involvedTypes,
-          new ReflectedObject (mixinConfiguration),
           _configurationErros,
           _validatonErrors,
           ProgramTest.GetRemotionReflection(),

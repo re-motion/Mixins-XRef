@@ -53,12 +53,12 @@ namespace MixinXRef
       
       var xmlStartTime = DateTime.Now;
       Console.Write ("  Generating XML ... ");
-      program.SaveXmlDocument (assemblies, xmlFile);
+      program.GenerateAndSaveXmlDocument (assemblies, xmlFile);
       Console.WriteLine (GetElapsedTime (xmlStartTime));
 
       var xslStartTime = DateTime.Now;
       Console.Write ("  Applying XSLT ... ");
-      var transformerExitCode = new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
+      var transformerExitCode = GenerateHtmlFromXml(outputDirectory, xmlFile);
       if (transformerExitCode != 0)
       {
         Console.Error.WriteLine ("Error applying XSLT (code {0})", transformerExitCode);
@@ -73,6 +73,11 @@ namespace MixinXRef
       Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1}.", outputDirectory, GetElapsedTime (startTime));
 
       return 0;
+    }
+
+    private static int GenerateHtmlFromXml (string outputDirectory, string xmlFile)
+    {
+      return new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml();
     }
 
     private readonly TextReader _input;
@@ -154,7 +159,7 @@ namespace MixinXRef
       return assemblies;
     }
 
-    public void SaveXmlDocument (Assembly[] assemblies, string xmlFile)
+    public void GenerateAndSaveXmlDocument (Assembly[] assemblies, string xmlFile)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
@@ -166,7 +171,7 @@ namespace MixinXRef
           new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflector).FindInvolvedTypes();
 
       var reportGenerator = new FullReportGenerator (
-          assemblies, involvedTypes, mixinConfiguration, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
+          assemblies, involvedTypes, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
 
       var outputDocument = reportGenerator.GenerateXmlDocument();
 

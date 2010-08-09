@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Utility;
 
@@ -13,8 +12,6 @@ namespace MixinXRef.Report
   {
     private readonly Assembly[] _assemblies;
     private readonly InvolvedType[] _involvedTypes;
-    // MixinConfiguration _mixinConfiguration;
-    private readonly ReflectedObject _mixinConfiguration;
     private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
     private readonly IRemotionReflector _remotionReflector;
@@ -24,7 +21,6 @@ namespace MixinXRef.Report
     public FullReportGenerator (
         Assembly[] assemblies,
         InvolvedType[] involvedTypes,
-        ReflectedObject mixinConfiguration,
         ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
         IRemotionReflector remotionReflector,
@@ -32,7 +28,6 @@ namespace MixinXRef.Report
     {
       ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
-      ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
       ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
@@ -40,7 +35,6 @@ namespace MixinXRef.Report
 
       _assemblies = assemblies;
       _involvedTypes = involvedTypes;
-      _mixinConfiguration = mixinConfiguration;
       _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
       _remotionReflector = remotionReflector;
