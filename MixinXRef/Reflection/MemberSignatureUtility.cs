@@ -29,7 +29,7 @@ namespace MixinXRef.Reflection
 
         case MemberTypes.Constructor:
           var constructorInfo = (ConstructorInfo) memberInfo;
-          return _outputFormatter.CreateConstructorMarkup (memberInfo.DeclaringType.Name, constructorInfo.GetParameters());
+          return _outputFormatter.CreateConstructorMarkup (_outputFormatter.GetShortFormattedTypeName(memberInfo.DeclaringType), constructorInfo.GetParameters());
 
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;

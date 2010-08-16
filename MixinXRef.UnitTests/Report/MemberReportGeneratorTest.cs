@@ -213,7 +213,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public"),
-              _outputFormatter.CreateConstructorMarkup ("Target", new ParameterInfo[0]),
+              _outputFormatter.CreateConstructorMarkup ("MemberOverrideTestClass.Target", new ParameterInfo[0]),
               new XElement ("Overrides")
               )
           );

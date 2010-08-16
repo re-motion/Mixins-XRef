@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2010-06-24 14:42:30">
+<MixinXRefReport creation-time="2010-08-16 14:10:59">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.1.0.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy2" version="2.1.0.0" location="./Castle.DynamicProxy2.dll" />
@@ -25,7 +25,7 @@
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.13.23.2" location="./Remotion.dll" />
     <Assembly id="6" name="Remotion.Interfaces" version="1.13.23.2" location="./Remotion.Interfaces.dll" />
-    <Assembly id="7" name="MixinXRef" version="1.2.0.0" location="./MixinXRef.exe" />
+    <Assembly id="7" name="MixinXRef" version="1.3.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Remotion_1_13_23.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="15" is-target="true" is-mixin="false" is-generic-definition="false">
@@ -165,7 +165,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Name>GenericTarget`2</Name>
+            <Name>GenericTarget&lt;TParameter1, TParameter2&gt;</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -387,6 +387,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>MyMixin</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -421,6 +423,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>MyMixinTarget</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -460,6 +464,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>MemberSignatureTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>NestedClassWithInterfaceAndInheritance</Name>
             <Text>(</Text>
             <Text>)</Text>

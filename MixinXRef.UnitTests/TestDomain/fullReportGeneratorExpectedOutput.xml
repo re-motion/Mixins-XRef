@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2010-06-24 14:38:50">
+<MixinXRefReport creation-time="2010-08-16 14:10:13">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
@@ -194,6 +194,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>MemberOverrideWithInheritanceTest</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>CustomMixin</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -216,7 +218,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <Name>GenericTarget`2</Name>
+            <Name>GenericTarget&lt;TParameter1, TParameter2&gt;</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -409,6 +411,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>MemberOverrideTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>Mixin1</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -440,6 +444,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>BaseMemberOverrideTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>Mixin1</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -460,6 +466,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>HiddenMemberTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>Mixin1</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -532,6 +540,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>MyMixin</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -566,6 +576,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>MyMixinTarget</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -605,6 +617,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>MemberSignatureTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>NestedClassWithInterfaceAndInheritance</Name>
             <Text>(</Text>
             <Text>)</Text>
@@ -824,6 +838,8 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
+            <ExplicitInterfaceName>SimpleMemberOverrideTest</ExplicitInterfaceName>
+            <Text>.</Text>
             <Name>TemplateMixin</Name>
             <Text>(</Text>
             <Text>)</Text>
