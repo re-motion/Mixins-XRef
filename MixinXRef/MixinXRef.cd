@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.InvolvedType">
-    <Position X="12" Y="7.75" Width="1.5" />
+    <Position X="11.75" Y="7.75" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -18,7 +18,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.InvolvedTypeFinder" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="7.75" Width="2" />
+    <Position X="14" Y="7.75" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -54,7 +54,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Formatting.OutputFormatter" BaseTypeListCollapsed="true">
-    <Position X="6.25" Y="7.75" Width="2.25" />
+    <Position X="6.25" Y="7.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAgECAAAAAQAAAgDAAAQAAAgAIAAACAAABABAAAAAAA=</HashCode>
       <FileName>Formatting\OutputFormatter.cs</FileName>
@@ -62,7 +62,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MixinXRef.Reflection.FastMemberInvokerCache">
-    <Position X="18.5" Y="0.5" Width="2.25" />
+    <Position X="18.5" Y="0.5" Width="2.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Nested Types" Collapsed="false" />
@@ -83,21 +83,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Reflection.FastMemberInvokerGenerator">
-    <Position X="18.5" Y="4.25" Width="2.25" />
+    <Position X="18.5" Y="4.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Reflection\FastMemberInvokerGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Reflection.MemberInfoEqualityUtility">
-    <Position X="19" Y="7.75" Width="2.5" />
+    <Position X="19" Y="7.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Reflection\MemberInfoEqualityUtility.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Reflection.MemberModifierUtility">
-    <Position X="19" Y="9" Width="2" />
+    <Position X="19" Y="9" Width="2.25" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -304,7 +304,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Utility.ErrorAggregator&lt;TException&gt;">
-    <Position X="16" Y="7.75" Width="2.25" />
+    <Position X="16.25" Y="7.75" Width="2.25" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -314,7 +314,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Utility.IdentifierGenerator&lt;T&gt;" BaseTypeListCollapsed="true">
-    <Position X="2.75" Y="12.75" Width="2" />
+    <Position X="2.75" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAAAAEAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\IdentifierGenerator.cs</FileName>
@@ -322,14 +322,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MixinXRef.Utility.IdentifierPopulator&lt;T&gt;">
-    <Position X="7.75" Y="12.75" Width="2.5" />
+    <Position X="8.25" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility\IdentifierPopulator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Utility.InvolvedTypeStore">
-    <Position X="13.75" Y="9.75" Width="2" />
+    <Position X="14" Y="9.75" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -339,7 +339,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MixinXRef.Utility.ReadonlyIdentifierGenerator&lt;T&gt;" BaseTypeListCollapsed="true">
-    <Position X="5" Y="12.75" Width="2.5" />
+    <Position X="5.5" Y="12.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Utility\ReadonlyIdentifierGenerator.cs</FileName>
@@ -354,14 +354,14 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="MixinXRef.IInvolvedTypeFinder">
-    <Position X="13.75" Y="8.5" Width="2" />
+    <Position X="14" Y="8.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>IInvolvedTypeFinder.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MixinXRef.Formatting.IOutputFormatter">
-    <Position X="8.75" Y="7.75" Width="2.25" />
+    <Position X="9" Y="7.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAgECAAAAAQAAAACAAAAAAAAAAAAACAAABABAAAAAAA=</HashCode>
       <FileName>Formatting\IOutputFormatter.cs</FileName>

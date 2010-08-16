@@ -321,6 +321,7 @@
     </Content>
     <Content Include="xml_utilities\stylesheets\treeBuilder.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="xml_utilities\stylesheets\utility.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -37,21 +38,21 @@ namespace MixinXRef.Report
 
       foreach (var assembly in _assemblies)
       {
-        InvolvedType[] involvedTypesForAssembly = Array.FindAll (_involvedTypes, involvedType => involvedType.Type.Assembly == assembly);
+        var currentAssembly = assembly;
+        InvolvedType[] involvedTypesForAssembly = Array.FindAll (_involvedTypes, involvedType => involvedType.Type.Assembly == currentAssembly);
         assembliesElement.Add (GenerateAssemblyElement (assembly, involvedTypesForAssembly));
       }
       return assembliesElement;
     }
 
-    private XElement GenerateAssemblyElement (Assembly assembly, InvolvedType[] involvedTypesForAssembly)
+    private XElement GenerateAssemblyElement (Assembly assembly, IEnumerable<InvolvedType> involvedTypesForAssembly)
     {
       return new XElement (
           "Assembly",
           new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
           new XAttribute ("name", assembly.GetName().Name),
           new XAttribute ("version", assembly.GetName().Version),
-          new XAttribute ("location", GetShortAssemblyLocation (assembly))
-          ,
+          new XAttribute ("location", GetShortAssemblyLocation (assembly)),
           from involvedType in involvedTypesForAssembly
           select
               new XElement (

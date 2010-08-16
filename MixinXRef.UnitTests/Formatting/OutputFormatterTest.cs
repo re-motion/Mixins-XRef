@@ -161,7 +161,8 @@ namespace MixinXRef.UnitTests.formatting
       var expectedOutput = new XElement (
           "Signature",
           new XElement ("Keyword", "string"),
-          new XElement ("ExplicitInterfaceName", "IExplicitInterface."),
+          new XElement ("ExplicitInterfaceName", "IExplicitInterface"),
+          new XElement ("Text", "."),
           new XElement ("Name", "Version"),
           new XElement ("Text", "("),
           new XElement ("Text", ")")

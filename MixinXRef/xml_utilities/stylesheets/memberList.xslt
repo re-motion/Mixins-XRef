@@ -77,7 +77,7 @@
 	</table>
   
   <xsl:if test="count( $members[@is-declared-by-this-class = false()] ) > 0">
-  <table class="display overriddenBaseMembersDataTable">
+  <table cellpadding="0" cellspacing="0" border="0" class="display overriddenBaseMembersDataTable">
     <caption>
       Base&#160;Members&#160;overridden&#160;by&#160;mixins&#160;(<xsl:value-of select="count( $members[@is-declared-by-this-class = false()] )"/>)
     </caption>
