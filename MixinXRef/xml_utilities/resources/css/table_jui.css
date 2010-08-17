@@ -108,6 +108,10 @@ table.display thead th {
 	text-align: right;
 }
 
+.dataTables_filter input{
+	width: 80%;	
+}
+
 .dataTables_info {
 	width: 50%;
 	float: left;

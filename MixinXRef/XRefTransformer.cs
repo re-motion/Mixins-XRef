@@ -32,7 +32,7 @@ namespace MixinXRef
 
       // dummy output file - will not be created, just to trick saxon
       var mainOutputFile = Path.Combine (_outputDirectory, "dummy.html");
-      var arguments = String.Format ("-s:{0} -xsl:{1} -o:{2}", _xmlInputFile, xsltStyleSheetPath, mainOutputFile);
+      var arguments = String.Format ("-s:\"{0}\" -xsl:\"{1}\" -o:\"{2}\"", _xmlInputFile, xsltStyleSheetPath, mainOutputFile);
 
       var xsltProcessor = new Process();
       xsltProcessor.StartInfo.FileName = xsltProcessorPath;

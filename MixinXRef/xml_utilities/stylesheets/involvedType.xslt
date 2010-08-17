@@ -70,7 +70,8 @@
   <xsl:variable name="classTypeIndexLink" select="if ( @is-mixin = true() ) then 'mixin' else 'target' " />
   
 	<h1><xsl:value-of select="@name" /></h1><h2><a href="../{$classTypeIndexLink}_index.html">[<xsl:value-of select="$classTypeName"/>]</a></h2>
-
+  <xsl:variable name="children" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@base-ref = current()/@id]"/>
+  
 	<fieldset>
 		<legend>Summary</legend>
 
@@ -95,6 +96,25 @@
       <label>Base:</label>
       <xsl:call-template name="involvedTypeBaseLink"/>
     </div>
+
+    <!--
+    <div>
+      <label>Children:</label>
+      <p class="involvedType-interfaceLinkList">
+
+      <xsl:for-each select="$children">
+        <xsl:sort select="@name"/>
+			  <xsl:if test="position() != 1">, </xsl:if>
+        <xsl:call-template name="GenerateInvolvedTypeLink">
+          <xsl:with-param name="rootMCR" select="/" />
+          <xsl:with-param name="involvedTypeId" select="@id" />
+          <xsl:with-param name="dir">..</xsl:with-param>
+        </xsl:call-template>	
+		  </xsl:for-each>
+      <xsl:if test="empty($children)">-</xsl:if>
+      </p>
+    </div>
+    -->
 	<div>
     <label>Interfaces:</label>
     <p class="involvedType-interfaceLinkList">
@@ -129,6 +149,17 @@
 		</div>
 	</fieldset>
 
+  <xsl:if test="count($children)>0">
+    <xsl:call-template name="genericTreeBuilder">
+      <xsl:with-param name="caption">Children</xsl:with-param>
+      <xsl:with-param name="treeNodes" select="." />
+      <xsl:with-param name="allReferences" select="/MixinXRefReport/InvolvedTypes/InvolvedType" />
+    </xsl:call-template>
+  </xsl:if>
+  <xsl:if test="count($children)=0">
+    <div class="emptyText">No Children</div>
+  </xsl:if>
+      
 	<xsl:call-template name="mixinList">
 		<xsl:with-param name="involvedType" select="." />
 	</xsl:call-template>
@@ -139,8 +170,9 @@
 			<xsl:with-param name="treeNodes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ (ru:contains(current()/Targets/Target/@ref, @id))]" />
       <xsl:with-param name="allReferences" select="Targets/Target/@ref" />
 		</xsl:call-template>
-		
-	</xsl:if>
+  </xsl:if>
+
+
 	<xsl:if test="@is-mixin = false()"> 
 		<div class="emptyText">No Targets</div>
 	</xsl:if>

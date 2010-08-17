@@ -1,4 +1,9 @@
-$(document).ready(function() {
+$(window).resize(function () {
+    initTableSorter();
+});
+
+
+$(document).ready(function () {
 
     initTableSorter();
 
@@ -11,7 +16,7 @@ $(document).ready(function() {
         highlight(document.location.hash);
     }
 
-    $('a[href*=#]').click(function() {
+    $('a[href*=#]').click(function () {
         var elemId = '#' + $(this).attr('href').split('#')[1];
         highlight(elemId);
     });
@@ -20,7 +25,7 @@ $(document).ready(function() {
 function getCookieName() {
     var file_name = document.location.href;
     var tmp = file_name.split("/");
-	return tmp[tmp.length-2] + "_" + (tmp[tmp.length-1].split("."))[0];
+    return tmp[tmp.length - 2] + "_" + (tmp[tmp.length - 1].split("."))[0];
 }
 
 
@@ -59,28 +64,28 @@ function calculateModifierSorting(node) {
     return index;
 }
 
-jQuery.fn.dataTableExt.oSort['modifier-visibility-asc'] = function(a, b) {
+jQuery.fn.dataTableExt.oSort['modifier-visibility-asc'] = function (a, b) {
     var x = calculateModifierSorting(a);
     var y = calculateModifierSorting(b);
 
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 };
 
-jQuery.fn.dataTableExt.oSort['modifier-visibility-desc'] = function(a, b) {
+jQuery.fn.dataTableExt.oSort['modifier-visibility-desc'] = function (a, b) {
     var x = calculateModifierSorting(a);
     var y = calculateModifierSorting(b);
 
     return ((x < y) ? 1 : ((x > y) ? -1 : 0));
 };
 
-jQuery.fn.dataTableExt.oSort['signature-asc'] = function(a, b) {
+jQuery.fn.dataTableExt.oSort['signature-asc'] = function (a, b) {
     var x = $(a).find("span.Name").text();
     var y = $(b).find("span.Name").text();
 
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 };
 
-jQuery.fn.dataTableExt.oSort['signature-desc'] = function(a, b) {
+jQuery.fn.dataTableExt.oSort['signature-desc'] = function (a, b) {
     var x = $(a).find("span.Name").text();
     var y = $(b).find("span.Name").text();
 
@@ -89,12 +94,12 @@ jQuery.fn.dataTableExt.oSort['signature-desc'] = function(a, b) {
 
 function initTableSorter() {
 
-        $('.assemblyDataTable').dataTable({
-            "bStateSave": true,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers",
-			"aaSorting": [[0, 'asc'], [1, 'asc']],
-			"aoColumns": [
+    $('.assemblyDataTable').dataTable({
+        "bStateSave": true, "bRetrieve": true,
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "aaSorting": [[0, 'asc'], [1, 'asc']],
+        "aoColumns": [
 				{ "sType": "html" },
 				null,
 				null,
@@ -102,11 +107,11 @@ function initTableSorter() {
 				null,
 				null
 			]
-        });
+    });
 
     if (location.href.indexOf("assemblies") != -1) {
         $('.indexDataTable').dataTable({
-            "bStateSave": true,
+            "bStateSave": true, "bRetrieve": true,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -114,41 +119,8 @@ function initTableSorter() {
             "bSort": true,
             "bInfo": false,
             "bAutoWidth": false,
-			"aaSorting": [[0, 'asc'], [1, 'asc']],
-			"aoColumns": [
-				null,
-				{ "sType": "html" },
-				null,
-				{ "sType": "html" },
-				{ "sType": "html" }
-			]			
-        });
-		
-		$('.interfaceDataTable, .attributeDataTable').dataTable({
-            "bStateSave": true,
-            "bJQueryUI": true,
-            "bPaginate": false,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": false,
-            "bAutoWidth": false,
-			"aaSorting": [[0, 'asc'], [1, 'asc']],
-			"aoColumns": [
-				null,
-				{ "sType": "html" },
-				null,
-				{ "sType": "html" }
-			]			
-        });
-    }
-    else {
-        $('.indexDataTable').dataTable({
-            "bStateSave": true,
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers",
-			"aaSorting": [[0, 'asc'], [1, 'asc']],
-			"aoColumns": [
+            "aaSorting": [[0, 'asc'], [1, 'asc']],
+            "aoColumns": [
 				null,
 				{ "sType": "html" },
 				null,
@@ -156,13 +128,46 @@ function initTableSorter() {
 				{ "sType": "html" }
 			]
         });
-		
-		$('.interfaceDataTable, .attributeDataTable').dataTable({
-            "bStateSave": true,
+
+        $('.interfaceDataTable, .attributeDataTable').dataTable({
+            "bStateSave": true, "bRetrieve": true,
+            "bJQueryUI": true,
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aaSorting": [[0, 'asc'], [1, 'asc']],
+            "aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" }
+			]
+        });
+    }
+    else {
+        $('.indexDataTable').dataTable({
+            "bStateSave": true, "bRetrieve": true,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
-			"aaSorting": [[0, 'asc'], [1, 'asc']],
-			"aoColumns": [
+            "aaSorting": [[0, 'asc'], [1, 'asc']],
+            "aoColumns": [
+				null,
+				{ "sType": "html" },
+				null,
+				{ "sType": "html" },
+				{ "sType": "html" }
+			]
+        });
+
+        $('.interfaceDataTable, .attributeDataTable').dataTable({
+            "bStateSave": true, "bRetrieve": true,
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "aaSorting": [[0, 'asc'], [1, 'asc']],
+            "aoColumns": [
 				null,
 				{ "sType": "html" },
 				null,
@@ -175,7 +180,7 @@ function initTableSorter() {
         $('.fg-toolbar').width($('.indexDataTable, .interfaceDataTable, .attributeDataTable, .assemblyDataTable').width() - 12);
 
     $('.mixinTable').dataTable({
-        "bStateSave": true,
+        "bStateSave": true, "bRetrieve": true,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -198,7 +203,7 @@ function initTableSorter() {
     });
 
     $('.dataTable').dataTable({
-        "bStateSave": true,
+        "bStateSave": true, "bRetrieve": true,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -217,7 +222,7 @@ function initTableSorter() {
     });
 
     $('.attributeTable').dataTable({
-        "bStateSave": true,
+        "bStateSave": true, "bRetrieve": true,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -236,7 +241,7 @@ function initTableSorter() {
     });
 
     $('.argumentTable').dataTable({
-        "bStateSave": true,
+        "bStateSave": true, "bRetrieve": true,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -248,7 +253,7 @@ function initTableSorter() {
 
     if ($('.declaredMembersDataTable').find('th').length == 5) {
         $('.declaredMembersDataTable').dataTable({
-            "bStateSave": true,
+            "bStateSave": true, "bRetrieve": true,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -267,7 +272,7 @@ function initTableSorter() {
     }
     else {
         $('.declaredMembersDataTable').dataTable({
-            "bStateSave": true,
+            "bStateSave": true, "bRetrieve": true,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -285,7 +290,7 @@ function initTableSorter() {
     }
 
     $('.overriddenBaseMembersDataTable').dataTable({
-        "bStateSave": true,
+        "bStateSave": true, "bRetrieve": true,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -304,7 +309,7 @@ function initTableSorter() {
 }
 
 function setSelectedIndexClass() {
-    $("#navigation a").filter(function() {
+    $("#navigation a").filter(function () {
         /* does the link in the navigation bar point to the current document? */
         return this.href == location.href;
     }).addClass("currentIndex");
@@ -338,7 +343,7 @@ function prepareCollapsing() {
 
     var classArray = cookieValue.split(",");
 
-    $("caption, .treeHeader").each(function(n) {
+    $("caption, .treeHeader").each(function (n) {
 
         if (this.tagName.toUpperCase() == "CAPTION") {
             $(this).addClass(classArray[n]);
@@ -347,7 +352,7 @@ function prepareCollapsing() {
                 $(this).nextAll("thead, tfoot, tbody").hide();
             }
 
-            $(this).click(function() {
+            $(this).click(function () {
                 $(this).toggleClass("visible").toggleClass("hidden");
 
                 if ($(this).hasClass("hidden"))
@@ -367,7 +372,7 @@ function prepareCollapsing() {
                 $('#treeViewID').children().hide();
             }
 
-            $(this).click(function() {
+            $(this).click(function () {
                 $(this).toggleClass("visible").toggleClass("hidden");
                 $('#treeViewID').children().toggle();
                 saveCookie();
@@ -381,7 +386,7 @@ function saveCookie() {
     var collapseElements = $("caption, .treeHeader");
     var cookieValue = "";
 
-    collapseElements.each(function(n) {
+    collapseElements.each(function (n) {
         if (n != 0)
             cookieValue += ",";
         cookieValue += ($(this).hasClass("visible") ? "visible" : "hidden");
@@ -405,10 +410,10 @@ function initTreeView() {
 function highlight(elemId) {
     var elem = $(elemId);
     var color = $(elemId).parent().css("background-color");
-	var elementColor = $(elemId).css("background-color");
-	
+    var elementColor = $(elemId).css("background-color");
+
     elem.animate({ backgroundColor: '#ffff66' }, 1500);
     $(elemId).nextAll("td").animate({ backgroundColor: '#ffff66' }, 1500);
-    setTimeout(function() { $(elemId).animate({ backgroundColor: elementColor }, 3000) }, 1000);
-    setTimeout(function() { $(elemId).nextAll("td").animate({ backgroundColor: color }, 3000) }, 1000);
+    setTimeout(function () { $(elemId).animate({ backgroundColor: elementColor }, 3000) }, 1000);
+    setTimeout(function () { $(elemId).nextAll("td").animate({ backgroundColor: color }, 3000) }, 1000);
 }
