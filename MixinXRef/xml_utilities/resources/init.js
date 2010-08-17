@@ -95,7 +95,9 @@ jQuery.fn.dataTableExt.oSort['signature-desc'] = function (a, b) {
 function initTableSorter() {
 
     $('.assemblyDataTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
         "aaSorting": [[0, 'asc'], [1, 'asc']],
@@ -112,6 +114,7 @@ function initTableSorter() {
     if (location.href.indexOf("assemblies") != -1) {
         $('.indexDataTable').dataTable({
             "bStateSave": true, "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -130,7 +133,9 @@ function initTableSorter() {
         });
 
         $('.interfaceDataTable, .attributeDataTable').dataTable({
-            "bStateSave": true, "bRetrieve": true,
+            "bStateSave": true,
+            "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -149,7 +154,9 @@ function initTableSorter() {
     }
     else {
         $('.indexDataTable').dataTable({
-            "bStateSave": true, "bRetrieve": true,
+            "bStateSave": true,
+            "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "aaSorting": [[0, 'asc'], [1, 'asc']],
@@ -163,7 +170,9 @@ function initTableSorter() {
         });
 
         $('.interfaceDataTable, .attributeDataTable').dataTable({
-            "bStateSave": true, "bRetrieve": true,
+            "bStateSave": true,
+            "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "aaSorting": [[0, 'asc'], [1, 'asc']],
@@ -180,7 +189,9 @@ function initTableSorter() {
         $('.fg-toolbar').width($('.indexDataTable, .interfaceDataTable, .attributeDataTable, .assemblyDataTable').width() - 12);
 
     $('.mixinTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -203,7 +214,9 @@ function initTableSorter() {
     });
 
     $('.dataTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -222,7 +235,9 @@ function initTableSorter() {
     });
 
     $('.attributeTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -241,7 +256,9 @@ function initTableSorter() {
     });
 
     $('.argumentTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
@@ -253,7 +270,9 @@ function initTableSorter() {
 
     if ($('.declaredMembersDataTable').find('th').length == 5) {
         $('.declaredMembersDataTable').dataTable({
-            "bStateSave": true, "bRetrieve": true,
+            "bStateSave": true,
+            "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -272,7 +291,9 @@ function initTableSorter() {
     }
     else {
         $('.declaredMembersDataTable').dataTable({
-            "bStateSave": true, "bRetrieve": true,
+            "bStateSave": true,
+            "bRetrieve": true,
+            "iCookieDuration": 60 * 60 * 24 * 365,
             "bJQueryUI": true,
             "bPaginate": false,
             "bLengthChange": false,
@@ -290,7 +311,9 @@ function initTableSorter() {
     }
 
     $('.overriddenBaseMembersDataTable').dataTable({
-        "bStateSave": true, "bRetrieve": true,
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
         "bJQueryUI": true,
         "bPaginate": false,
         "bLengthChange": false,
