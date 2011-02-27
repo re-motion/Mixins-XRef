@@ -22,6 +22,13 @@ namespace MixinXRefGUI
       _persistentSettingsFile = Path.Combine (baseDir, "MixinXRefGUI.dat");
 
       GetOrCreateSettings (_persistentSettingsFile);
+
+      UpdateEnabledStatusOfShowResultButton();
+    }
+
+    private void UpdateEnabledStatusOfShowResultButton ()
+    {
+      showResultsButton.Enabled = File.Exists (GetResultFilePath());
     }
 
     private void GetOrCreateSettings (string persistentSettingsFile)
@@ -74,18 +81,23 @@ namespace MixinXRefGUI
     private void BrowseOutputPath_Click (object sender, EventArgs e)
     {
       ShowAndSetFolderBrowserDialogForTextBox ("Select output folder", outputPathTextBox);
+      UpdateEnabledStatusOfShowResultButton();
     }
 
     private void ShowAndSetFolderBrowserDialogForTextBox (string description, TextBox pathTextBox)
     {
-      var folderBrowserDialog = new FolderBrowserDialog { Description = description };
+      using (var folderBrowserDialog = new FolderBrowserDialog { Description = description })
+      {
+        if (Directory.Exists (pathTextBox.Text))
+        {
+          folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+          folderBrowserDialog.SelectedPath = Path.GetFullPath (pathTextBox.Text);
+        }
 
-      if (Directory.Exists (pathTextBox.Text))
-        folderBrowserDialog.SelectedPath = Path.GetFullPath (pathTextBox.Text);
-
-      var objResult = folderBrowserDialog.ShowDialog (this);
-      if (objResult == DialogResult.OK)
-        pathTextBox.Text = folderBrowserDialog.SelectedPath;
+        var objResult = folderBrowserDialog.ShowDialog (this);
+        if (objResult == DialogResult.OK)
+          pathTextBox.Text = folderBrowserDialog.SelectedPath;
+      }
     }
 
     private void StartMixinXRefButton_Click (object sender, EventArgs e)
@@ -113,6 +125,7 @@ namespace MixinXRefGUI
 
       Cursor = Cursors.AppStarting;
       startMixinXRefButton.Enabled = false;
+      showResultsButton.Enabled = false;
 
       var process = new Process();
       process.StartInfo.FileName = fileName;
@@ -180,6 +193,14 @@ namespace MixinXRefGUI
         startMixinXRefButton.Enabled = enabled;
     }
 
+    private void SetShowResultsButtonEnabled (bool enabled)
+    {
+      if (showResultsButton.InvokeRequired)
+        showResultsButton.Invoke (new setStartMixinRefButtonEnabledDelegate (SetShowResultsButtonEnabled), new object[] { enabled });
+      else
+        showResultsButton.Enabled = enabled;
+    }
+
     private void WriteProcessStream (object sender, DataReceivedEventArgs dataReceivedEventArgs)
     {
       if (!String.IsNullOrEmpty (dataReceivedEventArgs.Data))
@@ -189,6 +210,9 @@ namespace MixinXRefGUI
     private void ProcessExited (object sender, EventArgs e)
     {
       SetStartMixinRefButtonEnabled (true);
+
+      if (File.Exists (GetResultFilePath ()))
+        SetShowResultsButtonEnabled (true);
     }
 
     private void CursorIconTimer_Tick (object sender, EventArgs e)
@@ -198,6 +222,22 @@ namespace MixinXRefGUI
         Cursor = Cursors.Default;
         cursorIconTimer.Enabled = false;
       }
+    }
+
+    private void ShowResultsButton_Click (object sender, EventArgs e)
+    {
+      var uriString = GetResultFilePath();
+      if (!File.Exists (uriString))
+        return;
+
+      var uri = new Uri (uriString);
+      var converted = uri.AbsoluteUri;
+      Process.Start (converted);
+    }
+
+    private string GetResultFilePath ()
+    {
+      return Path.GetFullPath (Path.Combine (outputPathTextBox.Text, "index.html"));
     }
   }
 }

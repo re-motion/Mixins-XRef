@@ -44,6 +44,7 @@
       this.logTextBox = new System.Windows.Forms.TextBox ();
       this.cursorIconTimer = new System.Windows.Forms.Timer (this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip (this.components);
+      this.showResultsButton = new System.Windows.Forms.Button ();
       ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit ();
       this.SuspendLayout ();
       // 
@@ -60,7 +61,7 @@
       // browseAssemblyPath
       // 
       this.browseAssemblyPath.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.browseAssemblyPath.Location = new System.Drawing.Point (229, 28);
+      this.browseAssemblyPath.Location = new System.Drawing.Point (253, 29);
       this.browseAssemblyPath.Name = "browseAssemblyPath";
       this.browseAssemblyPath.Size = new System.Drawing.Size (54, 20);
       this.browseAssemblyPath.TabIndex = 1;
@@ -74,14 +75,14 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.assemblyPathTextBox.Location = new System.Drawing.Point (12, 29);
       this.assemblyPathTextBox.Name = "assemblyPathTextBox";
-      this.assemblyPathTextBox.Size = new System.Drawing.Size (211, 20);
+      this.assemblyPathTextBox.Size = new System.Drawing.Size (235, 20);
       this.assemblyPathTextBox.TabIndex = 2;
       // 
       // pictureBox1
       // 
       this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.pictureBox1.Image = ((System.Drawing.Image) (resources.GetObject ("pictureBox1.Image")));
-      this.pictureBox1.Location = new System.Drawing.Point (307, 26);
+      this.pictureBox1.Location = new System.Drawing.Point (345, 12);
       this.pictureBox1.Name = "pictureBox1";
       this.pictureBox1.Size = new System.Drawing.Size (154, 69);
       this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -94,13 +95,13 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.outputPathTextBox.Location = new System.Drawing.Point (12, 75);
       this.outputPathTextBox.Name = "outputPathTextBox";
-      this.outputPathTextBox.Size = new System.Drawing.Size (211, 20);
+      this.outputPathTextBox.Size = new System.Drawing.Size (235, 20);
       this.outputPathTextBox.TabIndex = 5;
       // 
       // browseOutputPath
       // 
       this.browseOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.browseOutputPath.Location = new System.Drawing.Point (229, 75);
+      this.browseOutputPath.Location = new System.Drawing.Point (253, 75);
       this.browseOutputPath.Name = "browseOutputPath";
       this.browseOutputPath.Size = new System.Drawing.Size (54, 20);
       this.browseOutputPath.TabIndex = 4;
@@ -112,9 +113,9 @@
       // 
       this.customReflectorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.customReflectorTextBox.Location = new System.Drawing.Point (12, 144);
+      this.customReflectorTextBox.Location = new System.Drawing.Point (12, 147);
       this.customReflectorTextBox.Name = "customReflectorTextBox";
-      this.customReflectorTextBox.Size = new System.Drawing.Size (271, 20);
+      this.customReflectorTextBox.Size = new System.Drawing.Size (295, 20);
       this.customReflectorTextBox.TabIndex = 7;
       this.toolTip1.SetToolTip (this.customReflectorTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
       // 
@@ -150,9 +151,9 @@
       // startMixinXRefButton
       // 
       this.startMixinXRefButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.startMixinXRefButton.Location = new System.Drawing.Point (307, 131);
+      this.startMixinXRefButton.Location = new System.Drawing.Point (345, 101);
       this.startMixinXRefButton.Name = "startMixinXRefButton";
-      this.startMixinXRefButton.Size = new System.Drawing.Size (154, 33);
+      this.startMixinXRefButton.Size = new System.Drawing.Size (154, 30);
       this.startMixinXRefButton.TabIndex = 9;
       this.startMixinXRefButton.Text = "Start Mixin-Cross-Referencer";
       this.startMixinXRefButton.UseVisualStyleBackColor = true;
@@ -167,18 +168,31 @@
       this.logTextBox.Multiline = true;
       this.logTextBox.Name = "logTextBox";
       this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.logTextBox.Size = new System.Drawing.Size (446, 116);
+      this.logTextBox.Size = new System.Drawing.Size (484, 170);
       this.logTextBox.TabIndex = 10;
       // 
       // cursorIconTimer
       // 
       this.cursorIconTimer.Tick += new System.EventHandler (this.CursorIconTimer_Tick);
       // 
+      // showResultsButton
+      // 
+      this.showResultsButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.showResultsButton.Enabled = false;
+      this.showResultsButton.Location = new System.Drawing.Point (345, 141);
+      this.showResultsButton.Name = "showResultsButton";
+      this.showResultsButton.Size = new System.Drawing.Size (154, 30);
+      this.showResultsButton.TabIndex = 11;
+      this.showResultsButton.Text = "Show results";
+      this.showResultsButton.UseVisualStyleBackColor = true;
+      this.showResultsButton.Click += new System.EventHandler (this.ShowResultsButton_Click);
+      // 
       // MixinXRefForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size (480, 326);
+      this.ClientSize = new System.Drawing.Size (518, 374);
+      this.Controls.Add (this.showResultsButton);
       this.Controls.Add (this.logTextBox);
       this.Controls.Add (this.startMixinXRefButton);
       this.Controls.Add (this.label3);
@@ -216,6 +230,7 @@
     private System.Windows.Forms.TextBox logTextBox;
     private System.Windows.Forms.Timer cursorIconTimer;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Button showResultsButton;
   }
 }
 
