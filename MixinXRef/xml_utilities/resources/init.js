@@ -392,12 +392,12 @@ function prepareCollapsing() {
             $(this).addClass(classArray[n]);
 
             if (classArray[n] == "hidden") {
-                $('#treeViewID').children().hide();
+                $('.treeView').children().hide();
             }
 
             $(this).click(function () {
                 $(this).toggleClass("visible").toggleClass("hidden");
-                $('#treeViewID').children().toggle();
+                $('.treeView').children().toggle();
                 saveCookie();
             });
             //}
@@ -423,7 +423,7 @@ function initTreeView() {
     if (onIndexSite())
         return;
 
-    $("#treeViewID").children().treeview({
+    $(".treeView").children().treeview({
         collapsed: true,
         persist: "cookie",
         cookieId: getCookieName() + "_treeview"

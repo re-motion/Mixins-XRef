@@ -151,13 +151,13 @@
 
   <xsl:if test="count($children)>0">
     <xsl:call-template name="genericTreeBuilder">
-      <xsl:with-param name="caption">Children</xsl:with-param>
+      <xsl:with-param name="caption">Inheritors</xsl:with-param>
       <xsl:with-param name="treeNodes" select="." />
       <xsl:with-param name="allReferences" select="/MixinXRefReport/InvolvedTypes/InvolvedType" />
     </xsl:call-template>
   </xsl:if>
   <xsl:if test="count($children)=0">
-    <div class="emptyText">No Children</div>
+    <div class="emptyText">No Inheritors</div>
   </xsl:if>
       
 	<xsl:call-template name="mixinList">

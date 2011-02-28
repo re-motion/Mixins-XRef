@@ -13,7 +13,7 @@
       </span>
     </div>
 
-    <div id="treeViewID">
+    <div class="treeView">
       <xsl:call-template name="buildTree">
         <!-- treeNodes: get all involved classes which implements this attribute and get rid of involved classes which base-ref points to a class which also implements that interface 
 			==> only get root implementing classes  -->
@@ -36,7 +36,7 @@
       </span>
     </div>
 
-    <div id="treeViewID">
+    <div class="treeView">
       <xsl:call-template name="buildTree">
         <!-- treeNodes: get all involved classes which implements this attribute and get rid of involved classes which base-ref points to a class which also implements that interface 
 			==> only get root implementing classes  -->
