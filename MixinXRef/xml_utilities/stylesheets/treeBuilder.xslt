@@ -49,7 +49,6 @@
 
   </xsl:template>
 
-
   <xsl:template name="buildTree">
     <xsl:param name="rootNodes" />
     <xsl:param name="nonRootNodes" />

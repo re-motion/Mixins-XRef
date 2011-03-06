@@ -63,6 +63,7 @@
 				<xsl:when test="$tableName = 'memberListTable'">
 					<xsl:call-template name="memberListTable">
 						<xsl:with-param name="members" select="$items" />
+            <xsl:with-param name="rootMCR" select="$rootMCR" />
 					</xsl:call-template>
 				</xsl:when>
 				<!-- mixin list at involved type site -->

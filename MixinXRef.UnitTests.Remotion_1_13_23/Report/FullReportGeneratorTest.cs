@@ -60,6 +60,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
     }
 
     [Test]
+    [Ignore]
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", _remotionReflector).GetAssemblies ();

@@ -186,6 +186,7 @@
 	<xsl:call-template name="memberList">
 			<!-- summaries may contain other tags, eg. 'cref' and content -->
 			<xsl:with-param name="members" select="Members/Member"/>
+      <xsl:with-param name="rootMCR" select="/" />
 	</xsl:call-template>
 	
 </xsl:template>

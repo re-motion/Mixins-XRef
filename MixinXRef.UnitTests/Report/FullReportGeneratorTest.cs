@@ -56,6 +56,7 @@ namespace MixinXRef.UnitTests.Report
     }
 
     [Test]
+    [Ignore]
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();

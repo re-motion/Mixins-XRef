@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -312,6 +313,7 @@
     </Content>
     <Content Include="xml_utilities\stylesheets\memberList.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="xml_utilities\stylesheets\tableTemplate.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

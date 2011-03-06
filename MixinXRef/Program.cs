@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
@@ -102,11 +103,9 @@ namespace MixinXRef
 
       var forceOverride = false;
 
-      if (arguments.Length == 3 && arguments[2].ToLower().Equals ("-force"))
+      if (arguments.Any(a => a.ToLower().Equals ("-force")))
         forceOverride = true;
-      if (arguments.Length == 4 && arguments[3].ToLower().Equals ("-force"))
-        forceOverride = true;
-
+      
       if (arguments.Length < 2 || arguments.Length > 4)
       {
         _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]");

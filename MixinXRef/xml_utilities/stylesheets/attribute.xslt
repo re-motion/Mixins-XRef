@@ -48,6 +48,7 @@
   
   <xsl:call-template name="memberList">
     <xsl:with-param name="members" select="Members/Member"/>
+    <xsl:with-param name="rootMCR" select="/" />
   </xsl:call-template>
   
 </xsl:template>

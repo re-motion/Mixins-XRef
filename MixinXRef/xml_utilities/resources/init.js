@@ -329,6 +329,26 @@ function initTableSorter() {
 			null
 		]
     });
+
+    $('.baseMembersDataTable').dataTable({
+        "bStateSave": true,
+        "bRetrieve": true,
+        "iCookieDuration": 60 * 60 * 24 * 365,
+        "bJQueryUI": true,
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "aoColumns": [
+			null,
+			null,
+			{ "sType": "modifier-visibility" },
+			{ "sType": "signature" },
+			null
+		]
+    });
 }
 
 function setSelectedIndexClass() {

@@ -48,9 +48,9 @@ namespace MixinXRef.Report
 
       return new XElement (
           "Members",
-          from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-          where memberInfo.DeclaringType.IsAssignableFrom (_type)
-                && !IsSpecialName (memberInfo)
+          from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+          where // memberInfo.DeclaringType.IsAssignableFrom (_type)&& 
+          !IsSpecialName (memberInfo)
           select CreateMemberElement (memberInfo)
           );
     }
@@ -67,7 +67,7 @@ namespace MixinXRef.Report
     private XElement CreateMemberElement (MemberInfo memberInfo)
     {
       var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
-      if (IsPrivateOrInternal (memberModifier))
+      if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
         return null;
 
       var lastPoint = memberInfo.Name.LastIndexOf ('.');
@@ -213,11 +213,6 @@ namespace MixinXRef.Report
             );
       }
       return false;
-    }
-
-    private bool IsPrivateOrInternal (string memberModifiers)
-    {
-      return memberModifiers.Contains ("internal") || memberModifiers.Contains ("private");
     }
 
     private bool IsOverriddenBaseClassMember (MemberInfo memberInfo, XElement overrides)
