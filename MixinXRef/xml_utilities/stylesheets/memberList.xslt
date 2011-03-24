@@ -149,10 +149,21 @@
     </xsl:if>
 
     <!-- Shows ALL derived members - large performance impact -->
-    <!--<xsl:if test="@base-ref != 'none'">
+    <xsl:if test="@base-ref != 'none'">
+
+      <xsl:variable name="baseMembers">
+        <xsl:call-template name="membersFromBaseClasses">
+          <xsl:with-param name="rootMCR" select="$rootMCR" />
+          <xsl:with-param name="currentNode" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@id = current()/@base-ref]" />
+          <xsl:with-param name="members" select="$members" />
+        </xsl:call-template>
+      </xsl:variable>
+
+      <xsl:variable name="baseMemberCount" select="count($baseMembers/descendant::*[not(child::*)]) div 8" />
+      
       <table cellpadding="0" cellspacing="0" border="0" class="display baseMembersDataTable">
         <caption>
-          Members&#160;declared&#160;by&#160;a&#160;base&#160;class
+          Members&#160;declared&#160;by&#160;a&#160;base&#160;class&#160;(<xsl:value-of select="$baseMemberCount"/>)
         </caption>
         <thead>
           <tr>
@@ -165,7 +176,9 @@
         </thead>
         <tfoot>
           <tr>
-            <td>-</td>
+            <td>
+              <xsl:value-of select="$baseMemberCount"/>
+            </td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -173,15 +186,10 @@
           </tr>
         </tfoot>
         <tbody>
-          <xsl:call-template name="membersFromBaseClasses">
-            <xsl:with-param name="rootMCR" select="$rootMCR" />
-            <xsl:with-param name="currentNode" select="/MixinXRefReport/InvolvedTypes/InvolvedType[@id = current()/@base-ref]" />
-            <xsl:with-param name="members" select="$members" />
-          </xsl:call-template>
-
+          <xsl:copy-of select="$baseMembers" />
         </tbody>
       </table>
-    </xsl:if>-->
+    </xsl:if>
 
   </xsl:template>
 
@@ -209,7 +217,7 @@
             <xsl:call-template name="GenerateInvolvedTypeLink">
               <xsl:with-param name="rootMCR" select="$rootMCR" />
               <xsl:with-param name="involvedTypeId" select="$currentNode/@id" />
-              <xsl:with-param name="dir" select=".." />
+              <xsl:with-param name="dir" select="'..'" />
             </xsl:call-template>
           </td>
         </tr>

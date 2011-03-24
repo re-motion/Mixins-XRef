@@ -34,7 +34,6 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
       Assert.That (output, Is.False);
     }
 
-    [Ignore("needs fix")]
     [Test]
     public void IsNonApplicationAssembly_True ()
     {

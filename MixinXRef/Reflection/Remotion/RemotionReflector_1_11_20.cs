@@ -23,9 +23,7 @@ namespace MixinXRef.Reflection.Remotion
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);
 
-      return
-          assembly.GetCustomAttributes (false).Any (
-              attribute => attribute.GetType().FullName == "Remotion.Reflection.NonApplicationAssemblyAttribute");
+      return assembly.GetCustomAttributes (false).Any (attribute => attribute.GetType().Name == "NonApplicationAssemblyAttribute");
     }
 
     public virtual bool IsConfigurationException(Exception exception)
