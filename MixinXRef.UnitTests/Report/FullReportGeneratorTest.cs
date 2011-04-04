@@ -18,6 +18,7 @@ namespace MixinXRef.UnitTests.Report
   {
     private ErrorAggregator<Exception> _configurationErros;
     private ErrorAggregator<Exception> _validatonErrors;
+    private string pathOfExpectedOutput;
 
     [SetUp]
     public void SetUp ()
@@ -55,10 +56,11 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
     }
 
-    [Test]
+    [Test] // this test may be unstable
     public void FullReportGenerator_NonEmpty ()
     {
       var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();
+      pathOfExpectedOutput = @"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml";
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
@@ -88,7 +90,7 @@ namespace MixinXRef.UnitTests.Report
           new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
 
-      var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
+      var expectedOutput = XDocument.Load (pathOfExpectedOutput);
 
       // the creation time of the validiation file is different from the creation time of the generated report
       expectedOutput.Root.FirstAttribute.Value = reportGenerator.CreationTime;
