@@ -159,8 +159,8 @@
         </xsl:call-template>
       </xsl:variable>
 
-      <xsl:variable name="baseMemberCount" select="count($baseMembers/descendant::*[not(child::*)]) div 8" />
-      
+      <xsl:variable name="baseMemberCount" select="count($baseMembers/node())" />
+
       <table cellpadding="0" cellspacing="0" border="0" class="display baseMembersDataTable">
         <caption>
           Members&#160;declared&#160;by&#160;a&#160;base&#160;class&#160;(<xsl:value-of select="$baseMemberCount"/>)

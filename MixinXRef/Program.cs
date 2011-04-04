@@ -175,6 +175,9 @@ namespace MixinXRef
       var outputDocument = reportGenerator.GenerateXmlDocument();
 
       outputDocument.Save (xmlFile);
+
+      reportGenerator = null;
+      GC.Collect ();
     }
 
     public void SetRemotionReflector (IRemotionReflector remotionReflector)

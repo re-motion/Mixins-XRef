@@ -17,7 +17,8 @@
       <xsl:call-template name="buildTree">
         <!-- treeNodes: get all involved classes which implements this attribute and get rid of involved classes which base-ref points to a class which also implements that interface 
 			==> only get root implementing classes  -->
-        <xsl:with-param name="rootNodes" select="$treeNodes[not(ru:contains($allReferences, @base-ref))]" /> <!--  and  ru:contains($allReferences, @id) -->
+        <xsl:with-param name="rootNodes" select="$treeNodes[not(ru:contains($allReferences, @base-ref))]" />
+        <!--  and  ru:contains($allReferences, @id) -->
         <!-- nonRootNodes = allTypes - treeNodes -->
         <xsl:with-param name="nonRootNodes" select="$treeNodes[(ru:contains($allReferences, @base-ref))]" />
       </xsl:call-template>
@@ -37,14 +38,16 @@
     </div>
 
     <div class="treeView">
-      <xsl:call-template name="buildTree">
-        <!-- treeNodes: get all involved classes which implements this attribute and get rid of involved classes which base-ref points to a class which also implements that interface 
-			==> only get root implementing classes  -->
-        <xsl:with-param name="rootNodes" select="$treeNodes" />
-        <!--  and  ru:contains($allReferences, @id) -->
-        <!-- nonRootNodes = allTypes - treeNodes -->
-        <xsl:with-param name="nonRootNodes" select="$allReferences" />
-      </xsl:call-template>
+      <xsl:for-each select="$treeNodes">
+        <xsl:sort select="@name" />
+        <xsl:variable name="subTypes" select="$allReferences[@base-ref = current()/@id]" />
+        <xsl:if test="exists($subTypes)">
+          <xsl:call-template name="buildTree">
+            <xsl:with-param name="rootNodes" select="$subTypes" />
+            <xsl:with-param name="nonRootNodes" select="$allReferences" />
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:for-each>
     </div>
 
   </xsl:template>
