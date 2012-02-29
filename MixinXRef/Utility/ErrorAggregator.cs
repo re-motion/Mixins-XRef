@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace MixinXRef.Utility
 {
   public class ErrorAggregator<TException>
+    where TException : Exception
   {
     private readonly List<TException> _exceptionList = new List<TException>();
 
