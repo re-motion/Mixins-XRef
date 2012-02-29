@@ -41,8 +41,10 @@ namespace MixinXRef.Reflection
     private Type DetectVersion (Assembly remotionAssembly)
     {
       var version = remotionAssembly.GetName().Version;
-      
-      if (version.CompareTo(new Version(1,13,23)) >= 0)
+
+      //if (version.CompareTo (new Version (1, 13, 141)) >= 0)
+      //  return typeof (RemotionReflector_1_13_141);
+      if (version.CompareTo (new Version(1, 13, 23)) >= 0)
         return typeof (RemotionReflector_1_13_23);
       if (version.CompareTo (new Version (1, 11, 20)) >= 0)
         return typeof (RemotionReflector_1_11_20);

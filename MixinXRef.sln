@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.NonAppl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRefGUI", "MixinXRefGUI\MixinXRefGUI.csproj", "{C09D77AC-D4AF-4B1F-8D94-81BA8141F53D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Remotion_1_13_141", "MixinXRef.UnitTests.Remotion_1_13_141\MixinXRef.UnitTests.Remotion_1_13_141.csproj", "{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{C09D77AC-D4AF-4B1F-8D94-81BA8141F53D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{C09D77AC-D4AF-4B1F-8D94-81BA8141F53D}.Release|x86.ActiveCfg = Release|x86
 		{C09D77AC-D4AF-4B1F-8D94-81BA8141F53D}.Release|x86.Build.0 = Release|x86
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
