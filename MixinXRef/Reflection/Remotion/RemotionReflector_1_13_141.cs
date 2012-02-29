@@ -13,15 +13,9 @@ namespace MixinXRef.Reflection.Remotion
 
     // Constructor for factory
     public RemotionReflector_1_13_141 (string assemblyDirectory)
-        : this (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory), RemotionAssemblyFileNames)
+        : base (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory))
     {
-    }
-
-    // Constructor for derived classes
-    protected RemotionReflector_1_13_141 (string assemblyDirectory, string[] remotionAssemblyFileNames)
-        : base (assemblyDirectory, remotionAssemblyFileNames)
-    {
-      _mixinsAssembly = LoadIfAvailable (RemotionAssemblyFileNames[1], assemblyDirectory, remotionAssemblyFileNames);
+      _mixinsAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Mixins.dll");
     }
 
     public override bool IsInfrastructureType (Type type)

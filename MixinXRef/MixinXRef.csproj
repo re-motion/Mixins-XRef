@@ -81,6 +81,7 @@
     <Compile Include="Report\AttributeReferenceReportGenerator.cs" />
     <Compile Include="Report\AttributeReportGenerator.cs" />
     <Compile Include="Report\ConfigurationErrorReportGenerator.cs" />
+    <Compile Include="Utility\AssemblyHelper.cs" />
     <Compile Include="Utility\ErrorAggregator.cs" />
     <Compile Include="Formatting\OutputFormatter.cs" />
     <Compile Include="Report\FullReportGenerator.cs" />

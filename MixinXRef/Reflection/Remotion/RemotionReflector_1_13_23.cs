@@ -11,17 +11,10 @@ namespace MixinXRef.Reflection.Remotion
 
     private readonly Assembly _remotionAssembly;
 
-    // Constructor for factory
     public RemotionReflector_1_13_23 (string assemblyDirectory)
-        : this (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory), RemotionAssemblyFileNames)
+      : base (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory))
     {
-    }
-
-    // Constructor for derived classes
-    protected RemotionReflector_1_13_23 (string assemblyDirectory, string[] remotionAssemblyFileNames)
-        : base (assemblyDirectory, remotionAssemblyFileNames)
-    {
-      _remotionAssembly = LoadIfAvailable (RemotionAssemblyFileNames[0], assemblyDirectory, remotionAssemblyFileNames);
+      _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
     }
 
     public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)

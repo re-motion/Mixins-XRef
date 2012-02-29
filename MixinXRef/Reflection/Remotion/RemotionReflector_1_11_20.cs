@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Utility;
@@ -13,23 +12,12 @@ namespace MixinXRef.Reflection.Remotion
     private readonly Assembly _remotionAssembly;
     private readonly Assembly _remotionInterfaceAssembly;
 
-    // Constructor for factory
     public RemotionReflector_1_11_20 (string assemblyDirectory)
-        : this (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory), RemotionAssemblyFileNames)
     {
-    }
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-    // Constructor for derived classes
-    protected RemotionReflector_1_11_20 (string assemblyDirectory, string[] remotionAssemblyFileNames)
-    {
-      _remotionAssembly = LoadIfAvailable(RemotionAssemblyFileNames[0], assemblyDirectory, remotionAssemblyFileNames);
-      _remotionInterfaceAssembly = LoadIfAvailable (RemotionAssemblyFileNames[1], assemblyDirectory, remotionAssemblyFileNames);
-    }
-
-    protected Assembly LoadIfAvailable (string assemblyFileName, string assemblyDirectory, string[] remotionAssemblyFileNames)
-    {
-      int index = Array.IndexOf (remotionAssemblyFileNames, assemblyFileName);
-      return index != -1 ? Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, assemblyFileName))) : null;
+      _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
+      _remotionInterfaceAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");
     }
 
     public virtual bool IsNonApplicationAssembly(Assembly assembly)

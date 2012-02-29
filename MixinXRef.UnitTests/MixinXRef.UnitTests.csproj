@@ -89,6 +89,7 @@
     <Compile Include="Report\AttributeReferenceReportGeneratorTest.cs" />
     <Compile Include="Report\AttributeReportGeneratorTest.cs" />
     <Compile Include="Report\ConfigurationErrorReportGeneratorTest.cs" />
+    <Compile Include="Utility\AssemblyHelperTest.cs" />
     <Compile Include="Utility\ErrorAggregatorTest.cs" />
     <Compile Include="TestDomain\AdditionalDependenciesTest.cs" />
     <Compile Include="Explore\SimpleMemberOverrideTest.cs" />
