@@ -95,7 +95,7 @@ namespace MixinXRef.Report
           _remotionReflector,
           _outputFormatter);
       var configurationErrorReport = new ConfigurationErrorReportGenerator (_configurationErrors);
-      var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors);
+      var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors, _remotionReflector);
 
       return new CompositeReportGenerator (
           assemblyReport,

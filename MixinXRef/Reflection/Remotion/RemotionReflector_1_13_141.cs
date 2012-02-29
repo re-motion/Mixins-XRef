@@ -47,6 +47,13 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
 
+    public override ReflectedObject GetValidationLogFromValidationException (Exception validationException)
+    {
+      ArgumentUtility.CheckNotNull ("validationException", validationException);
+
+      return new ReflectedObject (validationException).GetProperty ("ValidationLogData");
+    }
+
     public override Assembly FindRemotionAssembly (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);

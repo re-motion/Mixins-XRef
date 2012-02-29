@@ -15,7 +15,7 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_NoErrors ()
     {
       var errorAggregator = new ErrorAggregator<Exception>();
-      var reportGenerator = new ValidationErrorReportGenerator (errorAggregator);
+      var reportGenerator = new ValidationErrorReportGenerator (errorAggregator, ProgramTest.GetRemotionReflection ());
 
       var output = reportGenerator.GenerateXml();
       var expectedOutput = new XElement ("ValidationErrors");
@@ -30,7 +30,7 @@ namespace MixinXRef.UnitTests.Report
       var validationException1 = SetUpExceptionWithDummyStackTrace("test validation exception", new DefaultValidationLog());
 
       errorAggregator.AddException (validationException1);
-      var reportGenerator = new ValidationErrorReportGenerator (errorAggregator);
+      var reportGenerator = new ValidationErrorReportGenerator (errorAggregator, ProgramTest.GetRemotionReflection ());
 
       var output = reportGenerator.GenerateXml();
 

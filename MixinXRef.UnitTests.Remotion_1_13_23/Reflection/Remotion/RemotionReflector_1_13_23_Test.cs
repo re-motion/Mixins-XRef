@@ -119,6 +119,18 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
     }
 
     [Test]
+    public void GetValidationLogFromValidationException ()
+    {
+      var validationLog = new DefaultValidationLog ();
+      var validationException = new ValidationException (validationLog);
+
+      var reflectedValidationLog = _remotionReflector.GetValidationLogFromValidationException (validationException);
+      var result = reflectedValidationLog.To<IValidationLog> ();
+
+      Assert.That (result, Is.SameAs (validationLog));
+    }
+
+    [Test]
     public void FindRemotionAssembly_FindRightAssembly ()
     {
       var remotionAssembly = typeof (TargetClassDefinitionFactory).Assembly;

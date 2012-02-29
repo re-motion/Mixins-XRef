@@ -71,6 +71,13 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", new object[] { assemblies });
     }
 
+    public virtual ReflectedObject GetValidationLogFromValidationException (Exception validationException)
+    {
+      ArgumentUtility.CheckNotNull ("validationException", validationException);
+
+      return new ReflectedObject (validationException).GetProperty ("ValidationLog");
+    }
+
     public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);

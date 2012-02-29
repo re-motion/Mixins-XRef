@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Linq;
-using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Report
@@ -8,11 +8,15 @@ namespace MixinXRef.Report
   public class ValidationErrorReportGenerator : IReportGenerator
   {
     private readonly ErrorAggregator<Exception> _errorAggregator;
+    private readonly IRemotionReflector _remotionReflector;
 
-    public ValidationErrorReportGenerator(ErrorAggregator<Exception> errorAggregator)
+    public ValidationErrorReportGenerator(ErrorAggregator<Exception> errorAggregator, IRemotionReflector remotionReflector)
     {
       ArgumentUtility.CheckNotNull ("errorAggregator", errorAggregator);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
+
       _errorAggregator = errorAggregator;
+      _remotionReflector = remotionReflector;
     }
 
     public XElement GenerateXml ()
@@ -22,7 +26,7 @@ namespace MixinXRef.Report
       foreach (var exception in _errorAggregator.Exceptions)
       {
         var topLevelExceptionElement = new RecursiveExceptionReportGenerator (exception).GenerateXml();
-        var validationLog = new ReflectedObject (exception).GetProperty ("ValidationLog");
+        var validationLog = _remotionReflector.GetValidationLogFromValidationException(exception);
 
         topLevelExceptionElement.Add (
             new XElement (
