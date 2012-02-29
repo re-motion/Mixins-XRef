@@ -26,14 +26,6 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     }
 
     [Test]
-    public void RemotionAssemblyFileNames ()
-    {
-      Assert.That (
-          RemotionReflector_1_11_20.RemotionAssemblyFileNames,
-          Is.EqualTo (new[] { "Remotion.dll", "Remotion.Interfaces.dll" }));
-    }
-
-    [Test]
     public void IsNonApplicationAssembly_False ()
     {
       var assembly = typeof (IDisposable).Assembly;

@@ -11,8 +11,6 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 {
   public class CustomRemotionReflector : IRemotionReflector
   {
-    public static readonly string[] RemotionAssemblyFileNames = new[] { "Remotion.dll", "Remotion.Interfaces.dll" };
-
     private readonly Assembly _remotionAssembly;
     private readonly Assembly _remotionInterfaceAssembly;
 
@@ -20,8 +18,8 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      _remotionAssembly = LoadFile (assemblyDirectory, RemotionAssemblyFileNames[0]);
-      _remotionInterfaceAssembly = LoadFile (assemblyDirectory, RemotionAssemblyFileNames[1]);
+      _remotionAssembly = LoadFile (assemblyDirectory, "Remotion.dll");
+      _remotionInterfaceAssembly = LoadFile (assemblyDirectory, "Remotion.Interfaces.dll");
     }
 
     private Assembly LoadFile (string assemblyDirectory, string assemblyFileName)

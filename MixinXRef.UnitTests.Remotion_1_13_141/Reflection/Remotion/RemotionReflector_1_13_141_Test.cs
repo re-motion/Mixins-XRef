@@ -25,14 +25,6 @@ namespace MixinXRef.UnitTests.Remotion_1_13_141.Reflection.Remotion
     }
 
     [Test]
-    public void GetRemotionAssemblyNames ()
-    {
-      Assert.That (
-          RemotionReflector_1_13_141.RemotionAssemblyFileNames,
-          Is.EqualTo (new[] { "Remotion.dll", "Remotion.Mixins.dll" }));
-    }
-
-    [Test]
     public void IsNonApplicationAssembly_False ()
     {
       var assembly = typeof (IDisposable).Assembly;

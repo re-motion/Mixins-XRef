@@ -7,8 +7,6 @@ namespace MixinXRef.Reflection.Remotion
 {
   public class RemotionReflector_1_13_23 : RemotionReflector_1_11_20
   {
-    public new static readonly string[] RemotionAssemblyFileNames = new[] { "Remotion.dll", "Remotion.Interfaces.dll" };
-
     private readonly Assembly _remotionAssembly;
 
     public RemotionReflector_1_13_23 (string assemblyDirectory)
