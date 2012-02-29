@@ -21,14 +21,14 @@ namespace MixinXRef.UnitTests.Remotion_1_13_141.Reflection.Remotion
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new RemotionReflector_1_13_141 (typeof (TargetClassDefinitionFactory).Assembly, typeof(Mixin<>).Assembly);
+      _remotionReflector = new RemotionReflector_1_13_141 (".");
     }
 
     [Test]
     public void GetRemotionAssemblyNames ()
     {
       Assert.That (
-          _remotionReflector.GetRemotionAssemblyNames (),
+          RemotionReflector_1_13_141.RemotionAssemblyFileNames,
           Is.EqualTo (new[] { "Remotion.dll", "Remotion.Mixins.dll" }));
     }
 
@@ -99,7 +99,6 @@ namespace MixinXRef.UnitTests.Remotion_1_13_141.Reflection.Remotion
       Assert.That(outputTrue3, Is.True);
       Assert.That(outputFalse, Is.False);
     }
-
 
     [Test]
     public void GetTargetClassDefinition ()

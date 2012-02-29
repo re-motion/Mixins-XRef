@@ -13,7 +13,6 @@ using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
-using Remotion.Mixins.Definitions;
 
 namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
 {
@@ -29,7 +28,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
     {
       _configurationErros = new ErrorAggregator<Exception> ();
       _validatonErrors = new ErrorAggregator<Exception> ();
-      _remotionReflector = new RemotionReflector_1_13_23(typeof(TargetClassDefinitionFactory).Assembly, typeof(Mixin<>).Assembly);
+      _remotionReflector = new RemotionReflector_1_13_23(".");
     }
 
     [Test]

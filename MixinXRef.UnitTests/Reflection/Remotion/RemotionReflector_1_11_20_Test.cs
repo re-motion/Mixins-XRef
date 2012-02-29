@@ -22,14 +22,14 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new RemotionReflector_1_11_20 (typeof (TargetClassDefinitionUtility).Assembly, typeof (Mixin<>).Assembly);
+      _remotionReflector = new RemotionReflector_1_11_20 (".");
     }
 
     [Test]
-    public void GetRemotionAssemblyNames ()
+    public void RemotionAssemblyFileNames ()
     {
       Assert.That (
-          _remotionReflector.GetRemotionAssemblyNames(),
+          RemotionReflector_1_11_20.RemotionAssemblyFileNames,
           Is.EqualTo (new[] { "Remotion.dll", "Remotion.Interfaces.dll" }));
     }
 

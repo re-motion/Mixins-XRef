@@ -4,7 +4,6 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection.Remotion;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests
 {
@@ -13,7 +12,7 @@ namespace MixinXRef.UnitTests
   {
     public static IRemotionReflector GetRemotionReflection()
     {
-      return new RemotionReflector_1_11_20(typeof(TargetClassDefinitionUtility).Assembly, typeof(Mixin<>).Assembly);
+      return new RemotionReflector_1_11_20(".");
     }
 
     public const string _userPromptOnExistingOutputDirectory =
