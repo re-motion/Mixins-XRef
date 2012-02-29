@@ -4,8 +4,7 @@ using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Utility;
 
-
-namespace MixinXRef.UnitTests.Stub
+namespace MixinXRef.UnitTests.Remotion_1_13_23.Stub
 {
   public class InvolvedTypeFinderStub : IInvolvedTypeFinder
   {
