@@ -821,7 +821,7 @@
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
    at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
+   at MixinXRef.UnitTests.Remotion_1_13_23.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
     </Exception>
   </ConfigurationErrors>
   <ValidationErrors>
@@ -840,7 +840,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
    at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
+   at MixinXRef.UnitTests.Remotion_1_13_23.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -854,7 +854,7 @@ Error: A mixin is applied to one of its base types.
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
    at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
+   at MixinXRef.UnitTests.Remotion_1_13_23.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
@@ -870,7 +870,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
    at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
+   at MixinXRef.UnitTests.Remotion_1_13_23.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests.Remotion_1_13_23\Stub\InvolvedTypeFinderStub.cs:line 90]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
   </ValidationErrors>
