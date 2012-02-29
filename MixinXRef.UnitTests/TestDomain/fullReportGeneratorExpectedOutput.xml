@@ -1040,7 +1040,7 @@
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 65
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 71
    at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
     </Exception>
   </ConfigurationErrors>
@@ -1061,7 +1061,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 65
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 71
    at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
@@ -1077,7 +1077,7 @@ Error: A mixin is applied to one of its base types.
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 65
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 71
    at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>
@@ -1095,7 +1095,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.TargetClassDefinitionUtility.GetConfiguration(Type targetOrConcreteType, MixinConfiguration mixinConfiguration) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\TargetClassDefinitionUtility.cs:line 115
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 65
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_11_20.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_11_20.cs:line 71
    at MixinXRef.UnitTests.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\RemotionContrib\MixinRef\trunk\MixinXRef.UnitTests\Stub\InvolvedTypeFinderStub.cs:line 91]]></StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>

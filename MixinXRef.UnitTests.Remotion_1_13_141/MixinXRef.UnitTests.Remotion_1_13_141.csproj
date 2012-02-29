@@ -48,6 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\RemotionReflectorFactoryTest.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_141_Test.cs" />
+    <Compile Include="TestDomain\CompleteInterfacesTestClass.cs" />
+    <Compile Include="TestDomain\Mixin1.cs" />
+    <Compile Include="TestDomain\TargetClass1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">

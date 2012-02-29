@@ -25,6 +25,14 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Reflection.Remotion
     }
 
     [Test]
+    public void GetRemotionAssemblyNames ()
+    {
+      Assert.That (
+          _remotionReflector.GetRemotionAssemblyNames (),
+          Is.EqualTo (new[] { "Remotion.dll", "Remotion.Interfaces.dll" }));
+    }
+
+    [Test]
     public void IsNonApplicationAssembly_False ()
     {
       var assembly = typeof (IDisposable).Assembly;

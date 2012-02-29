@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MixinXRef.Reflection.Remotion
 {
   public interface IRemotionReflector
   {
+    IEnumerable<string> GetRemotionAssemblyNames ();
+
     bool IsNonApplicationAssembly (Assembly assembly);
     bool IsConfigurationException (Exception exception);
     bool IsValidationException (Exception exception);

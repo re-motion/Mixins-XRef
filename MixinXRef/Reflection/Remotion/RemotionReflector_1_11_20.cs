@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Utility;
@@ -17,6 +18,11 @@ namespace MixinXRef.Reflection.Remotion
 
       _remotionAssembly = remotionAssembly;
       _remotionInterfaceAssembly = remotionInterfaceAssembly;
+    }
+
+    public virtual IEnumerable<string> GetRemotionAssemblyNames ()
+    {
+      return new[] { "Remotion.dll", "Remotion.Interfaces.dll" };
     }
 
     public virtual bool IsNonApplicationAssembly(Assembly assembly)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
@@ -19,6 +20,11 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 
       _remotionAssembly = remotionAssembly;
       _remotionInterfaceAssembly = remotionInterfaceAssembly;
+    }
+
+    public IEnumerable<string> GetRemotionAssemblyNames ()
+    {
+      return new[] { "Remotion.dll", "Remotion.Interfaces.dll" };
     }
 
     public virtual bool IsNonApplicationAssembly (Assembly assembly)
