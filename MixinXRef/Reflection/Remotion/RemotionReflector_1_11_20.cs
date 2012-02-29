@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection.Remotion
 {
-  public class RemotionReflector_1_11_20 : RemotionReflectorBase
+  public class RemotionReflector_1_11_20 : IRemotionReflector
   {
     public static readonly string[] RemotionAssemblyFileNames = new[] { "Remotion.dll", "Remotion.Interfaces.dll" };
 
@@ -20,49 +21,46 @@ namespace MixinXRef.Reflection.Remotion
 
     // Constructor for derived classes
     protected RemotionReflector_1_11_20 (string assemblyDirectory, string[] remotionAssemblyFileNames)
-        : base (assemblyDirectory, remotionAssemblyFileNames)
     {
-      _remotionAssembly = GetRemotionAssembly (remotionAssemblyFileNames, 0, RemotionAssemblyFileNames);
-      _remotionInterfaceAssembly = GetRemotionAssembly (remotionAssemblyFileNames, 1, RemotionAssemblyFileNames);
+      _remotionAssembly = LoadIfAvailable(RemotionAssemblyFileNames[0], assemblyDirectory, remotionAssemblyFileNames);
+      _remotionInterfaceAssembly = LoadIfAvailable (RemotionAssemblyFileNames[1], assemblyDirectory, remotionAssemblyFileNames);
     }
 
-    protected Assembly GetRemotionAssembly (string[] actualAssemblyFileNames, int index, string[] constantAssemblyFileNames)
+    protected Assembly LoadIfAvailable (string assemblyFileName, string assemblyDirectory, string[] remotionAssemblyFileNames)
     {
-      return actualAssemblyFileNames.Length > index
-             && actualAssemblyFileNames[index] == constantAssemblyFileNames[index]
-                 ? RemotionAssemblies[index]
-                 : null;
+      int index = Array.IndexOf (remotionAssemblyFileNames, assemblyFileName);
+      return index != -1 ? Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, assemblyFileName))) : null;
     }
 
-    public override bool IsNonApplicationAssembly(Assembly assembly)
+    public virtual bool IsNonApplicationAssembly(Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);
 
       return assembly.GetCustomAttributes (false).Any (attribute => attribute.GetType().Name == "NonApplicationAssemblyAttribute");
     }
 
-    public override bool IsConfigurationException(Exception exception)
+    public virtual bool IsConfigurationException (Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
       return exception.GetType().FullName == "Remotion.Mixins.ConfigurationException";
     }
 
-    public override bool IsValidationException (Exception exception)
+    public virtual bool IsValidationException (Exception exception)
     {
       ArgumentUtility.CheckNotNull ("exception", exception);
 
       return exception.GetType().FullName == "Remotion.Mixins.Validation.ValidationException";
     }
 
-    public override bool IsInfrastructureType (Type type)
+    public virtual bool IsInfrastructureType (Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
       return type.Assembly.GetName().Name == "Remotion.Interfaces";
     }
 
-    public override bool IsInheritedFromMixin (Type type)
+    public virtual bool IsInheritedFromMixin (Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
@@ -70,7 +68,7 @@ namespace MixinXRef.Reflection.Remotion
       return mixinBaseType.IsAssignableFrom (type);
     }
 
-    public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
+    public virtual ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
     {
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
@@ -79,7 +77,7 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (targetClassDefinitionUtilityType, "GetConfiguration", targetType, mixinConfiguration);
     }
 
-    public override ReflectedObject BuildConfigurationFromAssemblies(Assembly[] assemblies)
+    public virtual ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
@@ -87,7 +85,7 @@ namespace MixinXRef.Reflection.Remotion
       return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", new object[] { assemblies });
     }
 
-    public override Assembly FindRemotionAssembly (Assembly[] assemblies)
+    public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 

@@ -71,7 +71,6 @@
     <Compile Include="Reflection\FastMemberInvokerCache.cs" />
     <Compile Include="Reflection\FastMemberInvokerGenerator.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtility.cs" />
-    <Compile Include="Reflection\Remotion\RemotionReflectorBase.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_141.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_23.cs" />
     <Compile Include="Report\AdditionalDependencyReportGenerator.cs" />

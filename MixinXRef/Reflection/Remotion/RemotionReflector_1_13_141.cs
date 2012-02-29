@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection.Remotion
@@ -22,7 +21,7 @@ namespace MixinXRef.Reflection.Remotion
     protected RemotionReflector_1_13_141 (string assemblyDirectory, string[] remotionAssemblyFileNames)
         : base (assemblyDirectory, remotionAssemblyFileNames)
     {
-      _mixinsAssembly = GetRemotionAssembly (remotionAssemblyFileNames, 1, RemotionAssemblyFileNames);
+      _mixinsAssembly = LoadIfAvailable (RemotionAssemblyFileNames[1], assemblyDirectory, remotionAssemblyFileNames);
     }
 
     public override bool IsInfrastructureType (Type type)

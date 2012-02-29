@@ -21,7 +21,7 @@ namespace MixinXRef.Reflection.Remotion
     protected RemotionReflector_1_13_23 (string assemblyDirectory, string[] remotionAssemblyFileNames)
         : base (assemblyDirectory, remotionAssemblyFileNames)
     {
-      _remotionAssembly = GetRemotionAssembly (remotionAssemblyFileNames, 0, RemotionAssemblyFileNames);
+      _remotionAssembly = LoadIfAvailable (RemotionAssemblyFileNames[0], assemblyDirectory, remotionAssemblyFileNames);
     }
 
     public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
