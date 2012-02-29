@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
@@ -94,10 +96,31 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
 
       var expectedOutput = XDocument.Load (@"..\..\TestDomain\fullReportGeneratorExpectedOutput.xml");
       
-      // the creation time of the validiation file is different from the creation time of the generated report
+      // The creation time of the validiation file is different from the creation time of the generated report
       expectedOutput.Root.FirstAttribute.Value = reportGenerator.CreationTime;
+      // Absolute paths may differ depending on the environment
+      RemoveAbsolutePathsFromStackTraces (expectedOutput);
+      RemoveAbsolutePathsFromStackTraces (output);
 
       Assert.That (output.ToString ().ToLower (), Is.EqualTo (expectedOutput.ToString ().ToLower ()));
     }
+
+    private void RemoveAbsolutePathsFromStackTraces (XDocument document)
+    {
+      var configurationExceptions = document.Root.Descendants ("ConfigurationErrors").Descendants ("Exception");
+      var validationExceptions = document.Root.Descendants ("ValidationErrors").Descendants ("Exception");
+      var allExceptions = configurationExceptions.Concat (validationExceptions);
+
+      foreach (var exception in allExceptions)
+      {
+        var stackTraceElement = exception.Descendants ("StackTrace").Single();
+        var comparableStackTrace = _absolutePathRegex.Replace (stackTraceElement.Value, @"<path-removed>\");
+        stackTraceElement.SetValue (comparableStackTrace);
+      }
+    }
+
+    // at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+    private const string c_regexPattern = @"C:\\.*\\(?=.*\.cs)";
+    private readonly Regex _absolutePathRegex = new Regex (c_regexPattern, RegexOptions.IgnoreCase);
   }
 }

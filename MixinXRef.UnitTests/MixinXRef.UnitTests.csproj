@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\nunit.framework.dll" />
+    <Content Include="TestDomain\fullReportGeneratorExpectedOutput.xml" />
     <Content Include="TestDomain\MixinXRef.UnitTests.NonApplicationAssembly.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
