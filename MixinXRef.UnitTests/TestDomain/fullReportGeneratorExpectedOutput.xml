@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2011-04-04 08:34:26">
+<MixinXRefReport creation-time="2012-02-29 09:56:24">
   <Assemblies>
-    <Assembly id="0" name="MixinXRef.UnitTests" version="1.0.0.0" location="./MixinXRef.UnitTests.dll">
+    <Assembly id="0" name="Castle.Core" version="1.0.3.0" location="./Castle.Core.dll" />
+    <Assembly id="1" name="Castle.DynamicProxy" version="2.0.3.0" location="./Castle.DynamicProxy.dll" />
+    <Assembly id="2" name="log4net" version="1.2.10.0" location="./log4net.dll" />
+    <Assembly id="3" name="MixinXRef.UnitTests" version="1.0.0.0" location="./MixinXRef.UnitTests.dll">
       <InvolvedType-Reference ref="0" />
       <InvolvedType-Reference ref="1" />
       <InvolvedType-Reference ref="2" />
@@ -24,13 +27,13 @@
       <InvolvedType-Reference ref="19" />
       <InvolvedType-Reference ref="20" />
     </Assembly>
-    <Assembly id="1" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
-    <Assembly id="2" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
-    <Assembly id="3" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
-    <Assembly id="4" name="MixinXRef" version="1.3.2.0" location="./MixinXRef.exe" />
+    <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
+    <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
+    <Assembly id="6" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
+    <Assembly id="7" name="MixinXRef" version="1.3.2.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
-    <InvolvedType id="0" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="20" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="20" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -78,7 +81,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="1" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="FullReportGeneratorTestClass" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="FullReportGeneratorTestClass" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -142,7 +145,7 @@
         <Target ref="20" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="2" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithAlphabeticOrderingAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithAlphabeticOrderingAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Text>[</Text>
         <Type>AcceptsAlphabeticOrdering</Type>
@@ -169,7 +172,7 @@
         <Target ref="20" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="0" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.CustomMixin" base="Mixin&lt;MemberOverrideWithInheritanceTest.BaseClass&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="3" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.CustomMixin" base="Mixin&lt;MemberOverrideWithInheritanceTest.BaseClass&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -216,7 +219,7 @@
       </ImplementedInterfaces>
       <HasAttributes />
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
+    <InvolvedType id="4" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -241,7 +244,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -270,7 +273,7 @@
         <Target ref="13" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="6" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
         <Keyword>abstract</Keyword>
@@ -428,7 +431,62 @@
         <Target ref="14" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="7" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="MemberOverrideTestClass.Mixin1" base="Mixin&lt;MemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="7" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="HiddenMemberTestClass.Mixin1" base="Mixin&lt;HiddenMemberTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <ExplicitInterfaceName>HiddenMemberTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
+            <Name>Mixin1</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <ImplementedInterfaces />
+      <HasAttributes />
+    </InvolvedType>
+    <InvolvedType id="8" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BaseMemberOverrideTestClass.Mixin1" base="Mixin&lt;BaseMemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
+      <Modifiers>
+        <Keyword>public</Keyword>
+      </Modifiers>
+      <summary>No summary found.</summary>
+      <Members>
+        <Member type="Method" name="OverriddenMethod" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>OverriddenMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <ExplicitInterfaceName>BaseMemberOverrideTestClass</ExplicitInterfaceName>
+            <Text>.</Text>
+            <Name>Mixin1</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <ImplementedInterfaces />
+      <HasAttributes />
+    </InvolvedType>
+    <InvolvedType id="9" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberOverrideTestClass.Mixin1" base="Mixin&lt;MemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -473,62 +531,7 @@
       <ImplementedInterfaces />
       <HasAttributes />
     </InvolvedType>
-    <InvolvedType id="8" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="BaseMemberOverrideTestClass.Mixin1" base="Mixin&lt;BaseMemberOverrideTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
-      <Modifiers>
-        <Keyword>public</Keyword>
-      </Modifiers>
-      <summary>No summary found.</summary>
-      <Members>
-        <Member type="Method" name="OverriddenMethod" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>OverriddenMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <ExplicitInterfaceName>BaseMemberOverrideTestClass</ExplicitInterfaceName>
-            <Text>.</Text>
-            <Name>Mixin1</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-      </Members>
-      <ImplementedInterfaces />
-      <HasAttributes />
-    </InvolvedType>
-    <InvolvedType id="9" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="HiddenMemberTestClass.Mixin1" base="Mixin&lt;HiddenMemberTestClass.Target&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
-      <Modifiers>
-        <Keyword>public</Keyword>
-      </Modifiers>
-      <summary>No summary found.</summary>
-      <Members>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <ExplicitInterfaceName>HiddenMemberTestClass</ExplicitInterfaceName>
-            <Text>.</Text>
-            <Name>Mixin1</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-      </Members>
-      <ImplementedInterfaces />
-      <HasAttributes />
-    </InvolvedType>
-    <InvolvedType id="10" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin3" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="10" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin3" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -569,7 +572,7 @@
         <Target ref="10" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="11" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="11" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -605,7 +608,7 @@
         <Target ref="12" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="12" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="12" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -645,7 +648,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="13" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="4" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="13" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="4" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -692,7 +695,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="14" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="6" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="14" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="6" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
         <Keyword>abstract</Keyword>
@@ -746,7 +749,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="15" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="15" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -789,7 +792,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="16" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="16" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -812,7 +815,7 @@
         <Target ref="15" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="17" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="17" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -841,7 +844,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="18" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="18" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -866,7 +869,7 @@
         <Target ref="17" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="19" assembly-ref="0" namespace="MixinXRef.UnitTests.Explore" name="SimpleMemberOverrideTest.TemplateMixin" base="Mixin&lt;SimpleMemberOverrideTest.TargetOverrideMixin&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="19" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="SimpleMemberOverrideTest.TemplateMixin" base="Mixin&lt;SimpleMemberOverrideTest.TargetOverrideMixin&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -900,7 +903,7 @@
       <ImplementedInterfaces />
       <HasAttributes />
     </InvolvedType>
-    <InvolvedType id="20" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="UselessObject" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="20" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="UselessObject" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -937,7 +940,7 @@
     </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
-    <Interface id="0" assembly-ref="0" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.IAlgorithm" is-complete-interface="false">
+    <Interface id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.IAlgorithm" is-complete-interface="false">
       <Members>
         <Member type="Method" name="AlgorithmMethod" is-declared-by-this-class="true">
           <Modifiers>
@@ -979,7 +982,7 @@
         <InvolvedType-Reference ref="15" />
       </ImplementedBy>
     </Interface>
-    <Interface id="2" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
+    <Interface id="2" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
       <Members>
         <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
@@ -1012,7 +1015,7 @@
     </Interface>
   </Interfaces>
   <Attributes>
-    <Attribute id="0" assembly-ref="0" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
+    <Attribute id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="BookAttribute">
       <AppliedTo>
         <InvolvedType-Reference ref="5" />
       </AppliedTo>
