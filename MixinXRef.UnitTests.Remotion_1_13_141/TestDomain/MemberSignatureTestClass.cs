@@ -1,7 +1,7 @@
 using System;
 using Remotion.Collections;
 
-namespace MixinXRef.UnitTests.Remotion_1_13_23.TestDomain
+namespace MixinXRef.UnitTests.Remotion_1_13_141.TestDomain
 {
 
   public class MemberSignatureTestClass : IExplicitInterface

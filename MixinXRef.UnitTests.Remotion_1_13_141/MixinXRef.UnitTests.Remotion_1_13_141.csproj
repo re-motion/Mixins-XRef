@@ -34,6 +34,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\MixinXRef.UnitTests\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Remotion, Version=1.13.141.2, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>lib\Remotion.dll</HintPath>
+    </Reference>
     <Reference Include="Remotion.Mixins">
       <HintPath>lib\Remotion.Mixins.dll</HintPath>
     </Reference>
@@ -50,12 +53,14 @@
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_141_Test.cs" />
     <Compile Include="Report\FullReportGeneratorTest.cs" />
     <Compile Include="Stub\InvolvedTypeFinderStub.cs" />
+    <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
     <Compile Include="TestDomain\ClassWithAlphabeticOrderingAttribute.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />
     <Compile Include="TestDomain\CompleteInterfacesTestClass.cs" />
     <Compile Include="TestDomain\FullReportGeneratorTestClass.cs" />
     <Compile Include="TestDomain\GenericTarget.cs" />
     <Compile Include="TestDomain\MemberModifierTestClass.cs" />
+    <Compile Include="TestDomain\MemberSignatureTestClass.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\Mixin2.cs" />
     <Compile Include="TestDomain\Mixin3.cs" />
@@ -72,6 +77,9 @@
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDomain\fullReportGeneratorExpectedOutput.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ namespace MixinXRef.UnitTests.TestDomain
 
   public class MemberSignatureTestClass : IExplicitInterface
   {
-    protected MemberSignatureTestClass (int Param1, string Param2, Remotion.Reflection.ApplicationAssemblyFinderFilter Param3)
+    protected MemberSignatureTestClass (int Param1, string Param2, Remotion.Reflection.IActionInvoker Param3)
     {}
 
     public void PublicMethod ()
