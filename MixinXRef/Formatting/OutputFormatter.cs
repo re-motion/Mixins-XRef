@@ -29,7 +29,9 @@ namespace MixinXRef.Formatting
 
       if (type.IsGenericType)
       {
-        name = name.Substring (0, name.IndexOf ('`'));
+        int index = name.IndexOf ('`');
+        if (index != -1) // Happens for weird types
+          name = name.Substring (0, index);
         name = name + BuildGenericSignature (type);
       }
       return name;
