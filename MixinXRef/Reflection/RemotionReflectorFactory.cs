@@ -35,12 +35,19 @@ namespace MixinXRef.Reflection
 
       if (version.CompareTo (new Version (1, 13, 141)) >= 0)
         return typeof (RemotionReflector_1_13_141);
+      if (version.CompareTo (new Version (1, 13, 140)) == 0)
+        throw NewNotSupportedException (new Version (1, 13, 140));
       if (version.CompareTo (new Version(1, 13, 23)) >= 0)
         return typeof (RemotionReflector_1_13_23);
       if (version.CompareTo (new Version (1, 11, 20)) >= 0)
         return typeof (RemotionReflector_1_11_20);
 
-      throw new NotSupportedException (string.Format ("The remotion assembly version '{0}' is not supported.", version));
+      throw NewNotSupportedException (version);
+    }
+
+    private NotSupportedException NewNotSupportedException (Version remotionVersion)
+    {
+      return new NotSupportedException (string.Format ("The remotion assembly version '{0}' is not supported.", remotionVersion));
     }
   }
 }
