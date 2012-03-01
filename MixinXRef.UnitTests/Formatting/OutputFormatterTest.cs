@@ -40,23 +40,14 @@ namespace MixinXRef.UnitTests.Formatting
     public void GetShortFormattedTypeName_GenericDefinition ()
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (GenericTarget<,>));
-      var expectedOutput = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<,>));
-
-      Assert.That (output, Is.EqualTo (expectedOutput));
-    }
-
-    [Test]
-    public void GetFormattedTypeName_GenericDefinition ()
-    {
-      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<,>));
 
       Assert.That (output, Is.EqualTo ("GenericTarget<TParameter1, TParameter2>"));
     }
 
     [Test]
-    public void GetFormattedTypeName_GenericType ()
+    public void GetShortFormattedTypeName_GenericType ()
     {
-      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (GenericTarget<string, int>));
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (GenericTarget<string, int>));
 
       Assert.That (output, Is.EqualTo ("GenericTarget<string, int>"));
     }
@@ -66,39 +57,60 @@ namespace MixinXRef.UnitTests.Formatting
     }
 
     [Test]
-    public void GetFormattedTypeName_ContainsGenericArguments ()
+    public void GetShortFormattedTypeName_ContainsGenericArguments ()
     {
-      var output = _outputFormatter.GetFormattedGenericTypeName (typeof (ContainsGenericArguments<>).BaseType);
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
       Assert.That (output, Is.EqualTo ("Dictionary<TKey, int>"));
     }
 
     // See http://blogs.msdn.com/b/haibo_luo/archive/2006/02/17/534480.aspx for an explanation
-    class G<T>
-    {
-      class C { }
-      void M (C arg) { }
-    }
+    class G<T> { }
     class G2<T> : G<T> { }
 
-
     [Test]
-    public void GetFormattedTypeName_TypeReturnsNullForFullName ()
+    public void GetShortFormattedTypeName_TypeReturnsNullForFullName ()
     {
       var weirdType = typeof (G2<>).BaseType;
       Assert.That (weirdType.FullName, Is.Null);
 
-      var output = _outputFormatter.GetFormattedGenericTypeName (weirdType);
+      var output = _outputFormatter.GetShortFormattedTypeName (weirdType);
 
-      Assert.That (output, Is.EqualTo ("G<T>"));
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest.G<T>"));
     }
 
     [Test]
-    public void GetFormattedNestedTypeName ()
+    public void GetShortFormattedTypeName_Nested ()
     {
-      var output = _outputFormatter.GetFormattedNestedTypeName (typeof (MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
 
       Assert.That (output, Is.EqualTo ("MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance"));
+    }
+
+    class Nested
+    {
+      internal class VeryNested { }
+    }
+
+    [Test]
+    public void GetShortFormattedTypeName_VeryNested ()
+    {
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (Nested.VeryNested));
+
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest.Nested.VeryNested"));
+    }
+
+    class Nested<T>
+    {
+      internal class WithGenerics<X> { }
+    }
+
+    [Test]
+    public void GetShortFormattedTypeName_NestedGenericTypeDefinitions ()
+    {
+      var output = _outputFormatter.GetShortFormattedTypeName (typeof (Nested<>.WithGenerics<>));
+
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest.Nested<T>.WithGenerics<X>"));
     }
 
     [Test]

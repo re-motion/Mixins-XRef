@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Utility;
 
@@ -9,92 +9,43 @@ namespace MixinXRef.Formatting
 {
   public class OutputFormatter : IOutputFormatter
   {
-    public string GetFormattedNestedTypeName (Type type)
-    {
-      if (type.FullName == null)
-        return type.Name;
-
-      var nestedTypeName = new StringBuilder();
-
-      var nestedIndex = type.FullName.IndexOf ('+');
-      var nestingType = type.FullName.Substring (0, nestedIndex);
-      var nestedType = type.FullName.Substring (nestedIndex);
-      
-      nestedTypeName.Append ( nestingType.Substring (nestingType.LastIndexOf ('.')+1) );
-      nestedTypeName.Append ( nestedType.Replace("+", "."));
-
-      return nestedTypeName.ToString();
-    }
-
-    public string GetFormattedGenericTypeName (Type type)
-    {
-      var typeName = "";
-      var nestedTypeName = "";
-
-      // is not really a generic type name
-      if (!type.Name.Contains ("`") && type.FullName == null)
-        return type.Name;
-
-      if (type.IsNested)
-      {
-        typeName = (type.FullName.Substring (0, type.FullName.IndexOf ('`')));
-        typeName = typeName.Substring (typeName.LastIndexOf ('.') + 1);
-        
-        var index = type.FullName.IndexOf ('+');
-        if (index > 0)
-        {
-          nestedTypeName = (type.FullName.Substring (index, type.FullName.Length - index));
-          nestedTypeName = "." + nestedTypeName.Substring (1, nestedTypeName.IndexOf ('[') - 1);
-        }
-      }
-      else
-        typeName = type.Name.Substring (0, type.Name.IndexOf ('`'));
-
-      var result = new StringBuilder (typeName);
-      result.Append ("<");
-      var genericArguments = type.GetGenericArguments();
-      for (int i = 0; i < genericArguments.Length; i++)
-      {
-        if (i != 0)
-          result.Append (", ");
-
-        result.Append (GetShortFormattedTypeName (genericArguments[i]));
-      }
-      result.Append (">");
-      result.Append (nestedTypeName);
-
-      return result.ToString();
-    }
-
-    public XElement CreateModifierMarkup (string attributes, string keywords)
-    {
-      var modifiers = new XElement ("Modifiers");
-
-      foreach (var attribute in attributes.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
-      {
-        modifiers.Add (CreateElement ("Text", "["));
-        modifiers.Add (CreateElement ("Type", attribute));
-        modifiers.Add (CreateElement ("Text", "]"));
-      }
-
-      foreach (var keyword in keywords.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
-        modifiers.Add (CreateElement ("Keyword", keyword));
-
-      return modifiers;
-    }
-
     public string GetShortFormattedTypeName (Type type)
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
-      var name = type.Name;
-
-      if (type.IsGenericType)
-        return GetFormattedGenericTypeName (type);
+      var name = BuildUnnestedTypeName(type);
 
       if (type.IsNested)
-        return GetFormattedNestedTypeName (type);
+        name = GetShortFormattedTypeName (type.DeclaringType) + "." + name;
 
+      return name;
+    }
+
+    private string BuildUnnestedTypeName (Type type)
+    {
+      var name = type.Name;
+
+      name = FormatSimpleName (name);
+
+      if (type.IsGenericType)
+      {
+        name = name.Substring (0, name.IndexOf ('`'));
+        name = name + BuildGenericSignature (type);
+      }
+      return name;
+    }
+
+    private string BuildGenericSignature (Type type)
+    {
+      var genericArguments = type.GetGenericArguments()
+          .Select (argType => argType.IsGenericParameter ? BuildUnnestedTypeName (argType) : GetShortFormattedTypeName (argType))
+          .ToArray();
+
+      return "<" + string.Join (", ", genericArguments) + ">";
+    }
+
+    private string FormatSimpleName (string name)
+    {
       switch (name)
       {
         case "Boolean":
@@ -122,8 +73,25 @@ namespace MixinXRef.Formatting
         case "Void":
           return name.ToLower();
         default:
-          return type.Name;
+          return name;
       }
+    }
+
+    public XElement CreateModifierMarkup (string attributes, string keywords)
+    {
+      var modifiers = new XElement ("Modifiers");
+
+      foreach (var attribute in attributes.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+      {
+        modifiers.Add (CreateElement ("Text", "["));
+        modifiers.Add (CreateElement ("Type", attribute));
+        modifiers.Add (CreateElement ("Text", "]"));
+      }
+
+      foreach (var keyword in keywords.Split (new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+        modifiers.Add (CreateElement ("Keyword", keyword));
+
+      return modifiers;
     }
 
     public void AddParameterMarkup (ParameterInfo[] parameterInfos, XElement signatureElement)
