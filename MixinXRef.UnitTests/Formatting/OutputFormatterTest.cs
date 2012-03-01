@@ -7,7 +7,7 @@ using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace MixinXRef.UnitTests.formatting
+namespace MixinXRef.UnitTests.Formatting
 {
   [TestFixture]
   public class OutputFormatterTest
@@ -61,6 +61,10 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That (output, Is.EqualTo ("GenericTarget<string, int>"));
     }
 
+    public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
+    {
+    }
+
     [Test]
     public void GetFormattedTypeName_ContainsGenericArguments ()
     {
@@ -69,8 +73,24 @@ namespace MixinXRef.UnitTests.formatting
       Assert.That (output, Is.EqualTo ("Dictionary<TKey, int>"));
     }
 
-    public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
+    // See http://blogs.msdn.com/b/haibo_luo/archive/2006/02/17/534480.aspx for an explanation
+    class G<T>
     {
+      class C { }
+      void M (C arg) { }
+    }
+    class G2<T> : G<T> { }
+
+
+    [Test]
+    public void GetFormattedTypeName_TypeReturnsNullForFullName ()
+    {
+      var weirdType = typeof (G2<>).BaseType;
+      Assert.That (weirdType.FullName, Is.Null);
+
+      var output = _outputFormatter.GetFormattedGenericTypeName (weirdType);
+
+      Assert.That (output, Is.EqualTo ("G<T>"));
     }
 
     [Test]
