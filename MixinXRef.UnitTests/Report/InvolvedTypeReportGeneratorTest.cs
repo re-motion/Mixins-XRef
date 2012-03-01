@@ -132,60 +132,6 @@ namespace MixinXRef.UnitTests.Report
           "InvolvedTypes",
           new XElement (
               "InvolvedType",
-              new XAttribute ("id", "2"),
-              new XAttribute ("assembly-ref", "0"),
-              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "Mixin1"),
-              new XAttribute ("base", "Object"),
-              new XAttribute ("base-ref", "none"),
-              new XAttribute ("is-target", false),
-              new XAttribute ("is-mixin", true),
-              new XAttribute ("is-generic-definition", false),
-              _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType3.Type)),
-              _summaryPicker.GetSummary (involvedType3.Type),
-              new MemberReportGenerator (involvedType3.Type, involvedType3, _involvedTypeIdentifierGenerator, _outputFormatter).
-                  GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType3, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
-              new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
-              new MixinReferenceReportGenerator (
-                  involvedType3,
-                  _readonlyInvolvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
-                  _remotionReflector,
-                  _outputFormatter).
-                  GenerateXml(),
-              new TargetReferenceReportGenerator (involvedType3, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
-              ),
-          new XElement (
-              "InvolvedType",
-              new XAttribute ("id", "3"),
-              new XAttribute ("assembly-ref", "0"),
-              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "Mixin2"),
-              new XAttribute ("base", "Object"),
-              new XAttribute ("base-ref", "none"),
-              new XAttribute ("is-target", false),
-              new XAttribute ("is-mixin", true),
-              new XAttribute ("is-generic-definition", false),
-              _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType4.Type)),
-              _summaryPicker.GetSummary (involvedType4.Type),
-              new MemberReportGenerator (involvedType4.Type, involvedType4, _involvedTypeIdentifierGenerator, _outputFormatter).
-                  GenerateXml(),
-              new InterfaceReferenceReportGenerator (involvedType4, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
-              new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
-              new MixinReferenceReportGenerator (
-                  involvedType4,
-                  _readonlyInvolvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
-                  _remotionReflector,
-                  _outputFormatter).
-                  GenerateXml(),
-              new TargetReferenceReportGenerator (involvedType4, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
-              ),
-          new XElement (
-              "InvolvedType",
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
@@ -237,6 +183,60 @@ namespace MixinXRef.UnitTests.Report
                   _outputFormatter).
                   GenerateXml(),
               new TargetReferenceReportGenerator (involvedType2, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
+              ),
+          new XElement (
+              "InvolvedType",
+              new XAttribute ("id", "2"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "Mixin1"),
+              new XAttribute ("base", "Object"),
+              new XAttribute ("base-ref", "none"),
+              new XAttribute ("is-target", false),
+              new XAttribute ("is-mixin", true),
+              new XAttribute ("is-generic-definition", false),
+              _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType3.Type)),
+              _summaryPicker.GetSummary (involvedType3.Type),
+              new MemberReportGenerator (involvedType3.Type, involvedType3, _involvedTypeIdentifierGenerator, _outputFormatter).
+                  GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType3, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
+              new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
+              new MixinReferenceReportGenerator (
+                  involvedType3,
+                  _readonlyInvolvedTypeIdentifierGenerator,
+                  interfaceIdentifierGenerator,
+                  attributeIdentifierGenerator,
+                  _remotionReflector,
+                  _outputFormatter).
+                  GenerateXml(),
+              new TargetReferenceReportGenerator (involvedType3, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
+              ),
+          new XElement (
+              "InvolvedType",
+              new XAttribute ("id", "3"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "Mixin2"),
+              new XAttribute ("base", "Object"),
+              new XAttribute ("base-ref", "none"),
+              new XAttribute ("is-target", false),
+              new XAttribute ("is-mixin", true),
+              new XAttribute ("is-generic-definition", false),
+              _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType4.Type)),
+              _summaryPicker.GetSummary (involvedType4.Type),
+              new MemberReportGenerator (involvedType4.Type, involvedType4, _involvedTypeIdentifierGenerator, _outputFormatter).
+                  GenerateXml(),
+              new InterfaceReferenceReportGenerator (involvedType4, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
+              new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
+              new MixinReferenceReportGenerator (
+                  involvedType4,
+                  _readonlyInvolvedTypeIdentifierGenerator,
+                  interfaceIdentifierGenerator,
+                  attributeIdentifierGenerator,
+                  _remotionReflector,
+                  _outputFormatter).
+                  GenerateXml(),
+              new TargetReferenceReportGenerator (involvedType4, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               )
           );
 

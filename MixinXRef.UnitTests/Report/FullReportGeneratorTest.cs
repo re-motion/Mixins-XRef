@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Report;
-using MixinXRef.UnitTests.Stub;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -98,7 +97,7 @@ namespace MixinXRef.UnitTests.Report
       RemoveAbsolutePathsFromStackTraces (expectedOutput);
       RemoveAbsolutePathsFromStackTraces (output);
 
-      Assert.That (output.ToString ().ToLower (), Is.EqualTo (expectedOutput.ToString ().ToLower ()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
     
     private void RemoveAbsolutePathsFromStackTraces (XDocument document)

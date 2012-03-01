@@ -100,7 +100,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_141.Report
       RemoveAbsolutePathsFromStackTraces (expectedOutput);
       RemoveAbsolutePathsFromStackTraces (output);
 
-      Assert.That (output.ToString ().ToLower (), Is.EqualTo (expectedOutput.ToString ().ToLower ()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     private void RemoveAbsolutePathsFromStackTraces (XDocument document)

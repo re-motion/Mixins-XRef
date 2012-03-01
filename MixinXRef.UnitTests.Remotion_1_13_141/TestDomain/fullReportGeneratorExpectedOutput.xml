@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2012-02-29 17:51:46">
+<MixinXRefReport creation-time="2012-03-01 09:34:28">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.1.0.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy2" version="2.1.0.0" location="./Castle.DynamicProxy2.dll" />
@@ -50,13 +50,13 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Mixins>
-        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
+        <Mixin ref="5" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
+        <Mixin ref="1" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -64,7 +64,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="2" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="ClassWithAlphabeticOrderingAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="1" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="ClassWithAlphabeticOrderingAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Text>[</Text>
         <Type>AcceptsAlphabeticOrdering</Type>
@@ -87,11 +87,11 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Targets>
-        <Target ref="0" />
         <Target ref="15" />
+        <Target ref="0" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="4" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="2" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="ClassWithBookAttribute" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -116,11 +116,11 @@
         </HasAttribute>
       </HasAttributes>
       <Targets>
-        <Target ref="3" />
-        <Target ref="9" />
+        <Target ref="6" />
+        <Target ref="8" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="7" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="3" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -153,10 +153,10 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Targets>
-        <Target ref="8" />
+        <Target ref="4" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="8" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="4" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -191,12 +191,12 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="7" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="private">
+        <Mixin ref="3" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="1" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="FullReportGeneratorTestClass" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="5" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="FullReportGeneratorTestClass" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -256,11 +256,11 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Targets>
-        <Target ref="0" />
         <Target ref="15" />
+        <Target ref="0" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="3" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
+    <InvolvedType id="6" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="GenericTarget&lt;TParameter1, TParameter2&gt;" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="true">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -280,12 +280,12 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Mixins>
-        <Mixin ref="4" index="n/a" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
+        <Mixin ref="2" index="n/a" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="5" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="7" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="MemberModifierTestClass" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
         <Keyword>abstract</Keyword>
@@ -434,16 +434,16 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="5" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
+        <Mixin ref="7" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
       <Targets>
-        <Target ref="5" />
-        <Target ref="10" />
+        <Target ref="7" />
+        <Target ref="12" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="9" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="3" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="8" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance" base="GenericTarget&lt;string, int&gt;" base-ref="6" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -480,7 +480,7 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="4" index="0" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
+        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithBookAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions>
@@ -490,7 +490,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="12" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="9" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin1" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -510,10 +510,10 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Targets>
-        <Target ref="11" />
+        <Target ref="13" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="14" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="10" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin2" base="Object" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -535,10 +535,10 @@
         <HasAttribute ref="1" />
       </HasAttributes>
       <Targets>
-        <Target ref="13" />
+        <Target ref="14" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="6" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin3" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
+    <InvolvedType id="11" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="Mixin3" base="Object" base-ref="none" is-target="true" is-mixin="true" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -571,15 +571,15 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="6" index="n/a" relation="Extends" instance-name="Mixin3" introduced-member-visibility="private">
+        <Mixin ref="11" index="n/a" relation="Extends" instance-name="Mixin3" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
       <Targets>
-        <Target ref="6" />
+        <Target ref="11" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="10" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="5" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="12" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="SubModifierTestClass" base="MemberModifierTestClass" base-ref="7" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
         <Keyword>abstract</Keyword>
@@ -628,12 +628,12 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="5" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
+        <Mixin ref="7" index="n/a" relation="Extends" instance-name="MemberModifierTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="11" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="13" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="TargetClass1" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -668,7 +668,7 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="12" index="0" relation="Extends" instance-name="Mixin1" introduced-member-visibility="private">
+        <Mixin ref="9" index="0" relation="Extends" instance-name="Mixin1" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -676,7 +676,7 @@
         </Mixin>
       </Mixins>
     </InvolvedType>
-    <InvolvedType id="13" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
+    <InvolvedType id="14" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="TargetClass2" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -697,7 +697,7 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Mixins>
-        <Mixin ref="14" index="0" relation="Extends" instance-name="Mixin2" introduced-member-visibility="private">
+        <Mixin ref="10" index="0" relation="Extends" instance-name="Mixin2" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -726,13 +726,13 @@
       <ImplementedInterfaces />
       <HasAttributes />
       <Mixins>
-        <Mixin ref="1" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
+        <Mixin ref="5" index="1" relation="Extends" instance-name="FullReportGeneratorTestClass" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
           <MemberOverrides />
         </Mixin>
-        <Mixin ref="2" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
+        <Mixin ref="1" index="0" relation="Extends" instance-name="ClassWithAlphabeticOrderingAttribute" introduced-member-visibility="private">
           <AdditionalDependencies />
           <InterfaceIntroductions />
           <AttributeIntroductions />
@@ -742,29 +742,6 @@
     </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
-    <Interface id="1" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
-      <Members>
-        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-      </Members>
-      <ImplementedBy>
-        <InvolvedType-Reference ref="5" />
-        <InvolvedType-Reference ref="6" />
-        <InvolvedType-Reference ref="9" />
-        <InvolvedType-Reference ref="10" />
-        <InvolvedType-Reference ref="11" />
-      </ImplementedBy>
-    </Interface>
     <Interface id="0" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
       <Members>
         <Member type="Method" name="A" is-declared-by-this-class="true">
@@ -793,41 +770,85 @@
         </Member>
       </Members>
       <ImplementedBy>
+        <InvolvedType-Reference ref="4" />
+      </ImplementedBy>
+    </Interface>
+    <Interface id="1" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
+      <Members>
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+      </Members>
+      <ImplementedBy>
+        <InvolvedType-Reference ref="7" />
         <InvolvedType-Reference ref="8" />
+        <InvolvedType-Reference ref="11" />
+        <InvolvedType-Reference ref="12" />
+        <InvolvedType-Reference ref="13" />
       </ImplementedBy>
     </Interface>
   </Interfaces>
   <Attributes>
     <Attribute id="0" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="BookAttribute">
       <AppliedTo>
-        <InvolvedType-Reference ref="4" />
+        <InvolvedType-Reference ref="2" />
       </AppliedTo>
     </Attribute>
     <Attribute id="1" assembly-ref="none" namespace="System" name="SerializableAttribute">
       <AppliedTo>
-        <InvolvedType-Reference ref="14" />
+        <InvolvedType-Reference ref="10" />
       </AppliedTo>
     </Attribute>
   </Attributes>
   <ConfigurationErrors>
     <Exception type="Remotion.Mixins.ConfigurationException">
       <Message><![CDATA[The dependency 'ICMyMixinTargetMyMixin' (required by a complete interface) is not fulfilled - public or protected method 'Void B()' could not be found on the target class.]]></Message>
-      <StackTrace>   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.ChooseCandidateGroup(IEnumerable`1 candidatesByInheritanceOffset, MethodInfo interfaceMethod, RequirementDefinitionBase requirement) in &lt;path-removed&gt;\DuckTypingRequiredMethodDefinitionCollector.cs:line 95
-   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.FindMethod(MethodInfo interfaceMethod, RequirementDefinitionBase requirement) in &lt;path-removed&gt;\DuckTypingRequiredMethodDefinitionCollector.cs:line 61
-   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.&lt;CreateRequiredMethodDefinitions&gt;d__2.MoveNext() in &lt;path-removed&gt;\DuckTypingRequiredMethodDefinitionCollector.cs:line 49
-   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.Apply(RequirementDefinitionBase requirement) in &lt;path-removed&gt;\RequiredMethodDefinitionBuilder.cs:line 44
-   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.ApplyMethodRequirements(TargetClassDefinition classDefinition) in &lt;path-removed&gt;\TargetClassDefinitionBuilder.cs:line 90
-   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.Build(ClassContext classContext) in &lt;path-removed&gt;\TargetClassDefinitionBuilder.cs:line 55
-   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 44
+      <StackTrace>
+        <![CDATA[   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.ChooseCandidateGroup(IEnumerable`1 candidatesByInheritanceOffset, MethodInfo interfaceMethod, RequirementDefinitionBase requirement) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\RequiredMethodDefinitionBuilding\DuckTypingRequiredMethodDefinitionCollector.cs:line 95
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.FindMethod(MethodInfo interfaceMethod, RequirementDefinitionBase requirement) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\RequiredMethodDefinitionBuilding\DuckTypingRequiredMethodDefinitionCollector.cs:line 61
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilding.DuckTypingRequiredMethodDefinitionCollector.<CreateRequiredMethodDefinitions>d__2.MoveNext() in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\RequiredMethodDefinitionBuilding\DuckTypingRequiredMethodDefinitionCollector.cs:line 49
+   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.Apply(RequirementDefinitionBase requirement) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 44
+   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.ApplyMethodRequirements(TargetClassDefinition classDefinition) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\TargetClassDefinitionBuilder.cs:line 90
+   at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.Build(ClassContext classContext) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\Building\TargetClassDefinitionBuilder.cs:line 55
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 44
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in &lt;path-removed&gt;\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in &lt;path-removed&gt;\RemotionReflector_1_13_141.cs:line 47
-   at MixinXRef.UnitTests.Remotion_1_13_141.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in &lt;path-removed&gt;\InvolvedTypeFinderStub.cs:line 90</StackTrace>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+      </StackTrace>
     </Exception>
   </ConfigurationErrors>
   <ValidationErrors>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
-      <Message><![CDATA[Some parts of the mixin configuration could not be validated.
+      <Message>
+        <![CDATA[Some parts of the mixin configuration could not be validated.
+MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.Mixin3 (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.Mixin3):
+Error: A mixin is applied to itself.
+Error: A mixin is applied to one of its base types.
+]]>
+      </Message>
+      <StackTrace>
+        <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 54
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
+   at lambda_method(ExecutionScope , Object , Object[] )
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+      </StackTrace>
+      <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
+    </Exception>
+    <Exception type="Remotion.Mixins.Validation.ValidationException">
+      <Message>
+        <![CDATA[Some parts of the mixin configuration could not be validated.
 MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass):
 Error: A mixin is applied to itself.
 Error: A mixin is applied to one of its base types.
@@ -835,43 +856,36 @@ Error: A mixin for which a concrete subtype must be generated is not derived fro
 
 MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
-]]></Message>
-      <StackTrace>   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 54
-   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 45
+]]>
+      </Message>
+      <StackTrace>
+        <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 54
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in &lt;path-removed&gt;\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in &lt;path-removed&gt;\RemotionReflector_1_13_141.cs:line 47
-   at MixinXRef.UnitTests.Remotion_1_13_141.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in &lt;path-removed&gt;\InvolvedTypeFinderStub.cs:line 90</StackTrace>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+      </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
     <Exception type="Remotion.Mixins.Validation.ValidationException">
-      <Message><![CDATA[Some parts of the mixin configuration could not be validated.
-MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.Mixin3 (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.Mixin3):
-Error: A mixin is applied to itself.
-Error: A mixin is applied to one of its base types.
-]]></Message>
-      <StackTrace>   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 54
-   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 45
-   at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in &lt;path-removed&gt;\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in &lt;path-removed&gt;\RemotionReflector_1_13_141.cs:line 47
-   at MixinXRef.UnitTests.Remotion_1_13_141.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in &lt;path-removed&gt;\InvolvedTypeFinderStub.cs:line 90</StackTrace>
-      <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
-    </Exception>
-    <Exception type="Remotion.Mixins.Validation.ValidationException">
-      <Message><![CDATA[Some parts of the mixin configuration could not be validated.
+      <Message>
+        <![CDATA[Some parts of the mixin configuration could not be validated.
 MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.SubModifierTestClass):
 Error: A mixin for which a concrete subtype must be generated is not derived from one of the generic Mixin classes.
 
 MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass.PublicAbstractMethod (MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.MemberModifierTestClass -> MixinXRef.UnitTests.Remotion_1_13_141.TestDomain.SubModifierTestClass):
 Error: An abstract mixin method is not overridden (implemented) by the target class.
-]]></Message>
-      <StackTrace>   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 54
-   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in &lt;path-removed&gt;\TargetClassDefinitionFactory.cs:line 45
+]]>
+      </Message>
+      <StackTrace>
+        <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 54
+   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in &lt;path-removed&gt;\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in &lt;path-removed&gt;\RemotionReflector_1_13_141.cs:line 47
-   at MixinXRef.UnitTests.Remotion_1_13_141.Stub.InvolvedTypeFinderStub.GetTargetClassDefinition(Type type, ReflectedObject classContext) in &lt;path-removed&gt;\InvolvedTypeFinderStub.cs:line 90</StackTrace>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+      </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
   </ValidationErrors>
