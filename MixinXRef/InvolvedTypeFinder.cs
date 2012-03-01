@@ -66,7 +66,7 @@ namespace MixinXRef
         }
       }
 
-      return involvedTypes.ToArray();
+      return involvedTypes.ToSortedArray();
     }
 
     public ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)

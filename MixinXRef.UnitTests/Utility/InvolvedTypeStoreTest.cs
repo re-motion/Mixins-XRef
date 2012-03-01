@@ -37,19 +37,30 @@ namespace MixinXRef.UnitTests.Utility
     }
 
     [Test]
-    public void ToArray_EmptyStore ()
+    public void ToSortedArray_EmptyStore ()
     {
-      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (new InvolvedType[0]));
+      Assert.That (_involvedTypeStore.ToSortedArray(), Is.EqualTo (new InvolvedType[0]));
     }
 
     [Test]
-    public void ToArray_NonEmptyStore ()
+    public void ToSortedArray_NonEmptyStore ()
     {
       var involvedType1 = _involvedTypeStore.GetOrCreateValue (typeof (object));
       var involvedType2 = _involvedTypeStore.GetOrCreateValue (typeof (string));
-      var expectedType = new[] { involvedType1, involvedType2 };
 
-      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (expectedType));
+      var expectedTypes = new[] { involvedType1, involvedType2 };
+      Assert.That (_involvedTypeStore.ToSortedArray(), Is.EqualTo (expectedTypes));
+    }
+
+    [Test]
+    public void ToSortedArray_OrderByFullName ()
+    {
+      var involvedType1 = _involvedTypeStore.GetOrCreateValue (typeof (System.String));      // 3
+      var involvedType2 = _involvedTypeStore.GetOrCreateValue (typeof (System.Object));      // 2
+      var involvedType3 = _involvedTypeStore.GetOrCreateValue (typeof (System.IDisposable)); // 1
+
+      var expectedTypesInOrder = new[] { involvedType3, involvedType2, involvedType1 };
+      Assert.That (_involvedTypeStore.ToSortedArray (), Is.EqualTo (expectedTypesInOrder));
     }
   }
 }

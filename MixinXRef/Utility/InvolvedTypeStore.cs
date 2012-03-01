@@ -18,9 +18,11 @@ namespace MixinXRef.Utility
       return _involvedTypes[key];
     }
 
-    public InvolvedType[] ToArray ()
+    public InvolvedType[] ToSortedArray ()
     {
-      return _involvedTypes.Values.ToArray();
+      return _involvedTypes.Values
+          .OrderBy (involvedType => involvedType.Type.FullName)
+          .ToArray();
     }
   }
 }
