@@ -83,7 +83,6 @@
     <Compile Include="Reflection\RemotionReflectorFactoryTest.cs" />
     <Compile Include="Reflection\Remotion\RemotionReflector_1_13_23_Test.cs" />
     <Compile Include="Report\FullReportGeneratorTest.cs" />
-    <Compile Include="Stub\InvolvedTypeFinderStub.cs" />
     <Compile Include="TestDomain\ClassInheritsFromUselessObject.cs" />
     <Compile Include="TestDomain\ClassWithAlphabeticOrderingAttribute.cs" />
     <Compile Include="TestDomain\ClassWithBookAttribute.cs" />

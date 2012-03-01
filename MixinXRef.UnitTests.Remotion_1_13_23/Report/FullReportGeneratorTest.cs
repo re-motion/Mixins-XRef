@@ -7,7 +7,6 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
-using MixinXRef.UnitTests.Remotion_1_13_23.Stub;
 using MixinXRef.UnitTests.Remotion_1_13_23.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -77,7 +76,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_23.Report
           .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ().AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ().AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration ();
 
-      var involvedTypes = new InvolvedTypeFinderStub (
+      var involvedTypes = new InvolvedTypeFinder (
           new ReflectedObject (mixinConfiguration),
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,

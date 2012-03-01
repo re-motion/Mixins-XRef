@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
@@ -53,8 +52,7 @@ namespace MixinXRef.Report
     public XElement GenerateXml ()
     {
       var involvedTypesElement = new XElement ("InvolvedTypes");
-      var orderedInvolvedTypes = _involvedTypes.OrderBy (it => it.Type.FullName); // Make integration tests more robust
-      foreach (var involvedType in orderedInvolvedTypes) 
+      foreach (var involvedType in _involvedTypes) 
         involvedTypesElement.Add (CreateInvolvedTypeElement (involvedType));
 
       return involvedTypesElement;

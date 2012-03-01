@@ -74,7 +74,7 @@ namespace MixinXRef.UnitTests.Report
           .ForClass<CompleteInterfacesTestClass.MyMixinTarget> ().AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin> ().AddMixin<CompleteInterfacesTestClass.MyMixin> ()
           .BuildConfiguration();
 
-      var involvedTypes = new InvolvedTypeFinderStub (
+      var involvedTypes = new InvolvedTypeFinder (
           new ReflectedObject (mixinConfiguration),
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,
