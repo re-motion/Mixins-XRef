@@ -81,7 +81,7 @@ namespace MixinXRef.Reflection.Remotion
       {
         return reflectedValidationException.GetProperty ("ValidationLog");
       }
-      catch (MissingMethodException)
+      catch (MissingMethodException) // Since version 1.13.123, see https://www.re-motion.org/jira/browse/RM-4010
       {
         return reflectedValidationException.GetProperty ("ValidationLogData");
       }
