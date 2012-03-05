@@ -19,8 +19,8 @@ namespace MixinXRef.Report
     private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
     private readonly MemberSignatureUtility _memberSignatureUtility;
     private readonly Dictionary<MemberInfo, ReflectedObject> _memberDefinitionDictionary = new Dictionary<MemberInfo, ReflectedObject>();
-    private Dictionary<MemberInfo, ReflectedObject> _memberInfoToMemberDefinitionDictionary = new Dictionary<MemberInfo, ReflectedObject>();
 
+    private Dictionary<MemberInfo, ReflectedObject> _memberInfoToMemberDefinitionDictionary;
 
     public MemberReportGenerator (
         Type type,
@@ -50,7 +50,8 @@ namespace MixinXRef.Report
           "Members",
           from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
           where // memberInfo.DeclaringType.IsAssignableFrom (_type)&& 
-          !IsSpecialName (memberInfo)
+              !IsSpecialName (memberInfo)
+          orderby memberInfo.Name // Make integration tests more robust
           select CreateMemberElement (memberInfo)
           );
     }

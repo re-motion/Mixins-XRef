@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MixinXRefReport creation-time="2012-03-01 09:36:44">
+<MixinXRefReport creation-time="2012-03-05 11:22:48">
   <Assemblies>
     <Assembly id="0" name="Castle.Core" version="1.1.0.0" location="./Castle.Core.dll" />
     <Assembly id="1" name="Castle.DynamicProxy2" version="2.1.0.0" location="./Castle.DynamicProxy2.dll" />
@@ -125,17 +125,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="B" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>B</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -144,6 +133,17 @@
             <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
             <Text>.</Text>
             <Name>MyMixin</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="B" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>B</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -161,17 +161,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="A" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>A</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -180,6 +169,17 @@
             <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
             <Text>.</Text>
             <Name>MyMixinTarget</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Method" name="A" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>A</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -201,17 +201,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="ProtectedMethod" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>ProtectedMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -220,15 +209,6 @@
             <Name>FullReportGeneratorTestClass</Name>
             <Text>(</Text>
             <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Property" name="Property" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Type>Type</Type>
-            <Name>Property</Name>
           </Signature>
         </Member>
         <Member type="Field" name="_stringField" is-declared-by-this-class="true">
@@ -249,6 +229,26 @@
             <Name>FullReportGeneratorNestedClass</Name>
             <Text>:</Text>
             <Type>IDisposable</Type>
+          </Signature>
+        </Member>
+        <Member type="Property" name="Property" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Type>Type</Type>
+            <Name>Property</Name>
+          </Signature>
+        </Member>
+        <Member type="Method" name="ProtectedMethod" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>ProtectedMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
           </Signature>
         </Member>
       </Members>
@@ -291,6 +291,107 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>MemberModifierTestClass</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Field" name="_readonlyField" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>readonly</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>_readonlyField</Name>
+          </Signature>
+        </Member>
+        <Member type="Field" name="_staticField" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>static</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>int</Keyword>
+            <Name>_staticField</Name>
+          </Signature>
+        </Member>
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>Dispose</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
+        <Member type="Field" name="InternalField" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>InternalField</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedClass" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedClass</Name>
+          </Signature>
+        </Member>
+        <Member type="NestedType" name="NestedStaticClass" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>class</Keyword>
+            <Name>NestedStaticClass</Name>
+          </Signature>
+        </Member>
+        <Member type="Event" name="ProtectedInternalEvent" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+            <Keyword>internal</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>event</Keyword>
+            <Type>ChangedEventHandler</Type>
+            <Name>ProtectedInternalEvent</Name>
+          </Signature>
+        </Member>
+        <Member type="Property" name="ProtectedProperty" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>string</Keyword>
+            <Name>ProtectedProperty</Name>
+          </Signature>
+        </Member>
+        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+            <Keyword>abstract</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>PublicAbstractMethod</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
         <Member type="Method" name="PublicMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -314,29 +415,6 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>PublicAbstractMethod</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
         <Member type="Method" name="StaticMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -347,84 +425,6 @@
             <Name>StaticMethod</Name>
             <Text>(</Text>
             <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Name>MemberModifierTestClass</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Property" name="ProtectedProperty" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>ProtectedProperty</Name>
-          </Signature>
-        </Member>
-        <Member type="Event" name="ProtectedInternalEvent" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-            <Keyword>internal</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>event</Keyword>
-            <Type>ChangedEventHandler</Type>
-            <Name>ProtectedInternalEvent</Name>
-          </Signature>
-        </Member>
-        <Member type="Field" name="InternalField" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>internal</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>InternalField</Name>
-          </Signature>
-        </Member>
-        <Member type="Field" name="_readonlyField" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>readonly</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>string</Keyword>
-            <Name>_readonlyField</Name>
-          </Signature>
-        </Member>
-        <Member type="Field" name="_staticField" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>static</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>int</Keyword>
-            <Name>_staticField</Name>
-          </Signature>
-        </Member>
-        <Member type="NestedType" name="NestedStaticClass" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-            <Keyword>abstract</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>class</Keyword>
-            <Name>NestedStaticClass</Name>
-          </Signature>
-        </Member>
-        <Member type="NestedType" name="NestedClass" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>class</Keyword>
-            <Name>NestedClass</Name>
           </Signature>
         </Member>
       </Members>
@@ -448,18 +448,6 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
-        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Keyword>void</Keyword>
-            <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-          <Overrides />
-        </Member>
         <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -468,6 +456,18 @@
             <ExplicitInterfaceName>MemberSignatureTestClass</ExplicitInterfaceName>
             <Text>.</Text>
             <Name>NestedClassWithInterfaceAndInheritance</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+          <Overrides />
+        </Member>
+        <Member type="Method" name="Dispose" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Keyword>void</Keyword>
+            <Name>Dispose</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -543,6 +543,16 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>Mixin3</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
         <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -550,16 +560,6 @@
           <Signature>
             <Keyword>void</Keyword>
             <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Name>Mixin3</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -585,6 +585,16 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>protected</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>SubModifierTestClass</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+        </Member>
         <Member type="Method" name="PublicAbstractMethod" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -611,16 +621,6 @@
             <Text>)</Text>
           </Signature>
         </Member>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>protected</Keyword>
-          </Modifiers>
-          <Signature>
-            <Name>SubModifierTestClass</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-        </Member>
       </Members>
       <ImplementedInterfaces>
         <ImplementedInterface ref="1" />
@@ -638,6 +638,17 @@
       </Modifiers>
       <summary>No summary found.</summary>
       <Members>
+        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
+          <Modifiers>
+            <Keyword>public</Keyword>
+          </Modifiers>
+          <Signature>
+            <Name>TargetClass1</Name>
+            <Text>(</Text>
+            <Text>)</Text>
+          </Signature>
+          <Overrides />
+        </Member>
         <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
             <Keyword>public</Keyword>
@@ -645,17 +656,6 @@
           <Signature>
             <Keyword>void</Keyword>
             <Name>Dispose</Name>
-            <Text>(</Text>
-            <Text>)</Text>
-          </Signature>
-          <Overrides />
-        </Member>
-        <Member type="Constructor" name=".ctor" is-declared-by-this-class="true">
-          <Modifiers>
-            <Keyword>public</Keyword>
-          </Modifiers>
-          <Signature>
-            <Name>TargetClass1</Name>
             <Text>(</Text>
             <Text>)</Text>
           </Signature>
@@ -820,9 +820,9 @@
    at Remotion.Mixins.Definitions.Building.TargetClassDefinitionBuilder.Build(ClassContext classContext) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\TargetClassDefinitionBuilder.cs:line 54
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 35
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
     </Exception>
   </ConfigurationErrors>
@@ -843,9 +843,9 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
         <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
     </Exception>
@@ -863,9 +863,9 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
         <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />
     </Exception>
@@ -881,9 +881,9 @@ Error: A mixin is applied to one of its base types.
         <![CDATA[   at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.Validate(TargetClassDefinition definition) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 44
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\trunk\Remotion\Core\Core\Mixins\Definitions\TargetClassDefinitionFactory.cs:line 36
    at lambda_method(ExecutionScope , Object , Object[] )
-   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
-   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\bla\blub\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
+   at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_23.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_23.cs:line 24
+   at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
     </Exception>

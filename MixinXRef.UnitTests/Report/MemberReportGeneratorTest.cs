@@ -92,19 +92,19 @@ namespace MixinXRef.UnitTests.Report
           "Members",
           new XElement (
               "Member",
-              new XAttribute ("type", MemberTypes.Method),
-              new XAttribute ("name", "DoSomething"),
-              new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public override"),
-              _outputFormatter.CreateMethodMarkup ("DoSomething", typeof (void), new ParameterInfo[0])
-              ),
-          new XElement (
-              "Member",
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public"),
               _outputFormatter.CreateConstructorMarkup ("ClassWithProperty", new ParameterInfo[0])
+              ),
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "DoSomething"),
+              new XAttribute ("is-declared-by-this-class", true),
+              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreateMethodMarkup ("DoSomething", typeof (void), new ParameterInfo[0])
               ),
           new XElement (
               "Member",
@@ -128,7 +128,6 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
       var involvedType = new InvolvedType (type);
       involvedType.TargetClassDefintion = targetClassDefinition;
-      var memberInfo = type.GetMember ("MyBaseClassMethod")[0];
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
@@ -138,11 +137,11 @@ namespace MixinXRef.UnitTests.Report
           "Members",
           new XElement (
               "Member",
-              new XAttribute ("type", MemberTypes.Method),
-              new XAttribute ("name", "MyNewMethod"),
+              new XAttribute ("type", MemberTypes.Constructor),
+              new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public virtual"),
-              _outputFormatter.CreateMethodMarkup ("MyNewMethod", typeof (void), new ParameterInfo[0]),
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("InheritatedTargetClass", new ParameterInfo[0]),
               new XElement ("Overrides")
               ),
           new XElement (
@@ -152,15 +151,15 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-declared-by-this-class", false),
               _outputFormatter.CreateModifierMarkup ("", "public override"),
               _outputFormatter.CreateMethodMarkup ("MyBaseClassMethod", typeof (void), new ParameterInfo[0]),
-              GenerateOverrides("0", "MixinOverridesTargetClassMember")
+              GenerateOverrides ("0", "MixinOverridesTargetClassMember")
               ),
           new XElement (
               "Member",
-              new XAttribute ("type", MemberTypes.Constructor),
-              new XAttribute ("name", ".ctor"),
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "MyNewMethod"),
               new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public"),
-              _outputFormatter.CreateConstructorMarkup ("InheritatedTargetClass", new ParameterInfo[0]),
+              _outputFormatter.CreateModifierMarkup ("", "public virtual"),
+              _outputFormatter.CreateMethodMarkup ("MyNewMethod", typeof (void), new ParameterInfo[0]),
               new XElement ("Overrides")
               )
           );
@@ -191,11 +190,11 @@ namespace MixinXRef.UnitTests.Report
           "Members",
           new XElement (
               "Member",
-              new XAttribute ("type", MemberTypes.Method),
-              new XAttribute ("name", "TemplateMethod"),
+              new XAttribute ("type", MemberTypes.Constructor),
+              new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
-              _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0]),
+              _outputFormatter.CreateModifierMarkup ("", "public"),
+              _outputFormatter.CreateConstructorMarkup ("MemberOverrideTestClass.Target", new ParameterInfo[0]),
               new XElement ("Overrides")
               ),
           new XElement (
@@ -209,11 +208,11 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
-              new XAttribute ("type", MemberTypes.Constructor),
-              new XAttribute ("name", ".ctor"),
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "TemplateMethod"),
               new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public"),
-              _outputFormatter.CreateConstructorMarkup ("MemberOverrideTestClass.Target", new ParameterInfo[0]),
+              _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
+              _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0]),
               new XElement ("Overrides")
               )
           );
@@ -371,7 +370,7 @@ namespace MixinXRef.UnitTests.Report
       Assert.That (output.XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Overrides").ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
-     [Test]
+    [Test]
     public void GetOverrides_WithoutOverrides_ForMemberHiddenByDerivedClass ()
     {
       var targetType = typeof (HiddenMemberTestClass.Target);
