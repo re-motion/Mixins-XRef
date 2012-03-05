@@ -75,16 +75,7 @@ namespace MixinXRef.Reflection.Remotion
     {
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
-
-      var reflectedValidationException = new ReflectedObject (validationException);
-      try
-      {
-        return reflectedValidationException.GetProperty ("ValidationLog");
-      }
-      catch (MissingMethodException) // Since version 1.13.123, see https://www.re-motion.org/jira/browse/RM-4010
-      {
-        return reflectedValidationException.GetProperty ("ValidationLogData");
-      }
+      return new ReflectedObject (validationException).GetProperty ("ValidationLog");
     }
   }
 }
