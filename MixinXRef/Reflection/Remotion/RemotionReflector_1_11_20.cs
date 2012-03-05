@@ -75,7 +75,16 @@ namespace MixinXRef.Reflection.Remotion
     {
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
-      return new ReflectedObject (validationException).GetProperty ("ValidationLog");
+
+      var reflectedValidationException = new ReflectedObject (validationException);
+      try
+      {
+        return reflectedValidationException.GetProperty ("ValidationLog");
+      }
+      catch (MissingMethodException)
+      {
+        return reflectedValidationException.GetProperty ("ValidationLogData");
+      }
     }
 
     public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
