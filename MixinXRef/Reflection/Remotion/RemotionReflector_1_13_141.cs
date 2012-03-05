@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using MixinXRef.Utility;
 
@@ -52,13 +51,6 @@ namespace MixinXRef.Reflection.Remotion
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
       return new ReflectedObject (validationException).GetProperty ("ValidationLogData");
-    }
-
-    public override Assembly FindRemotionAssembly (Assembly[] assemblies)
-    {
-      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-
-      return assemblies.SingleOrDefault (a => a.GetName ().Name == "Remotion.Mixins");
     }
   }
 }

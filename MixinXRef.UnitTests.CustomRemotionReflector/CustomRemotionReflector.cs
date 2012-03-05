@@ -98,12 +98,5 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 
       return new ReflectedObject (validationException).GetProperty ("ValidationLog");
     }
-
-    public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
-    {
-      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-
-      return assemblies.SingleOrDefault (a => a.GetName ().Name == "Remotion");
-    }
   }
 }

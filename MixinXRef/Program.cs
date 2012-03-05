@@ -148,13 +148,6 @@ namespace MixinXRef
         return null;
       }
 
-      var remotionAssembly = _remotionReflector.FindRemotionAssembly (assemblies);
-      if (remotionAssembly == null)
-      {
-        _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
-        return null;
-      }
-
       return assemblies;
     }
 

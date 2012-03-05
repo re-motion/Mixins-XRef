@@ -14,7 +14,5 @@ namespace MixinXRef.Reflection.Remotion
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext);
     ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);
     ReflectedObject GetValidationLogFromValidationException (Exception validationException);
-
-    Assembly FindRemotionAssembly (Assembly[] assemblies);
   }
 }

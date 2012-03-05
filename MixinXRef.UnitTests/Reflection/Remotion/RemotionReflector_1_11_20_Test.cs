@@ -137,26 +137,5 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
 
       Assert.That (result, Is.SameAs (validationLog));
     }
-
-    [Test]
-    public void FindRemotionAssembly_FindRightAssembly ()
-    {
-      var remotionAssembly = typeof (TargetClassDefinitionUtility).Assembly;
-      var assemblies = new[] { typeof (object).Assembly, remotionAssembly };
-
-      var output = _remotionReflector.FindRemotionAssembly (assemblies);
-
-      Assert.That (output, Is.EqualTo (remotionAssembly));
-    }
-
-    [Test]
-    public void FindRemotionAssembly_FindNone ()
-    {
-      var assemblies = new[] { typeof (object).Assembly };
-
-      var output = _remotionReflector.FindRemotionAssembly (assemblies);
-
-      Assert.That (output, Is.Null);
-    }
   }
 }

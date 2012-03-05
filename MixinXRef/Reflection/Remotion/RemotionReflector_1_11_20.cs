@@ -86,12 +86,5 @@ namespace MixinXRef.Reflection.Remotion
         return reflectedValidationException.GetProperty ("ValidationLogData");
       }
     }
-
-    public virtual Assembly FindRemotionAssembly (Assembly[] assemblies)
-    {
-      ArgumentUtility.CheckNotNull ("assemblies", assemblies);
-
-      return assemblies.SingleOrDefault (a => a.GetName().Name == "Remotion");
-    }
   }
 }

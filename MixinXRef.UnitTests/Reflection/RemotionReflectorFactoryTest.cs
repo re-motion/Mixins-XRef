@@ -32,7 +32,7 @@ namespace MixinXRef.UnitTests.Reflection
         @"Could not load file or assembly 'C:\Remotion.dll' or one of its dependencies. The system cannot find the file specified.")]
     public void Create_FileNotFound ()
     {
-      _remotionReflectorFactory.Create (@"C:/");
+      _remotionReflectorFactory.Create (@"C:\");
     }
 
     // can not easily test "not recognized case"
