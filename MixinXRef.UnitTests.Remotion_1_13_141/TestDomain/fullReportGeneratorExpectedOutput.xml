@@ -26,7 +26,7 @@
     <Assembly id="5" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="6" name="Remotion" version="1.13.141.2" location="./Remotion.dll" />
     <Assembly id="7" name="Remotion.Mixins" version="1.13.141.2" location="./Remotion.Mixins.dll" />
-    <Assembly id="8" name="MixinXRef" version="1.3.2.0" location="./MixinXRef.exe" />
+    <Assembly id="8" name="MixinXRef" version="1.4.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="4" namespace="MixinXRef.UnitTests.Remotion_1_13_141.TestDomain" name="ClassInheritsFromUselessObject" base="UselessObject" base-ref="15" is-target="true" is-mixin="false" is-generic-definition="false">

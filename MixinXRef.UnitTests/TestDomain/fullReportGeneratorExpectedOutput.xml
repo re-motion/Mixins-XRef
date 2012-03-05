@@ -30,7 +30,7 @@
     <Assembly id="4" name="nunit.framework" version="2.4.8.0" location="./nunit.framework.dll" />
     <Assembly id="5" name="Remotion" version="1.11.20.13" location="./Remotion.dll" />
     <Assembly id="6" name="Remotion.Interfaces" version="1.11.20.13" location="./Remotion.Interfaces.dll" />
-    <Assembly id="7" name="MixinXRef" version="1.3.2.0" location="./MixinXRef.exe" />
+    <Assembly id="7" name="MixinXRef" version="1.4.0.0" location="./MixinXRef.exe" />
   </Assemblies>
   <InvolvedTypes>
     <InvolvedType id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.CustomMixin" base="Mixin&lt;MemberOverrideWithInheritanceTest.BaseClass&gt;" base-ref="none" is-target="false" is-mixin="false" is-generic-definition="false">
