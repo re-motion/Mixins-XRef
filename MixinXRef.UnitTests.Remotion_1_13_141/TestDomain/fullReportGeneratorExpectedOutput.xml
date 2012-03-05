@@ -822,7 +822,7 @@
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 44
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 46
    at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
     </Exception>
@@ -841,7 +841,7 @@ Error: A mixin is applied to one of its base types.
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 46
    at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="94" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="92" />
@@ -863,7 +863,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 46
    at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="4" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="176" />
@@ -883,7 +883,7 @@ Error: An abstract mixin method is not overridden (implemented) by the target cl
    at Remotion.Mixins.Definitions.TargetClassDefinitionFactory.CreateTargetClassDefinition(ClassContext context) in c:\build\Remotion\working\Remotion\Mixins\Core\Definitions\TargetClassDefinitionFactory.cs:line 45
    at lambda_method(ExecutionScope , Object , Object[] )
    at MixinXRef.Reflection.ReflectedObject.CallMethod(Type type, String methodName, Object[] parameters) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\ReflectedObject.cs:line 45
-   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 47
+   at MixinXRef.Reflection.Remotion.RemotionReflector_1_13_141.GetTargetClassDefinition(Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\Reflection\Remotion\RemotionReflector_1_13_141.cs:line 46
    at MixinXRef.InvolvedTypeFinder.GetTargetClassDefinition(Type type, ReflectedObject classContext) in C:\Development\MixinXRef\trunk\MixinXRef\InvolvedTypeFinder.cs:line 85]]>
       </StackTrace>
       <ValidationLog number-of-rules-executed="180" number-of-failures="2" number-of-unexpected-exceptions="0" number-of-warnings="0" number-of-successes="178" />

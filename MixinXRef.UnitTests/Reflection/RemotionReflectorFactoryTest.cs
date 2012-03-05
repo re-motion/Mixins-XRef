@@ -28,17 +28,11 @@ namespace MixinXRef.UnitTests.Reflection
     }
 
     [Test]
+    [ExpectedException (typeof (FileNotFoundException), ExpectedMessage =
+        @"Could not load file or assembly 'C:\Remotion.dll' or one of its dependencies. The system cannot find the file specified.")]
     public void Create_FileNotFound ()
     {
-      try
-      {
-        _remotionReflectorFactory.Create ("..");
-        Assert.Fail ("expected exception not thrown");
-      }
-      catch (FileNotFoundException fileNotFoundException)
-      {
-        Assert.That (fileNotFoundException.Message, Is.EqualTo ("The system cannot find the file specified. (Exception from HRESULT: 0x80070002)"));
-      }
+      _remotionReflectorFactory.Create (@"C:/");
     }
 
     // can not easily test "not recognized case"

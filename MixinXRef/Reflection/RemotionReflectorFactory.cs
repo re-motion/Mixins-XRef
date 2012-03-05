@@ -30,8 +30,7 @@ namespace MixinXRef.Reflection
     private Type DetectVersion (string assemblyDirectory)
     {
       // Assumption: There is always a 'Remotion.dll'
-      var remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
-      var version = remotionAssembly.GetName().Version;
+      var version = AssemblyName.GetAssemblyName (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll"))).Version;
 
       if (version.CompareTo (new Version (1, 13, 141)) >= 0)
         return typeof (RemotionReflector_1_13_141);
