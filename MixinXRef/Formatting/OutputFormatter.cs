@@ -39,7 +39,11 @@ namespace MixinXRef.Formatting
 
     private string BuildGenericSignature (Type type)
     {
+      var enclosingType = type.DeclaringType;
+      int genericParameterCountInEnclosingType = enclosingType == null ? 0 : enclosingType.GetGenericArguments().Count();
+
       var genericArguments = type.GetGenericArguments()
+          .Skip (genericParameterCountInEnclosingType)
           .Select (argType => argType.IsGenericParameter ? BuildUnnestedTypeName (argType) : GetShortFormattedTypeName (argType))
           .ToArray();
 
