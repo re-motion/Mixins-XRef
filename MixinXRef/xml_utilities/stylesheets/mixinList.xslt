@@ -45,7 +45,7 @@
 					<td>-</td>
 					<td>-</td>
 
-          <xsl:if test="$target/@is-generic-definition = false()">
+          <xsl:if test="$target/@is-generic-definition = false() and $target/@is-interface = false()">
 					  <td>
               <xsl:value-of select="count( distinct-values( $mixinRefs/InterfaceIntroductions/IntroducedInterface/@ref) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/InterfaceIntroductions/IntroducedInterface/@ref)"/>)
             </td>
@@ -56,7 +56,7 @@
               <xsl:value-of select="count( distinct-values( $mixinRefs/MemberOverrides/OverriddenMember/@name) )"/>&#160;(non-distinct:&#160;<xsl:value-of select="count($mixinRefs/MemberOverrides/OverriddenMember/@name)"/>)
             </td>
           </xsl:if>
-          <xsl:if test="$target/@is-generic-definition = true()">
+          <xsl:if test="$target/@is-generic-definition = true() or $target/@is-interface = true()">
             <td>n/a</td>
             <td>n/a</td>
             <td>n/a</td>
@@ -107,8 +107,8 @@
 <xsl:template name="mixinSpecificData">
   <xsl:param name="target" />
 
-  <!-- output mixin specific data if target is not a generic type definition -->
-  <xsl:if test="$target/@is-generic-definition = false()">
+  <!-- output mixin specific data if target is not a generic type definition or interface -->
+  <xsl:if test="$target/@is-generic-definition = false() and $target/@is-interface = false()">
     <!-- Interface Introductions -->
     <td>
       <xsl:for-each select="InterfaceIntroductions/IntroducedInterface">
@@ -143,7 +143,7 @@
     </td>
   </xsl:if>
 
-  <xsl:if test="$target/@is-generic-definition = true()">
+  <xsl:if test="$target/@is-generic-definition = true() or $target/@is-interface = true()">
     <td class="dubiosInvolvedType">n/a</td>
     <td class="dubiosInvolvedType">n/a</td>
     <td class="dubiosInvolvedType">n/a</td>

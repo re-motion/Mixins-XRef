@@ -143,6 +143,10 @@
 		<xsl:if test="@is-generic-definition = true() and @is-target = true()">
 			<div><span class="dubiosInvolvedType">This type is a generic definition. Therefore detailed Mixin information is not available.</span></div>
 		</xsl:if>
+
+    <xsl:if test="@is-interface = true() and @is-target = true()">
+      <div><span class="dubiosInvolvedType">This type is an interface. Therefore detailed Mixin information is not available.</span></div>
+    </xsl:if>
 		
 		<div class="involvedType-summary">
 			<xsl:apply-templates select="summary" />

@@ -76,7 +76,7 @@ namespace MixinXRef
 
     public ReflectedObject GetTargetClassDefinition (Type type, ReflectedObject classContext)
     {
-      if (type.IsGenericTypeDefinition)
+      if (type.IsGenericTypeDefinition || type.IsInterface)
         return null;
 
       try

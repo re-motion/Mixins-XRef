@@ -175,6 +175,22 @@ namespace MixinXRef.UnitTests
     }
 
     [Test]
+    public void GetTargetClassDefinition_Interface ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew()
+          .ForClass<IUseless>().AddMixin<Mixin1>()
+          .BuildConfiguration();
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, typeof (UselessObject).Assembly);
+      var targetType = typeof (IUseless);
+      var classContextForTargetType = new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (targetType));
+      var output = involvedTypeFinder.GetTargetClassDefinition (targetType, classContextForTargetType);
+
+      Assert.That (_configurationErrors.Exceptions.Count (), Is.EqualTo (0));
+      Assert.That (_validationErrors.Exceptions.Count (), Is.EqualTo (0));
+      Assert.That (output, Is.Null);
+    }
+
+    [Test]
     public void GenerateXml_MixinConfigurationError ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew()

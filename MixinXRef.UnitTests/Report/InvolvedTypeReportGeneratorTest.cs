@@ -74,6 +74,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", true),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, null, null, _outputFormatter).
@@ -91,6 +92,55 @@ namespace MixinXRef.UnitTests.Report
               new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml()
               ));
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void GenerateXml_ForInterface ()
+    {
+      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+
+      var involvedType1 = new InvolvedType (typeof (IUseless));
+
+      var reportGenerator = CreateReportGenerator (
+          new Assembly[0],
+          interfaceIdentifierGenerator,
+          attributeIdentifierGenerator,
+          involvedType1);
+
+      XElement output = reportGenerator.GenerateXml ();
+
+      var expectedOutput = new XElement (
+          "InvolvedTypes",
+          new XElement (
+              "InvolvedType",
+              new XAttribute ("id", "0"),
+              new XAttribute ("assembly-ref", "0"),
+              new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
+              new XAttribute ("name", "IUseless"),
+              new XAttribute ("base", "none"),
+              new XAttribute ("base-ref", "none"),
+              new XAttribute ("is-target", false),
+              new XAttribute ("is-mixin", false),
+              new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", true),
+              _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
+              _summaryPicker.GetSummary (involvedType1.Type),
+              new MemberReportGenerator (involvedType1.Type, null, null, _outputFormatter).
+                  GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new MixinReferenceReportGenerator (
+                  involvedType1,
+                  _readonlyInvolvedTypeIdentifierGenerator,
+                  interfaceIdentifierGenerator,
+                  attributeIdentifierGenerator,
+                  _remotionReflector,
+                  _outputFormatter).
+                  GenerateXml (),
+              new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml ()
+              ));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
@@ -141,6 +191,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, involvedType1, _involvedTypeIdentifierGenerator, _outputFormatter).
@@ -168,6 +219,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type, involvedType2, _involvedTypeIdentifierGenerator, _outputFormatter).
@@ -195,6 +247,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType3.Type)),
               _summaryPicker.GetSummary (involvedType3.Type),
               new MemberReportGenerator (involvedType3.Type, involvedType3, _involvedTypeIdentifierGenerator, _outputFormatter).
@@ -222,6 +275,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", true),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType4.Type)),
               _summaryPicker.GetSummary (involvedType4.Type),
               new MemberReportGenerator (involvedType4.Type, involvedType4, _involvedTypeIdentifierGenerator, _outputFormatter).
@@ -276,6 +330,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", true),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
               new MemberReportGenerator (involvedType1.Type, involvedType1, _involvedTypeIdentifierGenerator, _outputFormatter).
@@ -303,6 +358,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-target", false),
               new XAttribute ("is-mixin", false),
               new XAttribute ("is-generic-definition", false),
+              new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
               new MemberReportGenerator (involvedType2.Type, involvedType1, _involvedTypeIdentifierGenerator, _outputFormatter).
