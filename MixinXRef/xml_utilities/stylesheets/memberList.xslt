@@ -238,16 +238,14 @@
   <xsl:strip-space elements="Modifiers Signature" />
 
   <xsl:template match="Keyword | Type | Text | Name | ParameterName | ExplicitInterfaceName" >
-    <span class="{name(.)}">
+    <span class="{if (@languageType) then @languageType else name(.)}">
     <xsl:choose>
-		<xsl:when test="name(.) = 'Keyword' or name(.) = 'Type'"><xsl:value-of select="ru:GetPrettyTypeName(./text())" /></xsl:when>
+		<xsl:when test="name(.) = 'Type'"><xsl:value-of select="ru:GetPrettyTypeName(./text())" /></xsl:when>
 		<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
 	</xsl:choose>
-      <xsl:if test=". != '.'">
-        <xsl:if test=". != '(' and . != '[' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']'">
-          <xsl:text> </xsl:text>
-        </xsl:if>
-      </xsl:if>
+	<xsl:if test=". != '.' and . != '(' and . != '[' and . != '&lt;' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']' and following-sibling::*[1] !=  '&gt;'">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
     </span>
   </xsl:template>
 

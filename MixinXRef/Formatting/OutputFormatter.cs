@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace MixinXRef.Formatting
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
-      var name = BuildUnnestedTypeName(type);
+      var name = BuildUnnestedTypeName (type);
 
       if (type.IsNested)
         name = GetShortFormattedTypeName (type.DeclaringType) + "." + name;
@@ -27,8 +28,15 @@ namespace MixinXRef.Formatting
 
       var name = BuildUnnestedTypeName (type);
 
-      return type.IsNested ? string.Format("{0}.{1}.{2}", type.DeclaringType.Namespace, GetShortFormattedTypeName(type.DeclaringType), name) 
-                           : string.Format("{0}.{1}", type.Namespace, name);
+      return type.IsNested ? string.Format ("{0}.{1}.{2}", type.DeclaringType.Namespace, GetShortFormattedTypeName (type.DeclaringType), name)
+                           : string.Format ("{0}.{1}", type.Namespace, name);
+    }
+
+    public string GetConstructorName(Type type)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+
+      return Regex.Replace(type.Name, @"`\d+$", "");
     }
 
     private string BuildUnnestedTypeName (Type type)
@@ -48,12 +56,12 @@ namespace MixinXRef.Formatting
     private string BuildGenericSignature (Type type)
     {
       var enclosingType = type.DeclaringType;
-      int genericParameterCountInEnclosingType = enclosingType == null ? 0 : enclosingType.GetGenericArguments().Count();
+      int genericParameterCountInEnclosingType = enclosingType == null ? 0 : enclosingType.GetGenericArguments ().Count ();
 
-      var genericArguments = type.GetGenericArguments()
+      var genericArguments = type.GetGenericArguments ()
           .Skip (genericParameterCountInEnclosingType)
           .Select (argType => argType.IsGenericParameter ? BuildUnnestedTypeName (argType) : GetFullFormattedTypeName (argType))
-          .ToArray();
+          .ToArray ();
 
       return "<" + string.Join (", ", genericArguments) + ">";
     }
@@ -87,7 +95,7 @@ namespace MixinXRef.Formatting
         if (i != 0)
           signatureElement.Add (CreateElement ("Text", ","));
 
-        signatureElement.Add (CreateTypeOrKeywordElement (parameterInfos[i].ParameterType));
+        signatureElement.Add (CreateTypeElement (parameterInfos[i].ParameterType));
         signatureElement.Add (CreateElement ("ParameterName", parameterInfos[i].Name));
       }
 
@@ -102,13 +110,13 @@ namespace MixinXRef.Formatting
       return CreateMemberMarkup (null, null, name, parameterInfos);
     }
 
-    public XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos)
+    public XElement CreateMethodMarkup (string methodName, Type returnType, ParameterInfo[] parameterInfos, Type[] genericParameters = null)
     {
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("returnType", returnType);
       ArgumentUtility.CheckNotNull ("parameterInfos", parameterInfos);
 
-     return CreateMemberMarkup (null, returnType, methodName, parameterInfos);
+      return CreateMemberMarkup (null, returnType, methodName, parameterInfos, genericParameters);
     }
 
     public XElement CreateEventMarkup (string eventName, Type handlerType)
@@ -152,10 +160,10 @@ namespace MixinXRef.Formatting
 
       var nestedTypeMarkup = CreateMemberMarkup (prefix, null, nestedType.Name, null);
 
-      var inheritance = new List<Type>();
+      var inheritance = new List<Type> ();
       if (nestedType.BaseType != null && nestedType.BaseType != typeof (object) && nestedType.BaseType != typeof (ValueType))
         inheritance.Add (nestedType.BaseType);
-      inheritance.AddRange (nestedType.GetInterfaces());
+      inheritance.AddRange (nestedType.GetInterfaces ());
 
       for (int i = 0; i < inheritance.Count; i++)
       {
@@ -169,14 +177,11 @@ namespace MixinXRef.Formatting
       return nestedTypeMarkup;
     }
 
-    private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos)
+    private XElement CreateMemberMarkup (string prefix, Type type, string memberName, ParameterInfo[] parameterInfos, Type[] genericParameters = null)
     {
       var markup = new XElement ("Signature");
-
-
       markup.Add (CreateElement ("Keyword", prefix));
-
-      markup.Add (CreateTypeOrKeywordElement (type));
+      markup.Add (CreateTypeElement (type));
 
       if (memberName.Contains ("."))
       {
@@ -186,8 +191,21 @@ namespace MixinXRef.Formatting
         markup.Add (CreateElement ("ExplicitInterfaceName", parts[partCount - 2]));
         markup.Add (CreateElement ("Text", "."));
       }
-      
+
       markup.Add (CreateElement ("Name", memberName));
+
+      if (genericParameters != null && genericParameters.Length > 0)
+      {
+        markup.Add (CreateElement ("Text", "<"));
+        var i = 0;
+        foreach (var genericParameter in genericParameters)
+        {
+          if (i++ != 0)
+            markup.Add (CreateElement ("Text", ","));
+          markup.Add (CreateElement ("GenericMethodParameter", genericParameter.Name));
+        }
+        markup.Add (CreateElement ("Text", ">"));
+      }
 
       if (parameterInfos != null)
         AddParameterMarkup (parameterInfos, markup);
@@ -195,14 +213,45 @@ namespace MixinXRef.Formatting
       return markup;
     }
 
-    private XElement CreateTypeOrKeywordElement (Type type)
+    private XElement CreateTypeElement (Type type)
     {
       if (type == null)
         return null;
 
+      XElement element;
+      if (type.IsGenericParameter)
+      {
+        element = CreateElement("Type", type.Name);
+
+        if (type.DeclaringMethod != null)
+        {
+          var index = type.DeclaringMethod.GetGenericArguments ().Select (t => t.Name).ToList ().IndexOf (type.Name);
+          element.Add (new XAttribute ("genericParameter", string.Format ("!!{0}", index)));
+        }
+        else
+        {
+          var genericParameters = new List<string> ();
+          var declaringType = type;
+          while (declaringType.DeclaringType != null)
+          {
+            declaringType = declaringType.DeclaringType;
+            genericParameters.InsertRange (0, declaringType.GetGenericArguments ().Select (t => t.Name));
+          }
+          var index = genericParameters.IndexOf (type.Name);
+          element.Add (new XAttribute ("genericParameter", string.Format ("!{0}", index)));
+        }
+      }
+      else
+      {
+        element = CreateElement ("Type", GetFullFormattedTypeName (type));
+      }
+
       if (type.IsPrimitive || type == typeof (string) || type == typeof (void))
-        return CreateElement ("Keyword", GetFullFormattedTypeName (type));
-      return CreateElement ("Type", GetFullFormattedTypeName (type));
+        element.Add(new XAttribute("languageType", "Keyword"));
+      else
+        element.Add(new XAttribute("languageType", "Type"));
+
+      return element;
     }
 
     private XElement CreateElement (string elementName, string content)

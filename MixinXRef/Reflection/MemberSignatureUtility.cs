@@ -25,11 +25,11 @@ namespace MixinXRef.Reflection
       {
         case MemberTypes.Method:
           var methodInfo = (MethodInfo) memberInfo;
-          return _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters());
+          return _outputFormatter.CreateMethodMarkup (methodInfo.Name, methodInfo.ReturnType, methodInfo.GetParameters (), methodInfo.GetGenericArguments ());
 
         case MemberTypes.Constructor:
           var constructorInfo = (ConstructorInfo) memberInfo;
-          return _outputFormatter.CreateConstructorMarkup (_outputFormatter.GetShortFormattedTypeName(memberInfo.DeclaringType), constructorInfo.GetParameters());
+          return _outputFormatter.CreateConstructorMarkup (_outputFormatter.GetConstructorName (memberInfo.DeclaringType), constructorInfo.GetParameters ());
 
         case MemberTypes.Event:
           var eventInfo = (EventInfo) memberInfo;
