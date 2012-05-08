@@ -47,19 +47,21 @@ namespace MixinXRef.Report
 
     private XElement GenerateAssemblyElement (Assembly assembly, IEnumerable<InvolvedType> involvedTypesForAssembly)
     {
-      return new XElement (
-          "Assembly",
-          new XAttribute ("id", _assemblyIdentifierGenerator.GetIdentifier (assembly)),
-          new XAttribute ("name", assembly.GetName().Name),
-          new XAttribute ("version", assembly.GetName().Version),
-          new XAttribute ("location", GetShortAssemblyLocation (assembly)),
-          from involvedType in involvedTypesForAssembly
-          select
-              new XElement (
-              "InvolvedType-Reference",
-              new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (involvedType.Type))
-              )
-          );
+      return new XElement(
+        "Assembly",
+        new XAttribute("id", _assemblyIdentifierGenerator.GetIdentifier(assembly)),
+        new XAttribute("name", assembly.GetName().Name),
+        new XAttribute("version", assembly.GetName().Version),
+        new XAttribute("location", GetShortAssemblyLocation(assembly)),
+        new XAttribute("culture", assembly.GetName().CultureInfo),
+        new XAttribute("publicKeyToken", Convert.ToBase64String(assembly.GetName().GetPublicKeyToken())),
+        from involvedType in involvedTypesForAssembly
+        select
+          new XElement(
+          "InvolvedType-Reference",
+          new XAttribute("ref", _involvedTypeIdentifierGenerator.GetIdentifier(involvedType.Type))
+          )
+        );
     }
 
     public string GetShortAssemblyLocation (Assembly assembly)
