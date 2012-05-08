@@ -21,11 +21,19 @@ namespace MixinXRef.Formatting
       return name;
     }
 
+    public string GetFullFormattedTypeName (Type type)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+
+      var name = BuildUnnestedTypeName (type);
+
+      return type.IsNested ? string.Format("{0}.{1}.{2}", type.DeclaringType.Namespace, GetShortFormattedTypeName(type.DeclaringType), name) 
+                           : string.Format("{0}.{1}", type.Namespace, name);
+    }
+
     private string BuildUnnestedTypeName (Type type)
     {
       var name = type.Name;
-
-      name = FormatSimpleName (name);
 
       if (type.IsGenericType)
       {
@@ -44,43 +52,10 @@ namespace MixinXRef.Formatting
 
       var genericArguments = type.GetGenericArguments()
           .Skip (genericParameterCountInEnclosingType)
-          .Select (argType => argType.IsGenericParameter ? BuildUnnestedTypeName (argType) : GetShortFormattedTypeName (argType))
+          .Select (argType => argType.IsGenericParameter ? BuildUnnestedTypeName (argType) : GetFullFormattedTypeName (argType))
           .ToArray();
 
       return "<" + string.Join (", ", genericArguments) + ">";
-    }
-
-    private string FormatSimpleName (string name)
-    {
-      switch (name)
-      {
-        case "Boolean":
-          return "bool";
-        case "Int16":
-          return "short";
-        case "Int32":
-          return "int";
-        case "Int64":
-          return "long";
-        case "Single":
-          return "float";
-        case "UInt16":
-          return "ushort";
-        case "UInt32":
-          return "uint";
-        case "UInt64":
-          return "ulong";
-        case "Byte":
-        case "Char":
-        case "Decimal":
-        case "Double":
-        case "SByte":
-        case "String":
-        case "Void":
-          return name.ToLower();
-        default:
-          return name;
-      }
     }
 
     public XElement CreateModifierMarkup (string attributes, string keywords)
@@ -188,7 +163,7 @@ namespace MixinXRef.Formatting
           nestedTypeMarkup.Add (CreateElement ("Text", ":"));
         else
           nestedTypeMarkup.Add (CreateElement ("Text", ","));
-        nestedTypeMarkup.Add (CreateElement ("Type", GetShortFormattedTypeName (inheritance[i])));
+        nestedTypeMarkup.Add (CreateElement ("Type", GetFullFormattedTypeName (inheritance[i])));
       }
 
       return nestedTypeMarkup;
@@ -226,8 +201,8 @@ namespace MixinXRef.Formatting
         return null;
 
       if (type.IsPrimitive || type == typeof (string) || type == typeof (void))
-        return CreateElement ("Keyword", GetShortFormattedTypeName (type));
-      return CreateElement ("Type", GetShortFormattedTypeName (type));
+        return CreateElement ("Keyword", GetFullFormattedTypeName (type));
+      return CreateElement ("Type", GetFullFormattedTypeName (type));
     }
 
     private XElement CreateElement (string elementName, string content)

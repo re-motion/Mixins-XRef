@@ -22,6 +22,30 @@
   <xsl:copy-of select="if ( $it/@is-target = false() and $it/@is-mixin = false() ) then 'unusedMixinClass' else '' "/>
 </xsl:function>
 
+<!-- type name format functions -->
+<xsl:function name="ru:GetPrettyTypeName">
+	<xsl:param name="fullname" />
+	
+	<xsl:choose>
+		<xsl:when test="$fullname = 'System.Boolean'"><xsl:text>bool</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Int16'"><xsl:text>short</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Int32'"><xsl:text>int</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Int64'"><xsl:text>long</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Single'"><xsl:text>float</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.UInt16'"><xsl:text>ushort</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.UInt32'"><xsl:text>uint</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.UInt64'"><xsl:text>ulong</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Byte'"><xsl:text>byte</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Char'"><xsl:text>char</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Decimal'"><xsl:text>decimal</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Double'"><xsl:text>double</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.SByte'"><xsl:text>sbyte</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.String'"><xsl:text>string</xsl:text></xsl:when>
+		<xsl:when test="$fullname = 'System.Void'"><xsl:text>void</xsl:text></xsl:when>
+		<xsl:otherwise><xsl:value-of select="replace($fullname, '^.+\.([^\.]+?)$', '$1')" /></xsl:otherwise>
+	</xsl:choose>
+</xsl:function>
+
 <!-- overall count functions -->
 <xsl:function name="ru:GetOverallTargetClassCount">
 	<xsl:param name="rootMCR" />

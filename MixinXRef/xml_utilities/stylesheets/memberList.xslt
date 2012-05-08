@@ -239,7 +239,10 @@
 
   <xsl:template match="Keyword | Type | Text | Name | ParameterName | ExplicitInterfaceName" >
     <span class="{name(.)}">
-      <xsl:value-of select="."/>
+    <xsl:choose>
+		<xsl:when test="name(.) = 'Keyword' or name(.) = 'Type'"><xsl:value-of select="ru:GetPrettyTypeName(./text())" /></xsl:when>
+		<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+	</xsl:choose>
       <xsl:if test=". != '.'">
         <xsl:if test=". != '(' and . != '[' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']'">
           <xsl:text> </xsl:text>
