@@ -62,7 +62,7 @@ namespace MixinXRef.Report
     {
       var realType = involvedType.Type;
 
-      return new XElement (
+      var element = new XElement (
           "InvolvedType",
           new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
@@ -91,6 +91,12 @@ namespace MixinXRef.Report
           new TargetReferenceReportGenerator (
               involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
           );
+
+      if (realType.IsGenericType && !realType.IsGenericTypeDefinition)
+        element.Add (new XAttribute ("generic-definition-ref",
+                                   _involvedTypeIdentifierGenerator.GetIdentifier (realType.GetGenericTypeDefinition ())));
+
+      return element;
     }
 
     public string GetAlphabeticOrderingAttribute (InvolvedType involvedType)
