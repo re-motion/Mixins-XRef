@@ -57,6 +57,10 @@ namespace MixinXRef
       program.GenerateAndSaveXmlDocument (assemblies, xmlFile);
       Console.WriteLine (GetElapsedTime (xmlStartTime));
 
+      assemblies = null;
+      GC.Collect ();
+      GC.WaitForPendingFinalizers ();
+
       var xslStartTime = DateTime.Now;
       Console.Write ("  Applying XSLT ... ");
       var transformerExitCode = GenerateHtmlFromXml(outputDirectory, xmlFile);
