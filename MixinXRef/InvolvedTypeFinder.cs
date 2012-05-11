@@ -38,35 +38,36 @@ namespace MixinXRef
 
     public InvolvedType[] FindInvolvedTypes ()
     {
-      var involvedTypes = new InvolvedTypeStore();
+      var involvedTypes = new InvolvedTypeStore ();
       var classContexts = _mixinConfiguration.GetProperty ("ClassContexts");
 
       foreach (var assembly in _assemblies)
       {
-        foreach (var type in assembly.GetTypes())
+        foreach (var type in assembly.GetTypes ())
         {
           var classContext = classContexts.CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
             var targetClassDefinition = GetTargetClassDefinition (type, classContext);
-            involvedTypes.GetOrCreateValue (type).ClassContext = classContext;
-            involvedTypes.GetOrCreateValue (type).TargetClassDefintion = targetClassDefinition;
+            var involvedType = involvedTypes.GetOrCreateValue (type);
+            involvedType.ClassContext = classContext;
+            involvedType.TargetClassDefintion = targetClassDefinition;
 
             foreach (var mixinContext in classContext.GetProperty ("Mixins"))
             {
-              var mixinType = mixinContext.GetProperty ("MixinType").To<Type>();
-              involvedTypes.GetOrCreateValue (mixinType).TargetTypes.Add (
-                  classContext.GetProperty ("Type").To<Type>(), GetMixinDefiniton (mixinType, targetClassDefinition));
+              var mixinType = mixinContext.GetProperty ("MixinType").To<Type> ();
+              var mixin = involvedTypes.GetOrCreateValue (mixinType);
+              mixin.TargetTypes.Add (involvedType, GetMixinDefiniton (mixinType, targetClassDefinition));
             }
           }
 
           // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
-          if (_remotionReflector.IsInheritedFromMixin (type) && !_remotionReflector.IsInfrastructureType (type))
-            involvedTypes.GetOrCreateValue (type);
+          if (_remotionReflector.IsInheritedFromMixin(type) && !_remotionReflector.IsInfrastructureType(type))
+            involvedTypes.GetOrCreateValue(type);
         }
       }
 
-      return involvedTypes.ToSortedArray();
+      return involvedTypes.ToSortedArray ();
     }
 
     public ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)

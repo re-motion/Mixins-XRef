@@ -47,7 +47,7 @@ namespace MixinXRef.UnitTests
     {
       var type1 = new InvolvedType (typeof (TargetClass1));
       var type2 = new InvolvedType (typeof (Mixin1));
-      type2.TargetTypes.Add (typeof (TargetClass1), null);
+      type2.TargetTypes.Add (new InvolvedType(typeof (TargetClass1)), null);
 
       Assert.That (type1, Is.Not.EqualTo (type2));
     }
@@ -194,7 +194,7 @@ namespace MixinXRef.UnitTests
     public void MixinContextsProperty_ForMixin ()
     {
       var type1 = new InvolvedType (typeof (object));
-      type1.TargetTypes.Add (typeof (TargetClass1), null);
+      type1.TargetTypes.Add (new InvolvedType(typeof (TargetClass1)), null);
 
       Assert.That (type1.IsMixin, Is.True);
       Assert.That (type1.TargetTypes.Count, Is.GreaterThan (0));

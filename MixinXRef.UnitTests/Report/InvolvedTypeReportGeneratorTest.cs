@@ -160,9 +160,9 @@ namespace MixinXRef.UnitTests.Report
       SetTargetClassDefinition (involvedType2, mixinConfiguration);
 
       var involvedType3 = new InvolvedType (typeof (Mixin1));
-      involvedType3.TargetTypes.Add (typeof (TargetClass1), null);
+      involvedType3.TargetTypes.Add (new InvolvedType(typeof (TargetClass1)), null);
       var involvedType4 = new InvolvedType (typeof (Mixin2));
-      involvedType4.TargetTypes.Add (typeof (TargetClass2), null);
+      involvedType4.TargetTypes.Add (new InvolvedType(typeof (TargetClass2)), null);
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
@@ -399,7 +399,7 @@ namespace MixinXRef.UnitTests.Report
           MixinConfiguration.BuildNew().ForClass<UselessObject>().AddMixin<ClassWithAlphabeticOrderingAttribute>().BuildConfiguration();
       var involvedType = new InvolvedType (typeof (ClassWithAlphabeticOrderingAttribute));
       involvedType.TargetTypes.Add (
-          typeof (UselessObject),
+          new InvolvedType(typeof (UselessObject)),
           new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (typeof (UselessObject), mixinConfiguration).Mixins[0]));
 
       var reportGenerator = CreateReportGenerator (

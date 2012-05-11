@@ -27,7 +27,7 @@ namespace MixinXRef.Report
       return new XElement (
           "Targets",
           from targetType in _mixinType.TargetTypes.Keys
-          select GenerateTargetElement (targetType)
+          select GenerateTargetElement (targetType.Type)
           );
     }
 

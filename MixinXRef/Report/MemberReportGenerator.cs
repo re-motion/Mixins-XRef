@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,11 +17,8 @@ namespace MixinXRef.Report
     private readonly InvolvedType _involvedType;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
     private readonly IOutputFormatter _outputFormatter;
-    private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility();
+    private readonly MemberModifierUtility _memberModifierUtility = new MemberModifierUtility ();
     private readonly MemberSignatureUtility _memberSignatureUtility;
-    private readonly Dictionary<MemberInfo, ReflectedObject> _memberDefinitionDictionary = new Dictionary<MemberInfo, ReflectedObject>();
-
-    private Dictionary<MemberInfo, ReflectedObject> _memberInfoToMemberDefinitionDictionary;
 
     public MemberReportGenerator (
         Type type,
@@ -41,28 +39,13 @@ namespace MixinXRef.Report
       _memberSignatureUtility = new MemberSignatureUtility (outputFormatter);
     }
 
-
     public XElement GenerateXml ()
     {
-      GetAllMembers();
+      var members =
+        _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).
+          Where (m => !HasSpecialName (m)).OrderBy (m => m.Name).Select (CreateMemberElement);
 
-      return new XElement (
-          "Members",
-          from memberInfo in _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-          where // memberInfo.DeclaringType.IsAssignableFrom (_type)&& 
-              !IsSpecialName (memberInfo)
-          orderby memberInfo.Name // Make integration tests more robust
-          select CreateMemberElement (memberInfo)
-          );
-    }
-
-    private void GetAllMembers ()
-    {
-      if (_involvedType == null || !_involvedType.HasTargetClassDefintion)
-        return;
-
-      _memberInfoToMemberDefinitionDictionary = _involvedType.TargetClassDefintion.CallMethod ("GetAllMembers")
-          .ToDictionary (a => a.GetProperty ("MemberInfo").To<MemberInfo>(), a => a);
+      return new XElement ("Members", members);
     }
 
     private XElement CreateMemberElement (MemberInfo memberInfo)
@@ -71,123 +54,94 @@ namespace MixinXRef.Report
       if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
         return null;
 
-      var lastPoint = memberInfo.Name.LastIndexOf ('.');
-      var memberName = memberInfo.Name;
-
-      // member is explicit interface implementation
+      // remove interface name if member is explicit interface implementation
       // greater 0 because ".ctor" would be changed to "ctor"
-      if (lastPoint > 0)
-        memberName = memberInfo.Name.Substring (lastPoint + 1, memberInfo.Name.Length - lastPoint - 1);
+      var lastPoint = memberInfo.Name.LastIndexOf ('.');
+      var memberName = (lastPoint > 0) ? memberInfo.Name.Substring (lastPoint + 1) : memberInfo.Name;
 
-      var attributes = new StringBuilder();
-      XElement overrides = null;
+      var element = new XElement ("Member", new XAttribute ("type", memberInfo.MemberType),
+                                            new XAttribute ("name", memberName),
+                                            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type));
 
+      var attributes = new StringBuilder ();
+      var overridingTypes = Enumerable.Empty<Type> ();
+
+      var overridesElement = new XElement ("Overrides");
       if (_involvedType != null)
       {
-        // check involvedType is a target
+        if (HasOverrideMixinAttribute (memberInfo))
+          attributes.Append ("OverrideMixin ");
+        if (HasOverrideTargetAttribute (memberInfo))
+          attributes.Append ("OverrideTarget ");
+
         if (_involvedType.HasTargetClassDefintion)
         {
-          var memberDefinitionBase = GetMemberDefinitionBase(memberInfo);
-          _memberDefinitionDictionary.Add (memberInfo, memberDefinitionBase);
-
-          if (HasOverrideMixinAttribute (memberInfo))
-            attributes.Append ("OverrideMixin ");
-
-          overrides = GetOverrides (memberInfo);
+          overridingTypes = GetOverridingMixinTypes (memberInfo);
+          foreach (var overridingType in overridingTypes)
+            overridesElement.Add (CreateInvolvedTypeReferenceElement ("Mixin-Reference", overridingType));
         }
 
-        if (_involvedType.IsMixin && HasOverrideTargetAttribute (memberInfo))
-          attributes.Append ("OverrideTarget ");
-      }
-
-
-      if (memberInfo.DeclaringType == _type || IsOverriddenBaseClassMember (memberInfo, overrides))
-      {
-        return new XElement (
-            "Member",
-            new XAttribute ("type", memberInfo.MemberType),
-            new XAttribute ("name", memberName),
-            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type),
-            _outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
-            _memberSignatureUtility.GetMemberSignatur (memberInfo),
-            overrides
-            );
-      }
-      return null;
-    }
-
-    private ReflectedObject GetMemberDefinitionBase (MemberInfo memberInfo)
-    {
-      var keyValuePair =
-          _memberInfoToMemberDefinitionDictionary
-              .Where (mdb => MemberInfoEqualityUtility.MemberEquals (mdb.Key, memberInfo))
-              .SingleOrDefault();
-
-      // performance optimization
-      if (keyValuePair.Key != null)
-      {
-        _memberInfoToMemberDefinitionDictionary.Remove (keyValuePair.Key);
-      }
-
-      return keyValuePair.Value;
-    }
-
-    private bool HasOverrideMixinAttribute (MemberInfo memberInfo)
-    {
-      var memberDefinition = _memberDefinitionDictionary[memberInfo];
-      if (memberDefinition == null)
-        return false;
-
-      var baseAsMember = memberDefinition.GetProperty ("BaseAsMember");
-      return (baseAsMember != null);
-    }
-
-    private bool HasOverrideTargetAttribute (MemberInfo memberInfo)
-    {
-
-      foreach (var typeAndMixinDefinitionPair in _involvedType.TargetTypes)
-      {
-        if (typeAndMixinDefinitionPair.Value == null)
-          continue;
-
-        var overrideCollection = typeAndMixinDefinitionPair.Value.CallMethod ("GetAllOverrides");
-
-        foreach (var memberDefinitionBase in overrideCollection)
+        if (_involvedType.IsMixin)
         {
-          if (MemberInfoEqualityUtility.MemberEquals (memberDefinitionBase.GetProperty ("MemberInfo").To<MemberInfo>(), memberInfo))
-            return true;
+          overridingTypes = GetOverridingTargetTypes (memberInfo);
+          foreach (var overridingType in overridingTypes)
+            overridesElement.Add (CreateInvolvedTypeReferenceElement ("Target-Reference", overridingType));
         }
       }
 
-      return false;
+      if (memberInfo.DeclaringType != _type && !overridingTypes.Any())
+        return null;
+
+      element.Add (_outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
+                   _memberSignatureUtility.GetMemberSignatur (memberInfo),
+                   overridesElement);
+
+      return element;
     }
 
-    private XElement GetOverrides (MemberInfo memberInfo)
+    private XElement CreateInvolvedTypeReferenceElement (string tagName, Type overridingType)
     {
-      var overrides = new XElement ("Overrides");
-
-      var memberDefinition = _memberDefinitionDictionary[memberInfo];
-
-      // when MemberDefinition is null, the member has no relevance for the mixin engine; so return an empty overrides element. 
-      if (memberDefinition == null)
-        return overrides;
-
-      foreach (var overrideDefinition in memberDefinition.GetProperty ("Overrides"))
-      {
-        var type = overrideDefinition.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type>();
-        overrides.Add (
-            new XElement (
-                "Mixin-Reference",
-                new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (type)),
-                new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (type))
-                )
-            );
-      }
-
-      return overrides;
+      return new XElement (tagName, new XAttribute ("ref", _involvedTypeIdentifierGenerator.GetIdentifier (overridingType)),
+                                    new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (overridingType)));
     }
 
-    private bool IsSpecialName (MemberInfo memberInfo)
+    private IEnumerable<Type> GetOverridingMixinTypes (MemberInfo memberInfo)
+    {
+      Debug.Assert (_involvedType != null);
+
+      ReflectedObject memberDefinition;
+      _involvedType.TargetMemberDefinitions.TryGetValue (memberInfo, out memberDefinition);
+
+      if (memberDefinition == null)
+        return Enumerable.Empty<Type> ();
+
+      return memberDefinition.GetProperty ("Overrides").Select (o => o.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type> ());
+    }
+
+    private IEnumerable<Type> GetOverridingTargetTypes (MemberInfo memberInfo)
+    {
+      Debug.Assert (_involvedType != null);
+
+      ReflectedObject memberDefinition;
+      _involvedType.MixinMemberDefinitions.TryGetValue (memberInfo, out memberDefinition);
+
+      if (memberDefinition == null)
+        return Enumerable.Empty<Type> ();
+
+      return memberDefinition.GetProperty ("Overrides").Select (o => o.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type> ());
+    }
+
+    private static bool HasOverrideMixinAttribute (MemberInfo memberInfo)
+    {
+      return memberInfo.GetCustomAttributes (true).Any (a => a.GetType ().Name == "OverrideMixinAttribute");
+    }
+
+    private static bool HasOverrideTargetAttribute (MemberInfo memberInfo)
+    {
+      return memberInfo.GetCustomAttributes (true).Any (a => a.GetType ().Name == "OverrideTargetAttribute");
+    }
+
+    private static bool HasSpecialName (MemberInfo memberInfo)
     {
       if (memberInfo.MemberType == MemberTypes.Method)
       {
@@ -214,14 +168,6 @@ namespace MixinXRef.Report
             );
       }
       return false;
-    }
-
-    private bool IsOverriddenBaseClassMember (MemberInfo memberInfo, XElement overrides)
-    {
-      if (overrides == null)
-        return false;
-
-      return !(memberInfo.DeclaringType != _type && overrides.HasElements == false);
     }
   }
 }

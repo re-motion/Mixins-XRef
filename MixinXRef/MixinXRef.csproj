@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\MemberDefinitionCollection.cs" />
     <Compile Include="Reflection\FastMemberInvokerCache.cs" />
     <Compile Include="Reflection\FastMemberInvokerGenerator.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtility.cs" />

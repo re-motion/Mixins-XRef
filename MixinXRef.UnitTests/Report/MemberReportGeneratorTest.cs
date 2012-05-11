@@ -258,14 +258,14 @@ namespace MixinXRef.UnitTests.Report
     public void HasOverrideTargetAttribute_True ()
     {
       var mixinType = typeof (MemberOverrideTestClass.Mixin1);
-      var targetType = typeof (MemberOverrideTestClass.Target);
+      var targetType = new InvolvedType(typeof (MemberOverrideTestClass.Target));
       var mixinConfiguration =
           MixinConfiguration.BuildNew()
               .ForClass<MemberOverrideTestClass.Target>().AddMixin<MemberOverrideTestClass.Mixin1>()
               .BuildConfiguration();
       var involvedType = new InvolvedType (mixinType);
       involvedType.TargetTypes.Add (
-          targetType, new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration).Mixins[mixinType]));
+          targetType, new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration).Mixins[mixinType]));
       var reportGenerator = CreateMemberReportGenerator (mixinType, involvedType);
       
       var output = reportGenerator.GenerateXml ().XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Modifiers").Element ("Type");

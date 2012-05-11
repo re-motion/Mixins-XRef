@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using MixinXRef.Collections;
 using MixinXRef.Reflection;
 using MixinXRef.Utility;
 
@@ -14,7 +16,7 @@ namespace MixinXRef
     // TargetClassDefinition
     private ReflectedObject _targetClassDefintion;
     // keys are the types of target class, values are from type MixinDefinition
-    private readonly IDictionary<Type, ReflectedObject> _targetTypes = new Dictionary<Type, ReflectedObject>();
+    private readonly IDictionary<InvolvedType, ReflectedObject> _targetTypes = new Dictionary<InvolvedType, ReflectedObject> ();
 
     public InvolvedType (Type realType)
     {
@@ -72,9 +74,41 @@ namespace MixinXRef
       }
     }
 
-    public IDictionary<Type, ReflectedObject> TargetTypes
+    public IDictionary<InvolvedType, ReflectedObject> TargetTypes
     {
       get { return _targetTypes; }
+    }
+
+    private MemberDefinitionCollection _targetMemberDefinitions;
+    public IDictionary<MemberInfo, ReflectedObject> TargetMemberDefinitions
+    {
+      get
+      {
+        if (_targetMemberDefinitions == null)
+        {
+          _targetMemberDefinitions = new MemberDefinitionCollection ();
+
+          if (HasTargetClassDefintion)
+            _targetMemberDefinitions.AddRange (TargetClassDefintion.CallMethod ("GetAllMembers"));
+        }
+        return _targetMemberDefinitions;
+      }
+    }
+
+    private MemberDefinitionCollection _mixinMemberDefinitions;
+    public IDictionary<MemberInfo, ReflectedObject> MixinMemberDefinitions
+    {
+      get
+      {
+        if (_mixinMemberDefinitions == null)
+        {
+          _mixinMemberDefinitions = new MemberDefinitionCollection ();
+
+          if (IsMixin)
+            _mixinMemberDefinitions.AddRange (TargetTypes.Values.Where (t => t != null).SelectMany (t => t.CallMethod ("GetAllMembers")));
+        }
+        return _mixinMemberDefinitions;
+      }
     }
 
     public override bool Equals (object obj)
@@ -89,13 +123,13 @@ namespace MixinXRef
 
     public override int GetHashCode ()
     {
-      int hashCode = _realType.GetHashCode();
+      int hashCode = _realType.GetHashCode ();
       Rotate (ref hashCode);
-      hashCode ^= _classContext == null ? 0 : _classContext.GetHashCode();
+      hashCode ^= _classContext == null ? 0 : _classContext.GetHashCode ();
       Rotate (ref hashCode);
-      hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode();
+      hashCode ^= _targetClassDefintion == null ? 0 : _targetClassDefintion.GetHashCode ();
       Rotate (ref hashCode);
-      hashCode ^= _targetTypes.Aggregate (0, (current, typeAndMixinDefintionPair) => current ^ typeAndMixinDefintionPair.GetHashCode());
+      hashCode ^= _targetTypes.Aggregate (0, (current, typeAndMixinDefintionPair) => current ^ typeAndMixinDefintionPair.GetHashCode ());
 
       return hashCode;
     }
