@@ -35,7 +35,7 @@ namespace MixinXRef.Reflection
       if (version.CompareTo (new Version (1, 13, 141)) >= 0)
         return typeof (RemotionReflector_1_13_141);
       if (version.CompareTo (new Version (1, 13, 123)) >= 0)
-        return typeof (RemotionReflector_1_13_141);
+        throw NewNotSupportedException (version);
       if (version.CompareTo (new Version(1, 13, 23)) >= 0)
         return typeof (RemotionReflector_1_13_23);
       if (version.CompareTo (new Version (1, 11, 20)) >= 0)
