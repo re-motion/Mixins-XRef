@@ -61,7 +61,7 @@ namespace MixinXRef.Formatting
 
       var genericArguments = type.GetGenericArguments ()
         .Skip (enclosingTypeGenericArgumentsCount)
-        .Select (a => a.IsGenericParameter ? a.Name : GetShortFormattedTypeName (a))
+        .Select (a => a.IsGenericParameter ? a.Name : GetFullFormattedTypeName (a))
         .Aggregate ((a1, a2) => string.Format ("{0}, {1}", a1, a2));
 
       return string.Format ("<{0}>", genericArguments);

@@ -1,37 +1,38 @@
 using System;
 using System.IO;
+using System.Reflection;
 using MixinXRef.Formatting;
+using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Rhino.Mocks;
 
 namespace MixinXRef.UnitTests
 {
   [TestFixture]
   public class ProgramTest
   {
-    public static IRemotionReflector GetRemotionReflection()
-    {
-      return new RemotionReflector_1_11_20(".");
-    }
 
     public const string _userPromptOnExistingOutputDirectory =
         "Output directory 'existingOutputDirectory' does already exist.\r\nDo you want to override the directory and including files? [y/N] ";
 
     private Program _program;
     private TextWriter _standardOutput;
-    private IRemotionReflector _remotionReflector;
     private IOutputFormatter _outputFormatter;
+
+    public static IRemotionReflector GetRemotionReflection ()
+    {
+      return new RemotionReflector_1_13_141 (".");
+    }
 
     [SetUp]
     public void SetUp ()
     {
       _standardOutput = new StringWriter();
-      _remotionReflector = ProgramTest.GetRemotionReflection();
       _outputFormatter = new OutputFormatter();
 
       _program = new Program (new StringReader (""), _standardOutput, _outputFormatter);
-      _program.SetRemotionReflector (_remotionReflector);
     }
 
 
@@ -141,29 +142,41 @@ namespace MixinXRef.UnitTests
     [Test]
     public void GetAssemblies_WithAssemblies ()
     {
-      const string assemblyDirectory = ".";
+      const string assemblyDirectory = "assemblyTestDirectory";
 
       Assert.That (Directory.Exists (assemblyDirectory), Is.True);
 
-      var output = _program.GetAssemblies (assemblyDirectory);
-      var expectedOutput = new AssemblyBuilder (assemblyDirectory, _remotionReflector).GetAssemblies();
+      var a1 = Assembly.LoadFile(Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
+      var a2 = Assembly.LoadFile(Path.GetFullPath (Path.Combine (assemblyDirectory, "nunit.framework.dll")));
+      var a3 = Assembly.LoadFile(Path.GetFullPath (Path.Combine (assemblyDirectory, "MixinXRef.exe")));
+      var a4 = Assembly.LoadFile(Path.GetFullPath (Path.Combine (assemblyDirectory, "MixinXRef.UnitTests.NonApplicationAssembly.dll")));
 
-      Assert.That (output, Is.EqualTo (expectedOutput));
+      var remotionReflectorStub = MockRepository.GenerateStub<IRemotionReflector>();
+      remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a1)).Return(false);
+      remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a2)).Return(false);
+      remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a3)).Return(false);
+      remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a4)).Return(true);
+      _program.SetRemotionReflector (remotionReflectorStub);
+
+      var output = _program.GetAssemblies (assemblyDirectory);
+
+      Assert.That (output, Is.EqualTo (new[] { a1 }));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
     }
 
     [Test]
     public void SaveXmlDocument_ForNonEmptyAssemblyArray ()
     {
-      const string assemblyDirectory = ".";
+      const string assemblyDirectory = "assemblyTestDirectory";
       const string xmlFile = "testOutputFile.xml";
 
       Assert.That (File.Exists (xmlFile), Is.False);
 
-      // returns null or an array of assemblies with length > 0, never an empty array
-      var assemblies = _program.GetAssemblies (assemblyDirectory);
-
-      _program.GenerateAndSaveXmlDocument (assemblies, xmlFile);
+      var a1 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
+      var a2 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "nunit.framework.dll")));
+      var a3 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "MixinXRef.exe")));
+      
+      _program.GenerateAndSaveXmlDocument (new[] { a1, a2, a3 }, xmlFile);
 
       Assert.That (File.Exists (xmlFile), Is.True);
 

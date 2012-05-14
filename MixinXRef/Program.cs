@@ -145,7 +145,7 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var assemblies = new AssemblyBuilder (assemblyDirectory, _remotionReflector).GetAssemblies();
+      var assemblies = new AssemblyBuilder (assemblyDirectory).GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly (a));
       if (assemblies.Length == 0)
       {
         _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);

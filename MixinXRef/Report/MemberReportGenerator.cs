@@ -66,7 +66,7 @@ namespace MixinXRef.Report
       var attributes = new StringBuilder ();
       var overridingTypes = Enumerable.Empty<Type> ();
 
-      var overridesElement = new XElement ("Overrides");
+      XElement overridesElement = null;
       if (_involvedType != null)
       {
         if (HasOverrideMixinAttribute (memberInfo))
@@ -77,19 +77,27 @@ namespace MixinXRef.Report
         if (_involvedType.HasTargetClassDefintion)
         {
           overridingTypes = GetOverridingMixinTypes (memberInfo);
+
+          if (overridingTypes.Any())
+            overridesElement = new XElement ("Overrides");
+
           foreach (var overridingType in overridingTypes)
-            overridesElement.Add (CreateInvolvedTypeReferenceElement ("Mixin-Reference", overridingType));
+            overridesElement.Add(CreateInvolvedTypeReferenceElement("Mixin-Reference", overridingType));
         }
 
         if (_involvedType.IsMixin)
         {
           overridingTypes = GetOverridingTargetTypes (memberInfo);
+
+          if (overridingTypes.Any ())
+            overridesElement = new XElement ("Overrides");
+
           foreach (var overridingType in overridingTypes)
-            overridesElement.Add (CreateInvolvedTypeReferenceElement ("Target-Reference", overridingType));
+            overridesElement.Add(CreateInvolvedTypeReferenceElement("Target-Reference", overridingType));
         }
       }
 
-      if (memberInfo.DeclaringType != _type && !overridingTypes.Any())
+      if (memberInfo.DeclaringType != _type && !overridingTypes.Any ())
         return null;
 
       element.Add (_outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),

@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (int));
 
-      Assert.That (output, Is.EqualTo ("int"));
+      Assert.That (output, Is.EqualTo ("Int32"));
     }
 
     [Test]
@@ -49,7 +49,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (GenericTarget<string, int>));
 
-      Assert.That (output, Is.EqualTo ("GenericTarget<string, int>"));
+      Assert.That (output, Is.EqualTo ("GenericTarget<System.String, System.Int32>"));
     }
 
     public class ContainsGenericArguments<TKey> : Dictionary<TKey, int>
@@ -61,7 +61,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (ContainsGenericArguments<>).BaseType);
 
-      Assert.That (output, Is.EqualTo ("Dictionary<TKey, int>"));
+      Assert.That (output, Is.EqualTo ("Dictionary<TKey, System.Int32>"));
     }
 
     // See http://blogs.msdn.com/b/haibo_luo/archive/2006/02/17/534480.aspx for an explanation
@@ -152,13 +152,13 @@ namespace MixinXRef.UnitTests.Formatting
       var expectedOutput = new XElement (
           "Signature",
           new XElement ("Text", "("),
-          new XElement ("Keyword", "int"),
+          new XElement ("Type", "System.Int32", new XAttribute("languageType", "Keyword")),
           new XElement ("ParameterName", "intParam"),
           new XElement ("Text", ","),
-          new XElement ("Keyword", "string"),
+          new XElement ("Type", "System.String", new XAttribute ("languageType", "Keyword")),
           new XElement ("ParameterName", "stringParam"),
           new XElement ("Text", ","),
-          new XElement ("Type", "AssemblyBuilder"),
+          new XElement ("Type", "MixinXRef.AssemblyBuilder", new XAttribute ("languageType", "Type")),
           new XElement ("ParameterName", "assemblyBuilderParam"),
           new XElement ("Text", ")")
           );
@@ -172,7 +172,7 @@ namespace MixinXRef.UnitTests.Formatting
       var output = _outputFormatter.CreateMethodMarkup ("MethodName", typeof (string), new ParameterInfo[0]);
       var expectedOutput = new XElement (
           "Signature",
-          new XElement ("Keyword", "string"),
+          new XElement ("Type", "System.String", new XAttribute ("languageType", "Keyword")),
           new XElement ("Name", "MethodName")
           );
       _outputFormatter.AddParameterMarkup (new ParameterInfo[0], expectedOutput);
@@ -192,7 +192,7 @@ namespace MixinXRef.UnitTests.Formatting
 
       var expectedOutput = new XElement (
           "Signature",
-          new XElement ("Keyword", "string"),
+          new XElement ("Type", "System.String", new XAttribute ("languageType", "Keyword")),
           new XElement ("ExplicitInterfaceName", "IExplicitInterface"),
           new XElement ("Text", "."),
           new XElement ("Name", "Version"),
@@ -210,7 +210,7 @@ namespace MixinXRef.UnitTests.Formatting
       var expectedOutput = new XElement (
           "Signature",
           new XElement ("Keyword", "event"),
-          new XElement ("Type", "ChangedEventHandler"),
+          new XElement ("Type", "MixinXRef.UnitTests.TestDomain.ChangedEventHandler", new XAttribute ("languageType", "Type")),
           new XElement ("Name", "EventName")
           );
 
@@ -223,7 +223,7 @@ namespace MixinXRef.UnitTests.Formatting
       var output = _outputFormatter.CreateFieldMarkup ("FieldName", typeof (int));
       var expectedOutput = new XElement (
           "Signature",
-          new XElement ("Keyword", "int"),
+          new XElement ("Type", "System.Int32", new XAttribute ("languageType", "Keyword")),
           new XElement ("Name", "FieldName")
           );
 
@@ -236,7 +236,7 @@ namespace MixinXRef.UnitTests.Formatting
       var output = _outputFormatter.CreatePropertyMarkup ("PropertyName", typeof (int));
       var expectedOutput = new XElement (
           "Signature",
-          new XElement ("Keyword", "int"),
+          new XElement ("Type", "System.Int32", new XAttribute ("languageType", "Keyword")),
           new XElement ("Name", "PropertyName")
           );
 
@@ -265,7 +265,7 @@ namespace MixinXRef.UnitTests.Formatting
           new XElement ("Keyword", "struct"),
           new XElement ("Name", "NestedStruct"),
           new XElement ("Text", ":"),
-          new XElement ("Type", "IDisposable")
+          new XElement ("Type", "System.IDisposable")
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -280,9 +280,9 @@ namespace MixinXRef.UnitTests.Formatting
           new XElement ("Keyword", "interface"),
           new XElement ("Name", "INestedInterface"),
           new XElement ("Text", ":"),
-          new XElement ("Type", "IDisposable"),
+          new XElement ("Type", "System.IDisposable"),
           new XElement ("Text", ","),
-          new XElement ("Type", "ICloneable")
+          new XElement ("Type", "System.ICloneable")
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
@@ -297,9 +297,9 @@ namespace MixinXRef.UnitTests.Formatting
           new XElement ("Keyword", "class"),
           new XElement ("Name", "NestedClassWithInterfaceAndInheritance"),
           new XElement ("Text", ":"),
-          new XElement ("Type", "GenericTarget<string, int>"),
+          new XElement ("Type", "MixinXRef.UnitTests.TestDomain.GenericTarget<System.String, System.Int32>"),
           new XElement ("Text", ","),
-          new XElement ("Type", "IDisposable")
+          new XElement ("Type", "System.IDisposable")
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

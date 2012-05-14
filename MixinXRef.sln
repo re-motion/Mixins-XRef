@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRefGUI", "MixinXRefGU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Remotion_1_13_141", "MixinXRef.UnitTests.Remotion_1_13_141\MixinXRef.UnitTests.Remotion_1_13_141.csproj", "{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Remotion_1_11_20", "MixinXRef.UnitTests.Remotion_1_11_20\MixinXRef.UnitTests.Remotion_1_11_20.csproj", "{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,16 @@ Global
 		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9F6F6576-2766-4D8B-93CC-A19261BDCCAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Debug|x86.ActiveCfg = Debug|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Debug|x86.Build.0 = Debug|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Release|Any CPU.ActiveCfg = Release|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Release|Mixed Platforms.Build.0 = Release|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Release|x86.ActiveCfg = Release|x86
+		{50A45FA7-84C8-4EB0-8B94-0F43E213DB4B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

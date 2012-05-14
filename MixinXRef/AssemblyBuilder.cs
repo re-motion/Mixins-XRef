@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using MixinXRef.Reflection.Remotion;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -11,21 +10,18 @@ namespace MixinXRef
   public class AssemblyBuilder
   {
     private readonly string _assemblyDirectory;
-    private readonly IRemotionReflector _remotionReflector;
 
-    public AssemblyBuilder (string assemblyDirectory, IRemotionReflector remotionReflector)
+    public AssemblyBuilder (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
-      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
 
       _assemblyDirectory = Path.GetFullPath (assemblyDirectory);
-      _remotionReflector = remotionReflector;
 
       // register assembly reference resolver
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
     }
 
-    public Assembly[] GetAssemblies ()
+    public Assembly[] GetAssemblies (Func<Assembly, bool> filter = null)
     {
       var assemblies = new List<Assembly>();
 
@@ -43,7 +39,7 @@ namespace MixinXRef
           assemblies.Add (loadedAssembly);
       }
 
-      return assemblies.Where (a => !_remotionReflector.IsNonApplicationAssembly (a)).ToArray();
+      return (filter != null ? assemblies.Where (filter) : assemblies).ToArray ();
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)

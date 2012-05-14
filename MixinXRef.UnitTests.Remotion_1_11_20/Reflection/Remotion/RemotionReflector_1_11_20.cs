@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Remotion;
-using MixinXRef.UnitTests.Explore;
 using MixinXRef.UnitTests.NonApplicationAssembly;
-using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.UnitTests.Remotion_1_11_20.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
@@ -12,10 +11,10 @@ using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
 
-namespace MixinXRef.UnitTests.Reflection.Remotion
+namespace MixinXRef.UnitTests.Remotion_1_11_20.Reflection.Remotion
 {
   [TestFixture]
-  public class RemotionReflector_1_11_20_Test
+  public class RemotionReflector_1_13_141_Test
   {
     private IRemotionReflector _remotionReflector;
 
@@ -37,7 +36,6 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [Test]
     public void IsNonApplicationAssembly_True ()
     {
-      // SafeContext is type in Remotion.Mixins.Persistent.Signed, which is a "NonApplicationAssembly"
       var assembly = typeof (ClassForNonApplicationAssembly).Assembly;
       var output = _remotionReflector.IsNonApplicationAssembly (assembly);
 
@@ -59,7 +57,7 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [Test]
     public void IsValidationException ()
     {
-      var validationException = new ValidationException (new DefaultValidationLog());
+      var validationException = new ValidationException (new ValidationLogData());
 
       var outputTrue = _remotionReflector.IsValidationException (validationException);
       var outputFalse = _remotionReflector.IsValidationException (new Exception());
@@ -79,40 +77,33 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     }
 
     [Test]
-    public void IsInheritedFromMixin ()
+    public void IsInheritedFromMixin()
     {
-      var outputTrue1 = _remotionReflector.IsInheritedFromMixin (typeof (Mixin<>));
+      var outputTrue1 = _remotionReflector.IsInheritedFromMixin(typeof(Mixin<>));
       // Mixin<,> inherits from Mixin<>
-      var outputTrue2 = _remotionReflector.IsInheritedFromMixin (typeof (Mixin<,>));
+      var outputTrue2 = _remotionReflector.IsInheritedFromMixin(typeof(Mixin<,>));
       // MemberOverrideWithInheritanceTest.CustomMixin inherits from Mixin<>
-      var outputTrue3 = _remotionReflector.IsInheritedFromMixin (typeof (MemberOverrideWithInheritanceTest.CustomMixin));
-      var outputFalse = _remotionReflector.IsInheritedFromMixin ((typeof (object)));
+      var outputTrue3 = _remotionReflector.IsInheritedFromMixin(typeof(CompleteInterfacesTestClass.MyMixin));
+      var outputFalse = _remotionReflector.IsInheritedFromMixin((typeof(object)));
 
-      Assert.That (outputTrue1, Is.True);
-      Assert.That (outputTrue2, Is.True);
-      Assert.That (outputTrue3, Is.True);
-      Assert.That (outputFalse, Is.False);
+      Assert.That(outputTrue1, Is.True);
+      Assert.That(outputTrue2, Is.True);
+      Assert.That(outputTrue3, Is.True);
+      Assert.That(outputFalse, Is.False);
     }
-
 
     [Test]
     public void GetTargetClassDefinition ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<TargetClass2>().AddMixin<Mixin2>()
+          .ForClass<TargetClass1>().AddMixin<Mixin1>()
           .BuildConfiguration();
 
-      var targetType = typeof (TargetClass2);
-      var classContextForTargetType = new ReflectedObject(mixinConfiguration.ClassContexts.GetWithInheritance (targetType));
-      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (targetType, new ReflectedObject (mixinConfiguration), classContextForTargetType);
-      var expectedOutput = TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration);
+      var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass1), new ReflectedObject (mixinConfiguration), new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (typeof (TargetClass1))));
+      var expectedOutput = TargetClassDefinitionFactory.CreateTargetClassDefinition (mixinConfiguration.ClassContexts.First());
 
-      // is only true because target class definition gets cached!
-      Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.SameAs (expectedOutput));
-
-      // TargetClassDefinition has no overridden equals
-      var classContext = mixinConfiguration.ClassContexts.First();
-      Assert.That (new TargetClassDefinition (classContext), Is.Not.EqualTo (new TargetClassDefinition (classContext)));
+      Assert.That (reflectedOutput.To<TargetClassDefinition>(), Is.InstanceOfType (typeof (TargetClassDefinition)));
+      Assert.That (reflectedOutput.To<TargetClassDefinition>().FullName, Is.EqualTo (expectedOutput.FullName));
     }
 
     [Test]
@@ -129,13 +120,13 @@ namespace MixinXRef.UnitTests.Reflection.Remotion
     [Test]
     public void GetValidationLogFromValidationException ()
     {
-      var validationLog = new DefaultValidationLog();
-      var validationException = new ValidationException (validationLog);
+      var validationLogData = new ValidationLogData();
+      var validationException = new ValidationException (validationLogData);
 
       var reflectedValidationLog = _remotionReflector.GetValidationLogFromValidationException (validationException);
-      var result = reflectedValidationLog.To<IValidationLog>();
+      var result = reflectedValidationLog.To<ValidationLogData> ();
 
-      Assert.That (result, Is.SameAs (validationLog));
+      Assert.That (result, Is.SameAs (validationLogData));
     }
   }
 }

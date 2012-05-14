@@ -5,26 +5,29 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
-using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.UnitTests.Remotion_1_11_20.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 
-namespace MixinXRef.UnitTests.Report
+namespace MixinXRef.UnitTests.Remotion_1_11_20.Report
 {
   [TestFixture]
   public class FullReportGeneratorTest
   {
     private ErrorAggregator<Exception> _configurationErros;
     private ErrorAggregator<Exception> _validatonErrors;
+    private IRemotionReflector _remotionReflector;
 
     [SetUp]
     public void SetUp ()
     {
       _configurationErros = new ErrorAggregator<Exception>();
-      _validatonErrors = new ErrorAggregator<Exception>();
+      _validatonErrors = new ErrorAggregator<Exception> ();
+      _remotionReflector = new RemotionReflector_1_11_20 (".");
     }
 
     [Test]
@@ -35,7 +38,7 @@ namespace MixinXRef.UnitTests.Report
           new InvolvedType[0],
           _configurationErros,
           _validatonErrors,
-          ProgramTest.GetRemotionReflection(),
+          _remotionReflector,
           new OutputFormatter());
 
       var output = reportGenerator.GenerateXmlDocument();
@@ -59,7 +62,7 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
-      var assemblies = new AssemblyBuilder (".", ProgramTest.GetRemotionReflection()).GetAssemblies();
+      var assemblies = new AssemblyBuilder (".").GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly(a));
 
       var mixinConfiguration = MixinConfiguration.BuildNew()
           .ForClass<TargetClass1>().AddMixin<Mixin1>()
@@ -78,14 +81,14 @@ namespace MixinXRef.UnitTests.Report
           new[] { typeof (Mixin1).Assembly },
           _configurationErros,
           _validatonErrors,
-          ProgramTest.GetRemotionReflection()).FindInvolvedTypes();
+          _remotionReflector).FindInvolvedTypes ();
 
       var reportGenerator = new FullReportGenerator (
           assemblies,
           involvedTypes,
           _configurationErros,
           _validatonErrors,
-          ProgramTest.GetRemotionReflection(),
+          _remotionReflector,
           new OutputFormatter());
       var output = reportGenerator.GenerateXmlDocument();
 

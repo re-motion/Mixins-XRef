@@ -62,7 +62,7 @@ namespace MixinXRef.UnitTests.Remotion_1_13_141.Report
     [Test]
     public void FullReportGenerator_NonEmpty ()
     {
-      var assemblies = new AssemblyBuilder (".", _remotionReflector).GetAssemblies ();
+      var assemblies = new AssemblyBuilder (".").GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly (a));
 
       var mixinConfiguration = MixinConfiguration.BuildNew ()
           .ForClass<TargetClass1> ().AddMixin<Mixin1> ()

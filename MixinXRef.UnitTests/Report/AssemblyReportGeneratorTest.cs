@@ -42,23 +42,25 @@ namespace MixinXRef.UnitTests.Report
       var involvedType4 = new InvolvedType (typeof (Mixin2));
 
       var reportGenerator = CreateReportGenerator (new[] { _assembly1 }, involvedType1, involvedType2, involvedType3, involvedType4);
-      XElement output = reportGenerator.GenerateXml();
+      XElement output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "Assemblies",
           new XElement (
               "Assembly",
               new XAttribute ("id", "0"),
-              new XAttribute("name", _assembly1.GetName().Name),
-              new XAttribute("version", _assembly1.GetName().Version),
+              new XAttribute ("name", _assembly1.GetName ().Name),
+              new XAttribute ("version", _assembly1.GetName ().Version),
               new XAttribute ("location", "./" + Path.GetFileName (_assembly1.Location)),
+              new XAttribute ("culture", _assembly1.GetName ().CultureInfo),
+              new XAttribute ("publicKeyToken", Convert.ToBase64String (_assembly1.GetName ().GetPublicKeyToken ())),
               new XElement ("InvolvedType-Reference", new XAttribute ("ref", "0")),
               new XElement ("InvolvedType-Reference", new XAttribute ("ref", "1")),
               new XElement ("InvolvedType-Reference", new XAttribute ("ref", "2")),
               new XElement ("InvolvedType-Reference", new XAttribute ("ref", "3"))
               ));
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
@@ -66,25 +68,29 @@ namespace MixinXRef.UnitTests.Report
     {
 
       var reportGenerator = CreateReportGenerator (new[] { _assembly1, _assembly2 });
-      XElement output = reportGenerator.GenerateXml();
+      XElement output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "Assemblies",
           new XElement (
               "Assembly",
               new XAttribute ("id", "0"),
-              new XAttribute ("name", _assembly1.GetName().Name),
-              new XAttribute("version", _assembly1.GetName().Version),
-              new XAttribute("location", "./" + Path.GetFileName(_assembly1.Location))),
+              new XAttribute ("name", _assembly1.GetName ().Name),
+              new XAttribute ("version", _assembly1.GetName ().Version),
+              new XAttribute ("location", "./" + Path.GetFileName (_assembly1.Location)),
+              new XAttribute ("culture", _assembly1.GetName ().CultureInfo),
+              new XAttribute ("publicKeyToken", Convert.ToBase64String (_assembly1.GetName ().GetPublicKeyToken ()))),
           new XElement (
               "Assembly",
               new XAttribute ("id", "1"),
-              new XAttribute("name", _assembly2.GetName().Name),
-              new XAttribute("version", _assembly2.GetName().Version),
-              // _assembly2 is of type object - which is a GAC (mscorlib.dll)
-              new XAttribute ("location", _assembly2.Location)));
+              new XAttribute ("name", _assembly2.GetName ().Name),
+              new XAttribute ("version", _assembly2.GetName ().Version),
+        // _assembly2 is of type object - which is a GAC (mscorlib.dll)
+              new XAttribute ("location", _assembly2.Location),
+              new XAttribute ("culture", _assembly2.GetName ().CultureInfo),
+              new XAttribute ("publicKeyToken", Convert.ToBase64String (_assembly2.GetName ().GetPublicKeyToken ()))));
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
