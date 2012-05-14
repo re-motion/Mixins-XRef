@@ -148,7 +148,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "MyBaseClassMethod"),
               new XAttribute ("is-declared-by-this-class", false),
-              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("MyBaseClassMethod", typeof (void), new ParameterInfo[0]),
               GenerateOverrides ("Mixin-Reference", "0", "MixinOverridesTargetClassMember")
               ),
@@ -159,6 +159,15 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("MyNewMethod", typeof (void), new ParameterInfo[0])
+              ),
+          new XElement (
+              "Member",
+              new XAttribute ("type", MemberTypes.Method),
+              new XAttribute ("name", "MyNonRelevantBaseClassMethod"),
+              new XAttribute ("is-declared-by-this-class", true),
+              _outputFormatter.CreateModifierMarkup ("", "public override"),
+              _outputFormatter.CreateMethodMarkup ("MyNonRelevantBaseClassMethod", typeof (void), new ParameterInfo[0]),
+              GenerateOverrides ("Mixin-Reference", "0", "MixinOverridesTargetClassMember")
               )
           );
 

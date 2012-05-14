@@ -139,7 +139,7 @@ namespace MixinXRef.Reflection
 
     private bool IsOverriddenMethod (MethodInfo methodInfo)
     {
-      return (methodInfo != null) && (methodInfo != methodInfo.GetBaseDefinition());
+      return methodInfo != null && methodInfo.DeclaringType != methodInfo.GetBaseDefinition ().DeclaringType;
     }
   }
 }

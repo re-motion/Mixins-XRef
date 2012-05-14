@@ -21,12 +21,21 @@ namespace MixinXRef.UnitTests.TestDomain
     public virtual void MyNewMethod ()
     {
     }
+
+    public override void MyNonRelevantBaseClassMethod ()
+    {
+    }
   }
 
   public class MixinOverridesTargetClassMember
   {
     [OverrideTarget]
     public void MyBaseClassMethod ()
+    {
+    }
+
+    [OverrideTarget]
+    public void MyNonRelevantBaseClassMethod ()
     {
     }
   }
