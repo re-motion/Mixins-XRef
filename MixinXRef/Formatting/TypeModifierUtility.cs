@@ -1,6 +1,6 @@
 using System;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Formatting
 {
   public class TypeModifierUtility
   {

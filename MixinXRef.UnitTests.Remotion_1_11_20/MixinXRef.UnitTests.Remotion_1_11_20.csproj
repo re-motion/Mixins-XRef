@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MixinXRef.UnitTests.Remotion_1_11_20</RootNamespace>
     <AssemblyName>MixinXRef.UnitTests.Remotion_1_11_20</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -50,7 +51,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -78,9 +78,17 @@
     <Content Include="TestDomain\fullReportGeneratorExpectedOutput.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
+      <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
+      <Name>MixinXRef.Reflection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">
       <Project>{4D5710EA-E79A-484A-A9A2-2572571274D7}</Project>
       <Name>MixinXRef.UnitTests.NonApplicationAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
+      <Name>MixinXRef.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>

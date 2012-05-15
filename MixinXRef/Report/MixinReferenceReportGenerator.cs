@@ -3,8 +3,9 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef.Report
 {
@@ -70,7 +71,7 @@ namespace MixinXRef.Report
 
       if (_involvedType.HasTargetClassDefintion)
       {
-        var mixinDefinition = _involvedType.TargetClassDefintion.CallMethod (
+        var mixinDefinition = _involvedType.TargetClassDefinition.CallMethod (
             "GetMixinByConfiguredType", mixinContext.GetProperty ("MixinType").To<Type>());
 
         // set more specific name for mixin references

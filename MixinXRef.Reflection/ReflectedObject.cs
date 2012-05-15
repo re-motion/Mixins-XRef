@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection
@@ -101,7 +102,7 @@ namespace MixinXRef.Reflection
 
     public override bool Equals(object obj)
     {
-      return (obj is ReflectedObject) ? _wrappedObject.Equals (UnWrapInstance (obj)) : false;
+      return obj is ReflectedObject && _wrappedObject.Equals (UnWrapInstance (obj));
     }
 
     public override int GetHashCode()

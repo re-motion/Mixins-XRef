@@ -3,10 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
 using MixinXRef.Report;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef
 {
@@ -29,20 +28,7 @@ namespace MixinXRef
       if (!Directory.Exists (outputDirectory))
         Directory.CreateDirectory (outputDirectory);
 
-      if (ArgumentsContainCustomReflector (args))
-      {
-        try
-        {
-          program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory, args[2]));
-        }
-        catch (Exception fileNotFoundOrTypeLoadException)
-        {
-          Console.WriteLine (fileNotFoundOrTypeLoadException.Message);
-          return -5;
-        }
-      }
-      else
-        program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
+      program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
 
       Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
 
@@ -112,7 +98,7 @@ namespace MixinXRef
       
       if (arguments.Length < 2 || arguments.Length > 4)
       {
-        _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]");
+        _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory [-force]");
         _output.WriteLine ("Quitting MixinXRef");
         return -1;
       }

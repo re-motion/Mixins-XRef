@@ -1,7 +1,8 @@
 using System;
 using System.Reflection;
+using MixinXRef.Reflection.Utility;
 
-namespace MixinXRef.Reflection.Remotion
+namespace MixinXRef.Reflection.RemotionReflector
 {
   public interface IRemotionReflector
   {

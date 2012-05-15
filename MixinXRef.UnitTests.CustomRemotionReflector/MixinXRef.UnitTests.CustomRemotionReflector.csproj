@@ -80,6 +80,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
+      <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
+      <Name>MixinXRef.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
+      <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>

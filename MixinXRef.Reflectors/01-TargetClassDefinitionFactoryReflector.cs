@@ -1,18 +1,22 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using MixinXRef.Reflection;
+using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection.Remotion
+namespace MixinXRef.Reflectors
 {
-  public class RemotionReflector_1_13_23 : RemotionReflector_1_11_20
+  [ReflectorSupport ("Remotion", MinVersion = "1.13.23")]
+  public class TargetClassDefinitionFactory : RemotionReflectorBase
   {
     private readonly Assembly _remotionAssembly;
 
-    public RemotionReflector_1_13_23 (string assemblyDirectory)
-      : base (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory))
+    public TargetClassDefinitionFactory (string assemblyDirectory)
     {
       _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
+      AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");
     }
 
     public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)
@@ -20,7 +24,7 @@ namespace MixinXRef.Reflection.Remotion
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
 
-      var targetClassDefinitionFactoryType = _remotionAssembly.GetType("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
+      var targetClassDefinitionFactoryType = _remotionAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
 

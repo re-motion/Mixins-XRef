@@ -1,8 +1,10 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef
 {
@@ -51,7 +53,7 @@ namespace MixinXRef
             var targetClassDefinition = GetTargetClassDefinition (type, classContext);
             var involvedType = involvedTypes.GetOrCreateValue (type);
             involvedType.ClassContext = classContext;
-            involvedType.TargetClassDefintion = targetClassDefinition;
+            involvedType.TargetClassDefinition = targetClassDefinition;
 
             foreach (var mixinContext in classContext.GetProperty ("Mixins"))
             {

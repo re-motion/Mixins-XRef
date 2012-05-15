@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -80,8 +81,8 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType(typeof(TargetClass1));
       var type2 = new InvolvedType(typeof(TargetClass1));
 
-      type1.TargetClassDefintion = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass1), mixinConfiguration));
-      type2.TargetClassDefintion = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass2), mixinConfiguration));
+      type1.TargetClassDefinition = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass1), mixinConfiguration));
+      type2.TargetClassDefinition = new ReflectedObject(TargetClassDefinitionUtility.GetConfiguration(typeof(TargetClass2), mixinConfiguration));
 
       Assert.That(type1, Is.Not.EqualTo(type2));
     }
@@ -136,7 +137,7 @@ namespace MixinXRef.UnitTests
 
       var type1 = new InvolvedType(type);
       type1.ClassContext = new ReflectedObject(mixinConfiguration.ClassContexts.First());
-      type1.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
+      type1.TargetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
 
       Assert.That(type1.IsTarget, Is.True);
       Assert.That(type1.ClassContext, Is.Not.Null);
@@ -150,7 +151,7 @@ namespace MixinXRef.UnitTests
       Assert.That (type1.IsTarget, Is.False);
       try
       {
-        var output = type1.TargetClassDefintion;
+        var output = type1.TargetClassDefinition;
         Assert.Fail ("Expected exception was not thrown");
       }
       catch (InvalidOperationException ex)
@@ -172,7 +173,7 @@ namespace MixinXRef.UnitTests
       Assert.That (type1.IsTarget, Is.True);
       try
       {
-        var output = type1.TargetClassDefintion;
+        var output = type1.TargetClassDefinition;
         Assert.Fail ("Expected exception was not thrown");
       }
       catch (InvalidOperationException ex)

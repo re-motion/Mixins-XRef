@@ -1,15 +1,18 @@
-using System;
+﻿using System;
 using System.Reflection;
+using MixinXRef.Reflection;
+using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection.Remotion
+namespace MixinXRef.Reflectors
 {
-  public class RemotionReflector_1_13_141 : RemotionReflector_1_13_23
+  [ReflectorSupport ("Remotion", MinVersion = "1.13.141")]
+  public class MixinAssemblyReflector : RemotionReflectorBase
   {
     private readonly Assembly _mixinsAssembly;
 
-    public RemotionReflector_1_13_141 (string assemblyDirectory)
-        : base (ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory))
+    public MixinAssemblyReflector (string assemblyDirectory)
     {
       _mixinsAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Mixins.dll");
     }

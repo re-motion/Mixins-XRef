@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.UnitTests.NonApplicationAssembly;
 using MixinXRef.UnitTests.Remotion_1_13_141.TestDomain;
 using NUnit.Framework;

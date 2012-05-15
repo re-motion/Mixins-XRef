@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.Remotion_1_11_20.TestDomain;
 using MixinXRef.Utility;

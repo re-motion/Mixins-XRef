@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
@@ -127,7 +128,7 @@ namespace MixinXRef.UnitTests.Report
           MixinConfiguration.BuildNew ().ForClass<InheritatedTargetClass> ().AddMixin<MixinOverridesTargetClassMember> ().BuildConfiguration ();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
       var involvedType = new InvolvedType (type);
-      involvedType.TargetClassDefintion = targetClassDefinition;
+      involvedType.TargetClassDefinition = targetClassDefinition;
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
@@ -229,7 +230,7 @@ namespace MixinXRef.UnitTests.Report
           MixinConfiguration.BuildNew ().ForClass<MemberOverrideTestClass.Target> ().AddMixin<MemberOverrideTestClass.Mixin1> ().BuildConfiguration ();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
       var involvedType = new InvolvedType (type);
-      involvedType.TargetClassDefintion = targetClassDefinition;
+      involvedType.TargetClassDefinition = targetClassDefinition;
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
@@ -282,7 +283,7 @@ namespace MixinXRef.UnitTests.Report
       var mixinConfiguration =
           MixinConfiguration.BuildNew ().ForClass<MemberOverrideTestClass.Target> ().AddMixin<MemberOverrideTestClass.Mixin1> ().BuildConfiguration ();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
-      var involvedType = new InvolvedType (type) { TargetClassDefintion = targetClassDefinition };
+      var involvedType = new InvolvedType (type) { TargetClassDefinition = targetClassDefinition };
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
 
@@ -339,7 +340,7 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
       var involvedType = new InvolvedType (targetType)
                          {
-                           TargetClassDefintion = targetClassDefinition,
+                           TargetClassDefinition = targetClassDefinition,
                            ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
                          };
 
@@ -362,7 +363,7 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
       var involvedType = new InvolvedType (targetType)
                          {
-                           TargetClassDefintion = targetClassDefinition,
+                           TargetClassDefinition = targetClassDefinition,
                            ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
                          };
 
@@ -396,7 +397,7 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
       var involvedType = new InvolvedType (targetType)
       {
-        TargetClassDefintion = targetClassDefinition,
+        TargetClassDefinition = targetClassDefinition,
         ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
       };
 
@@ -427,7 +428,7 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration));
       var involvedType = new InvolvedType (targetType)
       {
-        TargetClassDefintion = targetClassDefinition,
+        TargetClassDefinition = targetClassDefinition,
         ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ())
       };
 

@@ -1,7 +1,8 @@
 using System;
 using System.Xml.Linq;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef.Report
 {

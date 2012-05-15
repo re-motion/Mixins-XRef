@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;

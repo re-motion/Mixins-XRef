@@ -1,10 +1,8 @@
-using System;
 using System.IO;
 using System.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-using Remotion.Mixins.Context;
 using Rhino.Mocks;
 
 namespace MixinXRef.UnitTests

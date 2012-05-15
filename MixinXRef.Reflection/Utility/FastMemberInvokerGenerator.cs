@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Linq;
 using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Reflection.Utility
 {
   public class FastMemberInvokerGenerator
   {

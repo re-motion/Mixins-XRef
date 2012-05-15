@@ -69,35 +69,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\MemberDefinitionCollection.cs" />
-    <Compile Include="Reflection\FastMemberInvokerCache.cs" />
-    <Compile Include="Reflection\FastMemberInvokerGenerator.cs" />
-    <Compile Include="Reflection\MemberInfoEqualityUtility.cs" />
-    <Compile Include="Reflection\Remotion\RemotionReflector_1_13_141.cs" />
-    <Compile Include="Reflection\Remotion\RemotionReflector_1_13_23.cs" />
+    <Compile Include="Formatting\MemberModifierUtility.cs" />
+    <Compile Include="Formatting\MemberSignatureUtility.cs" />
+    <Compile Include="Formatting\TypeModifierUtility.cs" />
+    <Compile Include="InvolvedTypeStore.cs" />
+    <Compile Include="RemotionReflectorFactory.cs" />
     <Compile Include="Report\AdditionalDependencyReportGenerator.cs" />
-    <Compile Include="Utility\ArgumentUtility.cs" />
     <Compile Include="AssemblyBuilder.cs" />
     <Compile Include="Report\AssemblyReportGenerator.cs" />
     <Compile Include="Report\AttributeIntroductionReportGenerator.cs" />
     <Compile Include="Report\AttributeReferenceReportGenerator.cs" />
     <Compile Include="Report\AttributeReportGenerator.cs" />
     <Compile Include="Report\ConfigurationErrorReportGenerator.cs" />
-    <Compile Include="Utility\AssemblyHelper.cs" />
-    <Compile Include="Utility\ErrorAggregator.cs" />
     <Compile Include="Formatting\OutputFormatter.cs" />
     <Compile Include="Report\FullReportGenerator.cs" />
-    <Compile Include="Utility\IdentifierGenerator.cs" />
-    <Compile Include="Utility\IdentifierPopulator.cs" />
     <Compile Include="Report\InterfaceReferenceReportGenerator.cs" />
     <Compile Include="Report\InterfaceReportGenerator.cs" />
     <Compile Include="Report\InterfaceIntroductionReportGenerator.cs" />
-    <Compile Include="Utility\InvolvedTypeStore.cs" />
     <Compile Include="Formatting\IOutputFormatter.cs" />
-    <Compile Include="Reflection\MemberModifierUtility.cs" />
-    <Compile Include="Reflection\MemberSignatureUtility.cs" />
-    <Compile Include="Reflection\Remotion\IRemotionReflector.cs" />
     <Compile Include="Report\IReportGenerator.cs" />
-    <Compile Include="Utility\IIdentifierGenerator.cs" />
     <Compile Include="IInvolvedTypeFinder.cs" />
     <Compile Include="InvolvedType.cs" />
     <Compile Include="Report\MemberOverrideReportGenerator.cs" />
@@ -108,15 +98,9 @@
     <Compile Include="Report\CompositeReportGenerator.cs" />
     <Compile Include="InvolvedTypeFinder.cs" />
     <Compile Include="Report\InvolvedTypeReportGenerator.cs" />
-    <Compile Include="Utility\ReadonlyIdentifierGenerator.cs" />
-    <Compile Include="Utility\RecursiveDirectoryCopy.cs" />
     <Compile Include="Report\RecursiveExceptionReportGenerator.cs" />
-    <Compile Include="Reflection\ReflectedObject.cs" />
-    <Compile Include="Reflection\Remotion\RemotionReflector_1_11_20.cs" />
-    <Compile Include="Reflection\RemotionReflectorFactory.cs" />
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="Report\TargetReferenceReportGenerator.cs" />
-    <Compile Include="Reflection\TypeModifierUtility.cs" />
     <Compile Include="Report\ValidationErrorReportGenerator.cs" />
     <Compile Include="XRefTransformer.cs" />
   </ItemGroup>
@@ -333,6 +317,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="MixinXRef.cd" />
     <None Include="xml_utilities\resources\images\Sorting icons.psd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -354,6 +339,23 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
+      <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
+      <Name>MixinXRef.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
+      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
+      <Name>MixinXRef.Reflectors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
+      <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

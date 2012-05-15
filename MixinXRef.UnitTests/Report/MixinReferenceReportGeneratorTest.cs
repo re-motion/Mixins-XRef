@@ -3,7 +3,8 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
@@ -52,7 +53,7 @@ namespace MixinXRef.UnitTests.Report
 
       var mixinConfiguration = MixinConfiguration.BuildNew().ForClass<TargetClass1>().AddMixin<Mixin1>().BuildConfiguration();
       targetType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
-      targetType.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration));
+      targetType.TargetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration));
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();

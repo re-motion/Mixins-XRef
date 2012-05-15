@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 
 namespace MixinXRef.Collections
 {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;

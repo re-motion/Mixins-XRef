@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using NUnit.Framework;

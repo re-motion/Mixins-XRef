@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
 
 namespace MixinXRef.UnitTests.CustomRemotionReflector
@@ -97,6 +97,16 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
       return new ReflectedObject (validationException).GetProperty ("ValidationLog");
+    }
+
+    public ReflectedObject GetTargetCallDependencies(ReflectedObject mixinDefinition)
+    {
+      throw new NotImplementedException();
+    }
+
+    public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)
+    {
+      throw new NotImplementedException();
     }
   }
 }

@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Linq;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;

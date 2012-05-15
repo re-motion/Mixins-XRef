@@ -1,6 +1,3 @@
-using System;
-using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 

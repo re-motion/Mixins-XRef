@@ -3,8 +3,10 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef.Report
 {

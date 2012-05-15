@@ -2,8 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -23,7 +22,8 @@ namespace MixinXRef.UnitTests
 
     public static IRemotionReflector GetRemotionReflection ()
     {
-      return new RemotionReflector_1_13_141 (".");
+      // TODO Replace with mock if possible
+      return new RemotionReflectorProvider("Remotion", new Version("1.13.141"), ".");
     }
 
     [SetUp]

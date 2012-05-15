@@ -117,7 +117,6 @@
     <Compile Include="Report\ReadonlyIdentifierGeneratorTest.cs" />
     <Compile Include="Utility\RecursiveDirectoryCopyTest.cs" />
     <Compile Include="Report\RecursiveExceptionReportGeneratorTest.cs" />
-    <Compile Include="Reflection\RemotionReflectorFactoryTest.cs" />
     <Compile Include="Stub\ReportGeneratorStub.cs" />
     <Compile Include="Report\AssemblyReportGeneratorTest.cs" />
     <Compile Include="Utility\IdentifierGeneratorTest.cs" />
@@ -161,9 +160,21 @@
     <Compile Include="XRefTransformerTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
+      <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
+      <Name>MixinXRef.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
+      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
+      <Name>MixinXRef.Reflectors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">
       <Project>{4D5710EA-E79A-484A-A9A2-2572571274D7}</Project>
       <Name>MixinXRef.UnitTests.NonApplicationAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
+      <Name>MixinXRef.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
@@ -193,9 +204,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

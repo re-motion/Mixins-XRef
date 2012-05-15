@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
@@ -412,7 +412,7 @@ namespace MixinXRef.UnitTests.Report
 
     private void SetTargetClassDefinition (InvolvedType involvedType, MixinConfiguration mixinConfiguration)
     {
-      involvedType.TargetClassDefintion = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (involvedType.Type, mixinConfiguration));
+      involvedType.TargetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (involvedType.Type, mixinConfiguration));
     }
 
     private InvolvedTypeReportGenerator CreateReportGenerator (

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
-using MixinXRef.Reflection.Remotion;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
+using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
 namespace MixinXRef.Report
 {

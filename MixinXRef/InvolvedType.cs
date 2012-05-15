@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using MixinXRef.Collections;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -11,12 +12,9 @@ namespace MixinXRef
   public class InvolvedType
   {
     private readonly Type _realType;
-    // ClassContext _classContext;
-    private ReflectedObject _classContext;
-    // TargetClassDefinition
-    private ReflectedObject _targetClassDefintion;
-    // keys are the types of target class, values are from type MixinDefinition
-    private readonly IDictionary<InvolvedType, ReflectedObject> _targetTypes = new Dictionary<InvolvedType, ReflectedObject> ();
+    private ReflectedObject /* ClassContext */ _classContext;
+    private ReflectedObject /* TargetClassDefinition */ _targetClassDefintion;
+    private readonly IDictionary<InvolvedType, ReflectedObject /* MixinDefinition */> _targetTypes = new Dictionary<InvolvedType, ReflectedObject> ();
 
     public InvolvedType (Type realType)
     {
@@ -40,12 +38,13 @@ namespace MixinXRef
       get { return _targetTypes.Count > 0; }
     }
 
-    public ReflectedObject ClassContext
+    public ReflectedObject /* ClassContext */ ClassContext
     {
       get
       {
         if (!IsTarget)
           throw new InvalidOperationException ("Involved type is not a target class.");
+
         return _classContext;
       }
       set
@@ -60,12 +59,13 @@ namespace MixinXRef
       get { return _targetClassDefintion != null; }
     }
 
-    public ReflectedObject TargetClassDefintion
+    public ReflectedObject /* TargetClassDefinition */ TargetClassDefinition
     {
       get
       {
         if (!HasTargetClassDefintion)
           throw new InvalidOperationException ("Involved type is either not a target class or a generic target class.");
+
         return _targetClassDefintion;
       }
       set
@@ -74,39 +74,39 @@ namespace MixinXRef
       }
     }
 
-    public IDictionary<InvolvedType, ReflectedObject> TargetTypes
+    public IDictionary<InvolvedType, ReflectedObject /* MixinDefinition */> TargetTypes
     {
       get { return _targetTypes; }
     }
 
     private MemberDefinitionCollection _targetMemberDefinitions;
-    public IDictionary<MemberInfo, ReflectedObject> TargetMemberDefinitions
+    public IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> TargetMemberDefinitions
     {
       get
       {
-        if (_targetMemberDefinitions == null)
-        {
-          _targetMemberDefinitions = new MemberDefinitionCollection ();
+        if (!HasTargetClassDefintion)
+          throw new InvalidOperationException ("Involved type is either not a target class or a generic target class.");
 
-          if (HasTargetClassDefintion)
-            _targetMemberDefinitions.AddRange (TargetClassDefintion.CallMethod ("GetAllMembers"));
-        }
+        if (_targetMemberDefinitions == null)
+          _targetMemberDefinitions = new MemberDefinitionCollection (/* IEnumerable<MemberDefinitionBase> */ TargetClassDefinition.CallMethod ("GetAllMembers"));
+
         return _targetMemberDefinitions;
       }
     }
 
     private MemberDefinitionCollection _mixinMemberDefinitions;
-    public IDictionary<MemberInfo, ReflectedObject> MixinMemberDefinitions
+    public IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> MixinMemberDefinitions
     {
       get
       {
-        if (_mixinMemberDefinitions == null)
-        {
-          _mixinMemberDefinitions = new MemberDefinitionCollection ();
+        if (!IsMixin)
+          throw new InvalidOperationException ("Involved type is not a mixin.");
 
-          if (IsMixin)
-            _mixinMemberDefinitions.AddRange (TargetTypes.Values.Where (t => t != null).SelectMany (t => t.CallMethod ("GetAllMembers")));
-        }
+        if (_mixinMemberDefinitions == null)
+          _mixinMemberDefinitions =
+            new MemberDefinitionCollection (
+              TargetTypes.Values.Where (t => t != null).SelectMany (t => /* IEnumerable<MemberDefinitionBase> */ t.CallMethod ("GetAllMembers")));
+
         return _mixinMemberDefinitions;
       }
     }

@@ -1,7 +1,6 @@
 using System.Reflection;
-using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Utility
 {
   public class MemberInfoEqualityUtility
   {

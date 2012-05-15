@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using MixinXRef.Utility;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Formatting
 {
   public class MemberModifierUtility
   {

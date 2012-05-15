@@ -4,7 +4,7 @@ using System.Reflection;
 using MixinXRef.Utility;
 using System.Linq;
 
-namespace MixinXRef.Reflection
+namespace MixinXRef.Reflection.Utility
 {
   public class FastMemberInvokerCache
   {
