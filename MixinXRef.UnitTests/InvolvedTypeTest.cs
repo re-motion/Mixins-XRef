@@ -118,7 +118,6 @@ namespace MixinXRef.UnitTests
       Assert.That (type1.IsTarget, Is.False);
       try
       {
-        var output = type1.ClassContext;
         Assert.Fail ("Expected exception was not thrown");
       }
       catch (InvalidOperationException ex)
@@ -151,7 +150,6 @@ namespace MixinXRef.UnitTests
       Assert.That (type1.IsTarget, Is.False);
       try
       {
-        var output = type1.TargetClassDefinition;
         Assert.Fail ("Expected exception was not thrown");
       }
       catch (InvalidOperationException ex)

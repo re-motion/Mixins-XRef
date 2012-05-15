@@ -91,11 +91,8 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("arguments", arguments);
 
-      var forceOverride = false;
+      bool forceOverride = arguments.Any(a => a.ToLower().Equals ("-force"));
 
-      if (arguments.Any(a => a.ToLower().Equals ("-force")))
-        forceOverride = true;
-      
       if (arguments.Length < 2 || arguments.Length > 4)
       {
         _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory [-force]");

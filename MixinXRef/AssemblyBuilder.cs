@@ -46,9 +46,10 @@ namespace MixinXRef
     {
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
-      AssemblyName assemblyName = new AssemblyName (args.Name);
+      var assemblyName = new AssemblyName (args.Name);
       return
-          AppDomain.CurrentDomain.GetAssemblies().Where (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName())).SingleOrDefault();
+        AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(
+          a => AssemblyName.ReferenceMatchesDefinition(assemblyName, a.GetName()));
     }
 
     private Assembly LoadAssembly (string assemblyFile)

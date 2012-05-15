@@ -12,12 +12,12 @@ namespace MixinXRef.UnitTests.Explore
     [Test]
     public void SimpleOverrideByMixin ()
     {
-      var mixinConfiguration = MixinConfiguration.BuildNew()
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
           .ForClass (typeof (Target)).AddMixin (typeof (MixinOverrideTarget))
-          .BuildConfiguration();
+          .BuildConfiguration ();
       var targetClassDefiniton = TargetClassDefinitionUtility.GetConfiguration (typeof (Target), mixinConfiguration);
-      var targetClassOverrides = targetClassDefiniton.GetAllMembers().Where (mdb => mdb.Name == "WriteType").Single().Overrides;
-      var mixinOverrides = targetClassDefiniton.Mixins[0].GetAllMembers().Where (mdb => mdb.Name == "WriteType").Single().Overrides;
+      var targetClassOverrides = targetClassDefiniton.GetAllMembers ().Single (mdb => mdb.Name == "WriteType").Overrides;
+      var mixinOverrides = targetClassDefiniton.Mixins[0].GetAllMembers ().Single (mdb => mdb.Name == "WriteType").Overrides;
 
       Assert.That (targetClassOverrides.Count, Is.EqualTo (1));
       Assert.That (mixinOverrides.Count, Is.EqualTo (0));
@@ -30,7 +30,7 @@ namespace MixinXRef.UnitTests.Explore
     {
       public virtual void WriteType ()
       {
-        Console.WriteLine (GetType());
+        Console.WriteLine (GetType ());
       }
     }
 
@@ -39,7 +39,7 @@ namespace MixinXRef.UnitTests.Explore
       [OverrideTarget]
       public void WriteType ()
       {
-        Console.WriteLine (GetType());
+        Console.WriteLine (GetType ());
       }
     }
 
@@ -48,12 +48,12 @@ namespace MixinXRef.UnitTests.Explore
     [Test]
     public void SimpleOverrideByTarget ()
     {
-      var mixinConfiguration = MixinConfiguration.BuildNew()
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
           .ForClass (typeof (TargetOverrideMixin)).AddMixin (typeof (TemplateMixin))
-          .BuildConfiguration();
+          .BuildConfiguration ();
       var targetClassDefiniton = TargetClassDefinitionUtility.GetConfiguration (typeof (TargetOverrideMixin), mixinConfiguration);
-      var targetClassOverrides = targetClassDefiniton.GetAllMembers().Where (mdb => mdb.Name == "WriteType").Single().Overrides;
-      var mixinOverrides = targetClassDefiniton.Mixins[0].GetAllMembers().Where (mdb => mdb.Name == "WriteType").Single().Overrides;
+      var targetClassOverrides = targetClassDefiniton.GetAllMembers ().Single (mdb => mdb.Name == "WriteType").Overrides;
+      var mixinOverrides = targetClassDefiniton.Mixins[0].GetAllMembers ().Single (mdb => mdb.Name == "WriteType").Overrides;
 
       Assert.That (targetClassOverrides.Count, Is.EqualTo (0));
       Assert.That (mixinOverrides.Count, Is.EqualTo (1));
@@ -67,7 +67,7 @@ namespace MixinXRef.UnitTests.Explore
       [OverrideMixin]
       public void WriteType ()
       {
-        Console.WriteLine (GetType());
+        Console.WriteLine (GetType ());
       }
     }
 
@@ -75,7 +75,7 @@ namespace MixinXRef.UnitTests.Explore
     {
       public virtual void WriteType ()
       {
-        Console.WriteLine (GetType());
+        Console.WriteLine (GetType ());
       }
     }
 
