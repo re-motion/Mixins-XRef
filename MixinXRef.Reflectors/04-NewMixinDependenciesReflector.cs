@@ -1,6 +1,6 @@
 ﻿using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
-using MixinXRef.Reflection.Utility;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
@@ -9,12 +9,16 @@ namespace MixinXRef.Reflectors
   {
     public override ReflectedObject GetNextCallDependencies (ReflectedObject mixinDefinition)
     {
-      return new ReflectedObject ("NewMixinDependenciesReflector");
+      ArgumentUtility.CheckNotNull ("mixinDefinition", mixinDefinition);
+
+      return mixinDefinition.GetProperty ("NextCallDependencies");
     }
 
     public override ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition)
     {
-      return new ReflectedObject ("NewMixinDependenciesReflector");
+      ArgumentUtility.CheckNotNull ("mixinDefinition", mixinDefinition);
+
+      return mixinDefinition.GetProperty ("TargetCallDependencies");
     }
   }
 }
