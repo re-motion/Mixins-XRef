@@ -46,6 +46,7 @@
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="IdentifierPopulator.cs" />
     <Compile Include="IIdentifierGenerator.cs" />
+    <Compile Include="MemberDefinitionEqualityComparer.cs" />
     <Compile Include="MemberInfoEqualityUtility.cs" />
     <Compile Include="PathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

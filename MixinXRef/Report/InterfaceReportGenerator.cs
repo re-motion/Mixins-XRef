@@ -15,21 +15,24 @@ namespace MixinXRef.Report
     private readonly InvolvedType[] _involvedTypes;
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
+    private readonly IIdentifierGenerator<MemberInfo> _memberIdentifierGenerator;
     private readonly IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
     private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
     public InterfaceReportGenerator (
-        InvolvedType[] involvedTypes,
-        IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
-        IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-        IIdentifierGenerator<Type> interfaceIdentifierGenerator,
-        IRemotionReflector remotionReflector,
-        IOutputFormatter outputFormatter)
+      InvolvedType[] involvedTypes, 
+      IIdentifierGenerator<Assembly> assemblyIdentifierGenerator, 
+      IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
+      IIdentifierGenerator<MemberInfo> memberIdentifierGenerator, 
+      IIdentifierGenerator<Type> interfaceIdentifierGenerator, 
+      IRemotionReflector remotionReflector, 
+      IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("assemblyIdentifierGenerator", assemblyIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("involvedTypeIdentifierGenerator", involvedTypeIdentifierGenerator);
+      ArgumentUtility.CheckNotNull ("memberIdentifierGenerator", memberIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("interfaceIdentifierGenerator", interfaceIdentifierGenerator);
       ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
@@ -37,6 +40,7 @@ namespace MixinXRef.Report
       _involvedTypes = involvedTypes;
       _assemblyIdentifierGenerator = assemblyIdentifierGenerator;
       _involvedTypeIdentifierGenerator = involvedTypeIdentifierGenerator;
+      _memberIdentifierGenerator = memberIdentifierGenerator;
       _interfaceIdentifierGenerator = interfaceIdentifierGenerator;
       _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
@@ -113,7 +117,7 @@ namespace MixinXRef.Report
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(usedInterface)),
           new XAttribute ("is-complete-interface", isCompleteInterface),
-          new MemberReportGenerator (usedInterface, null, null, _outputFormatter).GenerateXml(),
+          new MemberReportGenerator (usedInterface, null, null, _memberIdentifierGenerator, _outputFormatter).GenerateXml(),
           new XElement (
               "ImplementedBy",
               from implementingType in allInterfaces[usedInterface]

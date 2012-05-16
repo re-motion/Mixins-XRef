@@ -1,8 +1,7 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.RemotionReflector;
-using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
@@ -10,7 +9,6 @@ namespace MixinXRef
 {
   public class InvolvedTypeFinder : IInvolvedTypeFinder
   {
-    // MixinConfiguration _mixinConfiguration;
     private readonly ReflectedObject _mixinConfiguration;
     private readonly Assembly[] _assemblies;
     private readonly ErrorAggregator<Exception> _configurationErrors;
@@ -50,8 +48,8 @@ namespace MixinXRef
           var classContext = classContexts.CallMethod ("GetWithInheritance", type);
           if (classContext != null)
           {
-            var targetClassDefinition = GetTargetClassDefinition (type, classContext);
             var involvedType = involvedTypes.GetOrCreateValue (type);
+            var targetClassDefinition = GetTargetClassDefinition (type, classContext);
             involvedType.ClassContext = classContext;
             involvedType.TargetClassDefinition = targetClassDefinition;
 
@@ -64,12 +62,12 @@ namespace MixinXRef
           }
 
           // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
-          if (_remotionReflector.IsInheritedFromMixin(type) && !_remotionReflector.IsInfrastructureType(type))
-            involvedTypes.GetOrCreateValue(type);
+          if (_remotionReflector.IsInheritedFromMixin (type) && !_remotionReflector.IsInfrastructureType (type))
+            involvedTypes.GetOrCreateValue (type);
         }
       }
 
-      return involvedTypes.ToSortedArray ();
+      return involvedTypes.ToArray ();
     }
 
     public ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)

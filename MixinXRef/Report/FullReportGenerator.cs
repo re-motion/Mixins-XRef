@@ -67,6 +67,7 @@ namespace MixinXRef.Report
           assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
       var readonlyInvolvedTypeIdentiferGenerator =
           new IdentifierPopulator<Type> (_involvedTypes.Select (it => it.Type)).GetReadonlyIdentifierGenerator ("none");
+      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
 
@@ -77,6 +78,7 @@ namespace MixinXRef.Report
           _involvedTypes,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
+          memberIdentifierGenerator,
           interfaceIdentiferGenerator,
           attributeIdentiferGenerator,
           _remotionReflector,
@@ -85,6 +87,7 @@ namespace MixinXRef.Report
           _involvedTypes,
           readonlyAssemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
+          memberIdentifierGenerator,
           interfaceIdentiferGenerator,
           _remotionReflector,
           _outputFormatter);

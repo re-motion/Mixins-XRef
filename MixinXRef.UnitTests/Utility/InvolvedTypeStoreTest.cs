@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -39,7 +40,7 @@ namespace MixinXRef.UnitTests.Utility
     [Test]
     public void ToSortedArray_EmptyStore ()
     {
-      Assert.That (_involvedTypeStore.ToSortedArray(), Is.EqualTo (new InvolvedType[0]));
+      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (new InvolvedType[0]));
     }
 
     [Test]
@@ -49,7 +50,7 @@ namespace MixinXRef.UnitTests.Utility
       var involvedType2 = _involvedTypeStore.GetOrCreateValue (typeof (string));
 
       var expectedTypes = new[] { involvedType1, involvedType2 };
-      Assert.That (_involvedTypeStore.ToSortedArray(), Is.EqualTo (expectedTypes));
+      Assert.That (_involvedTypeStore.ToArray(), Is.EqualTo (expectedTypes));
     }
 
     [Test]
@@ -60,7 +61,7 @@ namespace MixinXRef.UnitTests.Utility
       var involvedType3 = _involvedTypeStore.GetOrCreateValue (typeof (System.IDisposable)); // 1
 
       var expectedTypesInOrder = new[] { involvedType3, involvedType2, involvedType1 };
-      Assert.That (_involvedTypeStore.ToSortedArray (), Is.EqualTo (expectedTypesInOrder));
+      Assert.That (_involvedTypeStore.ToArray (), Is.EqualTo (expectedTypesInOrder));
     }
   }
 }

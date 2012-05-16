@@ -41,7 +41,7 @@ namespace MixinXRef.UnitTests.Report
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
       var reportGenerator = CreateReportGenerator (involvedType);
-      var memberReportGenerator = new MemberReportGenerator (typeof (IDisposable), null, null, _outputFormatter);
+      var memberReportGenerator = new MemberReportGenerator (typeof (IDisposable), null, null, null, _outputFormatter);
 
       var output = reportGenerator.GenerateXml();
 
@@ -79,7 +79,7 @@ namespace MixinXRef.UnitTests.Report
       involvedType.ClassContext = new ReflectedObject (classContext);
 
       var reportGenerator = CreateReportGenerator (involvedType);
-      var memberReportGenerator = new MemberReportGenerator (typeof (CompleteInterfacesTestClass.ICMyMixinTargetMyMixin), null, null,_outputFormatter);
+      var memberReportGenerator = new MemberReportGenerator (typeof (CompleteInterfacesTestClass.ICMyMixinTargetMyMixin), null, null, null,_outputFormatter);
 
       var output = reportGenerator.GenerateXml();
 
@@ -128,7 +128,8 @@ namespace MixinXRef.UnitTests.Report
       return new InterfaceReportGenerator (
           involvedTypes,
           new IdentifierGenerator<Assembly>(),
-          new IdentifierGenerator<Type>(),
+          new IdentifierGenerator<Type>(), 
+          new IdentifierGenerator<MemberInfo>(), 
           new IdentifierGenerator<Type>(),
           ProgramTest.GetRemotionReflection(),
           _outputFormatter

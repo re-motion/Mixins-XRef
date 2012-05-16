@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MixinXRef.Collections;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -42,14 +40,10 @@ namespace MixinXRef
     {
       get
       {
-        if (!IsTarget)
-          throw new InvalidOperationException ("Involved type is not a target class.");
-
         return _classContext;
       }
       set
       {
-        ArgumentUtility.CheckNotNull ("value", value);
         _classContext = value;
       }
     }
@@ -63,9 +57,6 @@ namespace MixinXRef
     {
       get
       {
-        if (!HasTargetClassDefintion)
-          throw new InvalidOperationException ("Involved type is either not a target class or a generic target class.");
-
         return _targetClassDefintion;
       }
       set
@@ -79,33 +70,27 @@ namespace MixinXRef
       get { return _targetTypes; }
     }
 
-    private MemberDefinitionCollection _targetMemberDefinitions;
+    private IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> _targetMemberDefinitions;
     public IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> TargetMemberDefinitions
     {
       get
       {
-        if (!HasTargetClassDefintion)
-          throw new InvalidOperationException ("Involved type is either not a target class or a generic target class.");
-
         if (_targetMemberDefinitions == null)
-          _targetMemberDefinitions = new MemberDefinitionCollection (/* IEnumerable<MemberDefinitionBase> */ TargetClassDefinition.CallMethod ("GetAllMembers"));
+          _targetMemberDefinitions = TargetClassDefinition == null ? new Dictionary<MemberInfo, ReflectedObject> () :
+            TargetClassDefinition.CallMethod ("GetAllMembers").ToDictionary (m => m.GetProperty ("MemberInfo").To<MemberInfo> (), m => m, new MemberDefinitionEqualityComparer ());
 
         return _targetMemberDefinitions;
       }
     }
 
-    private MemberDefinitionCollection _mixinMemberDefinitions;
-    public IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> MixinMemberDefinitions
+    private IDictionary<MemberInfo, List<ReflectedObject /* MemberDefinitionBase */>> _mixinMemberDefinitions;
+    public IDictionary<MemberInfo, List<ReflectedObject /* MemberDefinitionBase */>> MixinMemberDefinitions
     {
       get
       {
-        if (!IsMixin)
-          throw new InvalidOperationException ("Involved type is not a mixin.");
-
         if (_mixinMemberDefinitions == null)
-          _mixinMemberDefinitions =
-            new MemberDefinitionCollection (
-              TargetTypes.Values.Where (t => t != null).SelectMany (t => /* IEnumerable<MemberDefinitionBase> */ t.CallMethod ("GetAllMembers")));
+          _mixinMemberDefinitions = TargetTypes.Values.Where (t => t != null).SelectMany (t => t.CallMethod ("GetAllMembers"))
+            .GroupBy (m => m.GetProperty ("MemberInfo").To<MemberInfo> ()).ToDictionary (m => m.Key, m => m.ToList (), new MemberDefinitionEqualityComparer ());
 
         return _mixinMemberDefinitions;
       }
@@ -144,6 +129,11 @@ namespace MixinXRef
     {
       const int rotateBy = 11;
       value = (value << rotateBy) ^ (value >> (32 - rotateBy));
+    }
+
+    public static InvolvedType FromType (Type type)
+    {
+      return new InvolvedType (type);
     }
   }
 }

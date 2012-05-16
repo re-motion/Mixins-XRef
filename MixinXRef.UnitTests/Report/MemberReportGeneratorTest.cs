@@ -440,7 +440,7 @@ namespace MixinXRef.UnitTests.Report
 
     private MemberReportGenerator CreateMemberReportGenerator (Type mixinType, InvolvedType involvedType)
     {
-      return new MemberReportGenerator (mixinType, involvedType, new IdentifierGenerator<Type> (), _outputFormatter);
+      return new MemberReportGenerator (mixinType, involvedType, new IdentifierGenerator<Type> (), new IdentifierGenerator<MemberInfo>(), _outputFormatter);
     }
   }
 }

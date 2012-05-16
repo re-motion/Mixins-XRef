@@ -28,7 +28,7 @@ namespace MixinXRef
       if (!Directory.Exists (outputDirectory))
         Directory.CreateDirectory (outputDirectory);
 
-      program.SetRemotionReflector (new RemotionReflectorFactory().Create (assemblyDirectory));
+      program.SetRemotionReflector (RemotionReflectorFactory.Create (assemblyDirectory));
 
       Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType().FullName);
 

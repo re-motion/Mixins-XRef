@@ -68,7 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\MemberDefinitionCollection.cs" />
     <Compile Include="Formatting\MemberModifierUtility.cs" />
     <Compile Include="Formatting\MemberSignatureUtility.cs" />
     <Compile Include="Formatting\TypeModifierUtility.cs" />
@@ -339,9 +338,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
