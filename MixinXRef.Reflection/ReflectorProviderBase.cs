@@ -79,7 +79,7 @@ namespace MixinXRef.Reflection
       {
         return (T) invoker (_instances[method], parameters);
       }
-      catch (Exception ex)
+      catch (SystemException ex)
       {
         throw new NotSupportedException (string.Format ("The reflector method {2} in {3} seems to be incompatible with version {0} of {1}", Version, Component, method, method.DeclaringType), ex);
       }
