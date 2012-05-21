@@ -2,9 +2,6 @@ using System;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
-using MixinXRef.Reflection.RemotionReflector;
-using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
@@ -22,17 +19,17 @@ namespace MixinXRef.Report
     private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
-    private readonly SummaryPicker _summaryPicker = new SummaryPicker();
-    private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility();
+    private readonly SummaryPicker _summaryPicker = new SummaryPicker ();
+    private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility ();
 
     public InvolvedTypeReportGenerator (
-      InvolvedType[] involvedTypes, 
-      IIdentifierGenerator<Assembly> assemblyIdentifierGenerator, 
+      InvolvedType[] involvedTypes,
+      IIdentifierGenerator<Assembly> assemblyIdentifierGenerator,
       IIdentifierGenerator<Type> involvedTypeIdentifierGenerator,
-      IIdentifierGenerator<MemberInfo> memberIdentifierGenerator, 
-      IIdentifierGenerator<Type> interfaceIdentifierGenerator, 
-      IIdentifierGenerator<Type> attributeIdentifierGenerator, 
-      IRemotionReflector remotionReflector, 
+      IIdentifierGenerator<MemberInfo> memberIdentifierGenerator,
+      IIdentifierGenerator<Type> interfaceIdentifierGenerator,
+      IIdentifierGenerator<Type> attributeIdentifierGenerator,
+      IRemotionReflector remotionReflector,
       IOutputFormatter outputFormatter)
     {
       ArgumentUtility.CheckNotNull ("involvedTypes", involvedTypes);
@@ -57,7 +54,7 @@ namespace MixinXRef.Report
     public XElement GenerateXml ()
     {
       var involvedTypesElement = new XElement ("InvolvedTypes");
-      foreach (var involvedType in _involvedTypes) 
+      foreach (var involvedType in _involvedTypes)
         involvedTypesElement.Add (CreateInvolvedTypeElement (involvedType));
 
       return involvedTypesElement;
@@ -74,27 +71,28 @@ namespace MixinXRef.Report
           new XAttribute ("namespace", realType.Namespace),
           new XAttribute ("name", _outputFormatter.GetShortFormattedTypeName (realType)),
           new XAttribute ("base", GetCSharpLikeNameForBaseType (realType)),
-          new XAttribute ("base-ref", GetBaseReference(realType)),
+          new XAttribute ("base-ref", GetBaseReference (realType)),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
           new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
           new XAttribute ("is-interface", realType.IsInterface),
           _outputFormatter.CreateModifierMarkup (GetAlphabeticOrderingAttribute (involvedType), _typeModifierUtility.GetTypeModifiers (realType)),
           _summaryPicker.GetSummary (realType),
-          new MemberReportGenerator (realType, involvedType, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).GenerateXml(),
+          new MemberReportGenerator (realType, involvedType, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).GenerateXml (),
           new InterfaceReferenceReportGenerator (
-              involvedType, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
+              involvedType, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
           new AttributeReferenceReportGenerator (
-              realType, _attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
+              realType, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
           new MixinReferenceReportGenerator (
               involvedType,
+              _assemblyIdentifierGenerator,
               _involvedTypeIdentifierGenerator,
               _interfaceIdentifierGenerator,
               _attributeIdentifierGenerator,
               _remotionReflector,
-              _outputFormatter).GenerateXml(),
+              _outputFormatter).GenerateXml (),
           new TargetReferenceReportGenerator (
-              involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
+              involvedType, _involvedTypeIdentifierGenerator).GenerateXml ()
           );
 
       if (realType.IsGenericType && !realType.IsGenericTypeDefinition)
@@ -113,7 +111,7 @@ namespace MixinXRef.Report
         if (mixinDefinition == null)
           continue;
 
-        if (mixinDefinition.GetProperty ("AcceptsAlphabeticOrdering").To<bool>())
+        if (mixinDefinition.GetProperty ("AcceptsAlphabeticOrdering").To<bool> ())
           return "AcceptsAlphabeticOrdering ";
       }
       return "";
@@ -124,7 +122,7 @@ namespace MixinXRef.Report
       return type.BaseType == null ? "none" : _outputFormatter.GetShortFormattedTypeName (type.BaseType);
     }
 
-    private string GetBaseReference(Type realType)
+    private string GetBaseReference (Type realType)
     {
       // System.Object
       if (realType.BaseType == null)
@@ -133,9 +131,9 @@ namespace MixinXRef.Report
       var baseType = realType.BaseType;
       // get type definition if base is a generic type
       if (baseType.IsGenericType)
-        baseType = baseType.GetGenericTypeDefinition();
+        baseType = baseType.GetGenericTypeDefinition ();
 
-      return _involvedTypeIdentifierGenerator.GetIdentifier(baseType);
+      return _involvedTypeIdentifierGenerator.GetIdentifier (baseType);
     }
   }
 }

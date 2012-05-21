@@ -2,39 +2,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using MixinXRef.Utility;
 
 namespace MixinXRef
 {
   public class InvolvedTypeStore : IEnumerable<InvolvedType>
   {
-    public static InvolvedTypeStore LastInstance { get; private set; }
+    private readonly Dictionary<Type, InvolvedType> _involvedTypes = new Dictionary<Type, InvolvedType> ();
 
-    private readonly Dictionary<Type, InvolvedType> _involvedTypes = new Dictionary<Type, InvolvedType>();
-
-    public InvolvedTypeStore()
+    public InvolvedType GetOrCreateValue (Type type)
     {
-      LastInstance = this;
+      ArgumentUtility.CheckNotNull ("type", type);
+
+      if (!_involvedTypes.ContainsKey (type))
+        _involvedTypes.Add (type, new InvolvedType (type));
+
+      return _involvedTypes[type];
     }
 
-    public InvolvedType GetOrCreateValue (Type key)
-    {
-      ArgumentUtility.CheckNotNull ("key", key);
-
-      if (!_involvedTypes.ContainsKey (key))
-        _involvedTypes.Add (key, InvolvedType.FromType (key));
-
-      return _involvedTypes[key];
-    }
-
-    public IEnumerator<InvolvedType> GetEnumerator()
+    public IEnumerator<InvolvedType> GetEnumerator ()
     {
       return _involvedTypes.Values.OrderBy (t => t.Type.FullName).GetEnumerator ();
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    IEnumerator IEnumerable.GetEnumerator ()
     {
-      return GetEnumerator();
+      return GetEnumerator ();
     }
   }
 }

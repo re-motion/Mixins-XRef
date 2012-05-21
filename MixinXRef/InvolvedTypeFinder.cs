@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
@@ -38,7 +40,7 @@ namespace MixinXRef
 
     public InvolvedType[] FindInvolvedTypes ()
     {
-      var involvedTypes = new InvolvedTypeStore ();
+      var involvedTypes = new InvolvedTypeStore();
       var classContexts = _mixinConfiguration.GetProperty ("ClassContexts");
 
       foreach (var assembly in _assemblies)
@@ -67,10 +69,18 @@ namespace MixinXRef
         }
       }
 
+      var additionalTypesCollector = new AdditionalTypesCollector ();
+
+      foreach (IVisitableInvolved involvedType in involvedTypes)
+        involvedType.Accept (additionalTypesCollector);
+
+      foreach (var additionalType in additionalTypesCollector.AdditionalTypes)
+        involvedTypes.GetOrCreateValue (additionalType);
+
       return involvedTypes.ToArray ();
     }
 
-    public ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)
+    private ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)
     {
       return targetClassDefinition == null ? null : targetClassDefinition.CallMethod ("GetMixinByConfiguredType", mixinType);
     }

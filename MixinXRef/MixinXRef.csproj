@@ -68,9 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalTypesCollector.cs" />
     <Compile Include="Formatting\MemberModifierUtility.cs" />
     <Compile Include="Formatting\MemberSignatureUtility.cs" />
     <Compile Include="Formatting\TypeModifierUtility.cs" />
+    <Compile Include="IInvolvedVisitor.cs" />
+    <Compile Include="InvolvedTypeMember.cs" />
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="RemotionReflectorFactory.cs" />
     <Compile Include="Report\AdditionalDependencyReportGenerator.cs" />

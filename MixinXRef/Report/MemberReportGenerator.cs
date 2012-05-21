@@ -45,15 +45,13 @@ namespace MixinXRef.Report
 
     public XElement GenerateXml ()
     {
-      var members =
-        _type.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).
-          Where (m => !HasSpecialName (m)).OrderBy (m => m.Name).Select (CreateMemberElement);
-
-      return new XElement ("Members", members);
+      return new XElement ("Members", _involvedType.Members.Select (CreateMemberElement));
     }
 
-    private XElement CreateMemberElement (MemberInfo memberInfo)
+    private XElement CreateMemberElement (InvolvedTypeMember member)
     {
+      var memberInfo = member.MemberInfo;
+
       var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
       if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
         return null;
@@ -79,8 +77,8 @@ namespace MixinXRef.Report
         if (HasOverrideTargetAttribute (memberInfo))
           attributes.Append ("OverrideTarget ");
 
-        overridesElement = CreateOverridesElement (memberInfo);
-        overriddenElement = CreateOverriddenElement (memberInfo);
+        overridesElement = CreateOverridesElement (member);
+        overriddenElement = CreateOverriddenElement (member);
       }
 
       if (memberInfo.DeclaringType != _type &&
@@ -95,12 +93,12 @@ namespace MixinXRef.Report
       return element;
     }
 
-    private XElement CreateOverridesElement (MemberInfo memberInfo)
+    private XElement CreateOverridesElement (InvolvedTypeMember member)
     {
       var overridesElement = new XElement ("Overrides");
 
-      var overridingMixinTypes = GetOverridingMixinTypes (memberInfo);
-      var overridingTargetTypes = GetOverridingTargetTypes (memberInfo);
+      var overridingMixinTypes = member.OverridingMixinTypes;
+      var overridingTargetTypes = member.OverridingTargetTypes;
 
       if (!overridingMixinTypes.Any () && !overridingTargetTypes.Any ())
         return null;
@@ -114,12 +112,12 @@ namespace MixinXRef.Report
       return overridesElement;
     }
 
-    private XElement CreateOverriddenElement (MemberInfo memberInfo)
+    private XElement CreateOverriddenElement (InvolvedTypeMember member)
     {
       var overriddenMembersElement = new XElement ("OverriddenMembers");
 
-      var overriddenMixinMembers = GetOverriddenMixinMembers (memberInfo);
-      var overriddenTargetMembers = GetOverriddenTargetMembers (memberInfo);
+      var overriddenMixinMembers = member.OverriddenMixinMembers;
+      var overriddenTargetMembers = member.OverriddenTargetMembers;
 
       if (!overriddenMixinMembers.Any () && !overriddenTargetMembers.Any ())
         return null;
@@ -143,64 +141,7 @@ namespace MixinXRef.Report
     {
       return new XElement ("Member-Reference", new XAttribute ("ref", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
                                                new XAttribute ("member-name", memberInfo.Name),
-                                               new XAttribute ("member-signature", memberInfo.ToString()));
-    }
-
-    private IEnumerable<MemberInfo> GetOverriddenTargetMembers (MemberInfo memberInfo)
-    {
-      Debug.Assert (_involvedType != null);
-
-      List<ReflectedObject> memberDefinitions;
-      _involvedType.MixinMemberDefinitions.TryGetValue (memberInfo, out memberDefinitions);
-
-      if (memberDefinitions == null)
-        return Enumerable.Empty<MemberInfo> ();
-
-      return memberDefinitions.Select (m => m.GetProperty ("BaseAsMember")).Where (m => m != null).Select (m => m.GetProperty ("MemberInfo").To<MemberInfo> ()).Distinct ();
-    }
-
-    private IEnumerable<MemberInfo> GetOverriddenMixinMembers (MemberInfo memberInfo)
-    {
-      Debug.Assert (_involvedType != null);
-
-      ReflectedObject memberDefinition;
-      _involvedType.TargetMemberDefinitions.TryGetValue (memberInfo, out memberDefinition);
-
-      if (memberDefinition == null)
-        return Enumerable.Empty<MemberInfo> ();
-
-      var baseMember = memberDefinition.GetProperty ("BaseAsMember");
-
-      if (baseMember == null)
-        return Enumerable.Empty<MemberInfo> ();
-
-      return new[] { baseMember.GetProperty ("MemberInfo").To<MemberInfo> () };
-    }
-
-    private IEnumerable<Type> GetOverridingMixinTypes (MemberInfo memberInfo)
-    {
-      Debug.Assert (_involvedType != null);
-      
-      ReflectedObject memberDefinition;
-      _involvedType.TargetMemberDefinitions.TryGetValue (memberInfo, out memberDefinition);
-
-      if (memberDefinition == null)
-        return Enumerable.Empty<Type> ();
-
-      return memberDefinition.GetProperty ("Overrides").Select (o => o.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type> ());
-    }
-
-    private IEnumerable<Type> GetOverridingTargetTypes (MemberInfo memberInfo)
-    {
-      Debug.Assert (_involvedType != null);
-
-      List<ReflectedObject> memberDefinition;
-      _involvedType.MixinMemberDefinitions.TryGetValue (memberInfo, out memberDefinition);
-
-      if (memberDefinition == null)
-        return Enumerable.Empty<Type> ();
-
-      return memberDefinition.SelectMany (m => m.GetProperty ("Overrides")).Select (o => o.GetProperty ("DeclaringClass").GetProperty ("Type").To<Type> ());
+                                               new XAttribute ("member-signature", memberInfo.ToString ()));
     }
 
     private static bool HasOverrideMixinAttribute (MemberInfo memberInfo)
@@ -211,35 +152,6 @@ namespace MixinXRef.Report
     private static bool HasOverrideTargetAttribute (MemberInfo memberInfo)
     {
       return memberInfo.GetCustomAttributes (true).Any (a => a.GetType ().Name == "OverrideTargetAttribute");
-    }
-
-    private static bool HasSpecialName (MemberInfo memberInfo)
-    {
-      if (memberInfo.MemberType == MemberTypes.Method)
-      {
-        var methodInfo = memberInfo as MethodInfo;
-        if (methodInfo == null)
-          return false;
-
-        var methodName = methodInfo.Name;
-        // only explicit interface implementations contain a '.'
-        if (methodName.Contains ('.'))
-        {
-          var parts = methodName.Split ('.');
-          var partCount = parts.Length;
-          methodName = parts[partCount - 1];
-        }
-
-        return
-            (methodInfo.IsSpecialName
-             && (methodName.StartsWith ("add_")
-                 || methodName.StartsWith ("remove_")
-                 || methodName.StartsWith ("get_")
-                 || methodName.StartsWith ("set_")
-                )
-            );
-      }
-      return false;
     }
   }
 }

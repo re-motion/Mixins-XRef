@@ -7,12 +7,13 @@ using MixinXRef.Utility;
 
 namespace MixinXRef
 {
-  public class InvolvedType
+  public class InvolvedType : IVisitableInvolved
   {
     private readonly Type _realType;
+    private IEnumerable<InvolvedTypeMember> _members;
     private ReflectedObject /* ClassContext */ _classContext;
     private ReflectedObject /* TargetClassDefinition */ _targetClassDefintion;
-    private readonly IDictionary<InvolvedType, ReflectedObject /* MixinDefinition */> _targetTypes = new Dictionary<InvolvedType, ReflectedObject> ();
+    private readonly IDictionary<InvolvedType, ReflectedObject> _targetTypes = new Dictionary<InvolvedType, ReflectedObject> ();
 
     public InvolvedType (Type realType)
     {
@@ -24,6 +25,26 @@ namespace MixinXRef
     public Type Type
     {
       get { return _realType; }
+    }
+
+    public IEnumerable<InvolvedTypeMember> Members
+    {
+      get
+      {
+        if (_members == null)
+          _members = _realType.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                              .Where (m => !HasSpecialName (m))
+                              .OrderBy (m => m.Name)
+                              .Select (m =>
+                              {
+                                ReflectedObject targetMemberDefinition;
+                                List<ReflectedObject> mixinMemberDefinitions;
+                                TargetMemberDefinitions.TryGetValue (m, out targetMemberDefinition);
+                                MixinMemberDefinitions.TryGetValue (m, out mixinMemberDefinitions);
+                                return new InvolvedTypeMember (m, targetMemberDefinition, mixinMemberDefinitions);
+                              });
+        return _members;
+      }
     }
 
     public bool IsTarget
@@ -65,13 +86,13 @@ namespace MixinXRef
       }
     }
 
-    public IDictionary<InvolvedType, ReflectedObject /* MixinDefinition */> TargetTypes
+    public IDictionary<InvolvedType, ReflectedObject> TargetTypes
     {
       get { return _targetTypes; }
     }
 
-    private IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> _targetMemberDefinitions;
-    public IDictionary<MemberInfo, ReflectedObject /* MemberDefinitionBase */> TargetMemberDefinitions
+    private IDictionary<MemberInfo, ReflectedObject> _targetMemberDefinitions;
+    public IDictionary<MemberInfo, ReflectedObject> TargetMemberDefinitions
     {
       get
       {
@@ -83,8 +104,8 @@ namespace MixinXRef
       }
     }
 
-    private IDictionary<MemberInfo, List<ReflectedObject /* MemberDefinitionBase */>> _mixinMemberDefinitions;
-    public IDictionary<MemberInfo, List<ReflectedObject /* MemberDefinitionBase */>> MixinMemberDefinitions
+    private IDictionary<MemberInfo, List<ReflectedObject>> _mixinMemberDefinitions;
+    public IDictionary<MemberInfo, List<ReflectedObject>> MixinMemberDefinitions
     {
       get
       {
@@ -94,6 +115,41 @@ namespace MixinXRef
 
         return _mixinMemberDefinitions;
       }
+    }
+
+    public void Accept (IInvolvedVisitor involvedVisitor)
+    {
+      foreach (var member in Members)
+        member.Accept (involvedVisitor);
+    }
+
+    private static bool HasSpecialName (MemberInfo memberInfo)
+    {
+      if (memberInfo.MemberType == MemberTypes.Method)
+      {
+        var methodInfo = memberInfo as MethodInfo;
+        if (methodInfo == null)
+          return false;
+
+        var methodName = methodInfo.Name;
+        // only explicit interface implementations contain a '.'
+        if (methodName.Contains ('.'))
+        {
+          var parts = methodName.Split ('.');
+          var partCount = parts.Length;
+          methodName = parts[partCount - 1];
+        }
+
+        return
+          (methodInfo.IsSpecialName
+           && (methodName.StartsWith ("add_")
+               || methodName.StartsWith ("remove_")
+               || methodName.StartsWith ("get_")
+               || methodName.StartsWith ("set_")
+              )
+          );
+      }
+      return false;
     }
 
     public override bool Equals (object obj)
@@ -121,19 +177,13 @@ namespace MixinXRef
 
     public override string ToString ()
     {
-      return string.Format ("{0}, isTarget: {1}, isMixin: {2}, # of targets: {3}", _realType, IsTarget, IsMixin, _targetTypes.Count);
+      return String.Format ("{0}, isTarget: {1}, isMixin: {2}, # of targets: {3}", _realType, IsTarget, IsMixin, _targetTypes.Count);
     }
-
 
     private static void Rotate (ref int value)
     {
       const int rotateBy = 11;
       value = (value << rotateBy) ^ (value >> (32 - rotateBy));
-    }
-
-    public static InvolvedType FromType (Type type)
-    {
-      return new InvolvedType (type);
     }
   }
 }
