@@ -45,7 +45,8 @@ namespace MixinXRef.Report
 
     public XElement GenerateXml ()
     {
-      return new XElement ("Members", _involvedType.Members.Select (CreateMemberElement));
+      var type = _involvedType ?? new InvolvedType (_type);
+      return new XElement ("Members", type.Members.Select (CreateMemberElement));
     }
 
     private XElement CreateMemberElement (InvolvedTypeMember member)
