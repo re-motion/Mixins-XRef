@@ -123,10 +123,10 @@ namespace MixinXRef.Report
         return null;
 
       foreach (var overriddenMember in overriddenMixinMembers)
-        overriddenMembersElement.Add (CreateMemberReferenceElement (overriddenMember));
+        overriddenMembersElement.Add (CreateMemberReferenceElement ("OverrideMixin", overriddenMember));
 
       foreach (var overriddenMember in overriddenTargetMembers)
-        overriddenMembersElement.Add (CreateMemberReferenceElement (overriddenMember));
+        overriddenMembersElement.Add (CreateMemberReferenceElement ("OverrideTarget", overriddenMember));
 
       return overriddenMembersElement;
     }
@@ -137,9 +137,10 @@ namespace MixinXRef.Report
                                     new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (overridingType)));
     }
 
-    private XElement CreateMemberReferenceElement (MemberInfo memberInfo)
+    private XElement CreateMemberReferenceElement (string typeName, MemberInfo memberInfo)
     {
       return new XElement ("Member-Reference", new XAttribute ("ref", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
+                                               new XAttribute ("type", typeName),
                                                new XAttribute ("member-name", memberInfo.Name),
                                                new XAttribute ("member-signature", memberInfo.ToString ()));
     }
