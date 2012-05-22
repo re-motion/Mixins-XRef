@@ -23,7 +23,7 @@ namespace MixinXRef.UnitTests
     public static IRemotionReflector GetRemotionReflection ()
     {
       // TODO Replace with mock if possible
-      return new RemotionReflectorProvider("Remotion", new Version("1.13.141"), ".");
+      return new RemotionReflectorProvider("Remotion", new Version("1.12.20"), ".");
     }
 
     [SetUp]

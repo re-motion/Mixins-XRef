@@ -9,7 +9,7 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.Report
 {
-  internal class TargetCallDependenciesReportGenerator : IReportGenerator
+  public class TargetCallDependenciesReportGenerator : IReportGenerator
   {
     private readonly ReflectedObject _mixinDefinition;
     private readonly IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;

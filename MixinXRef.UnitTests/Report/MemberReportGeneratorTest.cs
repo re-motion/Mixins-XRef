@@ -30,8 +30,8 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_InterfaceWithZeroMembers ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (IUseless), null);
-
       var output = reportGenerator.GenerateXml ();
+
       var expectedOutput = new XElement ("Members");
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
@@ -41,12 +41,13 @@ namespace MixinXRef.UnitTests.Report
     public void GenerateXml_InterfaceWithMembers ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (IDisposable), null);
-
       var output = reportGenerator.GenerateXml ();
+
       var expectedOutput = new XElement (
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "Dispose"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -70,6 +71,7 @@ namespace MixinXRef.UnitTests.Report
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -93,6 +95,7 @@ namespace MixinXRef.UnitTests.Report
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -101,6 +104,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "1"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "DoSomething"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -109,6 +113,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "2"),
               new XAttribute ("type", MemberTypes.Property),
               new XAttribute ("name", "PropertyName"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -127,17 +132,17 @@ namespace MixinXRef.UnitTests.Report
       var mixinConfiguration =
           MixinConfiguration.BuildNew ().ForClass<InheritatedTargetClass> ().AddMixin<MixinOverridesTargetClassMember> ().BuildConfiguration ();
       var targetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (type, mixinConfiguration));
-      var involvedType = new InvolvedType (type);
-      involvedType.TargetClassDefinition = targetClassDefinition;
+
+      var involvedType = new InvolvedType (type) { TargetClassDefinition = targetClassDefinition };
 
       var reportGenerator = CreateMemberReportGenerator (type, involvedType);
-
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -146,6 +151,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "1"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "MyBaseClassMethod"),
               new XAttribute ("is-declared-by-this-class", false),
@@ -155,6 +161,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "2"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "MyNewMethod"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -163,6 +170,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "3"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "MyNonRelevantBaseClassMethod"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -188,14 +196,14 @@ namespace MixinXRef.UnitTests.Report
       var targetClassDefinition = TargetClassDefinitionUtility.GetConfiguration (targetType, mixinConfiguration);
       mixin.TargetTypes.Add (target, new ReflectedObject (targetClassDefinition.GetMixinByConfiguredType (mixinType)));
 
-      var reportGenerator = CreateMemberReportGenerator(mixinType, mixin);
-
+      var reportGenerator = CreateMemberReportGenerator (mixinType, mixin);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -204,6 +212,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "1"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "ProtectedInheritedMethod"),
               new XAttribute ("is-declared-by-this-class", false),
@@ -232,13 +241,16 @@ namespace MixinXRef.UnitTests.Report
       var involvedType = new InvolvedType (type);
       involvedType.TargetClassDefinition = targetClassDefinition;
 
-      var reportGenerator = CreateMemberReportGenerator (type, involvedType);
+      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
+
+      var reportGenerator = new MemberReportGenerator (type, involvedType, new IdentifierGenerator<Type> (), memberIdentifierGenerator, _outputFormatter);
 
       var output = reportGenerator.GenerateXml ();
       var expectedOutput = new XElement (
           "Members",
           new XElement (
               "Member",
+              new XAttribute ("id", "0"),
               new XAttribute ("type", MemberTypes.Constructor),
               new XAttribute ("name", ".ctor"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -247,6 +259,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "1"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "OverriddenMethod"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -256,6 +269,7 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
+              new XAttribute ("id", "2"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "TemplateMethod"),
               new XAttribute ("is-declared-by-this-class", true),
@@ -349,7 +363,7 @@ namespace MixinXRef.UnitTests.Report
       //var memberInfo = targetType.GetMember ("Dispose")[0];
       var output = reportGenerator.GenerateXml ();
 
-      Assert.That (output.XPathSelectElements("Member[@name='Dispose']/Overrides").Any(), Is.False);
+      Assert.That (output.XPathSelectElements ("Member[@name='Dispose']/Overrides").Any (), Is.False);
     }
 
     [Test]
@@ -435,12 +449,12 @@ namespace MixinXRef.UnitTests.Report
       var reportGenerator = CreateMemberReportGenerator (targetType, involvedType);
       var output = reportGenerator.GenerateXml ();
 
-      Assert.That (output.XPathSelectElements ("Member[@name='HiddenMethod']/Overrides").Any(), Is.False);
+      Assert.That (output.XPathSelectElements ("Member[@name='HiddenMethod']/Overrides").Any (), Is.False);
     }
 
     private MemberReportGenerator CreateMemberReportGenerator (Type mixinType, InvolvedType involvedType)
     {
-      return new MemberReportGenerator (mixinType, involvedType, new IdentifierGenerator<Type> (), new IdentifierGenerator<MemberInfo>(), _outputFormatter);
+      return new MemberReportGenerator (mixinType, involvedType, new IdentifierGenerator<Type> (), new IdentifierGenerator<MemberInfo> (), _outputFormatter);
     }
   }
 }

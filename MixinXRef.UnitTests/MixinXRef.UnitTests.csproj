@@ -82,6 +82,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ReportFactory.cs" />
+    <Compile Include="Helpers\StubFactory.cs" />
     <Compile Include="Reflection\FastMemberInvokerCacheTest.cs" />
     <Compile Include="Reflection\FastMemberInvokerGeneratorTest.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtilityTest.cs" />
@@ -205,6 +207,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

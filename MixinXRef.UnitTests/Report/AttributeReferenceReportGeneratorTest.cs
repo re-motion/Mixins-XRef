@@ -6,57 +6,63 @@ using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
+using Rhino.Mocks;
+using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests.Report
 {
   [TestFixture]
   public class AttributeReferenceReportGeneratorTest
   {
-    private IdentifierGenerator<Type> _identifierGenerator;
+    private IIdentifierGenerator<Type> _identifierGenerator;
     private IRemotionReflector _remotionReflector;
 
     [SetUp]
     public void SetUp ()
     {
-      _identifierGenerator = new IdentifierGenerator<Type>();
-      _remotionReflector = ProgramTest.GetRemotionReflection();
+      _identifierGenerator = new IdentifierGenerator<Type> ();
+      _remotionReflector = MockRepository.GenerateStub<IRemotionReflector> ();
+      _remotionReflector.Stub (r => r.IsInfrastructureType (typeof (UsesAttribute))).Return (true);
+      _remotionReflector.Stub (r => r.IsInfrastructureType (typeof (ExtendsAttribute))).Return (true);
     }
 
     [Test]
     public void GenerateXml_ZeroAttributes ()
     {
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(UselessObject), _identifierGenerator, _remotionReflector);
-
-      var output = reportGenerator.GenerateXml();
+      var reportGenerator = new AttributeReferenceReportGenerator (typeof (UselessObject), _identifierGenerator, _remotionReflector);
+      var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement ("HasAttributes");
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
     public void GenerateXml_WithAttributes ()
     {
-      // Mixin2 has SerializableAttribute, SerializableAttribute has no parameters
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(Mixin2), _identifierGenerator, _remotionReflector);
+      _remotionReflector.Stub (r => r.IsInfrastructureType (typeof (SerializableAttribute))).Return (false);
 
-      var output = reportGenerator.GenerateXml();
+      // Mixin2 has SerializableAttribute which has no parameters
+      var reportGenerator = new AttributeReferenceReportGenerator (typeof (Mixin2), _identifierGenerator, _remotionReflector);
+      var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "HasAttributes",
           new XElement ("HasAttribute", new XAttribute ("ref", "0"))
           );
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
     public void GenerateXml_WithAttributesWithParameters ()
     {
-      // ClassWithBookAttribute has the following attribute: [Book (1, Title = "C# in depth")]
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithBookAttribute), _identifierGenerator, _remotionReflector);
+      _remotionReflector.Stub (r => r.IsInfrastructureType (typeof (BookAttribute))).Return (false);
 
-      var output = reportGenerator.GenerateXml();
+      // ClassWithBookAttribute has the following attribute: [Book (1, Title = "C# in depth")]
+      var reportGenerator = new AttributeReferenceReportGenerator (typeof (ClassWithBookAttribute), _identifierGenerator, _remotionReflector);
+
+      var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "HasAttributes",
@@ -77,16 +83,18 @@ namespace MixinXRef.UnitTests.Report
                   new XAttribute ("value", "C# in depth"))
               ));
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
 
     [Test]
     public void GenerateXml_WithAttributesWithFieldParameter ()
     {
-      // ClassWithAttributeFieldParam has the following attribute: [FieldParam(new[] { "AttributeParam1", "AttributeParam2"})]
-      var reportGenerator = new AttributeReferenceReportGenerator(typeof(ClassWithAttributeFieldParam), _identifierGenerator, _remotionReflector);
+      _remotionReflector.Stub (r => r.IsInfrastructureType (typeof (FieldParamAttribute))).Return (false);
 
-      var output = reportGenerator.GenerateXml();
+      // ClassWithAttributeFieldParam has the following attribute: [FieldParam(new[] { "AttributeParam1", "AttributeParam2"})]
+      var reportGenerator = new AttributeReferenceReportGenerator (typeof (ClassWithAttributeFieldParam), _identifierGenerator, _remotionReflector);
+
+      var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
           "HasAttributes",
@@ -103,7 +111,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
     }
   }
 }
