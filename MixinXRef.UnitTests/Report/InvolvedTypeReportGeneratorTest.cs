@@ -52,6 +52,7 @@ namespace MixinXRef.UnitTests.Report
     {
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
 
       var involvedType1 = new InvolvedType (typeof (GenericTarget<,>));
 
@@ -84,7 +85,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType1,
+                  involvedType1, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -101,6 +102,7 @@ namespace MixinXRef.UnitTests.Report
     {
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
       var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       var involvedType1 = new InvolvedType (typeof (IUseless));
 
@@ -133,7 +135,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType1,
+                  involvedType1, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -167,7 +169,8 @@ namespace MixinXRef.UnitTests.Report
       involvedType4.TargetTypes.Add (new InvolvedType(typeof (TargetClass2)), null);
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       InvolvedTypeReportGenerator reportGenerator = CreateReportGenerator (
           new Assembly[0],
@@ -201,7 +204,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType1,
+                  involvedType1, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -229,7 +232,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType2,
+                  involvedType2, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -257,7 +260,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType3, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType3,
+                  involvedType3, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -285,7 +288,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType4, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType4,
+                  involvedType4, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -307,7 +310,8 @@ namespace MixinXRef.UnitTests.Report
       var involvedType2 = new InvolvedType (typeof (object));
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       InvolvedTypeReportGenerator reportGenerator =
           CreateReportGenerator (
@@ -340,7 +344,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType1,
+                  involvedType1, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,
@@ -368,7 +372,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
               new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
               new MixinReferenceReportGenerator (
-                  involvedType2,
+                  involvedType2, assemblyIdentifierGenerator,
                   _readonlyInvolvedTypeIdentifierGenerator,
                   interfaceIdentifierGenerator,
                   attributeIdentifierGenerator,

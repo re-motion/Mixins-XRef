@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection;
@@ -33,7 +34,7 @@ namespace MixinXRef.UnitTests.Report
       var involvedTypeDummy = new InvolvedType (typeof (object));
 
       var reportGenerator = new MixinReferenceReportGenerator (
-          involvedTypeDummy,
+          involvedTypeDummy, new IdentifierGenerator<Assembly>(), 
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
           new IdentifierGenerator<Type>(),
@@ -56,10 +57,11 @@ namespace MixinXRef.UnitTests.Report
       targetType.TargetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (targetType.Type, mixinConfiguration));
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       var reportGenerator = new MixinReferenceReportGenerator (
-          targetType,
+          targetType, assemblyIdentifierGenerator,
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
           attributeIdentifierGenerator,
@@ -105,10 +107,11 @@ namespace MixinXRef.UnitTests.Report
       targetType.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
 
       var interfaceIdentifierGenerator = new IdentifierGenerator<Type>();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type>();
+      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
 
       var reportGenerator = new MixinReferenceReportGenerator (
-          targetType,
+          targetType, assemblyIdentifierGenerator,
           // generic target class
           new IdentifierGenerator<Type>(),
           interfaceIdentifierGenerator,
