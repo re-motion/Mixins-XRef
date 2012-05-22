@@ -101,6 +101,9 @@
     <Compile Include="InvolvedTypeFinder.cs" />
     <Compile Include="Report\InvolvedTypeReportGenerator.cs" />
     <Compile Include="Report\RecursiveExceptionReportGenerator.cs" />
+    <Compile Include="Report\TargetCallDependenciesReportGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SummaryPicker.cs" />
     <Compile Include="Report\TargetReferenceReportGenerator.cs" />
     <Compile Include="Report\ValidationErrorReportGenerator.cs" />

@@ -117,7 +117,7 @@ namespace MixinXRef.Report
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(usedInterface)),
           new XAttribute ("is-complete-interface", isCompleteInterface),
-          new MemberReportGenerator (usedInterface, null, null, _memberIdentifierGenerator, _outputFormatter).GenerateXml(),
+          new MemberReportGenerator (usedInterface, new InvolvedType (usedInterface), _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).GenerateXml (),
           new XElement (
               "ImplementedBy",
               from implementingType in allInterfaces[usedInterface]

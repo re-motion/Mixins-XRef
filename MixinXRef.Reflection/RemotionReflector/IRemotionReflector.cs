@@ -15,5 +15,7 @@ namespace MixinXRef.Reflection.RemotionReflector
     ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext);
     ReflectedObject BuildConfigurationFromAssemblies (Assembly[] assemblies);
     ReflectedObject GetValidationLogFromValidationException (Exception validationException);
+    ReflectedObject GetNextCallDependencies (ReflectedObject mixinDefinition);
+    ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition);
   }
 }
