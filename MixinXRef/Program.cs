@@ -149,8 +149,7 @@ namespace MixinXRef
       var involvedTypes =
           new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, _remotionReflector).FindInvolvedTypes();
 
-      var reportGenerator = new FullReportGenerator (
-          assemblies, involvedTypes, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
+      var reportGenerator = new FullReportGenerator (involvedTypes, configurationErrors, validationErrors, _remotionReflector, _outputFormatter);
 
       var outputDocument = reportGenerator.GenerateXmlDocument();
 

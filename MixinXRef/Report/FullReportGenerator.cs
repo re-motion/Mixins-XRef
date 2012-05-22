@@ -20,21 +20,18 @@ namespace MixinXRef.Report
     private string _creationTime;
 
     public FullReportGenerator (
-        Assembly[] assemblies,
         InvolvedType[] involvedTypes,
         ErrorAggregator<Exception> configurationErrors,
         ErrorAggregator<Exception> validationErrors,
         IRemotionReflector remotionReflector,
         IOutputFormatter outputFormatter)
     {
-      ArgumentUtility.CheckNotNull ("_assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("_involvedTypes", involvedTypes);
       ArgumentUtility.CheckNotNull ("configurationErrors", configurationErrors);
       ArgumentUtility.CheckNotNull ("validationErrors", validationErrors);
       ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
-      _assemblies = assemblies;
       _involvedTypes = involvedTypes;
       _configurationErrors = configurationErrors;
       _validationErrors = validationErrors;
@@ -71,8 +68,7 @@ namespace MixinXRef.Report
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
 
-      var assemblyReport = new AssemblyReportGenerator (
-          _assemblies, _involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
+      var assemblyReport = new AssemblyReportGenerator (_involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
 
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
