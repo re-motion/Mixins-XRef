@@ -227,9 +227,19 @@ namespace MixinXRef.UnitTests.Report
 
     private XElement GenerateOverrides (string referenceTagName, string referenceID, string instanceName)
     {
-      return new XElement ("Overrides", new XElement (referenceTagName, new XAttribute ("ref", referenceID), new XAttribute ("instance-name", instanceName)));
+      return new XElement ("Overrides",
+                          new XElement (referenceTagName, new XAttribute ("ref", referenceID),
+                                       new XAttribute ("instance-name", instanceName)));
     }
 
+    private object GenerateOverriddenMember (string referenceID, string memberName, string memberSignature)
+    {
+      return new XElement ("OverriddenMembers",
+                          new XElement ("Member-Reference", new XAttribute ("ref", referenceID),
+                                       new XAttribute ("type", "OverrideMixin"),
+                                       new XAttribute ("member-name", memberName),
+                                       new XAttribute ("member-signature", memberSignature)));
+    }
 
     [Test]
     public void GenerateXml ()
@@ -269,12 +279,13 @@ namespace MixinXRef.UnitTests.Report
               ),
           new XElement (
               "Member",
-              new XAttribute ("id", "2"),
+              new XAttribute ("id", "3"),
               new XAttribute ("type", MemberTypes.Method),
               new XAttribute ("name", "TemplateMethod"),
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("OverrideMixin ", "public"),
-              _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0])
+              _outputFormatter.CreateMethodMarkup ("TemplateMethod", typeof (void), new ParameterInfo[0]),
+              GenerateOverriddenMember ("2", "TemplateMethod", "Void TemplateMethod()")
               )
           );
 

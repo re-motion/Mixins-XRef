@@ -23,7 +23,7 @@ namespace MixinXRef.UnitTests
     public static IRemotionReflector GetRemotionReflection ()
     {
       // TODO Replace with mock if possible
-      return new RemotionReflectorProvider("Remotion", new Version("1.12.20"), ".");
+      return new RemotionReflectorProvider("Remotion", new Version("1.11.20"), ".");
     }
 
     [SetUp]
@@ -160,7 +160,7 @@ namespace MixinXRef.UnitTests
 
       var output = _program.GetAssemblies (assemblyDirectory);
 
-      Assert.That (output, Is.EqualTo (new[] { a1 }));
+      CollectionAssert.AreEquivalent(new[] { a1, a2, a3 }, output);
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
     }
 
@@ -176,6 +176,8 @@ namespace MixinXRef.UnitTests
       var a2 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "nunit.framework.dll")));
       var a3 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "MixinXRef.exe")));
       
+      _program.SetRemotionReflector(GetRemotionReflection());
+
       _program.GenerateAndSaveXmlDocument (new[] { a1, a2, a3 }, xmlFile);
 
       Assert.That (File.Exists (xmlFile), Is.True);

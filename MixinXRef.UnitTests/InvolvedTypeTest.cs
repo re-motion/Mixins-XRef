@@ -116,14 +116,6 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (object));
 
       Assert.That (type1.IsTarget, Is.False);
-      try
-      {
-        Assert.Fail ("Expected exception was not thrown");
-      }
-      catch (InvalidOperationException ex)
-      {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is not a target class."));
-      }
     }
 
     [Test]
@@ -148,14 +140,6 @@ namespace MixinXRef.UnitTests
       var type1 = new InvolvedType (typeof (object));
 
       Assert.That (type1.IsTarget, Is.False);
-      try
-      {
-        Assert.Fail ("Expected exception was not thrown");
-      }
-      catch (InvalidOperationException ex)
-      {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is either not a target class or a generic target class."));
-      }
     }
 
     [Test]
@@ -169,15 +153,6 @@ namespace MixinXRef.UnitTests
       type1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First());
 
       Assert.That (type1.IsTarget, Is.True);
-      try
-      {
-        var output = type1.TargetClassDefinition;
-        Assert.Fail ("Expected exception was not thrown");
-      }
-      catch (InvalidOperationException ex)
-      {
-        Assert.That (ex.Message, Is.EqualTo ("Involved type is either not a target class or a generic target class."));
-      }
     }
 
     [Test]
