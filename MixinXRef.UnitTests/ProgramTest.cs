@@ -42,7 +42,7 @@ namespace MixinXRef.UnitTests
       var arguments = new[] { "twoParametersRequired" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-1));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory [customRemotionReflectorAssemblyQualifiedName] [-force]\r\nQuitting MixinXRef\r\n"));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory [-force]\r\nQuitting MixinXRef\r\n"));
     }
 
     [Test]
