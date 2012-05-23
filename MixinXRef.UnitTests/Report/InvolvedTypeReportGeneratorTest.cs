@@ -13,18 +13,21 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
-using Rhino.Mocks;
 
 namespace MixinXRef.UnitTests.Report
 {
   [TestFixture]
   public class InvolvedTypeReportGeneratorTest
   {
-    private ReadonlyIdentifierGenerator<Type> _readonlyInvolvedTypeIdentifierGenerator;
     private IRemotionReflector _remotionReflector;
     private IOutputFormatter _outputFormatter;
+
     private IIdentifierGenerator<Type> _involvedTypeIdentifierGenerator;
-    private IdentifierGenerator<MemberInfo> _memberIdentifierGenerator;
+    private IIdentifierGenerator<Type> _readOnlyInvolvedTypeIdentifierGenerator;
+    private IIdentifierGenerator<Type> _interfaceIdentifierGenerator;
+    private IIdentifierGenerator<Type> _attributeIdentifierGenerator;
+    private IIdentifierGenerator<Assembly> _assemblyIdentifierGenerator;
+    private IIdentifierGenerator<MemberInfo> _memberIdentifierGenerator;
 
     private readonly SummaryPicker _summaryPicker = new SummaryPicker ();
     private readonly TypeModifierUtility _typeModifierUtility = new TypeModifierUtility ();
@@ -32,10 +35,16 @@ namespace MixinXRef.UnitTests.Report
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = MockRepository.GenerateStub<IRemotionReflector> ();
+      _remotionReflector = ProgramTest.GetRemotionReflection ();
       _outputFormatter = new OutputFormatter ();
+
       _involvedTypeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      _interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
+      _attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
+      _assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
       _memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
+
+      _readOnlyInvolvedTypeIdentifierGenerator = new ReadonlyIdentifierGenerator<Type> (_involvedTypeIdentifierGenerator, "none");
     }
 
     [Test]
@@ -52,23 +61,10 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void GenerateXml_ForGenericTypeDefinition ()
     {
-      var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
-      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
 
       var involvedType1 = new InvolvedType (typeof (GenericTarget<,>));
-      var involvedTypes = new[] { involvedType1 };
 
-      var reportGenerator = new InvolvedTypeReportGenerator (involvedTypes,
-                                                             assemblyIdentifierGenerator,
-                                                             involvedTypeIdentifierGenerator,
-                                                             memberIdentifierGenerator,
-                                                             interfaceIdentifierGenerator,
-                                                             attributeIdentifierGenerator,
-                                                             _remotionReflector,
-                                                             _outputFormatter);
+      var reportGenerator = CreateInvolvedTypeReportGenerator (involvedType1);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
@@ -87,18 +83,18 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, null, null, null, _outputFormatter).GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new MemberReportGenerator (involvedType1.Type, null, null, _memberIdentifierGenerator, _outputFormatter).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType1, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType1.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType1, assemblyIdentifierGenerator,
-                  _readonlyInvolvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType1, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
@@ -107,23 +103,10 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void GenerateXml_ForInterface ()
     {
-      var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
-      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
 
       var involvedType1 = new InvolvedType (typeof (IUseless));
-      var involvedTypes = new[] { involvedType1 };
 
-      var reportGenerator = new InvolvedTypeReportGenerator (involvedTypes,
-                                                             assemblyIdentifierGenerator,
-                                                             involvedTypeIdentifierGenerator,
-                                                             memberIdentifierGenerator,
-                                                             interfaceIdentifierGenerator,
-                                                             attributeIdentifierGenerator,
-                                                             _remotionReflector,
-                                                             _outputFormatter);
+      var reportGenerator = CreateInvolvedTypeReportGenerator (involvedType1);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
@@ -142,19 +125,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", true),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, null, null, null, _outputFormatter).
+              new MemberReportGenerator (involvedType1.Type, null, null, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType1, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType1.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType1, assemblyIdentifierGenerator,
-                  _readonlyInvolvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType1, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType1, _readonlyInvolvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
@@ -167,12 +150,6 @@ namespace MixinXRef.UnitTests.Report
           .ForClass<TargetClass1> ().AddMixin<Mixin1> ()
           .ForClass<TargetClass2> ().AddMixin<Mixin2> ()
           .BuildConfiguration ();
-
-      var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
-      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
 
       var involvedType1 = new InvolvedType (typeof (TargetClass1));
       involvedType1.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.First ());
@@ -187,16 +164,7 @@ namespace MixinXRef.UnitTests.Report
       var involvedType4 = new InvolvedType (typeof (Mixin2));
       involvedType4.TargetTypes.Add (new InvolvedType (typeof (TargetClass2)), null);
 
-      var involvedTypes = new[] { involvedType1, involvedType2, involvedType3, involvedType4 };
-
-      var reportGenerator = new InvolvedTypeReportGenerator (involvedTypes,
-                                                             assemblyIdentifierGenerator,
-                                                             involvedTypeIdentifierGenerator,
-                                                             memberIdentifierGenerator,
-                                                             interfaceIdentifierGenerator,
-                                                             attributeIdentifierGenerator,
-                                                             _remotionReflector,
-                                                             _outputFormatter);
+      var reportGenerator = CreateInvolvedTypeReportGenerator (involvedType1, involvedType2, involvedType3, involvedType4);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
@@ -215,19 +183,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, involvedType1, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType1.Type, involvedType1, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType1, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType1.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType1, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType1, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ),
           new XElement (
               "InvolvedType",
@@ -243,19 +211,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
-              new MemberReportGenerator (involvedType2.Type, involvedType2, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType2.Type, involvedType2, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType2, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType2.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType2, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType2, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType2, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ),
           new XElement (
               "InvolvedType",
@@ -271,19 +239,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType3.Type)),
               _summaryPicker.GetSummary (involvedType3.Type),
-              new MemberReportGenerator (involvedType3.Type, involvedType3, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType3.Type, involvedType3, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType3, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType3.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType3, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType3.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType3, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType3, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType3, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType3, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ),
           new XElement (
               "InvolvedType",
@@ -299,19 +267,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType4.Type)),
               _summaryPicker.GetSummary (involvedType4.Type),
-              new MemberReportGenerator (involvedType4.Type, involvedType4, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType4.Type, involvedType4, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType4, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType4.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType4, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType4.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType4, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType4, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType4, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType4, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               )
           );
 
@@ -324,22 +292,7 @@ namespace MixinXRef.UnitTests.Report
       var involvedType1 = new InvolvedType (typeof (TargetClass1)) { ClassContext = new ReflectedObject (new ClassContext (typeof (TargetClass1))) };
       var involvedType2 = new InvolvedType (typeof (object));
 
-      var involvedTypeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var interfaceIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var attributeIdentifierGenerator = new IdentifierGenerator<Type> ();
-      var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly> ();
-      var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
-
-      var involvedTypes = new[] { involvedType1, involvedType2 };
-
-      var reportGenerator = new InvolvedTypeReportGenerator (involvedTypes,
-                                                             assemblyIdentifierGenerator,
-                                                             involvedTypeIdentifierGenerator,
-                                                             memberIdentifierGenerator,
-                                                             interfaceIdentifierGenerator,
-                                                             attributeIdentifierGenerator,
-                                                             _remotionReflector,
-                                                             _outputFormatter);
+      var reportGenerator = CreateInvolvedTypeReportGenerator (involvedType1, involvedType2);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
@@ -358,19 +311,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType1.Type)),
               _summaryPicker.GetSummary (involvedType1.Type),
-              new MemberReportGenerator (involvedType1.Type, involvedType1, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType1.Type, involvedType1, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType1, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType1.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType1, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType1.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType1, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType1, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType1, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ),
           new XElement (
               "InvolvedType",
@@ -386,19 +339,19 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-interface", false),
               _outputFormatter.CreateModifierMarkup ("", _typeModifierUtility.GetTypeModifiers (involvedType2.Type)),
               _summaryPicker.GetSummary (involvedType2.Type),
-              new MemberReportGenerator (involvedType2.Type, involvedType1, involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
+              new MemberReportGenerator (involvedType2.Type, involvedType2, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).
                   GenerateXml (),
-              new InterfaceReferenceReportGenerator (involvedType2, interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-              new AttributeReferenceReportGenerator (involvedType2.Type, attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new InterfaceReferenceReportGenerator (involvedType2, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
+              new AttributeReferenceReportGenerator (involvedType2.Type, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
               new MixinReferenceReportGenerator (
-                  involvedType2, assemblyIdentifierGenerator,
-                  involvedTypeIdentifierGenerator,
-                  interfaceIdentifierGenerator,
-                  attributeIdentifierGenerator,
+                  involvedType2, _assemblyIdentifierGenerator,
+                  _readOnlyInvolvedTypeIdentifierGenerator,
+                  _interfaceIdentifierGenerator,
+                  _attributeIdentifierGenerator,
                   _remotionReflector,
                   _outputFormatter).
                   GenerateXml (),
-              new TargetReferenceReportGenerator (involvedType2, involvedTypeIdentifierGenerator).GenerateXml ()
+              new TargetReferenceReportGenerator (involvedType2, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
       Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
@@ -436,6 +389,19 @@ namespace MixinXRef.UnitTests.Report
     private void SetTargetClassDefinition (InvolvedType involvedType, MixinConfiguration mixinConfiguration)
     {
       involvedType.TargetClassDefinition = new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (involvedType.Type, mixinConfiguration));
+    }
+
+    private InvolvedTypeReportGenerator CreateInvolvedTypeReportGenerator (params InvolvedType[] involvedTypes)
+    {
+      _readOnlyInvolvedTypeIdentifierGenerator = new IdentifierPopulator<Type> (involvedTypes.Select (i => i.Type)).GetReadonlyIdentifierGenerator ("none");
+      return new InvolvedTypeReportGenerator (involvedTypes,
+                                              _assemblyIdentifierGenerator,
+                                              _readOnlyInvolvedTypeIdentifierGenerator,
+                                              _memberIdentifierGenerator,
+                                              _interfaceIdentifierGenerator,
+                                              _attributeIdentifierGenerator,
+                                              _remotionReflector,
+                                              _outputFormatter);
     }
   }
 }
