@@ -62,11 +62,6 @@ namespace MixinXRef.Report
       var lastPoint = memberInfo.Name.LastIndexOf ('.');
       var memberName = (lastPoint > 0) ? memberInfo.Name.Substring (lastPoint + 1) : memberInfo.Name;
 
-      var element = new XElement ("Member", new XAttribute ("id", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
-                                            new XAttribute ("type", memberInfo.MemberType),
-                                            new XAttribute ("name", memberName),
-                                            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type));
-
       var attributes = new StringBuilder ();
 
       XElement overridesElement = null;
@@ -86,11 +81,14 @@ namespace MixinXRef.Report
           overridesElement == null && overriddenElement == null)
         return null;
 
-      element.Add (_outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
-                   _memberSignatureUtility.GetMemberSignatur (memberInfo),
-                   overridesElement,
-                   overriddenElement);
-
+      var element = new XElement ("Member", new XAttribute ("id", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
+                                            new XAttribute ("type", memberInfo.MemberType),
+                                            new XAttribute ("name", memberName),
+                                            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type),
+                                            _outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
+                                            _memberSignatureUtility.GetMemberSignatur (memberInfo),
+                                            overridesElement,
+                                            overriddenElement);
       return element;
     }
 
