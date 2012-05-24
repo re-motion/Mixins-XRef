@@ -74,6 +74,7 @@ namespace MixinXRef.Report
           new XAttribute ("base-ref", GetBaseReference (realType)),
           new XAttribute ("is-target", involvedType.IsTarget),
           new XAttribute ("is-mixin", involvedType.IsMixin),
+          new XAttribute ("is-unusedmixin", !involvedType.IsTarget && !involvedType.IsMixin && _remotionReflector.IsInheritedFromMixin (involvedType.Type) && !_remotionReflector.IsInfrastructureType (involvedType.Type)),
           new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
           new XAttribute ("is-interface", realType.IsInterface),
           _outputFormatter.CreateModifierMarkup (GetAlphabeticOrderingAttribute (involvedType), _typeModifierUtility.GetTypeModifiers (realType)),

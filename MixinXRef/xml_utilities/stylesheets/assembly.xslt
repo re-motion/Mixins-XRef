@@ -79,7 +79,7 @@
             <xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id)[@is-target = true()] )"/>
           </td>
           <td>
-            <xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id)[ @is-mixin = true() or ( @is-target = false() and @is-mixin = false() ) ] )"/>
+            <xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id)[ @is-mixin = true() or @is-unusedmixin = true() ] )"/>
           </td>
           <td>
             <xsl:value-of select="count( ru:GetInvolvedTypesForAssembly(/, @id) )"/>
@@ -110,7 +110,7 @@
 
 	<xsl:call-template name="involvedTypeList">
 		<xsl:with-param name="rootMCR" select="/" />		
-		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)[ @is-mixin = true() or ( @is-target = false() and @is-mixin = false() ) ]" />  
+		<xsl:with-param name="involvedTypes" select="ru:GetInvolvedTypesForAssembly(/, @id)[ @is-mixin = true() or @is-unusedmixin = true() ]" />  
 		<xsl:with-param name="dir">..</xsl:with-param>
 		<xsl:with-param name="caption">Mixins</xsl:with-param>
     <xsl:with-param name="emptyText">No&#160;Mixins</xsl:with-param>

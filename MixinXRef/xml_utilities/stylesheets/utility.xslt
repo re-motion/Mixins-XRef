@@ -19,7 +19,7 @@
 <xsl:function name="ru:getUnusedMixinClass">
   <xsl:param name="it"/>
 
-  <xsl:copy-of select="if ( $it/@is-target = false() and $it/@is-mixin = false() ) then 'unusedMixinClass' else '' "/>
+  <xsl:copy-of select="if ( $it/@is-unusedmixin = true() ) then 'unusedMixinClass' else '' "/>
 </xsl:function>
 
 <!-- type name format functions -->
@@ -54,7 +54,7 @@
 
 <xsl:function name="ru:GetOverallMixinCount">
 	<xsl:param name="rootMCR" />
-	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[ @is-mixin = true() or ( @is-target = false() and @is-mixin = false() ) ] )" />
+	<xsl:copy-of select="count( $rootMCR//InvolvedTypes/InvolvedType[ @is-mixin = true() or @is-unusedmixin = true() ] )" />
 </xsl:function>
 
 <xsl:function name="ru:GetOverallAssemblyCount">

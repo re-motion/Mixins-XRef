@@ -33,7 +33,7 @@
 <xsl:template name ="involvedTypeMixin">
   <xsl:call-template name="involvedTypeList">
     <xsl:with-param name="rootMCR" select="/" />
-    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ @is-mixin = true() or ( @is-mixin = false() and @is-target = false() ) ]" />
+    <xsl:with-param name="involvedTypes" select="/MixinXRefReport/InvolvedTypes/InvolvedType[ @is-mixin = true() or @is-unusedmixin = true() ]" />
     <xsl:with-param name="dir">.</xsl:with-param>
     <xsl:with-param name="caption">Mixins</xsl:with-param>
     <xsl:with-param name="emptyText">No&#160;Mixins</xsl:with-param>

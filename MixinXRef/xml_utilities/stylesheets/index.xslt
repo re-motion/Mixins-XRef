@@ -28,7 +28,7 @@
     <div class="unusedMixinClass">
       <label>Non Applied Mixins:</label>
       <div class="labelValues">
-        <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-target = false() and @is-mixin = false()] )"/>
+        <xsl:value-of select="count( /MixinXRefReport/InvolvedTypes/InvolvedType[@is-unusedmixin = true()] )"/>
       </div>
     </div>
     <div>
