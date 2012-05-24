@@ -51,9 +51,10 @@ namespace MixinXRef.UnitTests
       expectedType1.TargetClassDefinition = CreateTargetClassDefintion<TargetClass1> (mixinConfiguration);
 
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.TargetTypes.Add (
-          new InvolvedType(typeof (TargetClass1)), expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType2.TargetTypes.Add (expectedType1, expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
+      var c = involvedTypes.Except(GetAdditonalAssemblyInvolvedTypes(expectedType1, expectedType2));
+      int i = 0;
       Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2)));
     }
 
@@ -73,19 +74,16 @@ namespace MixinXRef.UnitTests
       expectedType1.TargetClassDefinition = CreateTargetClassDefintion<TargetClass1> (mixinConfiguration);
 
       var expectedType2 = new InvolvedType (typeof (Mixin1));
-      expectedType2.TargetTypes.Add (
-          new InvolvedType(typeof (TargetClass1)), expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType2.TargetTypes.Add (expectedType1, expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
       var expectedType3 = new InvolvedType (typeof (TargetClass2));
       expectedType3.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
       expectedType3.TargetClassDefinition = CreateTargetClassDefintion<TargetClass2> (mixinConfiguration);
 
       var expectedType4 = new InvolvedType (typeof (Mixin2));
-      expectedType4.TargetTypes.Add (
-          new InvolvedType(typeof (TargetClass2)), expectedType3.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
+      expectedType4.TargetTypes.Add (expectedType3, expectedType3.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
-      Assert.That (
-          involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3, expectedType4)));
+      Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3, expectedType4)));
     }
 
     [Test]
@@ -106,11 +104,10 @@ namespace MixinXRef.UnitTests
       var expectedType2 = new InvolvedType (typeof (Mixin1));
       expectedType2.ClassContext = new ReflectedObject (mixinConfiguration.ClassContexts.Last());
       expectedType2.TargetClassDefinition = CreateTargetClassDefintion<Mixin1> (mixinConfiguration);
-      expectedType2.TargetTypes.Add (
-          new InvolvedType(typeof (TargetClass1)), expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType2.TargetTypes.Add (expectedType1, expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
       var expectedType3 = new InvolvedType (typeof (Mixin2));
-      expectedType3.TargetTypes.Add (new InvolvedType(typeof (Mixin1)), expectedType2.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
+      expectedType3.TargetTypes.Add (expectedType2, expectedType2.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin2)));
 
       Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3)));
     }
@@ -134,10 +131,8 @@ namespace MixinXRef.UnitTests
       expectedType2.TargetClassDefinition = CreateTargetClassDefintion<ClassInheritsFromUselessObject> (mixinConfiguration);
 
       var expectedType3 = new InvolvedType (typeof (Mixin1));
-      expectedType3.TargetTypes.Add (
-          new InvolvedType(typeof (UselessObject)), expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
-      expectedType3.TargetTypes.Add (
-          new InvolvedType(typeof (ClassInheritsFromUselessObject)), expectedType2.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType3.TargetTypes.Add (expectedType1, expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
+      expectedType3.TargetTypes.Add (expectedType2, expectedType2.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
 
       Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3)));
