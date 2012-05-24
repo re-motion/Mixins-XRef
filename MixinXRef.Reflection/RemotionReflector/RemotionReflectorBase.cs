@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using MixinXRef.Reflection.Utility;
 
 namespace MixinXRef.Reflection.RemotionReflector
 {

@@ -23,7 +23,7 @@ namespace MixinXRef.UnitTests
     public static IRemotionReflector GetRemotionReflection ()
     {
       // TODO Replace with mock if possible
-      return new RemotionReflectorProvider("Remotion", new Version("1.11.20"), ".");
+      return new RemotionReflector("Remotion", new Version("1.11.20"), new[] { Assembly.LoadFile(Path.GetFullPath("MixinXRef.Reflectors.dll")) }, new[] { "." });
     }
 
     [SetUp]
@@ -42,13 +42,13 @@ namespace MixinXRef.UnitTests
       var arguments = new[] { "twoParametersRequired" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-1));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory [-force]\r\nQuitting MixinXRef\r\n"));
+      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory (reflectorPath | customRemotionReflectorAssemblyQualifiedName) [-force]\r\nQuitting MixinXRef\r\n"));
     }
 
     [Test]
     public void CheckArguments_InvalidAssemblyDirectory ()
     {
-      var arguments = new[] { "invalidAssemblyDirectory", "doesNotMatter" };
+      var arguments = new[] { "invalidAssemblyDirectory", "doesNotMatter", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-2));
       Assert.That (_standardOutput.ToString (), Is.EqualTo ("Input directory 'invalidAssemblyDirectory' does not exist\r\nQuitting MixinXRef\r\n"));
@@ -57,7 +57,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void CheckArguments_OutputDoesNotExist ()
     {
-      var arguments = new[] { ".", "newOutputDirectory" };
+      var arguments = new[] { ".", "newOutputDirectory", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (0));
     }
@@ -67,7 +67,7 @@ namespace MixinXRef.UnitTests
     {
       Directory.CreateDirectory ("emptyDir");
 
-      var arguments = new[] { ".", "emptyDir" };
+      var arguments = new[] { ".", "emptyDir", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (0));
     }
@@ -78,7 +78,7 @@ namespace MixinXRef.UnitTests
       Directory.CreateDirectory ("invalidOutputDirectory");
       Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
 
-      var arguments = new[] { ".", "invalidOutputDirectory" };
+      var arguments = new[] { ".", "invalidOutputDirectory", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-3));
       Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'invalidOutputDirectory' is not empty\r\nQuitting MixinXRef\r\n"));
@@ -109,7 +109,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void CheckArguments_OutputDirectoryContainsInvalidCharacter ()
     {
-      var arguments = new[] { ".", "does<NotMatter" };
+      var arguments = new[] { ".", "does<NotMatter", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (-4));
       Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'does<NotMatter' contains invalid characters\r\nQuitting MixinXRef\r\n"));
@@ -118,7 +118,7 @@ namespace MixinXRef.UnitTests
     [Test]
     public void CheckArguments_ValidDirectories ()
     {
-      var arguments = new[] { ".", "MixinDoc" };
+      var arguments = new[] { ".", "MixinDoc", "reflector" };
       var output = _program.CheckArguments (arguments);
       Assert.That (output, Is.EqualTo (0));
       Assert.That (_standardOutput.ToString(), Is.EqualTo (""));

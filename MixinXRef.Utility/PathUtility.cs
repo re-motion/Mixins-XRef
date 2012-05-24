@@ -4,7 +4,7 @@ namespace MixinXRef.Utility
 {
   public static class PathUtility
   {
-    // Alternative to Path.GetDirectoryName if volume information need to be kept
+    // Alternative to Path.GetDirectoryName if volume information needs to be kept
     public static string GetDirectoryName (string path)
     {
       ArgumentUtility.CheckNotNull ("path", path);

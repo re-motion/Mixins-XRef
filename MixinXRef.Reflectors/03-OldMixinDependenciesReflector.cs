@@ -4,7 +4,7 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
-  [ReflectorSupport ("Remotion", MaxVersion = "1.13.93")]
+  [ReflectorSupport ("Remotion", "1.11.20")]
   public class OldMixinDependenciesReflector : RemotionReflectorBase
   {
     public override ReflectedObject GetNextCallDependencies (ReflectedObject mixinDefinition)

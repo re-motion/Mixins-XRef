@@ -16,24 +16,24 @@ namespace MixinXRefGUI
 
     public MixinXRefForm ()
     {
-      InitializeComponent();
+      InitializeComponent ();
 
       var baseDir = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "MixinXRef");
       _persistentSettingsFile = Path.Combine (baseDir, "MixinXRefGUI.dat");
 
       GetOrCreateSettings (_persistentSettingsFile);
 
-      UpdateEnabledStatusOfShowResultButton();
+      UpdateEnabledStatusOfShowResultButton ();
     }
 
     private void UpdateEnabledStatusOfShowResultButton ()
     {
-      showResultsButton.Enabled = File.Exists (GetResultFilePath());
+      showResultsButton.Enabled = File.Exists (GetResultFilePath ());
     }
 
     private void GetOrCreateSettings (string persistentSettingsFile)
     {
-      if (!Directory.Exists (Path.GetDirectoryName (_persistentSettingsFile)))
+      if (!File.Exists (_persistentSettingsFile))
         CreateDefaultSettings (persistentSettingsFile);
 
       LoadSettings (persistentSettingsFile);
@@ -44,8 +44,9 @@ namespace MixinXRefGUI
       try
       {
         var baseDirectory = Path.GetDirectoryName (_persistentSettingsFile);
-        Directory.CreateDirectory (baseDirectory);
-        File.WriteAllLines (persistentSettingsFile, new[] { @"C:\", @"C:\", "", @"False" });
+        if (!Directory.Exists (baseDirectory))
+          Directory.CreateDirectory (baseDirectory);
+        File.WriteAllLines (persistentSettingsFile, new[] { @"C:\", @"C:\", "MixinXRef.Reflectors*.dll", "", @"False" });
       }
       catch (Exception exception)
       {
@@ -59,18 +60,34 @@ namespace MixinXRefGUI
       if (File.Exists (persistentSettingsFile))
       {
         var settings = File.ReadAllLines (persistentSettingsFile);
-        if (settings.Length == 4)
+        if (settings.Length == 5)
         {
           if (Directory.Exists (settings[0]))
             assemblyPathTextBox.Text = settings[0];
           if (Directory.Exists (settings[1]))
             outputPathTextBox.Text = settings[1];
 
-          customReflectorTextBox.Text = settings[2];
+          reflectorAssemblyTextBox.Text = settings[2];
+          customReflectorTextBox.Text = settings[3];
 
-          forceOverrideCheckBox.Checked = bool.Parse (settings[3]);
+          forceOverrideCheckBox.Checked = bool.Parse (settings[4]);
         }
       }
+    }
+
+    private void SaveSettings ()
+    {
+      File.WriteAllLines (
+          _persistentSettingsFile,
+          new[]
+          {
+              assemblyPathTextBox.Text,
+              outputPathTextBox.Text,
+              reflectorAssemblyTextBox.Text,
+              customReflectorTextBox.Text,
+              forceOverrideCheckBox.Checked.ToString()
+          }
+          );
     }
 
     private void BrowseAssemblyPath_Click (object sender, EventArgs e)
@@ -81,7 +98,7 @@ namespace MixinXRefGUI
     private void BrowseOutputPath_Click (object sender, EventArgs e)
     {
       ShowAndSetFolderBrowserDialogForTextBox ("Select output folder", outputPathTextBox);
-      UpdateEnabledStatusOfShowResultButton();
+      UpdateEnabledStatusOfShowResultButton ();
     }
 
     private void ShowAndSetFolderBrowserDialogForTextBox (string description, TextBox pathTextBox)
@@ -102,11 +119,11 @@ namespace MixinXRefGUI
 
     private void StartMixinXRefButton_Click (object sender, EventArgs e)
     {
-      SaveSettings();
+      SaveSettings ();
 
       var remotionAssembly = Path.Combine (assemblyPathTextBox.Text, "Remotion.dll");
       if (File.Exists (remotionAssembly))
-        StartMixinXRefApplication();
+        StartMixinXRefApplication ();
       else
       {
         MessageBox.Show (
@@ -119,15 +136,15 @@ namespace MixinXRefGUI
 
     private void StartMixinXRefApplication ()
     {
-      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
+      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
       var fileName = Path.Combine (xRefPath, "MixinXRef.exe");
-      var arguments = GetArguments();
+      var arguments = GetArguments ();
 
       Cursor = Cursors.AppStarting;
       startMixinXRefButton.Enabled = false;
       showResultsButton.Enabled = false;
 
-      var process = new Process();
+      var process = new Process ();
       process.StartInfo.FileName = fileName;
       process.StartInfo.Arguments = arguments;
       process.StartInfo.UseShellExecute = false;
@@ -143,9 +160,9 @@ namespace MixinXRefGUI
 
       logTextBox.Text = "Started function.  Please stand by.." + Environment.NewLine;
 
-      process.Start();
-      process.BeginOutputReadLine();
-      process.BeginErrorReadLine();
+      process.Start ();
+      process.BeginOutputReadLine ();
+      process.BeginErrorReadLine ();
 
       cursorIconTimer.Enabled = true;
     }
@@ -154,27 +171,15 @@ namespace MixinXRefGUI
     {
       var arguments = String.Format ("\"{0}\" \"{1}\"", assemblyPathTextBox.Text, outputPathTextBox.Text);
 
-      if (!String.IsNullOrEmpty (customReflectorTextBox.Text))
+      if (reflectorAssemblyRadioButton.Checked && !string.IsNullOrEmpty (reflectorAssemblyTextBox.Text))
+        arguments += " \"" + reflectorAssemblyTextBox.Text + "\"";
+      else if (customReflectorRadioButton.Checked && !string.IsNullOrEmpty (customReflectorTextBox.Text))
         arguments += " \"" + customReflectorTextBox.Text + "\"";
 
       if (forceOverrideCheckBox.Checked)
         arguments += " -force";
 
       return arguments;
-    }
-
-    private void SaveSettings ()
-    {
-      File.WriteAllLines (
-          _persistentSettingsFile,
-          new[]
-          {
-              assemblyPathTextBox.Text,
-              outputPathTextBox.Text,
-              customReflectorTextBox.Text,
-              forceOverrideCheckBox.Checked.ToString()
-          }
-          );
     }
 
     private void AppendTextToLogTextBoxAsync (string message)
@@ -226,7 +231,7 @@ namespace MixinXRefGUI
 
     private void ShowResultsButton_Click (object sender, EventArgs e)
     {
-      var uriString = GetResultFilePath();
+      var uriString = GetResultFilePath ();
       if (!File.Exists (uriString))
         return;
 
@@ -238,6 +243,24 @@ namespace MixinXRefGUI
     private string GetResultFilePath ()
     {
       return Path.GetFullPath (Path.Combine (outputPathTextBox.Text, "index.html"));
+    }
+
+    private void ReflectorAssemblyRadioButtonCheckedChanged (object sender, EventArgs e)
+    {
+      if (reflectorAssemblyRadioButton.Checked)
+      {
+        reflectorAssemblyTextBox.Enabled = true;
+        customReflectorTextBox.Enabled = false;
+      }
+    }
+
+    private void customReflectorRadioButton_CheckedChanged (object sender, EventArgs e)
+    {
+      if (customReflectorRadioButton.Checked)
+      {
+        customReflectorTextBox.Enabled = true;
+        reflectorAssemblyTextBox.Enabled = false;
+      }
     }
   }
 }

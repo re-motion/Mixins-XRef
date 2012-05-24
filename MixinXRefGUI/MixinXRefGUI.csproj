@@ -85,6 +85,10 @@
     <Content Include="Resources\x.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
+      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
+      <Name>MixinXRef.Reflectors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>

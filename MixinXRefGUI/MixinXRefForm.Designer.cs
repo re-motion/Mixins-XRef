@@ -28,189 +28,233 @@
     /// </summary>
     private void InitializeComponent ()
     {
-      this.components = new System.ComponentModel.Container ();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager (typeof (MixinXRefForm));
-      this.forceOverrideCheckBox = new System.Windows.Forms.CheckBox ();
-      this.browseAssemblyPath = new System.Windows.Forms.Button ();
-      this.assemblyPathTextBox = new System.Windows.Forms.TextBox ();
-      this.pictureBox1 = new System.Windows.Forms.PictureBox ();
-      this.outputPathTextBox = new System.Windows.Forms.TextBox ();
-      this.browseOutputPath = new System.Windows.Forms.Button ();
-      this.customReflectorTextBox = new System.Windows.Forms.TextBox ();
-      this.label1 = new System.Windows.Forms.Label ();
-      this.label2 = new System.Windows.Forms.Label ();
-      this.label3 = new System.Windows.Forms.Label ();
-      this.startMixinXRefButton = new System.Windows.Forms.Button ();
-      this.logTextBox = new System.Windows.Forms.TextBox ();
-      this.cursorIconTimer = new System.Windows.Forms.Timer (this.components);
-      this.toolTip1 = new System.Windows.Forms.ToolTip (this.components);
-      this.showResultsButton = new System.Windows.Forms.Button ();
-      ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit ();
-      this.SuspendLayout ();
+      this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MixinXRefForm));
+      this.forceOverrideCheckBox = new System.Windows.Forms.CheckBox();
+      this.browseAssemblyPath = new System.Windows.Forms.Button();
+      this.assemblyPathTextBox = new System.Windows.Forms.TextBox();
+      this.pictureBox1 = new System.Windows.Forms.PictureBox();
+      this.outputPathTextBox = new System.Windows.Forms.TextBox();
+      this.browseOutputPath = new System.Windows.Forms.Button();
+      this.customReflectorTextBox = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.startMixinXRefButton = new System.Windows.Forms.Button();
+      this.logTextBox = new System.Windows.Forms.TextBox();
+      this.cursorIconTimer = new System.Windows.Forms.Timer(this.components);
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.reflectorAssemblyTextBox = new System.Windows.Forms.TextBox();
+      this.showResultsButton = new System.Windows.Forms.Button();
+      this.reflectorAssemblyRadioButton = new System.Windows.Forms.RadioButton();
+      this.customReflectorRadioButton = new System.Windows.Forms.RadioButton();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      this.groupBox1.SuspendLayout();
+      this.SuspendLayout();
       // 
       // forceOverrideCheckBox
       // 
       this.forceOverrideCheckBox.AutoSize = true;
-      this.forceOverrideCheckBox.Location = new System.Drawing.Point (12, 101);
+      this.forceOverrideCheckBox.Location = new System.Drawing.Point(12, 101);
       this.forceOverrideCheckBox.Name = "forceOverrideCheckBox";
-      this.forceOverrideCheckBox.Size = new System.Drawing.Size (131, 17);
+      this.forceOverrideCheckBox.Size = new System.Drawing.Size(131, 17);
       this.forceOverrideCheckBox.TabIndex = 0;
       this.forceOverrideCheckBox.Text = "Replace existing files?";
       this.forceOverrideCheckBox.UseVisualStyleBackColor = true;
       // 
       // browseAssemblyPath
       // 
-      this.browseAssemblyPath.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.browseAssemblyPath.Location = new System.Drawing.Point (253, 29);
+      this.browseAssemblyPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.browseAssemblyPath.Location = new System.Drawing.Point(253, 29);
       this.browseAssemblyPath.Name = "browseAssemblyPath";
-      this.browseAssemblyPath.Size = new System.Drawing.Size (54, 20);
+      this.browseAssemblyPath.Size = new System.Drawing.Size(54, 20);
       this.browseAssemblyPath.TabIndex = 1;
       this.browseAssemblyPath.Text = "Browse";
       this.browseAssemblyPath.UseVisualStyleBackColor = true;
-      this.browseAssemblyPath.Click += new System.EventHandler (this.BrowseAssemblyPath_Click);
+      this.browseAssemblyPath.Click += new System.EventHandler(this.BrowseAssemblyPath_Click);
       // 
       // assemblyPathTextBox
       // 
-      this.assemblyPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.assemblyPathTextBox.Location = new System.Drawing.Point (12, 29);
+      this.assemblyPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.assemblyPathTextBox.Location = new System.Drawing.Point(12, 29);
       this.assemblyPathTextBox.Name = "assemblyPathTextBox";
-      this.assemblyPathTextBox.Size = new System.Drawing.Size (235, 20);
+      this.assemblyPathTextBox.Size = new System.Drawing.Size(235, 20);
       this.assemblyPathTextBox.TabIndex = 2;
       // 
       // pictureBox1
       // 
-      this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.pictureBox1.Image = ((System.Drawing.Image) (resources.GetObject ("pictureBox1.Image")));
-      this.pictureBox1.Location = new System.Drawing.Point (345, 12);
+      this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+      this.pictureBox1.Location = new System.Drawing.Point(345, 12);
       this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size (154, 69);
+      this.pictureBox1.Size = new System.Drawing.Size(154, 69);
       this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
       this.pictureBox1.TabIndex = 3;
       this.pictureBox1.TabStop = false;
       // 
       // outputPathTextBox
       // 
-      this.outputPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.outputPathTextBox.Location = new System.Drawing.Point (12, 75);
+      this.outputPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.outputPathTextBox.Location = new System.Drawing.Point(12, 75);
       this.outputPathTextBox.Name = "outputPathTextBox";
-      this.outputPathTextBox.Size = new System.Drawing.Size (235, 20);
+      this.outputPathTextBox.Size = new System.Drawing.Size(235, 20);
       this.outputPathTextBox.TabIndex = 5;
       // 
       // browseOutputPath
       // 
-      this.browseOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.browseOutputPath.Location = new System.Drawing.Point (253, 75);
+      this.browseOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.browseOutputPath.Location = new System.Drawing.Point(253, 75);
       this.browseOutputPath.Name = "browseOutputPath";
-      this.browseOutputPath.Size = new System.Drawing.Size (54, 20);
+      this.browseOutputPath.Size = new System.Drawing.Size(54, 20);
       this.browseOutputPath.TabIndex = 4;
       this.browseOutputPath.Text = "Browse";
       this.browseOutputPath.UseVisualStyleBackColor = true;
-      this.browseOutputPath.Click += new System.EventHandler (this.BrowseOutputPath_Click);
+      this.browseOutputPath.Click += new System.EventHandler(this.BrowseOutputPath_Click);
       // 
       // customReflectorTextBox
       // 
-      this.customReflectorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.customReflectorTextBox.Location = new System.Drawing.Point (12, 147);
+      this.customReflectorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.customReflectorTextBox.Enabled = false;
+      this.customReflectorTextBox.Location = new System.Drawing.Point(19, 91);
       this.customReflectorTextBox.Name = "customReflectorTextBox";
-      this.customReflectorTextBox.Size = new System.Drawing.Size (295, 20);
+      this.customReflectorTextBox.Size = new System.Drawing.Size(256, 20);
       this.customReflectorTextBox.TabIndex = 7;
-      this.toolTip1.SetToolTip (this.customReflectorTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
+      this.toolTip1.SetToolTip(this.customReflectorTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
       // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point (12, 10);
+      this.label1.Location = new System.Drawing.Point(12, 10);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size (74, 13);
+      this.label1.Size = new System.Drawing.Size(74, 13);
       this.label1.TabIndex = 8;
       this.label1.Text = "Input directory";
       // 
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point (12, 59);
+      this.label2.Location = new System.Drawing.Point(12, 59);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size (82, 13);
+      this.label2.Size = new System.Drawing.Size(82, 13);
       this.label2.TabIndex = 8;
       this.label2.Text = "Output directory";
       // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Font = new System.Drawing.Font ("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-      this.label3.Location = new System.Drawing.Point (12, 131);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size (129, 13);
-      this.label3.TabIndex = 8;
-      this.label3.Text = "Custom reflector (optional)";
-      this.toolTip1.SetToolTip (this.label3, "The custom reflector has to be in the input directory");
-      // 
       // startMixinXRefButton
       // 
-      this.startMixinXRefButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.startMixinXRefButton.Location = new System.Drawing.Point (345, 101);
+      this.startMixinXRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.startMixinXRefButton.Location = new System.Drawing.Point(345, 101);
       this.startMixinXRefButton.Name = "startMixinXRefButton";
-      this.startMixinXRefButton.Size = new System.Drawing.Size (154, 30);
+      this.startMixinXRefButton.Size = new System.Drawing.Size(154, 30);
       this.startMixinXRefButton.TabIndex = 9;
       this.startMixinXRefButton.Text = "Start Mixin-Cross-Referencer";
       this.startMixinXRefButton.UseVisualStyleBackColor = true;
-      this.startMixinXRefButton.Click += new System.EventHandler (this.StartMixinXRefButton_Click);
+      this.startMixinXRefButton.Click += new System.EventHandler(this.StartMixinXRefButton_Click);
       // 
       // logTextBox
       // 
-      this.logTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                  | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.logTextBox.Location = new System.Drawing.Point (15, 192);
+      this.logTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.logTextBox.Location = new System.Drawing.Point(15, 252);
       this.logTextBox.Multiline = true;
       this.logTextBox.Name = "logTextBox";
       this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.logTextBox.Size = new System.Drawing.Size (484, 170);
+      this.logTextBox.Size = new System.Drawing.Size(484, 228);
       this.logTextBox.TabIndex = 10;
       // 
       // cursorIconTimer
       // 
-      this.cursorIconTimer.Tick += new System.EventHandler (this.CursorIconTimer_Tick);
+      this.cursorIconTimer.Tick += new System.EventHandler(this.CursorIconTimer_Tick);
+      // 
+      // reflectorAssemblyTextBox
+      // 
+      this.reflectorAssemblyTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.reflectorAssemblyTextBox.Location = new System.Drawing.Point(19, 42);
+      this.reflectorAssemblyTextBox.Name = "reflectorAssemblyTextBox";
+      this.reflectorAssemblyTextBox.Size = new System.Drawing.Size(256, 20);
+      this.reflectorAssemblyTextBox.TabIndex = 14;
+      this.toolTip1.SetToolTip(this.reflectorAssemblyTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
       // 
       // showResultsButton
       // 
-      this.showResultsButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.showResultsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.showResultsButton.Enabled = false;
-      this.showResultsButton.Location = new System.Drawing.Point (345, 141);
+      this.showResultsButton.Location = new System.Drawing.Point(345, 141);
       this.showResultsButton.Name = "showResultsButton";
-      this.showResultsButton.Size = new System.Drawing.Size (154, 30);
+      this.showResultsButton.Size = new System.Drawing.Size(154, 30);
       this.showResultsButton.TabIndex = 11;
       this.showResultsButton.Text = "Show results";
       this.showResultsButton.UseVisualStyleBackColor = true;
-      this.showResultsButton.Click += new System.EventHandler (this.ShowResultsButton_Click);
+      this.showResultsButton.Click += new System.EventHandler(this.ShowResultsButton_Click);
+      // 
+      // reflectorAssemblyRadioButton
+      // 
+      this.reflectorAssemblyRadioButton.AutoSize = true;
+      this.reflectorAssemblyRadioButton.Checked = true;
+      this.reflectorAssemblyRadioButton.Location = new System.Drawing.Point(6, 19);
+      this.reflectorAssemblyRadioButton.Name = "reflectorAssemblyRadioButton";
+      this.reflectorAssemblyRadioButton.Size = new System.Drawing.Size(269, 17);
+      this.reflectorAssemblyRadioButton.TabIndex = 12;
+      this.reflectorAssemblyRadioButton.TabStop = true;
+      this.reflectorAssemblyRadioButton.Text = "Reflector assembly (file path with * wildcard support)";
+      this.reflectorAssemblyRadioButton.UseVisualStyleBackColor = true;
+      this.reflectorAssemblyRadioButton.CheckedChanged += new System.EventHandler(this.ReflectorAssemblyRadioButtonCheckedChanged);
+      // 
+      // customReflectorRadioButton
+      // 
+      this.customReflectorRadioButton.AutoSize = true;
+      this.customReflectorRadioButton.Location = new System.Drawing.Point(6, 68);
+      this.customReflectorRadioButton.Name = "customReflectorRadioButton";
+      this.customReflectorRadioButton.Size = new System.Drawing.Size(247, 17);
+      this.customReflectorRadioButton.TabIndex = 13;
+      this.customReflectorRadioButton.Text = "Custom reflector (assembly qualified type name)";
+      this.customReflectorRadioButton.UseVisualStyleBackColor = true;
+      this.customReflectorRadioButton.CheckedChanged += new System.EventHandler(this.customReflectorRadioButton_CheckedChanged);
+      // 
+      // groupBox1
+      // 
+      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox1.Controls.Add(this.reflectorAssemblyRadioButton);
+      this.groupBox1.Controls.Add(this.customReflectorRadioButton);
+      this.groupBox1.Controls.Add(this.reflectorAssemblyTextBox);
+      this.groupBox1.Controls.Add(this.customReflectorTextBox);
+      this.groupBox1.Location = new System.Drawing.Point(12, 125);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(295, 121);
+      this.groupBox1.TabIndex = 0;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Remotion reflector source";
       // 
       // MixinXRefForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size (518, 374);
-      this.Controls.Add (this.showResultsButton);
-      this.Controls.Add (this.logTextBox);
-      this.Controls.Add (this.startMixinXRefButton);
-      this.Controls.Add (this.label3);
-      this.Controls.Add (this.label2);
-      this.Controls.Add (this.label1);
-      this.Controls.Add (this.customReflectorTextBox);
-      this.Controls.Add (this.outputPathTextBox);
-      this.Controls.Add (this.browseOutputPath);
-      this.Controls.Add (this.pictureBox1);
-      this.Controls.Add (this.assemblyPathTextBox);
-      this.Controls.Add (this.browseAssemblyPath);
-      this.Controls.Add (this.forceOverrideCheckBox);
-      this.Icon = ((System.Drawing.Icon) (resources.GetObject ("$this.Icon")));
+      this.ClientSize = new System.Drawing.Size(518, 492);
+      this.Controls.Add(this.groupBox1);
+      this.Controls.Add(this.showResultsButton);
+      this.Controls.Add(this.logTextBox);
+      this.Controls.Add(this.startMixinXRefButton);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.label1);
+      this.Controls.Add(this.outputPathTextBox);
+      this.Controls.Add(this.browseOutputPath);
+      this.Controls.Add(this.pictureBox1);
+      this.Controls.Add(this.assemblyPathTextBox);
+      this.Controls.Add(this.browseAssemblyPath);
+      this.Controls.Add(this.forceOverrideCheckBox);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MixinXRefForm";
       this.Text = "MixinXRef";
-      ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit ();
-      this.ResumeLayout (false);
-      this.PerformLayout ();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -225,12 +269,15 @@
     private System.Windows.Forms.TextBox customReflectorTextBox;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button startMixinXRefButton;
     private System.Windows.Forms.TextBox logTextBox;
     private System.Windows.Forms.Timer cursorIconTimer;
     private System.Windows.Forms.ToolTip toolTip1;
     private System.Windows.Forms.Button showResultsButton;
+    private System.Windows.Forms.RadioButton reflectorAssemblyRadioButton;
+    private System.Windows.Forms.RadioButton customReflectorRadioButton;
+    private System.Windows.Forms.TextBox reflectorAssemblyTextBox;
+    private System.Windows.Forms.GroupBox groupBox1;
   }
 }
 

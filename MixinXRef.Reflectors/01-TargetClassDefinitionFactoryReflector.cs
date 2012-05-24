@@ -3,12 +3,11 @@ using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
-using MixinXRef.Reflection.Utility;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
-  [ReflectorSupport ("Remotion", MinVersion = "1.13.23")]
+  [ReflectorSupport ("Remotion", "1.13.23")]
   public class TargetClassDefinitionFactory : RemotionReflectorBase
   {
     private readonly Assembly _remotionAssembly;

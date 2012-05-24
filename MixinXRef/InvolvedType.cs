@@ -32,6 +32,7 @@ namespace MixinXRef
       get
       {
         if (_members == null)
+          // TODO remove constructors
           _members = _realType.GetMembers (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
                               .Where (m => !HasSpecialName (m))
                               .OrderBy (m => m.Name)

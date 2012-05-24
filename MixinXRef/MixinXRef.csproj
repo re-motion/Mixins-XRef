@@ -322,7 +322,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="MixinXRef.cd" />
     <None Include="xml_utilities\resources\images\Sorting icons.psd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
