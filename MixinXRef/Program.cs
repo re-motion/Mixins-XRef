@@ -126,9 +126,10 @@ namespace MixinXRef
         return 1;
       }
 
-      var xmlFile = !string.IsNullOrEmpty (cmdLineArgs.XMLOutputFileName)
-                      ? cmdLineArgs.XMLOutputFileName
-                      : "MixinXRef.xml";
+      var xmlFile = Path.Combine (cmdLineArgs.OutputDirectory,
+                                 !string.IsNullOrEmpty (cmdLineArgs.XMLOutputFileName)
+                                   ? cmdLineArgs.XMLOutputFileName
+                                   : "MixinXRef.xml");
 
       var xmlStartTime = DateTime.Now;
       Console.Write ("  Generating XML ... ");
