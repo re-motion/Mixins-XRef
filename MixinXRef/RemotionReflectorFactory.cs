@@ -31,7 +31,6 @@ namespace MixinXRef
 
     private static Version DetectVersion (string assemblyDirectory)
     {
-      return new Version ("1.13.141");
       // Assumption: There is always a 'Remotion.dll'
       return AssemblyName.GetAssemblyName (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll"))).Version;
     }
