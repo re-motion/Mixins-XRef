@@ -48,6 +48,13 @@
     <Compile Include="IIdentifierGenerator.cs" />
     <Compile Include="MemberDefinitionEqualityComparer.cs" />
     <Compile Include="MemberInfoEqualityUtility.cs" />
+    <Compile Include="Options\ActionOption.cs" />
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionContext.cs" />
+    <Compile Include="Options\OptionException.cs" />
+    <Compile Include="Options\OptionSet.cs" />
+    <Compile Include="Options\OptionValueCollection.cs" />
+    <Compile Include="Options\OptionValueType.cs" />
     <Compile Include="PathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadonlyIdentifierGenerator.cs" />

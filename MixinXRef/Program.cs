@@ -6,6 +6,7 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
 using MixinXRef.Utility;
+using MixinXRef.Utility.Options;
 
 namespace MixinXRef
 {
@@ -15,41 +16,119 @@ namespace MixinXRef
     {
       var startTime = DateTime.Now;
 
-      var program = new Program (Console.In, Console.Out, new OutputFormatter ());
+      var cmdLineArgs = CommandLineArguments.Instance;
+      var showOptionsHelp = false;
+      var options = new OptionSet
+                      {
+                        {
+                          "i=|input-directory=", "Directory that contains the assemblies to analyze",
+                          v => cmdLineArgs.AssemblyDirectory = v
+                        }, 
+                        {
+                          "o=|output-directory=", "Output directory. Execution is stopped if this directory exists. Force overwrite with -f.",
+                          v => cmdLineArgs.OutputDirectory = v
+                        }, 
+                        {
+                          "x=|xml-outputfile=", "File path to a custom output file for the generated XML",
+                          v => cmdLineArgs.XMLOutputFileName = v
+                        }, 
+                        {
+                          "f|force-overwrite", "Forces all existing files to be overwritten", 
+                          v => cmdLineArgs.OverwriteExistingFiles = true
+                        }, 
+                        {
+                          "s|skip-html", "Skip generation of HTML documentation",
+                          v => cmdLineArgs.SkipHTMLGeneration = true
+                        },
+                        {
+                          "r|reflector-assembly=", "File path to an assembly that contains one or more reflectors. " + 
+                                                   "You can specify more that one assembly by using wildcards (e.g. MixinXRef.Reflectors*.dll).",
+                          v =>
+                            {
+                              cmdLineArgs.ReflectorSource = ReflectorSource.ReflectorAssembly;
+                              cmdLineArgs.ReflectorPath = v;
+                            }
+                        }, 
+                        {
+                          "c|custom-reflector=", "An assembly qualified type name that is used as a custom reflector. " + 
+                                                 "This type has to implement " + typeof(IRemotionReflector).Name + ".",
+                          v =>
+                            {
+                              cmdLineArgs.ReflectorSource = ReflectorSource.CustomReflector;
+                              cmdLineArgs.CustomReflectorAssemblyQualifiedTypeName = v;
+                            }
+                        }, 
+                        {
+                          "h|?|help", "Show this help page",
+                          v => showOptionsHelp = true
+                        }
+                      };
 
-      var argumentCheckResult = program.CheckArguments (args);
-      if (argumentCheckResult != 0)
-        return (argumentCheckResult);
-
-      var assemblyDirectory = args[0];
-      var outputDirectory = Path.GetFullPath (args[1]);
-      var reflectorSource = args[2];
-      var xmlFile = Path.Combine (outputDirectory, "MixinReport.xml");
-
-      if (!Directory.Exists (outputDirectory))
-        Directory.CreateDirectory (outputDirectory);
-
-      IRemotionReflector reflector;
-      var customReflector = Type.GetType (reflectorSource); // try to interpret as assembly qualified type name
-      if (customReflector == null)
-        reflector = RemotionReflectorFactory.Create (assemblyDirectory, reflectorSource);
-      else if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
+      try
       {
-        Console.WriteLine ("Specified custom reflector {0} does not implement {1}", customReflector, typeof (IRemotionReflector).FullName);
-        return -7;
+        options.Parse (args);
       }
-      else
-        reflector = RemotionReflectorFactory.Create (assemblyDirectory, customReflector);
+      catch (OptionException e)
+      {
+        Console.Error.WriteLine ("Error while parsing the command line options: {0}", e.Message);
+        return 1;
+      }
 
-      program.SetRemotionReflector (reflector);
+      if (showOptionsHelp)
+      {
+        PrintUsage (options);
+        return 0;
+      }
 
-      Console.WriteLine ("RemotionReflector '{0}' is used.", program._remotionReflector.GetType ().FullName);
+      var argsExitCode = CheckArguments (cmdLineArgs);
+      if (argsExitCode == 1)
+      {
+        PrintUsage (options);
+        return argsExitCode;
+      }
+      if (argsExitCode != 0)
+      {
+        return argsExitCode;
+      }
 
+      IRemotionReflector reflector = null;
+      switch (cmdLineArgs.ReflectorSource)
+      {
+        case ReflectorSource.ReflectorAssembly:
+          reflector = RemotionReflectorFactory.Create (cmdLineArgs.AssemblyDirectory, cmdLineArgs.ReflectorPath);
+          break;
+        case ReflectorSource.CustomReflector:
+          var customReflector = Type.GetType (cmdLineArgs.CustomReflectorAssemblyQualifiedTypeName);
+          if (customReflector == null)
+          {
+            Console.Error.WriteLine ("Custom reflector can not be found");
+            return 2;
+          }
+          if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
+          {
+            Console.WriteLine ("Specified custom reflector {0} does not implement {1}", customReflector, typeof (IRemotionReflector).FullName);
+            return 2;
+          }
+          reflector = RemotionReflectorFactory.Create (cmdLineArgs.AssemblyDirectory, customReflector);
+          break;
+        case ReflectorSource.Unspecified:
+          throw new IndexOutOfRangeException ("Reflector source is unspecified");
+      }
+
+      Console.WriteLine ("RemotionReflector '{0}' is used.", reflector.GetType ().FullName);
       Console.WriteLine ("Generating MixinDoc");
 
-      var assemblies = program.GetAssemblies (assemblyDirectory);
-      if (assemblies == null)
-        return (-6);
+      var program = new Program (reflector, new OutputFormatter ());
+      var assemblies = program.GetAssemblies (cmdLineArgs.AssemblyDirectory);
+      if (!assemblies.Any ())
+      {
+        Console.Error.WriteLine ("\"{0}\" contains no assemblies", cmdLineArgs.AssemblyDirectory);
+        return 1;
+      }
+
+      var xmlFile = !string.IsNullOrEmpty (cmdLineArgs.XMLOutputFileName)
+                      ? cmdLineArgs.XMLOutputFileName
+                      : "MixinXRef.xml";
 
       var xmlStartTime = DateTime.Now;
       Console.Write ("  Generating XML ... ");
@@ -60,95 +139,102 @@ namespace MixinXRef
       GC.Collect ();
       GC.WaitForPendingFinalizers ();
 
-      var xslStartTime = DateTime.Now;
-      Console.Write ("  Applying XSLT ... ");
-      var transformerExitCode = GenerateHtmlFromXml (outputDirectory, xmlFile);
-      if (transformerExitCode != 0)
+      if (!cmdLineArgs.SkipHTMLGeneration)
       {
-        Console.Error.WriteLine ("Error applying XSLT (code {0})", transformerExitCode);
-        return transformerExitCode;
+        var xslStartTime = DateTime.Now;
+        Console.Write ("  Applying XSLT ... ");
+        var transformerExitCode = new XRefTransformer (xmlFile, cmdLineArgs.OutputDirectory).GenerateHtmlFromXml ();
+        if (transformerExitCode != 0)
+        {
+          Console.Error.WriteLine ("Error applying XSLT (code {0})", transformerExitCode);
+          return transformerExitCode;
+        }
+        Console.WriteLine (GetElapsedTime (xslStartTime));
+
+        // copy resources folder
+        var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
+        new DirectoryInfo (Path.Combine (xRefPath, @"xml_utilities\resources")).CopyTo (Path.Combine (cmdLineArgs.OutputDirectory, "resources"));
+
+        Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1}.", cmdLineArgs.OutputDirectory, GetElapsedTime (startTime));
       }
-      Console.WriteLine (GetElapsedTime (xslStartTime));
-
-      // copy resources folder
-      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
-      new DirectoryInfo (Path.Combine (xRefPath, @"xml_utilities\resources")).CopyTo (Path.Combine (outputDirectory, "resources"));
-
-      Console.WriteLine ("Mixin Documentation successfully generated to '{0}' in {1}.", outputDirectory, GetElapsedTime (startTime));
+      else
+      {
+        Console.WriteLine ("  Skipping HTML generation");
+      }
 
       return 0;
     }
 
-    private static int GenerateHtmlFromXml (string outputDirectory, string xmlFile)
+    private static void PrintUsage (OptionSet optionSet)
     {
-      return new XRefTransformer (xmlFile, outputDirectory).GenerateHtmlFromXml ();
+      optionSet.WriteOptionDescriptions (Console.Out);
     }
 
-    private readonly TextReader _input;
-    private readonly TextWriter _output;
-    private IRemotionReflector _remotionReflector;
+    private static int CheckArguments (CommandLineArguments cmdLineArgs)
+    {
+      if (string.IsNullOrEmpty (cmdLineArgs.AssemblyDirectory))
+      {
+        Console.Error.WriteLine ("Input directory missing");
+        return 1;
+      }
+
+      if (string.IsNullOrEmpty (cmdLineArgs.OutputDirectory))
+      {
+        Console.Error.WriteLine ("Output directory missing");
+        return 1;
+      }
+
+      if (cmdLineArgs.ReflectorSource == ReflectorSource.Unspecified)
+      {
+        Console.Error.WriteLine ("Reflector is missing. Either provide a reflector assembly or a custom reflector.");
+        return 1;
+      }
+
+      if (!Directory.Exists (cmdLineArgs.AssemblyDirectory))
+      {
+        Console.Error.WriteLine ("Input directory does not exist");
+        return 2;
+      }
+
+      var invalid = cmdLineArgs.OutputDirectory.Intersect (Path.GetInvalidPathChars ());
+      if (invalid.Any ())
+      {
+        Console.Error.WriteLine ("Output directory contains invalid characters: {0}", string.Join (" ", invalid.Select (c => c.ToString ()).ToArray ()));
+        return 2;
+      }
+
+      if (Directory.Exists (cmdLineArgs.OutputDirectory) && !cmdLineArgs.OverwriteExistingFiles)
+      {
+        Console.Error.WriteLine ("Output directory already exists. Use -f option if you are sure you want to overwrite all existing files.");
+        return 2;
+      }
+
+      return 0;
+    }
+
+    private static string GetElapsedTime (DateTime startTime)
+    {
+      var elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
+      return elapsed.ToString ("mm:ss");
+    }
+
+    private readonly IRemotionReflector _remotionReflector;
     private readonly IOutputFormatter _outputFormatter;
 
-    public Program (TextReader input, TextWriter output, IOutputFormatter outputFormatter)
+    public Program (IRemotionReflector remotionReflector, IOutputFormatter outputFormatter)
     {
-      ArgumentUtility.CheckNotNull ("input", input);
-      ArgumentUtility.CheckNotNull ("output", output);
+      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
       ArgumentUtility.CheckNotNull ("outputFormatter", outputFormatter);
 
-      _input = input;
-      _output = output;
+      _remotionReflector = remotionReflector;
       _outputFormatter = outputFormatter;
-    }
-
-    public int CheckArguments (string[] arguments)
-    {
-      ArgumentUtility.CheckNotNull ("arguments", arguments);
-
-      bool forceOverride = arguments.Any (a => a.ToLower ().Equals ("-force"));
-
-      if (arguments.Length < 3 || arguments.Length > 4)
-      {
-        _output.WriteLine ("usage: mixinxref assemblyDirectory outputDirectory (reflectorPath | customRemotionReflectorAssemblyQualifiedName) [-force]");
-        _output.WriteLine ("Quitting MixinXRef");
-        return -1;
-      }
-
-      if (!Directory.Exists (arguments[0]))
-      {
-        _output.WriteLine ("Input directory '{0}' does not exist", arguments[0]);
-        _output.WriteLine ("Quitting MixinXRef");
-        return -2;
-      }
-
-      if (Directory.Exists (arguments[1]) && !IsEmptyDirectory (arguments[1]) && forceOverride == false)
-      {
-        _output.WriteLine ("Output directory '{0}' is not empty", arguments[1]);
-        _output.WriteLine ("Quitting MixinXRef");
-        return -3;
-      }
-
-      if (arguments[1].IndexOfAny (Path.GetInvalidPathChars ()) >= 0)
-      {
-        _output.WriteLine ("Output directory '{0}' contains invalid characters", arguments[1]);
-        _output.WriteLine ("Quitting MixinXRef");
-        return -4;
-      }
-
-      return 0;
     }
 
     public Assembly[] GetAssemblies (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      var assemblies = new AssemblyBuilder (assemblyDirectory).GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly (a));
-      if (assemblies.Length == 0)
-      {
-        _output.WriteLine ("'{0}' contains no assemblies", assemblyDirectory);
-        return null;
-      }
-
-      return assemblies;
+      return new AssemblyBuilder (assemblyDirectory).GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly (a));
     }
 
     public void GenerateAndSaveXmlDocument (Assembly[] assemblies, string xmlFile)
@@ -170,24 +256,6 @@ namespace MixinXRef
 
       reportGenerator = null;
       GC.Collect ();
-    }
-
-    public void SetRemotionReflector (IRemotionReflector remotionReflector)
-    {
-      ArgumentUtility.CheckNotNull ("remotionReflector", remotionReflector);
-
-      _remotionReflector = remotionReflector;
-    }
-
-    private bool IsEmptyDirectory (string path)
-    {
-      return Directory.GetFiles (path).Length == 0 && Directory.GetDirectories (path).Length == 0;
-    }
-
-    private static string GetElapsedTime (DateTime startTime)
-    {
-      DateTime elapsed = new DateTime () + (DateTime.Now - startTime); // TimeSpan does not implement IFormattable, but DateTime does!
-      return elapsed.ToString ("mm:ss");
     }
   }
 }

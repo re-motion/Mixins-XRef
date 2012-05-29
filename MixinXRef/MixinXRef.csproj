@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalTypesCollector.cs" />
+    <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Formatting\MemberModifierUtility.cs" />
     <Compile Include="Formatting\MemberSignatureUtility.cs" />
     <Compile Include="Formatting\TypeModifierUtility.cs" />

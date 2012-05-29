@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using MixinXRef;
 
 namespace MixinXRefGUI
 {
@@ -39,14 +41,63 @@ namespace MixinXRefGUI
       LoadSettings (persistentSettingsFile);
     }
 
-    private void CreateDefaultSettings (string persistentSettingsFile)
+    private void LoadSettings (string persistentSettingsFile)
+    {
+      if (File.Exists (persistentSettingsFile))
+      {
+        var settings = DeserializeFromFile (persistentSettingsFile);
+        assemblyPathTextBox.Text = settings.AssemblyDirectory;
+        outputPathTextBox.Text = settings.OutputDirectory;
+        reflectorAssemblyTextBox.Text = settings.ReflectorPath;
+        customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
+        forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
+
+        switch (settings.ReflectorSource)
+        {
+          case ReflectorSource.ReflectorAssembly:
+            reflectorAssemblyRadioButton.Checked = true;
+            break;
+          case ReflectorSource.CustomReflector:
+            customReflectorRadioButton.Checked = true;
+            break;
+        }
+      }
+    }
+
+    private void SaveSettings ()
+    {
+      SerializeToFile (_persistentSettingsFile, new CommandLineArguments
+                                                  {
+                                                    AssemblyDirectory = assemblyPathTextBox.Text,
+                                                    OutputDirectory = outputPathTextBox.Text,
+                                                    ReflectorPath = reflectorAssemblyTextBox.Text,
+                                                    CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
+                                                    OverwriteExistingFiles = forceOverrideCheckBox.Checked,
+                                                    ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly
+                                                  });
+    }
+
+    private static void CreateDefaultSettings (string persistentSettingsFile)
     {
       try
       {
-        var baseDirectory = Path.GetDirectoryName (_persistentSettingsFile);
+        var baseDirectory = Path.GetDirectoryName (persistentSettingsFile);
         if (!Directory.Exists (baseDirectory))
           Directory.CreateDirectory (baseDirectory);
-        File.WriteAllLines (persistentSettingsFile, new[] { @"C:\", @"C:\", "MixinXRef.Reflectors*.dll", "", @"False" });
+
+        var settings = new CommandLineArguments
+        {
+          AssemblyDirectory = @"C:\",
+          OutputDirectory = @"C:\",
+          OverwriteExistingFiles = false,
+          XMLOutputFileName = "",
+          ReflectorSource = ReflectorSource.ReflectorAssembly,
+          ReflectorPath = "MixinXRef.Reflectors*.dll",
+          CustomReflectorAssemblyQualifiedTypeName = "",
+          SkipHTMLGeneration = false
+        };
+
+        SerializeToFile (persistentSettingsFile, settings);
       }
       catch (Exception exception)
       {
@@ -55,39 +106,22 @@ namespace MixinXRefGUI
       }
     }
 
-    private void LoadSettings (string persistentSettingsFile)
+    private static void SerializeToFile (string file, CommandLineArguments args)
     {
-      if (File.Exists (persistentSettingsFile))
+      using (var stream = File.OpenWrite (file))
       {
-        var settings = File.ReadAllLines (persistentSettingsFile);
-        if (settings.Length == 5)
-        {
-          if (Directory.Exists (settings[0]))
-            assemblyPathTextBox.Text = settings[0];
-          if (Directory.Exists (settings[1]))
-            outputPathTextBox.Text = settings[1];
-
-          reflectorAssemblyTextBox.Text = settings[2];
-          customReflectorTextBox.Text = settings[3];
-
-          forceOverrideCheckBox.Checked = bool.Parse (settings[4]);
-        }
+        var formatter = new BinaryFormatter ();
+        formatter.Serialize (stream, args);
       }
     }
 
-    private void SaveSettings ()
+    private static CommandLineArguments DeserializeFromFile (string file)
     {
-      File.WriteAllLines (
-          _persistentSettingsFile,
-          new[]
-          {
-              assemblyPathTextBox.Text,
-              outputPathTextBox.Text,
-              reflectorAssemblyTextBox.Text,
-              customReflectorTextBox.Text,
-              forceOverrideCheckBox.Checked.ToString()
-          }
-          );
+      using (var stream = File.OpenRead (file))
+      {
+        var formatter = new BinaryFormatter ();
+        return (CommandLineArguments) formatter.Deserialize (stream);
+      }
     }
 
     private void BrowseAssemblyPath_Click (object sender, EventArgs e)
@@ -169,15 +203,15 @@ namespace MixinXRefGUI
 
     private string GetArguments ()
     {
-      var arguments = String.Format ("\"{0}\" \"{1}\"", assemblyPathTextBox.Text, outputPathTextBox.Text);
+      var arguments = String.Format ("-i \"{0}\" -o \"{1}\"", assemblyPathTextBox.Text, outputPathTextBox.Text);
 
       if (reflectorAssemblyRadioButton.Checked && !string.IsNullOrEmpty (reflectorAssemblyTextBox.Text))
-        arguments += " \"" + reflectorAssemblyTextBox.Text + "\"";
+        arguments += " -r \"" + reflectorAssemblyTextBox.Text + "\"";
       else if (customReflectorRadioButton.Checked && !string.IsNullOrEmpty (customReflectorTextBox.Text))
-        arguments += " \"" + customReflectorTextBox.Text + "\"";
+        arguments += " -c \"" + customReflectorTextBox.Text + "\"";
 
       if (forceOverrideCheckBox.Checked)
-        arguments += " -force";
+        arguments += " -f";
 
       return arguments;
     }

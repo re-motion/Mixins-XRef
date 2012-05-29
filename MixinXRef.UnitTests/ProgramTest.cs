@@ -32,96 +32,7 @@ namespace MixinXRef.UnitTests
       _standardOutput = new StringWriter();
       _outputFormatter = new OutputFormatter();
 
-      _program = new Program (new StringReader (""), _standardOutput, _outputFormatter);
-    }
-
-
-    [Test]
-    public void CheckArguments_InvalidArgumentCount ()
-    {
-      var arguments = new[] { "twoParametersRequired" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (-1));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("usage: mixinxref assemblyDirectory outputDirectory (reflectorPath | customRemotionReflectorAssemblyQualifiedName) [-force]\r\nQuitting MixinXRef\r\n"));
-    }
-
-    [Test]
-    public void CheckArguments_InvalidAssemblyDirectory ()
-    {
-      var arguments = new[] { "invalidAssemblyDirectory", "doesNotMatter", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (-2));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Input directory 'invalidAssemblyDirectory' does not exist\r\nQuitting MixinXRef\r\n"));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDoesNotExist ()
-    {
-      var arguments = new[] { ".", "newOutputDirectory", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (0));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDoesExistAndIsEmpty ()
-    {
-      Directory.CreateDirectory ("emptyDir");
-
-      var arguments = new[] { ".", "emptyDir", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (0));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDirectoryNotEmpty ()
-    {
-      Directory.CreateDirectory ("invalidOutputDirectory");
-      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
-
-      var arguments = new[] { ".", "invalidOutputDirectory", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (-3));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'invalidOutputDirectory' is not empty\r\nQuitting MixinXRef\r\n"));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDirectoryNotEmptyWithForce_1 ()
-    {
-      Directory.CreateDirectory ("invalidOutputDirectory");
-      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
-
-      var arguments = new[] { ".", "invalidOutputDirectory", "-force" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (0));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDirectoryNotEmptyWithForce_2 ()
-    {
-      Directory.CreateDirectory ("invalidOutputDirectory");
-      Directory.CreateDirectory ("invalidOutputDirectory\\dummyFolder");
-
-      var arguments = new[] { ".", "invalidOutputDirectory", "customReflector", "-force" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (0));
-    }
-
-    [Test]
-    public void CheckArguments_OutputDirectoryContainsInvalidCharacter ()
-    {
-      var arguments = new[] { ".", "does<NotMatter", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (-4));
-      Assert.That (_standardOutput.ToString (), Is.EqualTo ("Output directory 'does<NotMatter' contains invalid characters\r\nQuitting MixinXRef\r\n"));
-    }
-
-    [Test]
-    public void CheckArguments_ValidDirectories ()
-    {
-      var arguments = new[] { ".", "MixinDoc", "reflector" };
-      var output = _program.CheckArguments (arguments);
-      Assert.That (output, Is.EqualTo (0));
-      Assert.That (_standardOutput.ToString(), Is.EqualTo (""));
+      _program = new Program (GetRemotionReflection (), _outputFormatter);
     }
 
     [Test]
@@ -156,8 +67,8 @@ namespace MixinXRef.UnitTests
       remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a2)).Return(false);
       remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a3)).Return(false);
       remotionReflectorStub.Stub(r => r.IsNonApplicationAssembly(a4)).Return(true);
-      _program.SetRemotionReflector (remotionReflectorStub);
 
+      _program = new Program(remotionReflectorStub, _outputFormatter);
       var output = _program.GetAssemblies (assemblyDirectory);
 
       CollectionAssert.AreEquivalent(new[] { a1, a2, a3 }, output);
@@ -175,8 +86,6 @@ namespace MixinXRef.UnitTests
       var a1 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
       var a2 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "nunit.framework.dll")));
       var a3 = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "MixinXRef.exe")));
-      
-      _program.SetRemotionReflector(GetRemotionReflection());
 
       _program.GenerateAndSaveXmlDocument (new[] { a1, a2, a3 }, xmlFile);
 
