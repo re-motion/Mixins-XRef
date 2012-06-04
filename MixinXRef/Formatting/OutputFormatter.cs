@@ -59,6 +59,9 @@ namespace MixinXRef.Formatting
                                                  ? 0
                                                  : type.DeclaringType.GetGenericArguments ().Length;
 
+      if (enclosingTypeGenericArgumentsCount == type.GetGenericArguments ().Length)
+        return "";
+
       var genericArguments = type.GetGenericArguments ()
         .Skip (enclosingTypeGenericArgumentsCount)
         .Select (a => a.IsGenericParameter ? a.Name : GetFullFormattedTypeName (a))
