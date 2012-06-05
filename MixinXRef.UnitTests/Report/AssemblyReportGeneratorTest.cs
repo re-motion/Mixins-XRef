@@ -30,7 +30,7 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void GenerateXml_EmptyAssemblies ()
     {
-      var reportGenerator = ReportFactory.CreateAssemblyReportGenerator ();
+      var reportGenerator = ReportBuilder.CreateAssemblyReportGenerator ();
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement ("Assemblies");
@@ -48,7 +48,7 @@ namespace MixinXRef.UnitTests.Report
 
       var involvedTypes = new[] { involvedType1, involvedType2, involvedType3, involvedType4 };
 
-      var reportGenerator = ReportFactory.CreateAssemblyReportGenerator (involvedTypes);
+      var reportGenerator = ReportBuilder.CreateAssemblyReportGenerator (involvedTypes);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement (
@@ -80,10 +80,10 @@ namespace MixinXRef.UnitTests.Report
       typeStub2.Stub (t => t.Assembly).Return (_assembly2);
 
       var assemblyIdentifierGeneratorStub =
-        StubFactory.CreateIdentifierGeneratorStub (new Dictionary<string, Assembly> { { "0", _assembly1 }, { "1", _assembly2 } });
+        StubFactory.CreateIdentifierGeneratorStub (new[] { _assembly1, _assembly2 });
 
       var typeIdentifierGeneratorStub =
-        StubFactory.CreateIdentifierGeneratorStub (new Dictionary<string, Type> { { "0", typeStub1 }, { "1", typeStub2 } });
+        StubFactory.CreateIdentifierGeneratorStub (new[] { typeStub1, typeStub2 });
 
       var involvedTypes = new[] { new InvolvedType (typeStub1), new InvolvedType (typeStub2) };
 
@@ -118,9 +118,32 @@ namespace MixinXRef.UnitTests.Report
     }
 
     [Test]
+    public void GenerateXml_AdditionalAssemblies ()
+    {
+      var assemblyIdentifierGenerator = StubFactory.CreateIdentifierGeneratorStub (new[] { _assembly2 });
+
+      var reportGenerator = ReportBuilder.CreateAssemblyReportGenerator (assemblyIdentifierGenerator);
+      var output = reportGenerator.GenerateXml ();
+
+      var expectedOutput = new XElement (
+        "Assemblies",
+        new XElement (
+          "Assembly",
+          new XAttribute ("id", "0"),
+          new XAttribute ("name", _assembly2.GetName ().Name),
+          new XAttribute ("version", _assembly2.GetName ().Version),
+          new XAttribute ("location", _assembly2.Location),
+          new XAttribute ("culture", _assembly2.GetName ().CultureInfo),
+          new XAttribute ("publicKeyToken", Convert.ToBase64String (_assembly2.GetName ().GetPublicKeyToken ()))
+          ));
+
+      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+    }
+
+    [Test]
     public void GetShortAssemblyLocation ()
     {
-      var reportGenerator = ReportFactory.CreateAssemblyReportGenerator ();
+      var reportGenerator = ReportBuilder.CreateAssemblyReportGenerator ();
       // non-GAC assembly
       Assert.That (reportGenerator.GetShortAssemblyLocation (_assembly1), Is.EqualTo ("./" + Path.GetFileName (_assembly1.Location)));
       // GAC assembly

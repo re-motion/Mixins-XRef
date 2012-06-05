@@ -32,9 +32,13 @@ namespace MixinXRef.Report
     {
       var assembliesElement = new XElement ("Assemblies");
 
-      var assemblies = _involvedTypes.GroupBy(i => i.Type.Assembly);
-      foreach (var assembly in assemblies)
-        assembliesElement.Add(GenerateAssemblyElement(assembly.Key, assembly));
+      var involvedTypes = _involvedTypes.GroupBy(i => i.Type.Assembly);
+      foreach (var involvedTypesByAssembly in involvedTypes)
+        assembliesElement.Add(GenerateAssemblyElement(involvedTypesByAssembly.Key, involvedTypesByAssembly));
+
+      var additionalAssemblies = _assemblyIdentifierGenerator.Elements.Except(_involvedTypes.Select(t => t.Type.Assembly));
+      foreach (var assemblies in additionalAssemblies)
+        assembliesElement.Add(GenerateAssemblyElement(assemblies, Enumerable.Empty<InvolvedType>()));
 
       return assembliesElement;
     }

@@ -60,19 +60,16 @@ namespace MixinXRef.Report
     private CompositeReportGenerator CreateCompositeReportGenerator ()
     {
       var assemblyIdentifierGenerator = new IdentifierGenerator<Assembly>();
-      var readonlyAssemblyIdentifierGenerator =
-          assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
+      var readOnlyassemblyIdentifierGenerator = assemblyIdentifierGenerator.GetReadonlyIdentiferGenerator ("none");
       var readonlyInvolvedTypeIdentiferGenerator =
           new IdentifierPopulator<Type> (_involvedTypes.Select (it => it.Type)).GetReadonlyIdentifierGenerator ("none");
       var memberIdentifierGenerator = new IdentifierGenerator<MemberInfo> ();
       var interfaceIdentiferGenerator = new IdentifierGenerator<Type>();
       var attributeIdentiferGenerator = new IdentifierGenerator<Type>();
 
-      var assemblyReport = new AssemblyReportGenerator (_involvedTypes, assemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
-
       var involvedReport = new InvolvedTypeReportGenerator (
           _involvedTypes,
-          readonlyAssemblyIdentifierGenerator,
+          assemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           memberIdentifierGenerator,
           interfaceIdentiferGenerator,
@@ -81,7 +78,7 @@ namespace MixinXRef.Report
           _outputFormatter);
       var interfaceReport = new InterfaceReportGenerator (
           _involvedTypes,
-          readonlyAssemblyIdentifierGenerator,
+          assemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           memberIdentifierGenerator,
           interfaceIdentiferGenerator,
@@ -89,19 +86,21 @@ namespace MixinXRef.Report
           _outputFormatter);
       var attributeReport = new AttributeReportGenerator (
           _involvedTypes,
-          readonlyAssemblyIdentifierGenerator,
+          assemblyIdentifierGenerator,
           readonlyInvolvedTypeIdentiferGenerator,
           attributeIdentiferGenerator,
           _remotionReflector,
           _outputFormatter);
+      var assemblyReport = new AssemblyReportGenerator (_involvedTypes, readOnlyassemblyIdentifierGenerator, readonlyInvolvedTypeIdentiferGenerator);
+
       var configurationErrorReport = new ConfigurationErrorReportGenerator (_configurationErrors);
       var validationErrorReport = new ValidationErrorReportGenerator (_validationErrors, _remotionReflector);
 
       return new CompositeReportGenerator (
-          assemblyReport,
           involvedReport,
           interfaceReport,
           attributeReport,
+          assemblyReport,
           configurationErrorReport,
           validationErrorReport);
     }

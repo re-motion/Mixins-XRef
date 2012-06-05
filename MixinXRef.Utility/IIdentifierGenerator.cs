@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MixinXRef.Utility
 {
@@ -6,5 +7,7 @@ namespace MixinXRef.Utility
   {
     string GetIdentifier (T item);
     string GetIdentifier (T item, string defaultIfNotPresent);
+
+    IEnumerable<T> Elements { get; }
   }
 }

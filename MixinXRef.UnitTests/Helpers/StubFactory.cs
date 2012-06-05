@@ -13,6 +13,8 @@ namespace MixinXRef.UnitTests.Helpers
       foreach (var value in values)
         identifierGeneratorStub.Stub (ig => ig.GetIdentifier (value.Value)).Return (value.Key);
 
+      identifierGeneratorStub.Stub (ig => ig.Elements).Return (values.Values);
+
       return identifierGeneratorStub;
     }
 
@@ -23,6 +25,8 @@ namespace MixinXRef.UnitTests.Helpers
       var i = 0;
       foreach (var value in values)
         identifierGeneratorStub.Stub (ig => ig.GetIdentifier (value)).Return ((i++).ToString ());
+
+      identifierGeneratorStub.Stub (ig => ig.Elements).Return (values);
 
       return identifierGeneratorStub;
     }

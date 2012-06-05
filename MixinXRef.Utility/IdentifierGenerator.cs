@@ -29,5 +29,10 @@ namespace MixinXRef.Utility
     {
       return new ReadonlyIdentifierGenerator<T> (this, defaultValue);
     }
+
+    public IEnumerable<T> Elements
+    {
+      get { return _identifiers.Keys; }
+    }
   }
 }

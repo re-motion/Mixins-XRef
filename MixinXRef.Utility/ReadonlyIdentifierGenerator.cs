@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MixinXRef.Utility
 {
@@ -7,7 +8,6 @@ namespace MixinXRef.Utility
     private readonly IIdentifierGenerator<T> _identifierGenerator;
 
     private readonly string _defaultValue;
-
 
     public ReadonlyIdentifierGenerator (IIdentifierGenerator<T> identifierGenerator, string defaultValue)
     {
@@ -26,6 +26,11 @@ namespace MixinXRef.Utility
     public string GetIdentifier (T item, string defaultIfNotPresent)
     {
       return _identifierGenerator.GetIdentifier (item, defaultIfNotPresent);
+    }
+
+    public IEnumerable<T> Elements
+    {
+      get { return _identifierGenerator.Elements; }
     }
   }
 }

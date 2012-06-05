@@ -8,11 +8,16 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.UnitTests.Helpers
 {
-  internal static class ReportFactory
+  internal static class ReportBuilder
   {
     public static AssemblyReportGenerator CreateAssemblyReportGenerator (params InvolvedType[] types)
     {
-      return new AssemblyReportGenerator (types, new IdentifierGenerator<Assembly> (), new IdentifierGenerator<Type> ());
+      return CreateAssemblyReportGenerator (new IdentifierGenerator<Assembly> (), types);
+    }
+
+    public static AssemblyReportGenerator CreateAssemblyReportGenerator (IIdentifierGenerator<Assembly> identifierGenerator, params InvolvedType[] types)
+    {
+      return new AssemblyReportGenerator (types, identifierGenerator, new IdentifierGenerator<Type> ());
     }
 
     public static InterfaceReportGenerator CreateInterfaceReportGenerator (IRemotionReflector remotionReflector, IOutputFormatter outputFormatter, params InvolvedType[] types)

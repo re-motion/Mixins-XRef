@@ -50,7 +50,7 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void GenerateXml_NoInvolvedTypes ()
     {
-      var reportGenerator = ReportFactory.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
+      var reportGenerator = ReportBuilder.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement ("InvolvedTypes");
@@ -370,7 +370,7 @@ namespace MixinXRef.UnitTests.Report
     {
       var involvedType = new InvolvedType (typeof (object));
 
-      var reportGenerator = ReportFactory.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
+      var reportGenerator = ReportBuilder.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
 
       var output = reportGenerator.GetAlphabeticOrderingAttribute (involvedType);
 
@@ -387,7 +387,7 @@ namespace MixinXRef.UnitTests.Report
           new InvolvedType (typeof (UselessObject)),
           new ReflectedObject (TargetClassDefinitionUtility.GetConfiguration (typeof (UselessObject), mixinConfiguration).Mixins[0]));
 
-      var reportGenerator = ReportFactory.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
+      var reportGenerator = ReportBuilder.CreateInvolvedTypeReportGenerator (_remotionReflector, _outputFormatter);
 
       var output = reportGenerator.GetAlphabeticOrderingAttribute (involvedType);
 

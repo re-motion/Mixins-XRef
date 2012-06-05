@@ -82,17 +82,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ReportFactory.cs" />
+    <Compile Include="Helpers\ReportBuilder.cs" />
     <Compile Include="Helpers\StubFactory.cs" />
     <Compile Include="Reflection\FastMemberInvokerCacheTest.cs" />
     <Compile Include="Reflection\FastMemberInvokerGeneratorTest.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtilityTest.cs" />
     <Compile Include="Reflection\RemotionReflectorTest.cs" />
     <Compile Include="Report\AdditionalDependencyReportGeneratorTest.cs" />
+    <Compile Include="Report\TargetCallDependenciesReportGeneratorTest.cs" />
     <Compile Include="Stub\RemotionReflectorStub.cs" />
     <Compile Include="TestDomain\BaseMemberOverrideTestClass.cs" />
     <Compile Include="TestDomain\ClassOverridingInheritedMixinMethod.cs" />
+    <Compile Include="TestDomain\Mixin4.cs" />
+    <Compile Include="TestDomain\TargetClass3.cs" />
     <Compile Include="TestDomain\HiddenMemberTestClass.cs" />
+    <Compile Include="TestDomain\MixinInheritingFromMixin.cs" />
     <Compile Include="TestDomain\MixinWithInheritedMethod.cs" />
     <Compile Include="TestDomain\Reflection\ClassImplementingRemotionReflectorV1_13_32.cs" />
     <Compile Include="TestDomain\Reflection\ClassWithAmbiguousMethod1.cs" />

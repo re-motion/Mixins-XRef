@@ -33,7 +33,7 @@ namespace MixinXRef.UnitTests.Report
     [Test]
     public void GenerateXml_ZeroInterfaces ()
     {
-      var reportGenerator = ReportFactory.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter);
+      var reportGenerator = ReportBuilder.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter);
       var output = reportGenerator.GenerateXml ();
 
       var expectedOutput = new XElement ("Interfaces");
@@ -46,10 +46,10 @@ namespace MixinXRef.UnitTests.Report
       // TargetClass1 implements IDisposable
       var involvedType = new InvolvedType (typeof (TargetClass1));
 
-      var reportGenerator = ReportFactory.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
+      var reportGenerator = ReportBuilder.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
       var output = reportGenerator.GenerateXml ();
 
-      var memberReportGenerator = ReportFactory.CreateMemberReportGenerator (typeof (IDisposable), _outputFormatter);
+      var memberReportGenerator = ReportBuilder.CreateMemberReportGenerator (typeof (IDisposable), _outputFormatter);
       var expectedOutput = new XElement (
           "Interfaces",
           new XElement (
@@ -84,10 +84,10 @@ namespace MixinXRef.UnitTests.Report
       var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (CompleteInterfacesTestClass.MyMixinTarget));
       involvedType.ClassContext = new ReflectedObject (classContext);
 
-      var reportGenerator = ReportFactory.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
+      var reportGenerator = ReportBuilder.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
       var output = reportGenerator.GenerateXml ();
 
-      var memberReportGenerator = ReportFactory.CreateMemberReportGenerator (typeof (CompleteInterfacesTestClass.ICMyMixinTargetMyMixin), _outputFormatter);
+      var memberReportGenerator = ReportBuilder.CreateMemberReportGenerator (typeof (CompleteInterfacesTestClass.ICMyMixinTargetMyMixin), _outputFormatter);
       var expectedOutput = new XElement (
           "Interfaces",
           new XElement (
@@ -122,7 +122,7 @@ namespace MixinXRef.UnitTests.Report
       var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (CompleteInterfacesTestClass.MyMixinTarget));
       involvedType.ClassContext = new ReflectedObject (classContext);
 
-      var reportGenerator = ReportFactory.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
+      var reportGenerator = ReportBuilder.CreateInterfaceReportGenerator (_remotionReflector, _outputFormatter, involvedType);
       var output = reportGenerator.GetCompleteInterfaces ();
 
       Assert.That (output, Is.EquivalentTo (classContext.CompleteInterfaces));
