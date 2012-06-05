@@ -96,7 +96,6 @@
     <Compile Include="TestDomain\Mixin4.cs" />
     <Compile Include="TestDomain\TargetClass3.cs" />
     <Compile Include="TestDomain\HiddenMemberTestClass.cs" />
-    <Compile Include="TestDomain\MixinInheritingFromMixin.cs" />
     <Compile Include="TestDomain\MixinWithInheritedMethod.cs" />
     <Compile Include="TestDomain\Reflection\ClassImplementingRemotionReflectorV1_13_32.cs" />
     <Compile Include="TestDomain\Reflection\ClassWithAmbiguousMethod1.cs" />
