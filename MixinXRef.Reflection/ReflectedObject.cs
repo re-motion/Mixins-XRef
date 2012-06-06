@@ -10,7 +10,7 @@ namespace MixinXRef.Reflection
 {
   public class ReflectedObject : IEnumerable<ReflectedObject>
   {
-    private static readonly FastMemberInvokerCache s_cache = new FastMemberInvokerCache();
+    private static readonly FastMemberInvokerCache s_cache = new FastMemberInvokerCache ();
 
     private readonly object _wrappedObject;
 
@@ -39,10 +39,20 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
+      return CallMethod (type, methodName, new Type[0], parameters);
+    }
+
+    public static ReflectedObject CallMethod (Type type, string methodName, Type[] typeParameters, params object[] parameters)
+    {
+      ArgumentUtility.CheckNotNull ("type", type);
+      ArgumentUtility.CheckNotNull ("methodName", methodName);
+      ArgumentUtility.CheckNotNull ("typeParameters", typeParameters);
+      ArgumentUtility.CheckNotNull ("parameters", parameters);
+
       var unwrappedParameters = UnWrapParameters (parameters);
       var argumentTypes = unwrappedParameters.Select (obj => obj.GetType ()).ToArray ();
-      var invoker = s_cache.GetOrCreateFastMethodInvoker (type, methodName, argumentTypes, BindingFlags.Public | BindingFlags.Static);
-      
+      var invoker = s_cache.GetOrCreateFastMethodInvoker (type, methodName, typeParameters, argumentTypes, BindingFlags.Public | BindingFlags.Static);
+
       var returnValue = invoker (null, unwrappedParameters);
       return returnValue == null ? null : new ReflectedObject (returnValue);
     }
@@ -52,9 +62,18 @@ namespace MixinXRef.Reflection
       ArgumentUtility.CheckNotNull ("methodName", methodName);
       ArgumentUtility.CheckNotNull ("parameters", parameters);
 
+      return CallMethod (methodName, new Type[0], parameters);
+    }
+
+    public ReflectedObject CallMethod (string methodName, Type[] typeParameters, params object[] parameters)
+    {
+      ArgumentUtility.CheckNotNull ("methodName", methodName);
+      ArgumentUtility.CheckNotNull ("typeParameters", typeParameters);
+      ArgumentUtility.CheckNotNull ("parameters", parameters);
+
       var unwrappedParameters = UnWrapParameters (parameters);
       var argumentTypes = unwrappedParameters.Select (obj => obj.GetType ()).ToArray ();
-      var invoker = s_cache.GetOrCreateFastMethodInvoker (_wrappedObject.GetType(), methodName, argumentTypes, BindingFlags.Public | BindingFlags.Instance);
+      var invoker = s_cache.GetOrCreateFastMethodInvoker (_wrappedObject.GetType (), methodName, typeParameters, argumentTypes, BindingFlags.Public | BindingFlags.Instance);
 
       var returnValue = invoker (_wrappedObject, unwrappedParameters);
       return returnValue == null ? null : new ReflectedObject (returnValue);
@@ -82,32 +101,32 @@ namespace MixinXRef.Reflection
           yield return new ReflectedObject (item);
       }
       else
-        throw new NotSupportedException (string.Format ("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType()));
+        throw new NotSupportedException (string.Format ("The reflected object '{0}' is not enumerable.", _wrappedObject.GetType ()));
     }
 
     IEnumerator IEnumerable.GetEnumerator ()
     {
-      return GetEnumerator();
+      return GetEnumerator ();
     }
 
     public IEnumerable AsEnumerable<T> ()
     {
-      return this.Select (reflectedObject => reflectedObject.To<T>());
+      return this.Select (reflectedObject => reflectedObject.To<T> ());
     }
 
     public override string ToString ()
     {
-      return _wrappedObject.ToString();
+      return _wrappedObject.ToString ();
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals (object obj)
     {
       return obj is ReflectedObject && _wrappedObject.Equals (UnWrapInstance (obj));
     }
 
-    public override int GetHashCode()
+    public override int GetHashCode ()
     {
-      return _wrappedObject.GetHashCode();
+      return _wrappedObject.GetHashCode ();
     }
 
     private static object UnWrapInstance (object instance)

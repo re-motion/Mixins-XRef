@@ -93,6 +93,7 @@
     <Compile Include="Stub\RemotionReflectorStub.cs" />
     <Compile Include="TestDomain\BaseMemberOverrideTestClass.cs" />
     <Compile Include="TestDomain\ClassOverridingInheritedMixinMethod.cs" />
+    <Compile Include="TestDomain\FastMethodInvoker\ClassWithMethods.cs" />
     <Compile Include="TestDomain\Mixin4.cs" />
     <Compile Include="TestDomain\TargetClass3.cs" />
     <Compile Include="TestDomain\HiddenMemberTestClass.cs" />

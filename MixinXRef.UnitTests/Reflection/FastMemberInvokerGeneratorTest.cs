@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Utility;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.UnitTests.TestDomain.FastMethodInvoker;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
@@ -25,7 +27,7 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = "stringContent";
       var invoker = _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "IsNullOrEmpty",
+          "IsNullOrEmpty", new Type[0],
           new[] { typeof (string) }, BindingFlags.Public | BindingFlags.Static);
 
       var output = invoker (null, new object[] { instance });
@@ -39,7 +41,7 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = "stringContent";
       var invoker = _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "GetHashCode",
+          "GetHashCode", new Type[0],
           Type.EmptyTypes, BindingFlags.Public | BindingFlags.Instance);
 
       var output = invoker (instance, new object[0]);
@@ -53,12 +55,54 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = "stringContent";
       var invoker = _generator.GetFastMethodInvoker (
           instance.GetType(),
-          "IndexOf",
+          "IndexOf", new Type[0],
           new[] { typeof (char) }, BindingFlags.Public | BindingFlags.Instance);
       
       var output = invoker(instance, new object[] { 't' });
 
       Assert.That (output, Is.EqualTo (1));
+    }
+
+    [Test]
+    public void GetFastMethodInvoker_ForGenericMethod()
+    {
+      var instance = new ClassWithMethods();
+      var invoker = _generator.GetFastMethodInvoker (
+          instance.GetType(),
+          "Count", new[] { typeof(int) },
+          new[] { typeof (IEnumerable<int>) }, BindingFlags.Public | BindingFlags.Instance);
+      
+      var output = invoker(instance, new object[] { new[] { 3, 1, 2 } });
+
+      Assert.That (output, Is.EqualTo (3));
+    }
+
+    [Test]
+    public void GetFastMethodInvoker_ForStaticGenericMethod()
+    {
+      var instance = new ClassWithMethods();
+      var invoker = _generator.GetFastMethodInvoker (
+          instance.GetType(),
+          "Count", new[] { typeof(int) },
+          new[] { typeof (IEnumerable<int>), typeof(int) }, BindingFlags.Public | BindingFlags.Static);
+      
+      var output = invoker(instance, new object[] { new[] { 3, 1, 2 }, 1 });
+
+      Assert.That (output, Is.EqualTo (4));
+    }
+
+    [Test]
+    public void GetFastMethodInvoker_ForGenericMethodTwoParameters ()
+    {
+      var instance = new ClassWithMethods ();
+      var invoker = _generator.GetFastMethodInvoker (
+          instance.GetType (),
+          "Count", new[] { typeof (int), typeof(string) },
+          new[] { typeof (IEnumerable<int>), typeof (string) }, BindingFlags.Public | BindingFlags.Instance);
+
+      var output = invoker (instance, new object[] { new[] { 3, 1, 2 }, "asdf" });
+
+      Assert.That (output, Is.EqualTo (7));
     }
 
     [Test]
@@ -68,7 +112,7 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = "stringContent";
       _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "Foo",
+          "Foo", new Type[0],
           new[] { typeof (string) }, BindingFlags.Public | BindingFlags.Static);
     }
 
@@ -79,7 +123,7 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = "stringContent";
       _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "GetHashCode",
+          "GetHashCode", new Type[0],
           new[] { typeof (string) }, BindingFlags.Public | BindingFlags.Instance);
     }
 
@@ -90,7 +134,7 @@ namespace MixinXRef.UnitTests.Reflection
       var instance = new TargetDoSomething();
       var invoker = _generator.GetFastMethodInvoker (
           instance.GetType (),
-          "DoSomething",
+          "DoSomething", new Type[0],
           Type.EmptyTypes,
           BindingFlags.Public | BindingFlags.Instance);
 

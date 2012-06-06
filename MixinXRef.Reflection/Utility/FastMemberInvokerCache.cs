@@ -12,9 +12,10 @@ namespace MixinXRef.Reflection.Utility
     {
       private readonly Type _declaringType;
       private readonly string _memberName;
+      private readonly Type[] _typeParameters;
       private readonly Type[] _argumentTypes;
 
-      public CacheKey(Type declaringType, string memberName, Type[] argumentTypes)
+      public CacheKey(Type declaringType, string memberName, Type[] typeParameters, Type[] argumentTypes)
       {
         ArgumentUtility.CheckNotNull ("declaringType", declaringType);
         ArgumentUtility.CheckNotNull ("memberName", memberName);
@@ -22,6 +23,7 @@ namespace MixinXRef.Reflection.Utility
 
         _declaringType = declaringType;
         _memberName = memberName;
+        _typeParameters = typeParameters;
         _argumentTypes = argumentTypes;
       }
 
@@ -29,6 +31,7 @@ namespace MixinXRef.Reflection.Utility
       {
         return _declaringType.GetHashCode () 
             ^ _memberName.GetHashCode ()
+            ^ _typeParameters.Length
             ^ _argumentTypes.Length;
       }
 
@@ -37,6 +40,8 @@ namespace MixinXRef.Reflection.Utility
         var other = (CacheKey) obj;
         return _declaringType == other._declaringType
             && _memberName == other._memberName
+            && _typeParameters.Length == other._typeParameters.Length
+            && _typeParameters.SequenceEqual(other._typeParameters)
             && _argumentTypes.Length == other._argumentTypes.Length
             && _argumentTypes.SequenceEqual (other._argumentTypes);
       }
@@ -46,18 +51,14 @@ namespace MixinXRef.Reflection.Utility
 
     private readonly Dictionary<CacheKey, Func<object, object[], object>> _cache = new Dictionary<CacheKey, Func<object, object[], object>> ();
 
-    public Func<object, object[], object> GetOrCreateFastMethodInvoker (
-        Type declaringType, 
-        string methodName, 
-        Type[] argumentTypes, 
-        BindingFlags bindingFlags)
+    public Func<object, object[], object> GetOrCreateFastMethodInvoker (Type declaringType, string methodName, Type[] typeParameters, Type[] argumentTypes, BindingFlags bindingFlags)
     {
       Func<object, object[], object> invoker;
 
-      var key = new CacheKey(declaringType, methodName, argumentTypes);
+      var key = new CacheKey(declaringType, methodName, typeParameters, argumentTypes);
       if (!_cache.TryGetValue (key, out invoker))
       {
-        invoker = _generator.GetFastMethodInvoker (declaringType, methodName, argumentTypes, bindingFlags);
+        invoker = _generator.GetFastMethodInvoker (declaringType, methodName, typeParameters, argumentTypes, bindingFlags);
         _cache.Add (key, invoker);
       }
 
