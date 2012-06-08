@@ -21,6 +21,11 @@ namespace MixinXRef.Reflectors
       _remotionInterfaceAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");
     }
 
+    public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)
+    {
+      return assembly.GetReferencedAssemblies ().Any (r => r.FullName == _remotionInterfaceAssembly.GetName ().FullName);
+    }
+
     public override bool IsNonApplicationAssembly (Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);

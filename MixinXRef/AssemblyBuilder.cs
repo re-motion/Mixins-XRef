@@ -47,32 +47,55 @@ namespace MixinXRef
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
-      return
-        AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(
-          a => AssemblyName.ReferenceMatchesDefinition(assemblyName, a.GetName()));
+      var assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => AssemblyName.ReferenceMatchesDefinition(assemblyName, a.GetName()));
+      // Console.WriteLine("Resolved '{0} to '{1}'.", args.Name, assembly != null ? assembly.FullName : "<null>");
+      return assembly;
     }
 
     private Assembly LoadAssembly (string assemblyFile)
     {
-        try
-        {
-          return Assembly.LoadFile (assemblyFile);
-          
-        }
-        catch (FileNotFoundException fileNotFoundException)
-        {
-          Console.Out.WriteLine (fileNotFoundException.Message);
-        }
-        catch (FileLoadException fileLoadException)
-        {
-          Console.Out.WriteLine (fileLoadException.Message);
-        }
-        catch (BadImageFormatException badImageFormatException)
-        {
-          Console.Out.WriteLine (badImageFormatException.Message);
-        }
+      Assembly loadedAssembly = null;
+      try
+      {
+        loadedAssembly = Assembly.LoadFile(assemblyFile);
+      }
+      catch (FileNotFoundException fileNotFoundException)
+      {
+        Console.Out.WriteLine (fileNotFoundException.Message);
+      }
+      catch (FileLoadException fileLoadException)
+      {
+        Console.Out.WriteLine (fileLoadException.Message);
+      }
+      catch (BadImageFormatException badImageFormatException)
+      {
+        Console.Out.WriteLine (badImageFormatException.Message);
+      }
 
-      return null;
+      if (loadedAssembly != null)
+      {
+        var mscorlibAssembly = typeof (object).Assembly;
+        var mscorlibReference = loadedAssembly.GetReferencedAssemblies().FirstOrDefault (a => a.Name == mscorlibAssembly.GetName().Name);
+        if (mscorlibReference == null)
+        {
+          Console.Out.WriteLine(
+            "Assembly '{0}' does not reference the same core library as this tool ('{1}'), it is skipped.",
+            loadedAssembly.CodeBase, 
+            mscorlibAssembly.FullName);
+          return null;
+        }
+        else if (mscorlibReference.Version > mscorlibAssembly.GetName ().Version)
+        {
+          Console.Out.WriteLine (
+            "Assembly '{0}' references a core library '{1}', but this tool only works with references to core library '{2}' or lower.",
+            loadedAssembly.CodeBase,
+            mscorlibReference,
+            mscorlibAssembly.FullName);
+          return null;
+        }
+      }
+
+      return loadedAssembly;
     }
   }
 }

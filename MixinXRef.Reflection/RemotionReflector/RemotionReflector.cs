@@ -12,6 +12,11 @@ namespace MixinXRef.Reflection.RemotionReflector
       : base (component, version, assemblies, constructParameters)
     { }
 
+    public bool IsRelevantAssemblyForConfiguration (Assembly assembly)
+    {
+      return GetCompatibleReflector (MethodBase.GetCurrentMethod ()).IsRelevantAssemblyForConfiguration (assembly);
+    }
+
     public bool IsNonApplicationAssembly (Assembly assembly)
     {
       return GetCompatibleReflector (MethodBase.GetCurrentMethod ()).IsNonApplicationAssembly (assembly);

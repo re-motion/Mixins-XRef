@@ -6,6 +6,7 @@ namespace MixinXRef.Reflection.RemotionReflector
 {
   public interface IRemotionReflector
   {
+    bool IsRelevantAssemblyForConfiguration (Assembly assembly);
     bool IsNonApplicationAssembly (Assembly assembly);
     bool IsConfigurationException (Exception exception);
     bool IsValidationException (Exception exception);

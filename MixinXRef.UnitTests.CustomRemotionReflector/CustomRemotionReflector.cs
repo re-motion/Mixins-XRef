@@ -37,6 +37,11 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       throw new NotImplementedException();
     }
 
+    public bool IsRelevantAssemblyForConfiguration(Assembly assembly)
+    {
+      throw new NotImplementedException();
+    }
+
     public virtual bool IsNonApplicationAssembly (Assembly assembly)
     {
       ArgumentUtility.CheckNotNull ("assembly", assembly);

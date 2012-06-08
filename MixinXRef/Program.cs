@@ -235,7 +235,9 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      return new AssemblyBuilder (assemblyDirectory).GetAssemblies (a => !_remotionReflector.IsNonApplicationAssembly (a));
+      return new AssemblyBuilder(assemblyDirectory).GetAssemblies( 
+          a => _remotionReflector.IsRelevantAssemblyForConfiguration(a) && 
+               !_remotionReflector.IsNonApplicationAssembly(a));
     }
 
     public void GenerateAndSaveXmlDocument (Assembly[] assemblies, string xmlFile)
