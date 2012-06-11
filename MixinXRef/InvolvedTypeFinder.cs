@@ -40,32 +40,41 @@ namespace MixinXRef
 
     public InvolvedType[] FindInvolvedTypes ()
     {
-      var involvedTypes = new InvolvedTypeStore();
+      var involvedTypes = new InvolvedTypeStore ();
       var classContexts = _mixinConfiguration.GetProperty ("ClassContexts");
 
       foreach (var assembly in _assemblies)
       {
-        foreach (var type in assembly.GetTypes ())
+        try
         {
-          var classContext = classContexts.CallMethod ("GetWithInheritance", type);
-          if (classContext != null)
+          foreach (var type in assembly.GetTypes ())
           {
-            var involvedType = involvedTypes.GetOrCreateValue (type);
-            var targetClassDefinition = GetTargetClassDefinition (type, classContext);
-            involvedType.ClassContext = classContext;
-            involvedType.TargetClassDefinition = targetClassDefinition;
-
-            foreach (var mixinContext in classContext.GetProperty ("Mixins"))
+            var classContext = classContexts.CallMethod ("GetWithInheritance", type);
+            if (classContext != null)
             {
-              var mixinType = mixinContext.GetProperty ("MixinType").To<Type> ();
-              var mixin = involvedTypes.GetOrCreateValue (mixinType);
-              mixin.TargetTypes.Add (involvedType, GetMixinDefiniton (mixinType, targetClassDefinition));
-            }
-          }
+              var involvedType = involvedTypes.GetOrCreateValue (type);
+              var targetClassDefinition = GetTargetClassDefinition (type, classContext);
+              involvedType.ClassContext = classContext;
+              involvedType.TargetClassDefinition = targetClassDefinition;
 
-          // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
-          if (_remotionReflector.IsInheritedFromMixin (type) && !_remotionReflector.IsInfrastructureType (type))
-            involvedTypes.GetOrCreateValue (type);
+              foreach (var mixinContext in classContext.GetProperty ("Mixins"))
+              {
+                var mixinType = mixinContext.GetProperty ("MixinType").To<Type> ();
+                var mixin = involvedTypes.GetOrCreateValue (mixinType);
+                mixin.TargetTypes.Add (involvedType, GetMixinDefiniton (mixinType, targetClassDefinition));
+              }
+            }
+
+            // also add classes which inherit from Mixin<> or Mixin<,>, but are actually not used as Mixins (not in ClassContexts)
+            if (_remotionReflector.IsInheritedFromMixin (type) && !_remotionReflector.IsInfrastructureType (type))
+              involvedTypes.GetOrCreateValue (type);
+          }
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+          Console.WriteLine ("Unable to analyze '{0}' because some referenced assemblies could not be loaded: ", assembly);
+          foreach (var loaderException in ex.LoaderExceptions)
+            Console.WriteLine ("   " + loaderException.Message);
         }
       }
 

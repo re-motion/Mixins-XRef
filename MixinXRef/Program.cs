@@ -235,9 +235,8 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      return new AssemblyBuilder(assemblyDirectory).GetAssemblies( 
-          a => _remotionReflector.IsRelevantAssemblyForConfiguration(a) && 
-               !_remotionReflector.IsNonApplicationAssembly(a));
+      return new AssemblyBuilder (assemblyDirectory)
+        .GetAssemblies (a => !_remotionReflector.IsRelevantAssemblyForConfiguration (a) || !_remotionReflector.IsNonApplicationAssembly (a));
     }
 
     public void GenerateAndSaveXmlDocument (Assembly[] assemblies, string xmlFile)
@@ -245,7 +244,8 @@ namespace MixinXRef
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
       ArgumentUtility.CheckNotNull ("xmlFile", xmlFile);
 
-      var mixinConfiguration = _remotionReflector.BuildConfigurationFromAssemblies (assemblies);
+      var relevantAssemblies = Array.FindAll (assemblies, a => _remotionReflector.IsRelevantAssemblyForConfiguration (a));
+      var mixinConfiguration = _remotionReflector.BuildConfigurationFromAssemblies (relevantAssemblies);
       var configurationErrors = new ErrorAggregator<Exception> ();
       var validationErrors = new ErrorAggregator<Exception> ();
       var involvedTypes =
