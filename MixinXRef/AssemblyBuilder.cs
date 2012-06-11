@@ -84,7 +84,7 @@ namespace MixinXRef
             mscorlibAssembly.FullName);
           return null;
         }
-        else if (mscorlibReference.Version > mscorlibAssembly.GetName ().Version)
+        else if (mscorlibReference.Version == mscorlibAssembly.GetName ().Version)
         {
           Console.Out.WriteLine (
             "Assembly '{0}' references a core library '{1}', but this tool only works with references to core library '{2}' or lower.",
