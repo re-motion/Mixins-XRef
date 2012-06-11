@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
@@ -14,6 +15,11 @@ namespace MixinXRef.Reflectors
     public MixinAssemblyReflector (string assemblyDirectory)
     {
       _mixinsAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Mixins.dll");
+    }
+
+    public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)
+    {
+      return assembly.GetReferencedAssemblies ().Any (r => r.FullName == _mixinsAssembly.GetName ().FullName);
     }
 
     public override bool IsInfrastructureType (Type type)
