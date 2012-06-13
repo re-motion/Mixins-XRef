@@ -3,7 +3,6 @@ using MixinXRef;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility.Options;
 using TalkBack;
-using TalkBack.Brokers.Delegate;
 
 namespace MixinXRefConsole
 {
@@ -88,8 +87,8 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      var sender = new DelegateMessageBroker (MessageReceived);
-      return XRef.Run (cmdLineArgs, sender) ? 0 : 1;
+      TalkBackInvoke.Action (sender => XRef.Run (cmdLineArgs, sender), MessageReceived);
+      return 0;
     }
 
     private static void MessageReceived (Message message)
