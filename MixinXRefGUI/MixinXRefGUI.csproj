@@ -41,13 +41,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="TalkBack, Version=0.5.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TalkBack.0.5.5\lib\net35\TalkBack.dll</HintPath>
     </Reference>
@@ -93,10 +88,6 @@
     <Content Include="Resources\x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
-      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
-      <Name>MixinXRef.Reflectors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>
       <Name>MixinXRef</Name>

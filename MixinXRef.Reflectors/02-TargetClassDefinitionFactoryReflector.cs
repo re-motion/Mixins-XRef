@@ -8,11 +8,11 @@ using MixinXRef.Utility;
 namespace MixinXRef.Reflectors
 {
   [ReflectorSupport ("Remotion", "1.13.23")]
-  public class TargetClassDefinitionFactory : RemotionReflectorBase
+  public class TargetClassDefinitionFactoryReflector : RemotionReflectorBase
   {
     private readonly Assembly _remotionAssembly;
 
-    public TargetClassDefinitionFactory (string assemblyDirectory)
+    public TargetClassDefinitionFactoryReflector (string assemblyDirectory)
     {
       _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
       AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");

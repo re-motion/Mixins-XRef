@@ -51,7 +51,8 @@ namespace MixinXRef.Reflection.Utility
       var extractedParameters = from parameterInfo in methodInfo.GetParameters ()
                                 let arrayElementExpression = Expression.ArrayIndex (argsParameter, Expression.Constant (parameterInfo.Position))
                                 select (Expression) Expression.Convert (arrayElementExpression, parameterInfo.ParameterType);
-      var callExpression = Expression.Call (Expression.Convert (instanceParameter, methodInfo.DeclaringType), methodInfo, extractedParameters);
+      var instanceType = methodInfo.IsStatic ? null : Expression.Convert (instanceParameter, methodInfo.DeclaringType);
+      var callExpression = Expression.Call (instanceType, methodInfo, extractedParameters);
       var convertedCallResult = Expression.Convert (callExpression, typeof (object));
 
       var lambda = Expression.Lambda<Func<object, object[], object>> (convertedCallResult, instanceParameter, argsParameter);
