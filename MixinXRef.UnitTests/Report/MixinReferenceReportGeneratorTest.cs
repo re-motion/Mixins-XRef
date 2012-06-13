@@ -24,7 +24,7 @@ namespace MixinXRef.UnitTests.Report
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = ProgramTest.GetRemotionReflection ();
+      _remotionReflector = Helpers.RemotionReflectorFactory.GetRemotionReflection ();
       _outputFormatter = new OutputFormatter ();
     }
 
@@ -88,7 +88,7 @@ namespace MixinXRef.UnitTests.Report
               new InterfaceIntroductionReportGenerator (new ReflectedObject (mixinDefinition.InterfaceIntroductions), interfaceIdentifierGenerator).
                   GenerateXml (),
               new AttributeIntroductionReportGenerator (
-                  new ReflectedObject (mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, ProgramTest.GetRemotionReflection ()).
+                  new ReflectedObject (mixinDefinition.AttributeIntroductions), attributeIdentifierGenerator, Helpers.RemotionReflectorFactory.GetRemotionReflection ()).
                   GenerateXml (),
               new MemberOverrideReportGenerator (new ReflectedObject (mixinDefinition.GetAllOverrides ())).GenerateXml (),
               new TargetCallDependenciesReportGenerator (new ReflectedObject (mixinDefinition), assemblyIdentifierGenerator, _remotionReflector, _outputFormatter).GenerateXml ()

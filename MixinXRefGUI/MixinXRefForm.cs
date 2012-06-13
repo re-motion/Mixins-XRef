@@ -1,20 +1,38 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Windows.Forms;
 using MixinXRef;
+using TalkBack;
+using Message = TalkBack.Message;
+using ThreadState = System.Threading.ThreadState;
 
 namespace MixinXRefGUI
 {
   public partial class MixinXRefForm : Form
   {
-    private readonly string _persistentSettingsFile;
-
     private delegate void AppendTextToLogTextBoxAsyncDelegate (string message);
 
-    private delegate void setStartMixinRefButtonEnabledDelegate (bool enabled);
+    private delegate void SetStartMixinRefButtonEnabledDelegate (bool enabled);
+
+    private class XRefThreadOptions
+    {
+      public XRefArguments Arguments { get; private set; }
+      public ITalkbackChannel Channel { get; set; }
+
+      public XRefThreadOptions (XRefArguments arguments, ITalkbackChannel channel)
+      {
+        Arguments = arguments;
+        Channel = channel;
+      }
+    }
+
+    private readonly string _persistentSettingsFile;
+    private readonly Settings _settings;
+
+    private readonly BackgroundWorker _xrefWorker;
 
     public MixinXRefForm ()
     {
@@ -23,105 +41,82 @@ namespace MixinXRefGUI
       var baseDir = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "MixinXRef");
       _persistentSettingsFile = Path.Combine (baseDir, "MixinXRefGUI.dat");
 
-      GetOrCreateSettings (_persistentSettingsFile);
+      _settings = new Settings (_persistentSettingsFile,
+                                ApplySettings,
+                                GetSettings,
+                                new XRefArguments
+                                  {
+                                    AssemblyDirectory = @"C:\",
+                                    OutputDirectory = @"C:\",
+                                    OverwriteExistingFiles = false,
+                                    XMLOutputFileName = "",
+                                    ReflectorSource = ReflectorSource.ReflectorAssembly,
+                                    ReflectorPath = "MixinXRef.Reflectors*.dll",
+                                    CustomReflectorAssemblyQualifiedTypeName = "",
+                                    SkipHTMLGeneration = false
+                                  });
 
       UpdateEnabledStatusOfShowResultButton ();
+      _xrefWorker = new BackgroundWorker ();
+      _xrefWorker.DoWork += (sender, args) => RunXRef ((XRefThreadOptions) args.Argument);
+      _xrefWorker.RunWorkerCompleted += (sender, args) => OnXRefFinished ();
+    }
+
+    protected override void OnClosing (CancelEventArgs e)
+    {
+      if (_xrefWorker.IsBusy)
+        e.Cancel = true;
+    }
+
+    private void ApplySettings (XRefArguments settings)
+    {
+      assemblyPathTextBox.Text = settings.AssemblyDirectory;
+      outputPathTextBox.Text = settings.OutputDirectory;
+      reflectorAssemblyTextBox.Text = settings.ReflectorPath;
+      customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
+      forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
+
+      switch (settings.ReflectorSource)
+      {
+        case ReflectorSource.ReflectorAssembly:
+          reflectorAssemblyRadioButton.Checked = true;
+          break;
+        case ReflectorSource.CustomReflector:
+          customReflectorRadioButton.Checked = true;
+          break;
+      }
+    }
+
+    private XRefArguments GetSettings ()
+    {
+      return new XRefArguments
+      {
+        AssemblyDirectory = assemblyPathTextBox.Text,
+        OutputDirectory = outputPathTextBox.Text,
+        ReflectorPath = reflectorAssemblyTextBox.Text,
+        CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
+        OverwriteExistingFiles = forceOverrideCheckBox.Checked,
+        ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly
+      };
+    }
+
+    private void RunXRef (XRefThreadOptions options)
+    {
+      AppendTextToLogTextBoxAsync ("Running MixinXRef...");
+      XRef.Run (options.Arguments, options.Channel);
+    }
+
+    private void OnXRefFinished ()
+    {
+      SetStartMixinRefButtonEnabled (true);
+
+      if (File.Exists (GetResultFilePath ()))
+        SetShowResultsButtonEnabled (true);
     }
 
     private void UpdateEnabledStatusOfShowResultButton ()
     {
       showResultsButton.Enabled = File.Exists (GetResultFilePath ());
-    }
-
-    private void GetOrCreateSettings (string persistentSettingsFile)
-    {
-      if (!File.Exists (_persistentSettingsFile))
-        CreateDefaultSettings (persistentSettingsFile);
-
-      LoadSettings (persistentSettingsFile);
-    }
-
-    private void LoadSettings (string persistentSettingsFile)
-    {
-      if (File.Exists (persistentSettingsFile))
-      {
-        var settings = DeserializeFromFile (persistentSettingsFile);
-        assemblyPathTextBox.Text = settings.AssemblyDirectory;
-        outputPathTextBox.Text = settings.OutputDirectory;
-        reflectorAssemblyTextBox.Text = settings.ReflectorPath;
-        customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
-        forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
-
-        switch (settings.ReflectorSource)
-        {
-          case ReflectorSource.ReflectorAssembly:
-            reflectorAssemblyRadioButton.Checked = true;
-            break;
-          case ReflectorSource.CustomReflector:
-            customReflectorRadioButton.Checked = true;
-            break;
-        }
-      }
-    }
-
-    private void SaveSettings ()
-    {
-      SerializeToFile (_persistentSettingsFile, new CommandLineArguments
-                                                  {
-                                                    AssemblyDirectory = assemblyPathTextBox.Text,
-                                                    OutputDirectory = outputPathTextBox.Text,
-                                                    ReflectorPath = reflectorAssemblyTextBox.Text,
-                                                    CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
-                                                    OverwriteExistingFiles = forceOverrideCheckBox.Checked,
-                                                    ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly
-                                                  });
-    }
-
-    private static void CreateDefaultSettings (string persistentSettingsFile)
-    {
-      try
-      {
-        var baseDirectory = Path.GetDirectoryName (persistentSettingsFile);
-        if (!Directory.Exists (baseDirectory))
-          Directory.CreateDirectory (baseDirectory);
-
-        var settings = new CommandLineArguments
-        {
-          AssemblyDirectory = @"C:\",
-          OutputDirectory = @"C:\",
-          OverwriteExistingFiles = false,
-          XMLOutputFileName = "",
-          ReflectorSource = ReflectorSource.ReflectorAssembly,
-          ReflectorPath = "MixinXRef.Reflectors*.dll",
-          CustomReflectorAssemblyQualifiedTypeName = "",
-          SkipHTMLGeneration = false
-        };
-
-        SerializeToFile (persistentSettingsFile, settings);
-      }
-      catch (Exception exception)
-      {
-        //File.WriteAllText (@".\MixinXRefGUI.log", exception.Message);
-        MessageBox.Show (exception.Message, "Failed to save settings.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
-    }
-
-    private static void SerializeToFile (string file, CommandLineArguments args)
-    {
-      using (var stream = File.OpenWrite (file))
-      {
-        var formatter = new BinaryFormatter ();
-        formatter.Serialize (stream, args);
-      }
-    }
-
-    private static CommandLineArguments DeserializeFromFile (string file)
-    {
-      using (var stream = File.OpenRead (file))
-      {
-        var formatter = new BinaryFormatter ();
-        return (CommandLineArguments) formatter.Deserialize (stream);
-      }
     }
 
     private void BrowseAssemblyPath_Click (object sender, EventArgs e)
@@ -153,11 +148,18 @@ namespace MixinXRefGUI
 
     private void StartMixinXRefButton_Click (object sender, EventArgs e)
     {
-      SaveSettings ();
+      var remotionAssembly = Path.Combine (GetSettings ().AssemblyDirectory, "Remotion.dll");
 
-      var remotionAssembly = Path.Combine (assemblyPathTextBox.Text, "Remotion.dll");
       if (File.Exists (remotionAssembly))
-        StartMixinXRefApplication ();
+      {
+        _settings.Save ();
+        SetStartMixinRefButtonEnabled (false);
+
+        var talkBack = new TalkbackChannel ();
+        talkBack.Subscribe<Message> (message => AppendTextToLogTextBoxAsync (message.Text));
+
+        _xrefWorker.RunWorkerAsync (new XRefThreadOptions (_settings.Arguments, talkBack));
+      }
       else
       {
         MessageBox.Show (
@@ -166,54 +168,6 @@ namespace MixinXRefGUI
             MessageBoxButtons.OK,
             MessageBoxIcon.Error);
       }
-    }
-
-    private void StartMixinXRefApplication ()
-    {
-      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
-      var fileName = Path.Combine (xRefPath, "MixinXRef.exe");
-      var arguments = GetArguments ();
-
-      Cursor = Cursors.AppStarting;
-      startMixinXRefButton.Enabled = false;
-      showResultsButton.Enabled = false;
-
-      var process = new Process ();
-      process.StartInfo.FileName = fileName;
-      process.StartInfo.Arguments = arguments;
-      process.StartInfo.UseShellExecute = false;
-      process.StartInfo.CreateNoWindow = true;
-      process.StartInfo.RedirectStandardError = true;
-      process.StartInfo.RedirectStandardOutput = true;
-
-      process.OutputDataReceived += WriteProcessStream;
-      process.ErrorDataReceived += WriteProcessStream;
-      process.EnableRaisingEvents = true;
-      process.Exited += ProcessExited;
-      process.Disposed += ProcessExited;
-
-      logTextBox.Text = "Started function.  Please stand by.." + Environment.NewLine;
-
-      process.Start ();
-      process.BeginOutputReadLine ();
-      process.BeginErrorReadLine ();
-
-      cursorIconTimer.Enabled = true;
-    }
-
-    private string GetArguments ()
-    {
-      var arguments = String.Format ("-i \"{0}\" -o \"{1}\"", assemblyPathTextBox.Text, outputPathTextBox.Text);
-
-      if (reflectorAssemblyRadioButton.Checked && !string.IsNullOrEmpty (reflectorAssemblyTextBox.Text))
-        arguments += " -r \"" + reflectorAssemblyTextBox.Text + "\"";
-      else if (customReflectorRadioButton.Checked && !string.IsNullOrEmpty (customReflectorTextBox.Text))
-        arguments += " -c \"" + customReflectorTextBox.Text + "\"";
-
-      if (forceOverrideCheckBox.Checked)
-        arguments += " -f";
-
-      return arguments;
     }
 
     private void AppendTextToLogTextBoxAsync (string message)
@@ -227,7 +181,7 @@ namespace MixinXRefGUI
     private void SetStartMixinRefButtonEnabled (bool enabled)
     {
       if (startMixinXRefButton.InvokeRequired)
-        startMixinXRefButton.Invoke (new setStartMixinRefButtonEnabledDelegate (SetStartMixinRefButtonEnabled), new object[] { enabled });
+        startMixinXRefButton.Invoke (new SetStartMixinRefButtonEnabledDelegate (SetStartMixinRefButtonEnabled), new object[] { enabled });
       else
         startMixinXRefButton.Enabled = enabled;
     }
@@ -235,23 +189,9 @@ namespace MixinXRefGUI
     private void SetShowResultsButtonEnabled (bool enabled)
     {
       if (showResultsButton.InvokeRequired)
-        showResultsButton.Invoke (new setStartMixinRefButtonEnabledDelegate (SetShowResultsButtonEnabled), new object[] { enabled });
+        showResultsButton.Invoke (new SetStartMixinRefButtonEnabledDelegate (SetShowResultsButtonEnabled), new object[] { enabled });
       else
         showResultsButton.Enabled = enabled;
-    }
-
-    private void WriteProcessStream (object sender, DataReceivedEventArgs dataReceivedEventArgs)
-    {
-      if (!String.IsNullOrEmpty (dataReceivedEventArgs.Data))
-        AppendTextToLogTextBoxAsync (dataReceivedEventArgs.Data);
-    }
-
-    private void ProcessExited (object sender, EventArgs e)
-    {
-      SetStartMixinRefButtonEnabled (true);
-
-      if (File.Exists (GetResultFilePath ()))
-        SetShowResultsButtonEnabled (true);
     }
 
     private void CursorIconTimer_Tick (object sender, EventArgs e)
@@ -276,7 +216,7 @@ namespace MixinXRefGUI
 
     private string GetResultFilePath ()
     {
-      return Path.GetFullPath (Path.Combine (outputPathTextBox.Text, "index.html"));
+      return Path.GetFullPath (Path.Combine (_settings.Arguments.OutputDirectory, "index.html"));
     }
 
     private void ReflectorAssemblyRadioButtonCheckedChanged (object sender, EventArgs e)

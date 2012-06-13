@@ -98,7 +98,7 @@ namespace MixinXRef.UnitTests.Report
           new IdentifierGenerator<Assembly>(),
           new IdentifierGenerator<Type>(),
           attributeIdentifier,
-          ProgramTest.GetRemotionReflection(),
+          Helpers.RemotionReflectorFactory.GetRemotionReflection (),
           new OutputFormatter());
     }
   }

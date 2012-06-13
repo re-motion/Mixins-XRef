@@ -22,8 +22,8 @@ namespace MixinXRef
 
     public int GenerateHtmlFromXml ()
     {
-      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
-      
+      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
+
       // stylesheet path
       var xsltStyleSheetPath = Path.Combine (xRefPath, @"xml_utilities\main.xslt");
 
@@ -34,17 +34,17 @@ namespace MixinXRef
       var mainOutputFile = Path.Combine (_outputDirectory, "dummy.html");
       var arguments = String.Format ("-s:\"{0}\" -xsl:\"{1}\" -o:\"{2}\"", _xmlInputFile, xsltStyleSheetPath, mainOutputFile);
 
-      var xsltProcessor = new Process();
+      var xsltProcessor = new Process ();
       xsltProcessor.StartInfo.FileName = xsltProcessorPath;
       xsltProcessor.StartInfo.Arguments = arguments;
       xsltProcessor.StartInfo.RedirectStandardError = true;
       xsltProcessor.StartInfo.RedirectStandardOutput = true;
       xsltProcessor.StartInfo.UseShellExecute = false;
 
-      xsltProcessor.Start();
-      Console.Error.Write (xsltProcessor.StandardError.ReadToEnd());
-      Console.Out.Write (xsltProcessor.StandardOutput.ReadToEnd());
-      xsltProcessor.WaitForExit();
+      xsltProcessor.Start ();
+      XRef.Log.SendInfo (xsltProcessor.StandardOutput.ReadToEnd ().TrimEnd (Environment.NewLine.ToCharArray ()));
+      XRef.Log.SendError (xsltProcessor.StandardError.ReadToEnd ().TrimEnd (Environment.NewLine.ToCharArray ()));
+      xsltProcessor.WaitForExit ();
 
       return xsltProcessor.ExitCode;
     }

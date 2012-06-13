@@ -48,7 +48,6 @@ namespace MixinXRef
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
       var assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => AssemblyName.ReferenceMatchesDefinition(assemblyName, a.GetName()));
-      // Console.WriteLine("Resolved '{0} to '{1}'.", args.Name, assembly != null ? assembly.FullName : "<null>");
       return assembly;
     }
 
@@ -61,15 +60,15 @@ namespace MixinXRef
       }
       catch (FileNotFoundException fileNotFoundException)
       {
-        Console.Out.WriteLine (fileNotFoundException.Message);
+        XRef.Log.SendInfo (fileNotFoundException.Message);
       }
       catch (FileLoadException fileLoadException)
       {
-        Console.Out.WriteLine (fileLoadException.Message);
+        XRef.Log.SendInfo (fileLoadException.Message);
       }
       catch (BadImageFormatException badImageFormatException)
       {
-        Console.Out.WriteLine (badImageFormatException.Message);
+        XRef.Log.SendInfo (badImageFormatException.Message);
       }
 
       if (loadedAssembly != null)
@@ -78,7 +77,7 @@ namespace MixinXRef
         var mscorlibReference = loadedAssembly.GetReferencedAssemblies().FirstOrDefault (a => a.Name == mscorlibAssembly.GetName().Name);
         if (mscorlibReference == null)
         {
-          Console.Out.WriteLine(
+          XRef.Log.SendWarning (
             "Assembly '{0}' does not reference the same core library as this tool ('{1}'), it is skipped.",
             loadedAssembly.CodeBase, 
             mscorlibAssembly.FullName);
@@ -86,7 +85,7 @@ namespace MixinXRef
         }
         else if (mscorlibReference.Version != mscorlibAssembly.GetName ().Version)
         {
-          Console.Out.WriteLine (
+          XRef.Log.SendWarning (
             "Assembly '{0}' references a core library '{1}', but this tool only works with references to core library '{2}'.",
             loadedAssembly.CodeBase,
             mscorlibReference,

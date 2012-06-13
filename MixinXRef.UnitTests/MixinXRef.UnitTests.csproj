@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\RemotionReflectorFactory.cs" />
     <Compile Include="Helpers\ReportBuilder.cs" />
     <Compile Include="Helpers\StubFactory.cs" />
     <Compile Include="Reflection\FastMemberInvokerCacheTest.cs" />
@@ -125,7 +126,6 @@
     <Compile Include="Report\MemberReportGeneratorTest.cs" />
     <Compile Include="Reflection\MemberSignatureUtilityTest.cs" />
     <Compile Include="Report\MixinReferenceReportGeneratorTest.cs" />
-    <Compile Include="ProgramTest.cs" />
     <Compile Include="Report\ReadonlyIdentifierGeneratorTest.cs" />
     <Compile Include="Utility\RecursiveDirectoryCopyTest.cs" />
     <Compile Include="Report\RecursiveExceptionReportGeneratorTest.cs" />
@@ -187,6 +187,10 @@
     <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
       <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
       <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRefConsole\MixinXRefConsole.csproj">
+      <Project>{FFDD0510-463C-4EF6-A9EC-576B99E2A949}</Project>
+      <Name>MixinXRefConsole</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>

@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
-using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
+using TalkBack;
 
 namespace MixinXRef
 {
@@ -72,9 +71,11 @@ namespace MixinXRef
         }
         catch (ReflectionTypeLoadException ex)
         {
-          Console.WriteLine ("Unable to analyze '{0}' because some referenced assemblies could not be loaded: ", assembly);
-          foreach (var loaderException in ex.LoaderExceptions)
-            Console.WriteLine ("   " + loaderException.Message);
+          XRef.Log.Send (new Message (MessageSeverity.Warning,
+                                      "Unable to analyze '{1}' because some referenced assemblies could not be loaded: {0}   ",
+                                      ex, Environment.NewLine, assembly,
+                                      ex.LoaderExceptions.Select (e => e.Message)
+                                        .Aggregate ((m1, m2) => string.Format ("{1}{0}   {2}{0}", Environment.NewLine, m1, m2))));
         }
       }
 

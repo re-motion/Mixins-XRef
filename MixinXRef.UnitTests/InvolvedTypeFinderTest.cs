@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
-using MixinXRef.Reflection.Utility;
 using MixinXRef.UnitTests.TestDomain;
+using MixinXRef.UnitTests.Helpers;
 using MixinXRef.Utility;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
@@ -225,7 +225,7 @@ namespace MixinXRef.UnitTests
           assemblies,
           _configurationErrors,
           _validationErrors,
-          ProgramTest.GetRemotionReflection());
+          Helpers.RemotionReflectorFactory.GetRemotionReflection ());
     }
 
     private ReflectedObject CreateTargetClassDefintion<ForType> (MixinConfiguration mixinConfiguration)
@@ -236,7 +236,7 @@ namespace MixinXRef.UnitTests
     private InvolvedType[] GetAdditonalAssemblyInvolvedTypes (params InvolvedType[] explicitInvolvedTypes)
     {
       var implicitInvolvedTypes = new List<InvolvedType>();
-      var remotionReflector = ProgramTest.GetRemotionReflection();
+      var remotionReflector = Helpers.RemotionReflectorFactory.GetRemotionReflection ();
       var assembly = typeof (Mixin1).Assembly;
 
       foreach (var type in assembly.GetTypes())

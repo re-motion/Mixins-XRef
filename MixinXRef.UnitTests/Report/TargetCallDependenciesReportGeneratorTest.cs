@@ -25,7 +25,7 @@ namespace MixinXRef.UnitTests.Report
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = ProgramTest.GetRemotionReflection ();
+      _remotionReflector = Helpers.RemotionReflectorFactory.GetRemotionReflection ();
       _outputFormatter = new OutputFormatter ();
     }
 

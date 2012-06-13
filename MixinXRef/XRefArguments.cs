@@ -11,10 +11,10 @@ namespace MixinXRef
   }
 
   [Serializable]
-  public sealed class CommandLineArguments : ISerializable
+  public sealed class XRefArguments : ISerializable
   {
-    private static CommandLineArguments s_instance;
-    public static CommandLineArguments Instance { get { return s_instance ?? (s_instance = new CommandLineArguments ()); } }
+    private static XRefArguments s_instance;
+    public static XRefArguments Instance { get { return s_instance ?? (s_instance = new XRefArguments ()); } }
 
     public string AssemblyDirectory { get; set; }
     public string OutputDirectory { get; set; }
@@ -25,10 +25,10 @@ namespace MixinXRef
     public string ReflectorPath { get; set; }
     public string CustomReflectorAssemblyQualifiedTypeName { get; set; }
 
-    public CommandLineArguments()
+    public XRefArguments()
     { }
 
-    protected CommandLineArguments (SerializationInfo info, StreamingContext context)
+    protected XRefArguments (SerializationInfo info, StreamingContext context)
     {
       AssemblyDirectory = info.GetString ("AssemblyDirectory");
       OutputDirectory = info.GetString ("OutputDirectory");
