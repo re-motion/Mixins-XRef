@@ -2,12 +2,9 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 using MixinXRef;
 using TalkBack;
-using Message = TalkBack.Message;
-using ThreadState = System.Threading.ThreadState;
 
 namespace MixinXRefGUI
 {
@@ -16,18 +13,6 @@ namespace MixinXRefGUI
     private delegate void AppendTextToLogTextBoxAsyncDelegate (string message);
 
     private delegate void SetStartMixinRefButtonEnabledDelegate (bool enabled);
-
-    private class XRefThreadOptions
-    {
-      public XRefArguments Arguments { get; private set; }
-      public ITalkbackChannel Channel { get; set; }
-
-      public XRefThreadOptions (XRefArguments arguments, ITalkbackChannel channel)
-      {
-        Arguments = arguments;
-        Channel = channel;
-      }
-    }
 
     private readonly string _persistentSettingsFile;
     private readonly Settings _settings;
@@ -58,7 +43,7 @@ namespace MixinXRefGUI
 
       UpdateEnabledStatusOfShowResultButton ();
       _xrefWorker = new BackgroundWorker ();
-      _xrefWorker.DoWork += (sender, args) => RunXRef ((XRefThreadOptions) args.Argument);
+      _xrefWorker.DoWork += (sender, args) => RunXRef ((XRefArguments) args.Argument);
       _xrefWorker.RunWorkerCompleted += (sender, args) => OnXRefFinished ();
     }
 
@@ -100,10 +85,10 @@ namespace MixinXRefGUI
       };
     }
 
-    private void RunXRef (XRefThreadOptions options)
+    private void RunXRef (XRefArguments options)
     {
       AppendTextToLogTextBoxAsync ("Running MixinXRef...");
-      XRef.Run (options.Arguments, options.Channel);
+      TalkBackInvoke.Action (sender => XRef.Run (options, sender), message => AppendTextToLogTextBoxAsync (message.Text));
     }
 
     private void OnXRefFinished ()
@@ -155,10 +140,7 @@ namespace MixinXRefGUI
         _settings.Save ();
         SetStartMixinRefButtonEnabled (false);
 
-        var talkBack = new TalkbackChannel ();
-        talkBack.Subscribe<Message> (message => AppendTextToLogTextBoxAsync (message.Text));
-
-        _xrefWorker.RunWorkerAsync (new XRefThreadOptions (_settings.Arguments, talkBack));
+        _xrefWorker.RunWorkerAsync (_settings.Arguments);
       }
       else
       {

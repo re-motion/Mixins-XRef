@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
@@ -71,11 +72,12 @@ namespace MixinXRef
         }
         catch (ReflectionTypeLoadException ex)
         {
-          XRef.Log.Send (new Message (MessageSeverity.Warning,
-                                      "Unable to analyze '{1}' because some referenced assemblies could not be loaded: {0}   ",
-                                      ex, Environment.NewLine, assembly,
-                                      ex.LoaderExceptions.Select (e => e.Message)
-                                        .Aggregate ((m1, m2) => string.Format ("{1}{0}   {2}{0}", Environment.NewLine, m1, m2))));
+          var loaderExceptionLog = new StringBuilder ();
+          foreach (var loaderException in ex.LoaderExceptions)
+            loaderExceptionLog.AppendFormat ("   {1}{0}", Environment.NewLine, loaderException.Message);
+
+          XRef.Log.SendWarning("Unable to analyze '{1}' because some referenced assemblies could not be loaded: {0}{2}",
+            Environment.NewLine, assembly, loaderExceptionLog);
         }
       }
 

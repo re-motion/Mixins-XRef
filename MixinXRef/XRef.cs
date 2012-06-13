@@ -7,32 +7,44 @@ using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
 using MixinXRef.Utility;
 using TalkBack;
+using TalkBack.Brokers;
+using TalkBack.Brokers.Delegate;
 
 namespace MixinXRef
 {
   public static class XRef
   {
     private static readonly object s_locker = new object ();
-    private static readonly TalkbackChannel s_defaultChannel = new TalkbackChannel ();
+    private static readonly MessageSender s_defaultChannel = new DelegateMessageBroker (LogToConsole);
 
-    private static ITalkbackChannel s_log;
-    internal static ITalkbackChannel Log
+    private static IMessageSender s_log;
+    internal static IMessageSender Log
     {
       get { return s_log ?? s_defaultChannel; }
     }
 
-    static XRef ()
+    private static void LogToConsole (Message message)
     {
-      s_defaultChannel.Subscribe (message => Console.WriteLine (message.Text), MessageSeverity.Info | MessageSeverity.Debug | MessageSeverity.Warning);
-      s_defaultChannel.Subscribe (message => Console.Error.WriteLine (message.Text), MessageSeverity.Error);
+      if (message.Severity == MessageSeverity.Error)
+        Console.Error.WriteLine (message.Text);
+      else
+        Console.WriteLine (message.Text);
     }
 
-    public static bool Run (XRefArguments arguments, ITalkbackChannel logger = null)
+    public static bool Run (XRefArguments arguments, IMessageSender logger = null)
     {
       lock (s_locker)
       {
+        var success = false;
         s_log = logger;
-        var success = InternalRun (arguments);
+        try
+        {
+          success = InternalRun (arguments);
+        }
+        catch (Exception ex)
+        {
+          Log.SendError (ex.ToString ());
+        }
         s_log = null;
         return success;
       }
@@ -73,7 +85,7 @@ namespace MixinXRef
 
       if (!assemblies.Any ())
       {
-        Log.Send (new Message (MessageSeverity.Error, "\"{0}\" contains no assemblies", arguments.AssemblyDirectory));
+        Log.SendError ("\"{0}\" contains no assemblies", arguments.AssemblyDirectory);
         return false;
       }
 

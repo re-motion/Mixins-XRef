@@ -3,6 +3,7 @@ using MixinXRef;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility.Options;
 using TalkBack;
+using TalkBack.Brokers.Delegate;
 
 namespace MixinXRefConsole
 {
@@ -10,6 +11,8 @@ namespace MixinXRefConsole
   {
     private static int Main (string[] args)
     {
+      args = TalkBackChannel.Initialize (args);
+
       var cmdLineArgs = XRefArguments.Instance;
       var showOptionsHelp = false;
       var options = new OptionSet
@@ -85,27 +88,26 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      var talkBack = new TalkbackChannel ();
-      talkBack.Subscribe (PrintErrorLine, MessageSeverity.Error);
-      talkBack.Subscribe (PrintLine, MessageSeverity.Info | MessageSeverity.Debug);
-      talkBack.Subscribe (PrintWarningLine, MessageSeverity.Warning);
-
-      return XRef.Run (cmdLineArgs, talkBack) ? 0 : 1;
+      var sender = new DelegateMessageBroker (MessageReceived);
+      return XRef.Run (cmdLineArgs, sender) ? 0 : 1;
     }
 
-    private static void PrintWarningLine (Message message)
+    private static void MessageReceived (Message message)
     {
-      Console.WriteLine ("WARNING: {0}", message.Text);
-    }
+      TalkBackChannel.Out.SendMessage (message);
 
-    private static void PrintLine (Message message)
-    {
-      Console.WriteLine (message.Text);
-    }
-
-    private static void PrintErrorLine (Message message)
-    {
-      Console.Error.WriteLine ("ERROR: {0}", message.Text);
+      switch (message.Severity)
+      {
+        case MessageSeverity.Error:
+          Console.Error.WriteLine ("ERROR: {0}", message.Text);
+          break;
+        case MessageSeverity.Warning:
+          Console.WriteLine ("WARNING: {0}", message.Text);
+          break;
+        default:
+          Console.WriteLine (message.Text);
+          break;
+      }
     }
 
     private static void PrintUsage (OptionSet optionSet)
