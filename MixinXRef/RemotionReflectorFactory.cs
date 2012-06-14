@@ -37,7 +37,7 @@ namespace MixinXRef
 
     private static IEnumerable<_Assembly> GetReflectorAssemblies (string reflectorPath)
     {
-      var path = PathUtility.GetDirectoryName (reflectorPath);
+      var path = Path.GetDirectoryName (reflectorPath);
       path = string.IsNullOrEmpty (path) ? "." : path;
       var file = Path.GetFileName (reflectorPath) ?? "*.dll";
 

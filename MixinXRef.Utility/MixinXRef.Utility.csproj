@@ -55,7 +55,6 @@
     <Compile Include="Options\OptionSet.cs" />
     <Compile Include="Options\OptionValueCollection.cs" />
     <Compile Include="Options\OptionValueType.cs" />
-    <Compile Include="PathUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadonlyIdentifierGenerator.cs" />
     <Compile Include="RecursiveDirectoryCopy.cs" />
