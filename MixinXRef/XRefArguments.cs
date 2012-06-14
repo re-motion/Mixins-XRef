@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace MixinXRef
@@ -24,11 +26,14 @@ namespace MixinXRef
     public ReflectorSource ReflectorSource { get; set; }
     public string ReflectorPath { get; set; }
     public string CustomReflectorAssemblyQualifiedTypeName { get; set; }
+    public IEnumerable<string> IgnoredAssemblies { get; set; }
 
-    public XRefArguments()
-    { }
+    public XRefArguments ()
+    {
+      IgnoredAssemblies = Enumerable.Empty<string> ();
+    }
 
-    protected XRefArguments (SerializationInfo info, StreamingContext context)
+    private XRefArguments (SerializationInfo info, StreamingContext context)
     {
       AssemblyDirectory = info.GetString ("AssemblyDirectory");
       OutputDirectory = info.GetString ("OutputDirectory");
@@ -38,6 +43,7 @@ namespace MixinXRef
       ReflectorSource = (ReflectorSource) info.GetInt32 ("ReflectorSource");
       ReflectorPath = info.GetString ("ReflectorPath");
       CustomReflectorAssemblyQualifiedTypeName = info.GetString ("CustomReflectorAssemblyQualifiedTypeName");
+      IgnoredAssemblies = (List<string>) info.GetValue ("IgnoredAssemblies", typeof (List<string>));
     }
 
     public void GetObjectData (SerializationInfo info, StreamingContext context)
@@ -50,6 +56,7 @@ namespace MixinXRef
       info.AddValue ("ReflectorSource", (int) ReflectorSource);
       info.AddValue ("ReflectorPath", ReflectorPath);
       info.AddValue ("CustomReflectorAssemblyQualifiedTypeName", CustomReflectorAssemblyQualifiedTypeName);
+      info.AddValue ("IgnoredAssemblies", IgnoredAssemblies.ToList ());
     }
   }
 }

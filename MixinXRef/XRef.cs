@@ -80,12 +80,12 @@ namespace MixinXRef
           throw new IndexOutOfRangeException ("Reflector source is unspecified");
       }
 
-      var assemblies = new AssemblyBuilder (arguments.AssemblyDirectory)
+      var assemblies = new AssemblyBuilder (arguments.AssemblyDirectory, arguments.IgnoredAssemblies)
         .GetAssemblies (a => !reflector.IsRelevantAssemblyForConfiguration (a) || !reflector.IsNonApplicationAssembly (a));
 
       if (!assemblies.Any ())
       {
-        Log.SendError ("\"{0}\" contains no assemblies", arguments.AssemblyDirectory);
+        Log.SendError ("\"{0}\" contains no assemblies or only assemblies on the ignore list", arguments.AssemblyDirectory);
         return false;
       }
 
@@ -94,7 +94,7 @@ namespace MixinXRef
                                    ? arguments.XMLOutputFileName
                                    : "MixinXRef.xml");
 
-      var relevantAssemblies = Array.FindAll (assemblies, a => reflector.IsRelevantAssemblyForConfiguration (a));
+      var relevantAssemblies = Array.FindAll (assemblies, a => !arguments.IgnoredAssemblies.Contains (a.GetName ().Name) && reflector.IsRelevantAssemblyForConfiguration (a));
       var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (relevantAssemblies);
       var outputFormatter = new OutputFormatter ();
       var configurationErrors = new ErrorAggregator<Exception> ();

@@ -76,8 +76,8 @@ namespace MixinXRef
           foreach (var loaderException in ex.LoaderExceptions)
             loaderExceptionLog.AppendFormat ("   {1}{0}", Environment.NewLine, loaderException.Message);
 
-          XRef.Log.SendWarning("Unable to analyze '{1}' because some referenced assemblies could not be loaded: {0}{2}",
-            Environment.NewLine, assembly, loaderExceptionLog);
+          XRef.Log.SendWarning ("Unable to analyze '{1}' in '{2}' because some referenced assemblies could not be loaded: {0}{3}",
+            Environment.NewLine, assembly.FullName, assembly.Location, loaderExceptionLog);
         }
       }
 

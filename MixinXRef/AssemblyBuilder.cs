@@ -9,12 +9,14 @@ namespace MixinXRef
 {
   public class AssemblyBuilder
   {
+    private readonly IEnumerable<string> _ignore;
     private readonly string _assemblyDirectory;
 
-    public AssemblyBuilder (string assemblyDirectory)
+    public AssemblyBuilder (string assemblyDirectory, IEnumerable<string> ignore = null)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
+      _ignore = ignore ?? Enumerable.Empty<string> ();
       _assemblyDirectory = Path.GetFullPath (assemblyDirectory);
 
       // register assembly reference resolver
@@ -23,23 +25,50 @@ namespace MixinXRef
 
     public Assembly[] GetAssemblies (Func<Assembly, bool> filter = null)
     {
-      var assemblies = new List<Assembly>();
+      var assemblies = new List<Assembly> ();
 
       foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll"))
       {
-        var loadedAssembly = LoadAssembly (assemblyFile);
-        if (loadedAssembly != null)
-          assemblies.Add (loadedAssembly);
+        if (!IsIgnoredAssembly (assemblyFile))
+        {
+          var loadedAssembly = LoadAssembly (assemblyFile);
+          if (loadedAssembly != null)
+            assemblies.Add (loadedAssembly);
+        }
+        else
+        {
+          XRef.Log.SendInfo ("Ignoring {0}", assemblyFile);
+        }
       }
-      
+
       foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe"))
       {
-        var loadedAssembly = LoadAssembly (assemblyFile);
-        if (loadedAssembly != null)
-          assemblies.Add (loadedAssembly);
+        if (!IsIgnoredAssembly (assemblyFile))
+        {
+          var loadedAssembly = LoadAssembly (assemblyFile);
+          if (loadedAssembly != null)
+            assemblies.Add (loadedAssembly);
+        }
+        else
+        {
+          XRef.Log.SendInfo ("Ignoring {0}", assemblyFile);
+        }
       }
 
       return (filter != null ? assemblies.Where (filter) : assemblies).ToArray ();
+    }
+
+    private bool IsIgnoredAssembly (string assemblyFile)
+    {
+      try
+      {
+        return _ignore.Contains (AssemblyName.GetAssemblyName (assemblyFile).Name);
+      }
+      catch (BadImageFormatException badImageFormatException)
+      {
+        XRef.Log.SendInfo (badImageFormatException.Message);
+      }
+      return true;
     }
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
@@ -47,7 +76,7 @@ namespace MixinXRef
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
-      var assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => AssemblyName.ReferenceMatchesDefinition(assemblyName, a.GetName()));
+      var assembly = AppDomain.CurrentDomain.GetAssemblies ().SingleOrDefault (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName ()));
       return assembly;
     }
 
@@ -56,7 +85,7 @@ namespace MixinXRef
       Assembly loadedAssembly = null;
       try
       {
-        loadedAssembly = Assembly.LoadFile(assemblyFile);
+        loadedAssembly = Assembly.LoadFile (assemblyFile);
       }
       catch (FileNotFoundException fileNotFoundException)
       {
@@ -74,20 +103,22 @@ namespace MixinXRef
       if (loadedAssembly != null)
       {
         var mscorlibAssembly = typeof (object).Assembly;
-        var mscorlibReference = loadedAssembly.GetReferencedAssemblies().FirstOrDefault (a => a.Name == mscorlibAssembly.GetName().Name);
+        var mscorlibReference = loadedAssembly.GetReferencedAssemblies ().FirstOrDefault (a => a.Name == mscorlibAssembly.GetName ().Name);
         if (mscorlibReference == null)
         {
           XRef.Log.SendWarning (
-            "Assembly '{0}' does not reference the same core library as this tool ('{1}'), it is skipped.",
-            loadedAssembly.CodeBase, 
+            "Assembly '{0}' in '{1}' does not reference the same core library as this tool ('{2}'), it is skipped.",
+            loadedAssembly.FullName,
+            loadedAssembly.Location,
             mscorlibAssembly.FullName);
           return null;
         }
         else if (mscorlibReference.Version != mscorlibAssembly.GetName ().Version)
         {
           XRef.Log.SendWarning (
-            "Assembly '{0}' references a core library '{1}', but this tool only works with references to core library '{2}'.",
-            loadedAssembly.CodeBase,
+            "Assembly '{0}' in '{1}' references a core library '{2}', but this tool only works with references to core library '{3}'.",
+            loadedAssembly.FullName,
+            loadedAssembly.Location,
             mscorlibReference,
             mscorlibAssembly.FullName);
           return null;
