@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using MixinXRef;
 using TalkBack;
@@ -38,7 +39,8 @@ namespace MixinXRefGUI
                                     ReflectorSource = ReflectorSource.ReflectorAssembly,
                                     ReflectorPath = "MixinXRef.Reflectors*.dll",
                                     CustomReflectorAssemblyQualifiedTypeName = "",
-                                    SkipHTMLGeneration = false
+                                    SkipHTMLGeneration = false,
+                                    IgnoredAssemblies = Enumerable.Empty<string> ()
                                   });
 
       UpdateEnabledStatusOfShowResultButton ();
@@ -60,6 +62,7 @@ namespace MixinXRefGUI
       reflectorAssemblyTextBox.Text = settings.ReflectorPath;
       customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
       forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
+      ignoreAssembliesTextBox.Text = string.Join (Environment.NewLine, settings.IgnoredAssemblies.ToArray ());
 
       switch (settings.ReflectorSource)
       {
@@ -81,7 +84,8 @@ namespace MixinXRefGUI
         ReflectorPath = reflectorAssemblyTextBox.Text,
         CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
         OverwriteExistingFiles = forceOverrideCheckBox.Checked,
-        ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly
+        ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly,
+        IgnoredAssemblies = ignoreAssembliesTextBox.Text.Split (new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
       };
     }
 
