@@ -352,7 +352,7 @@ table .noSorting thead tr th {
 	border: 1px solid #FFF;
 	padding: 4px;
 	cursor: default;
-  background-image: url(); 
+  background-image: none; 
 }
 
 table tbody td {

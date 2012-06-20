@@ -45,9 +45,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TalkBack, Version=0.7.1.0, Culture=neutral, PublicKeyToken=5aa5282d352f0130, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\TalkBack.0.7.1\lib\net35\TalkBack.dll</HintPath>
+    <Reference Include="TalkBack">
+      <HintPath>..\packages\TalkBack.0.7.2\lib\net35\TalkBack.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
