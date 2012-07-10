@@ -37,14 +37,14 @@ namespace MixinXRef
       {
         var success = false;
         s_log = logger;
-        try
-        {
+        //try
+        //{
           success = InternalRun (arguments);
-        }
-        catch (Exception ex)
-        {
-          Log.SendError (ex.ToString ());
-        }
+        //}
+        //catch (Exception ex)
+        //{
+        //  Log.SendError (ex.ToString ());
+        //}
         s_log = null;
         return success;
       }

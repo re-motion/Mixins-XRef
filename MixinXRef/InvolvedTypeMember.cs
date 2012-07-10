@@ -9,74 +9,103 @@ namespace MixinXRef
 {
   public class InvolvedTypeMember : IVisitableInvolved
   {
-    private static readonly IEqualityComparer<MemberInfo> s_equalityComparer = new MemberDefinitionEqualityComparer();
+    private static readonly IEqualityComparer<MemberInfo> EqualityComparer = new MemberDefinitionEqualityComparer();
 
     public InvolvedTypeMember(MemberInfo memberInfo, ReflectedObject targetMemberDefinition,
                               IEnumerable<ReflectedObject> mixinMemberDefinitions)
     {
       ArgumentUtility.CheckNotNull("memberInfo", memberInfo);
 
-      MemberInfo = memberInfo;
-      SubMemberInfos = GetSubMemberInfos(memberInfo);
+      MemberInfo = new OverridingMemberInfo(memberInfo);
+      AddSubMemberInfos(memberInfo);
+
+      SetMixinOverride(targetMemberDefinition);
+      AddTargetOverrides(mixinMemberDefinitions);
+
       MixinMemberDefinitions = mixinMemberDefinitions ?? Enumerable.Empty<ReflectedObject>();
       TargetMemberDefinition = targetMemberDefinition;
 
-      MixinOverrideInfos = GetMixinOverrideInfos();
-      TargetOverrideInfos = GetTargetOverrideInfos();
       OverridingMixinTypes = GetOverridingMixinTypes();
       OverridingTargetTypes = GetOverridingTargetTypes();
     }
 
-    private IEnumerable<MemberInfo> GetSubMemberInfos(MemberInfo memberInfo)
+    private void AddOverriddenMember(MemberInfo overriddenMember, OverridingMemberInfo.OverrideType type)
     {
-      var subMembers = new List<MemberInfo>();
+      MemberInfo.AddOverriddenMember (overriddenMember, type);
 
+      if (overriddenMember.MemberType == MemberTypes.Property)
+      {
+        var overriddenProperty = (PropertyInfo) overriddenMember;
+
+        if (overriddenProperty.GetGetMethod () != null && _subMemberInfos.ContainsKey (SubMemberType.PropertyGet))
+          _subMemberInfos[SubMemberType.PropertyGet].AddOverriddenMember (overriddenProperty.GetGetMethod (), type);
+
+        if (overriddenProperty.GetSetMethod () != null && _subMemberInfos.ContainsKey (SubMemberType.PropertySet))
+          _subMemberInfos[SubMemberType.PropertyGet].AddOverriddenMember (overriddenProperty.GetSetMethod (), type);
+      }
+
+      if (overriddenMember.MemberType == MemberTypes.Event)
+      {
+        var overriddenEvent = (EventInfo) overriddenMember;
+
+        if (_subMemberInfos.ContainsKey (SubMemberType.EventAdd))
+          _subMemberInfos[SubMemberType.PropertyGet].AddOverriddenMember(overriddenEvent.GetAddMethod(), type);
+
+        if (_subMemberInfos.ContainsKey (SubMemberType.EventRemove))
+          _subMemberInfos[SubMemberType.PropertyGet].AddOverriddenMember(overriddenEvent.GetRemoveMethod(), type);
+      }
+    }
+
+    private void AddTargetOverrides(IEnumerable<ReflectedObject> mixinMemberDefinitions)
+    {
+      if (mixinMemberDefinitions == null || !mixinMemberDefinitions.Any ())
+        return;
+
+      var overriddenMembers = mixinMemberDefinitions
+        .Select(m => m.GetProperty("BaseAsMember"))
+        .Where(m => m != null)
+        .Select(m => m.GetProperty("MemberInfo").To<MemberInfo>())
+        .Distinct();
+
+      foreach (var overriddenMember in overriddenMembers)
+        AddOverriddenMember(overriddenMember, OverridingMemberInfo.OverrideType.Target);
+    }
+
+    private void SetMixinOverride(ReflectedObject targetMemberDefinition)
+    {
+      if (targetMemberDefinition == null)
+        return;
+
+      var baseMember = targetMemberDefinition.GetProperty ("BaseAsMember");
+
+      if (baseMember == null)
+        return;
+
+      AddOverriddenMember(baseMember.GetProperty ("MemberInfo").To<MemberInfo> (), OverridingMemberInfo.OverrideType.Mixin);
+    }
+
+    private void AddSubMemberInfos(MemberInfo memberInfo)
+    {
       if (memberInfo.MemberType == MemberTypes.Property)
       {
         var propInfo = ((PropertyInfo) memberInfo);
 
         var getMethod = propInfo.GetGetMethod ();
         if (getMethod != null)
-          subMembers.Add (getMethod);
+          _subMemberInfos.Add(SubMemberType.PropertyGet, new OverridingMemberInfo(getMethod));
 
         var setMethod = propInfo.GetSetMethod ();
         if (setMethod != null)
-          subMembers.Add (setMethod);
+          _subMemberInfos.Add (SubMemberType.PropertySet, new OverridingMemberInfo (setMethod));
       }
 
       if (memberInfo.MemberType == MemberTypes.Event)
       {
         var eventInfo = ((EventInfo) memberInfo);
 
-        subMembers.Add(eventInfo.GetAddMethod());
-        subMembers.Add(eventInfo.GetRemoveMethod());
+        _subMemberInfos.Add (SubMemberType.EventAdd, new OverridingMemberInfo (eventInfo.GetAddMethod()));
+        _subMemberInfos.Add (SubMemberType.EventRemove, new OverridingMemberInfo (eventInfo.GetRemoveMethod()));
       }
-
-      return subMembers;
-    }
-
-    private IEnumerable<OverrideInfo> GetTargetOverrideInfos ()
-    {
-      if (!MixinMemberDefinitions.Any())
-        return Enumerable.Empty<OverrideInfo> ();
-
-      return MixinMemberDefinitions.Select(m => new {Override = m, Base = m.GetProperty("BaseAsMember")}).Where(
-        m => m.Base != null).Select(
-          m => new {Override = m.Override, BaseMember = m.Base.GetProperty("MemberInfo").To<MemberInfo>()}).DistinctBy(
-            m => m.BaseMember).Select(m => new OverrideInfo(m.Override, m.BaseMember));
-    }
-
-    private IEnumerable<OverrideInfo> GetMixinOverrideInfos ()
-    {
-      if (TargetMemberDefinition == null)
-        return Enumerable.Empty<OverrideInfo> ();
-
-      var baseMember = TargetMemberDefinition.GetProperty("BaseAsMember");
-
-      if (baseMember == null)
-        return Enumerable.Empty<OverrideInfo> ();
-
-      return new[] { new OverrideInfo (TargetMemberDefinition, baseMember.GetProperty ("MemberInfo").To<MemberInfo> ()) };
     }
 
     private IEnumerable<Type> GetOverridingMixinTypes()
@@ -99,14 +128,36 @@ namespace MixinXRef
           o => o.GetProperty("DeclaringClass").GetProperty("Type").To<Type>());
     }
 
-    public MemberInfo MemberInfo { get; private set; }
-    public IEnumerable<MemberInfo> SubMemberInfos { get; private set; } 
+    private enum SubMemberType
+    {
+      PropertyGet,
+      PropertySet,
+      EventAdd,
+      EventRemove
+    }
+
+    private readonly IDictionary<SubMemberType, OverridingMemberInfo> _subMemberInfos =
+      new Dictionary<SubMemberType, OverridingMemberInfo>(); 
+
+    public OverridingMemberInfo MemberInfo { get; private set; }
+
+    public IEnumerable<OverridingMemberInfo> SubMemberInfos
+    {
+      get { return _subMemberInfos.Values; }
+    }
 
     public ReflectedObject TargetMemberDefinition { get; private set; }
     public IEnumerable<ReflectedObject> MixinMemberDefinitions { get; private set; }
 
-    public IEnumerable<OverrideInfo> MixinOverrideInfos { get; private set; }
-    public IEnumerable<OverrideInfo> TargetOverrideInfos { get; private set; }
+    public IEnumerable<Type> OverriddenMembersDeclaringTypes
+    {
+      get
+      {
+        return
+          MemberInfo.OverriddenMixinMembers.Select(m => m.DeclaringType).Concat(
+            MemberInfo.OverriddenTargetMembers.Select(m => m.DeclaringType));
+      }
+    } 
 
     public IEnumerable<Type> OverridingMixinTypes { get; private set; }
     public IEnumerable<Type> OverridingTargetTypes { get; private set; }
@@ -119,7 +170,7 @@ namespace MixinXRef
     public override bool Equals(object obj)
     {
       var other = obj as InvolvedTypeMember;
-      return other != null && s_equalityComparer.Equals(MemberInfo, other.MemberInfo);
+      return other != null && EqualityComparer.Equals(MemberInfo, other.MemberInfo);
     }
 
     public override int GetHashCode()
