@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ArgumentUtility.cs" />
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ErrorAggregator.cs" />
     <Compile Include="IdentifierGenerator.cs" />
     <Compile Include="IdentifierPopulator.cs" />

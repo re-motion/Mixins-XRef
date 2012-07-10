@@ -19,15 +19,15 @@ namespace MixinXRefConsole
       var options = new OptionSet
                       {
                         {
-                          "i|input-directory=", "Directory that contains the assemblies to analyze",
+                          "i=|input-directory=", "Directory that contains the assemblies to analyze",
                           v => cmdLineArgs.AssemblyDirectory = v
                         }, 
                         {
-                          "o|output-directory=", "Output directory. Execution is stopped if this directory exists. Force overwrite with -f.",
+                          "o=|output-directory=", "Output directory. Execution is stopped if this directory exists. Force overwrite with -f.",
                           v => cmdLineArgs.OutputDirectory = v
                         }, 
                         {
-                          "x|xml-outputfile=", "File path to a custom output file for the generated XML",
+                          "x=|xml-outputfile=", "File path to a custom output file for the generated XML",
                           v => cmdLineArgs.XMLOutputFileName = v
                         }, 
                         {
@@ -48,7 +48,7 @@ namespace MixinXRefConsole
                             }
                         }, 
                         {
-                          "c|custom-reflector=", "An assembly qualified type name that is used as a custom reflector. " + 
+                          "c=|custom-reflector=", "An assembly qualified type name that is used as a custom reflector. " + 
                                                  "This type has to implement " + typeof (IRemotionReflector).Name + ".",
                           v =>
                             {
@@ -57,7 +57,7 @@ namespace MixinXRefConsole
                             }
                         }, 
                         {
-                          "w|ignore-warning=", "A list of assembly names to ignore. Names must be separated by a semicolon. ",
+                          "w=|ignore-warning=", "A list of assembly names to ignore. Names must be separated by a semicolon. ",
                           v => cmdLineArgs.IgnoredAssemblies = v.Split (';').Select (n => n.Trim ())
                         },
                         {

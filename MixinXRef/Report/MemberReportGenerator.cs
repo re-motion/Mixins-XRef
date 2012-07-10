@@ -49,18 +49,23 @@ namespace MixinXRef.Report
       return new XElement ("Members", type.Members.Select (CreateMemberElement));
     }
 
+    private string GetMemberName(MemberInfo memberInfo)
+    {
+      // remove interface name if member is explicit interface implementation
+      // greater 0 because ".ctor" would be changed to "ctor"
+      var lastPoint = memberInfo.Name.LastIndexOf ('.');
+      return (lastPoint > 0) ? memberInfo.Name.Substring (lastPoint + 1) : memberInfo.Name;
+    }
+
     private XElement CreateMemberElement (InvolvedTypeMember member)
     {
-      var memberInfo = member.MemberInfo;
+      var memberInfo = member.MemberInfo.MainMember;
 
       var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
       if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
         return null;
 
-      // remove interface name if member is explicit interface implementation
-      // greater 0 because ".ctor" would be changed to "ctor"
-      var lastPoint = memberInfo.Name.LastIndexOf ('.');
-      var memberName = (lastPoint > 0) ? memberInfo.Name.Substring (lastPoint + 1) : memberInfo.Name;
+      var memberName = GetMemberName(memberInfo);
 
       var attributes = new StringBuilder ();
 
@@ -81,14 +86,33 @@ namespace MixinXRef.Report
           overridesElement == null && overriddenElement == null)
         return null;
 
-      var element = new XElement ("Member", new XAttribute ("id", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
-                                            new XAttribute ("type", memberInfo.MemberType),
-                                            new XAttribute ("name", memberName),
-                                            new XAttribute ("is-declared-by-this-class", memberInfo.DeclaringType == _type),
-                                            _outputFormatter.CreateModifierMarkup (attributes.ToString (), memberModifier),
-                                            _memberSignatureUtility.GetMemberSignatur (memberInfo),
-                                            overridesElement,
-                                            overriddenElement);
+      var element = new XElement("Member", new XAttribute("id", _memberIdentifierGenerator.GetIdentifier(memberInfo)),
+                                 new XAttribute("type", memberInfo.MemberType),
+                                 new XAttribute("name", memberName),
+                                 new XAttribute("is-declared-by-this-class", memberInfo.DeclaringType == _type),
+                                 _outputFormatter.CreateModifierMarkup(attributes.ToString(), memberModifier),
+                                 _memberSignatureUtility.GetMemberSignature(memberInfo),
+                                 member.MemberInfo.SubMembers.Select(CreateSubMemberElement),
+                                 overridesElement,
+                                 overriddenElement);
+      return element;
+    }
+
+    private XElement CreateSubMemberElement(MemberInfo memberInfo)
+    {
+      var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
+      if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
+        return null;
+
+      var memberName = GetMemberName (memberInfo);
+
+      var attributes = new StringBuilder ();
+
+      var element = new XElement("SubMember", new XAttribute("id", _memberIdentifierGenerator.GetIdentifier(memberInfo)),
+                                 new XAttribute("type", memberInfo.MemberType),
+                                 new XAttribute("name", memberName),
+                                 _outputFormatter.CreateModifierMarkup(attributes.ToString(), memberModifier),
+                                 _memberSignatureUtility.GetMemberSignature(memberInfo));
       return element;
     }
 
@@ -136,12 +160,22 @@ namespace MixinXRef.Report
                                     new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (overridingType)));
     }
 
-    private XElement CreateMemberReferenceElement (string typeName, MemberInfo memberInfo)
+    private XElement CreateMemberReferenceElement (string typeName, AdvancedMemberInfo memberInfo)
     {
-      return new XElement ("Member-Reference", new XAttribute ("ref", _memberIdentifierGenerator.GetIdentifier (memberInfo)),
-                                               new XAttribute ("type", typeName),
-                                               new XAttribute ("member-name", memberInfo.Name),
-                                               new XAttribute ("member-signature", memberInfo.ToString ()));
+      return new XElement("Member-Reference",
+                          new XAttribute("ref", _memberIdentifierGenerator.GetIdentifier(memberInfo.MainMember)),
+                          new XAttribute("type", typeName),
+                          new XAttribute("member-name", memberInfo.MainMember.Name),
+                          new XAttribute("member-signature", memberInfo.ToString()),
+                          memberInfo.SubMembers.Select(CreateSubMemberReferenceElement));
+    }
+
+    private XElement CreateSubMemberReferenceElement(MemberInfo memberInfo)
+    {
+      return new XElement("SubMember-Reference",
+                          new XAttribute("ref", _memberIdentifierGenerator.GetIdentifier(memberInfo)),
+                          new XAttribute("member-name", memberInfo.Name),
+                          new XAttribute("member-signature", memberInfo.ToString()));
     }
 
     private static bool HasOverrideMixinAttribute (MemberInfo memberInfo)

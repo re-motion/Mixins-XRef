@@ -16,7 +16,7 @@ namespace MixinXRef.Formatting
       _outputFormatter = outputFormatter;
     }
 
-    public XElement GetMemberSignatur (MemberInfo memberInfo)
+    public XElement GetMemberSignature (MemberInfo memberInfo)
     {
       ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
 
