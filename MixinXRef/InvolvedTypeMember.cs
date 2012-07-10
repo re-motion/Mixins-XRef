@@ -16,13 +16,13 @@ namespace MixinXRef
 
     public AdvancedMemberInfo(MemberInfo memberInfo)
     {
-      Initialize(memberInfo);
-    }
-
-    private void Initialize(MemberInfo memberInfo)
-    {
       MainMember = memberInfo;
 
+      SetSubMembers (memberInfo);
+    }
+
+    private void SetSubMembers(MemberInfo memberInfo)
+    {
       if (memberInfo.MemberType == MemberTypes.Property)
       {
         var propInfo = ((PropertyInfo) memberInfo);
@@ -47,6 +47,8 @@ namespace MixinXRef
 
     public AdvancedMemberInfo(ReflectedObject overrideMember, MemberInfo baseMember)
     {
+      MainMember = baseMember;
+
       if (baseMember.MemberType == MemberTypes.Property)
       {
         var propInfo = ((PropertyInfo) baseMember);
@@ -61,7 +63,7 @@ namespace MixinXRef
       }
       else
       {
-        Initialize(baseMember);
+        SetSubMembers(baseMember);
       }
     }
   }
