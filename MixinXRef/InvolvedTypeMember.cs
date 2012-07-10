@@ -7,67 +7,6 @@ using MixinXRef.Utility;
 
 namespace MixinXRef
 {
-  public class AdvancedMemberInfo
-  {
-    public MemberInfo MainMember { get; private set; }
-    public IEnumerable<MemberInfo> SubMembers { get { return _subMembers; }}
-
-    private readonly List<MemberInfo> _subMembers = new List<MemberInfo>(); 
-
-    public AdvancedMemberInfo(MemberInfo memberInfo)
-    {
-      MainMember = memberInfo;
-
-      SetSubMembers (memberInfo);
-    }
-
-    private void SetSubMembers(MemberInfo memberInfo)
-    {
-      if (memberInfo.MemberType == MemberTypes.Property)
-      {
-        var propInfo = ((PropertyInfo) memberInfo);
-
-        var getMethod = propInfo.GetGetMethod();
-        if (getMethod != null)
-          _subMembers.Add(getMethod);
-
-        var setMethod = propInfo.GetSetMethod();
-        if (setMethod != null)
-          _subMembers.Add(setMethod);
-      }
-
-      if (memberInfo.MemberType == MemberTypes.Event)
-      {
-        var eventInfo = ((EventInfo) memberInfo);
-
-        _subMembers.Add(eventInfo.GetAddMethod());
-        _subMembers.Add(eventInfo.GetRemoveMethod());
-      }
-    }
-
-    public AdvancedMemberInfo(ReflectedObject overrideMember, MemberInfo baseMember)
-    {
-      MainMember = baseMember;
-
-      if (baseMember.MemberType == MemberTypes.Property)
-      {
-        var propInfo = ((PropertyInfo) baseMember);
-
-        var getMethod = propInfo.GetGetMethod ();
-        if (getMethod != null && overrideMember.GetProperty("GetMethod") != null)
-          _subMembers.Add (getMethod);
-
-        var setMethod = propInfo.GetSetMethod ();
-        if (setMethod != null && overrideMember.GetProperty ("SetMethod") != null)
-          _subMembers.Add(setMethod);
-      }
-      else
-      {
-        SetSubMembers(baseMember);
-      }
-    }
-  }
-
   public class InvolvedTypeMember : IVisitableInvolved
   {
     private static readonly IEqualityComparer<MemberInfo> s_equalityComparer = new MemberDefinitionEqualityComparer();
@@ -77,38 +16,67 @@ namespace MixinXRef
     {
       ArgumentUtility.CheckNotNull("memberInfo", memberInfo);
 
-      MemberInfo = new AdvancedMemberInfo(memberInfo);
+      MemberInfo = memberInfo;
+      SubMemberInfos = GetSubMemberInfos(memberInfo);
       MixinMemberDefinitions = mixinMemberDefinitions ?? Enumerable.Empty<ReflectedObject>();
       TargetMemberDefinition = targetMemberDefinition;
 
-      OverriddenMixinMembers = GetOverriddenMixinMembers();
-      OverriddenTargetMembers = GetOverriddenTargetMembers();
+      MixinOverrideInfos = GetMixinOverrideInfos();
+      TargetOverrideInfos = GetTargetOverrideInfos();
       OverridingMixinTypes = GetOverridingMixinTypes();
       OverridingTargetTypes = GetOverridingTargetTypes();
     }
 
-    private IEnumerable<AdvancedMemberInfo> GetOverriddenTargetMembers()
+    private IEnumerable<MemberInfo> GetSubMemberInfos(MemberInfo memberInfo)
+    {
+      var subMembers = new List<MemberInfo>();
+
+      if (memberInfo.MemberType == MemberTypes.Property)
+      {
+        var propInfo = ((PropertyInfo) memberInfo);
+
+        var getMethod = propInfo.GetGetMethod ();
+        if (getMethod != null)
+          subMembers.Add (getMethod);
+
+        var setMethod = propInfo.GetSetMethod ();
+        if (setMethod != null)
+          subMembers.Add (setMethod);
+      }
+
+      if (memberInfo.MemberType == MemberTypes.Event)
+      {
+        var eventInfo = ((EventInfo) memberInfo);
+
+        subMembers.Add(eventInfo.GetAddMethod());
+        subMembers.Add(eventInfo.GetRemoveMethod());
+      }
+
+      return subMembers;
+    }
+
+    private IEnumerable<OverrideInfo> GetTargetOverrideInfos ()
     {
       if (!MixinMemberDefinitions.Any())
-        return Enumerable.Empty<AdvancedMemberInfo> ();
+        return Enumerable.Empty<OverrideInfo> ();
 
       return MixinMemberDefinitions.Select(m => new {Override = m, Base = m.GetProperty("BaseAsMember")}).Where(
         m => m.Base != null).Select(
           m => new {Override = m.Override, BaseMember = m.Base.GetProperty("MemberInfo").To<MemberInfo>()}).DistinctBy(
-            m => m.BaseMember).Select(m => new AdvancedMemberInfo(m.Override, m.BaseMember));
+            m => m.BaseMember).Select(m => new OverrideInfo(m.Override, m.BaseMember));
     }
 
-    private IEnumerable<AdvancedMemberInfo> GetOverriddenMixinMembers ()
+    private IEnumerable<OverrideInfo> GetMixinOverrideInfos ()
     {
       if (TargetMemberDefinition == null)
-        return Enumerable.Empty<AdvancedMemberInfo> ();
+        return Enumerable.Empty<OverrideInfo> ();
 
       var baseMember = TargetMemberDefinition.GetProperty("BaseAsMember");
 
       if (baseMember == null)
-        return Enumerable.Empty<AdvancedMemberInfo>();
+        return Enumerable.Empty<OverrideInfo> ();
 
-      return new[] {new AdvancedMemberInfo(TargetMemberDefinition, baseMember.GetProperty("MemberInfo").To<MemberInfo>())};
+      return new[] { new OverrideInfo (TargetMemberDefinition, baseMember.GetProperty ("MemberInfo").To<MemberInfo> ()) };
     }
 
     private IEnumerable<Type> GetOverridingMixinTypes()
@@ -131,13 +99,15 @@ namespace MixinXRef
           o => o.GetProperty("DeclaringClass").GetProperty("Type").To<Type>());
     }
 
-    public AdvancedMemberInfo MemberInfo { get; private set; }
+    public MemberInfo MemberInfo { get; private set; }
+    public IEnumerable<MemberInfo> SubMemberInfos { get; private set; } 
 
     public ReflectedObject TargetMemberDefinition { get; private set; }
     public IEnumerable<ReflectedObject> MixinMemberDefinitions { get; private set; }
 
-    public IEnumerable<AdvancedMemberInfo> OverriddenMixinMembers { get; private set; }
-    public IEnumerable<AdvancedMemberInfo> OverriddenTargetMembers { get; private set; }
+    public IEnumerable<OverrideInfo> MixinOverrideInfos { get; private set; }
+    public IEnumerable<OverrideInfo> TargetOverrideInfos { get; private set; }
+
     public IEnumerable<Type> OverridingMixinTypes { get; private set; }
     public IEnumerable<Type> OverridingTargetTypes { get; private set; }
 
@@ -149,7 +119,7 @@ namespace MixinXRef
     public override bool Equals(object obj)
     {
       var other = obj as InvolvedTypeMember;
-      return other != null && s_equalityComparer.Equals(MemberInfo.MainMember, other.MemberInfo.MainMember);
+      return other != null && s_equalityComparer.Equals(MemberInfo, other.MemberInfo);
     }
 
     public override int GetHashCode()

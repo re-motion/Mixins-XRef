@@ -77,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalTypesCollector.cs" />
+    <Compile Include="OverriddenMemberInfo.cs" />
+    <Compile Include="OverrideInfo.cs" />
     <Compile Include="XRef.cs" />
     <Compile Include="XRefArguments.cs" />
     <Compile Include="Formatting\MemberModifierUtility.cs" />

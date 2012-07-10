@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Report
@@ -59,7 +56,7 @@ namespace MixinXRef.Report
 
     private XElement CreateMemberElement (InvolvedTypeMember member)
     {
-      var memberInfo = member.MemberInfo.MainMember;
+      var memberInfo = member.MemberInfo;
 
       var memberModifier = _memberModifierUtility.GetMemberModifiers (memberInfo);
       if (memberModifier.Contains ("private")) // memberModifier.Contains ("internal")
@@ -92,7 +89,7 @@ namespace MixinXRef.Report
                                  new XAttribute("is-declared-by-this-class", memberInfo.DeclaringType == _type),
                                  _outputFormatter.CreateModifierMarkup(attributes.ToString(), memberModifier),
                                  _memberSignatureUtility.GetMemberSignature(memberInfo),
-                                 member.MemberInfo.SubMembers.Select(CreateSubMemberElement),
+                                 member.SubMemberInfos.Select(CreateSubMemberElement),
                                  overridesElement,
                                  overriddenElement);
       return element;
@@ -139,8 +136,8 @@ namespace MixinXRef.Report
     {
       var overriddenMembersElement = new XElement ("OverriddenMembers");
 
-      var overriddenMixinMembers = member.OverriddenMixinMembers;
-      var overriddenTargetMembers = member.OverriddenTargetMembers;
+      var overriddenMixinMembers = member.MixinOverrideInfos;
+      var overriddenTargetMembers = member.TargetOverrideInfos;
 
       if (!overriddenMixinMembers.Any () && !overriddenTargetMembers.Any ())
         return null;
@@ -160,21 +157,22 @@ namespace MixinXRef.Report
                                     new XAttribute ("instance-name", _outputFormatter.GetShortFormattedTypeName (overridingType)));
     }
 
-    private XElement CreateMemberReferenceElement (string typeName, AdvancedMemberInfo memberInfo)
+    private XElement CreateMemberReferenceElement (string typeName, OverrideInfo overrideInfo)
     {
       return new XElement("Member-Reference",
-                          new XAttribute("ref", _memberIdentifierGenerator.GetIdentifier(memberInfo.MainMember)),
+                          new XAttribute("ref", _memberIdentifierGenerator.GetIdentifier(overrideInfo.MainMemberInfo)),
                           new XAttribute("type", typeName),
-                          new XAttribute("member-name", memberInfo.MainMember.Name),
-                          new XAttribute("member-signature", memberInfo.ToString()),
-                          memberInfo.SubMembers.Select(CreateSubMemberReferenceElement));
+                          new XAttribute ("member-name", overrideInfo.MainMemberInfo.Name),
+                          new XAttribute("member-signature", overrideInfo.ToString()),
+                          overrideInfo.SubMemberInfos.Select(CreateSubMemberReferenceElement));
     }
 
-    private XElement CreateSubMemberReferenceElement(MemberInfo memberInfo)
+    private XElement CreateSubMemberReferenceElement (OverriddenMemberInfo memberInfo)
     {
       return new XElement("SubMember-Reference",
-                          new XAttribute("ref", _memberIdentifierGenerator.GetIdentifier(memberInfo)),
-                          new XAttribute("member-name", memberInfo.Name),
+                          new XAttribute("override-ref", _memberIdentifierGenerator.GetIdentifier(memberInfo.OverrideMemberInfo)),
+                          new XAttribute("base-ref", _memberIdentifierGenerator.GetIdentifier(memberInfo.BaseMemberInfo)),
+                          new XAttribute("member-name", memberInfo.BaseMemberInfo),
                           new XAttribute("member-signature", memberInfo.ToString()));
     }
 

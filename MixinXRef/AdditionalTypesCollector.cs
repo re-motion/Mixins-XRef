@@ -11,8 +11,8 @@ namespace MixinXRef
 
     public void Visit (InvolvedTypeMember involvedTypeMember)
     {
-      _additionalTypes.AddRange (involvedTypeMember.OverriddenMixinMembers.Select (m => m.MainMember.DeclaringType));
-      _additionalTypes.AddRange (involvedTypeMember.OverriddenTargetMembers.Select (m => m.MainMember.DeclaringType));
+      _additionalTypes.AddRange (involvedTypeMember.MixinOverrideInfos.Select (m => m.MainMemberInfo.DeclaringType));
+      _additionalTypes.AddRange (involvedTypeMember.TargetOverrideInfos.Select (m => m.MainMemberInfo.DeclaringType));
     }
 
     public IEnumerable<Type> AdditionalTypes
