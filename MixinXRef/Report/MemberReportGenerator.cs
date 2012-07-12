@@ -54,6 +54,17 @@ namespace MixinXRef.Report
       return (lastPoint > 0) ? memberInfo.Name.Substring (lastPoint + 1) : memberInfo.Name;
     }
 
+    private int GetMetadataToken(MemberInfo memberInfo)
+    {
+      if (memberInfo.MemberType == MemberTypes.Property)
+        memberInfo = ((PropertyInfo) memberInfo).GetAccessors(true).First();
+
+      if (memberInfo.MemberType == MemberTypes.Event)
+        memberInfo = ((EventInfo) memberInfo).GetAddMethod(true);
+
+      return memberInfo.MetadataToken;
+    }
+
     private XElement CreateMemberElement (InvolvedTypeMember member)
     {
       MemberInfo memberInfo = member.MemberInfo;
@@ -84,6 +95,7 @@ namespace MixinXRef.Report
         return null;
 
       var element = new XElement("Member", new XAttribute("id", _memberIdentifierGenerator.GetIdentifier(memberInfo)),
+                                 new XAttribute("metadataToken", GetMetadataToken(memberInfo)),
                                  new XAttribute("type", memberInfo.MemberType),
                                  new XAttribute("name", memberName),
                                  new XAttribute("is-declared-by-this-class", memberInfo.DeclaringType == _type),
@@ -108,6 +120,7 @@ namespace MixinXRef.Report
       var attributes = new StringBuilder ();
 
       var element = new XElement("SubMember", new XAttribute("id", _memberIdentifierGenerator.GetIdentifier(subMember)),
+                                 new XAttribute("metadataToken", GetMetadataToken(memberInfo)),
                                  new XAttribute("type", memberInfo.MemberType),
                                  new XAttribute("name", memberName),
                                  _outputFormatter.CreateModifierMarkup(attributes.ToString(), memberModifier),

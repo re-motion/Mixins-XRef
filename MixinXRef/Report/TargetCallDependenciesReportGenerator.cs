@@ -38,10 +38,13 @@ namespace MixinXRef.Report
     {
       var targetClassDefinition = _mixinDefinition.GetProperty ("TargetClass");
       var requiredType = targetCallDependencyDefinition.GetProperty ("RequiredType").GetProperty ("Type").To<Type> ();
-      var element = new XElement ("Dependency", new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (requiredType.Assembly)),
-                                                new XAttribute ("namespace", requiredType.Namespace),
-                                                new XAttribute ("name", _outputFormatter.GetShortFormattedTypeName (requiredType)),
-                                                new XAttribute ("is-interface", requiredType.IsInterface));
+      var element = new XElement("Dependency",
+                                 new XAttribute("assembly-ref",
+                                                _assemblyIdentifierGenerator.GetIdentifier(requiredType.Assembly)),
+                                 new XAttribute("metadataToken", requiredType.MetadataToken),
+                                 new XAttribute("namespace", requiredType.Namespace),
+                                 new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(requiredType)),
+                                 new XAttribute("is-interface", requiredType.IsInterface));
       if (requiredType.IsInterface)
       {
         var implementedByTarget = targetClassDefinition.GetProperty ("ImplementedInterfaces").Any (i => i.To<Type> () == requiredType);

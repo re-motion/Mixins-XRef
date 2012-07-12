@@ -64,37 +64,43 @@ namespace MixinXRef.Report
     {
       var realType = involvedType.Type;
 
-      var element = new XElement (
-          "InvolvedType",
-          new XAttribute ("id", _involvedTypeIdentifierGenerator.GetIdentifier (realType)),
-          new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (realType.Assembly)),
-          new XAttribute ("namespace", realType.Namespace),
-          new XAttribute ("name", _outputFormatter.GetShortFormattedTypeName (realType)),
-          new XAttribute ("base", GetCSharpLikeNameForBaseType (realType)),
-          new XAttribute ("base-ref", GetBaseReference (realType)),
-          new XAttribute ("is-target", involvedType.IsTarget),
-          new XAttribute ("is-mixin", involvedType.IsMixin),
-          new XAttribute ("is-unusedmixin", !involvedType.IsTarget && !involvedType.IsMixin && _remotionReflector.IsInheritedFromMixin (involvedType.Type) && !_remotionReflector.IsInfrastructureType (involvedType.Type)),
-          new XAttribute ("is-generic-definition", realType.IsGenericTypeDefinition),
-          new XAttribute ("is-interface", realType.IsInterface),
-          _outputFormatter.CreateModifierMarkup (GetAlphabeticOrderingAttribute (involvedType), _typeModifierUtility.GetTypeModifiers (realType)),
-          _summaryPicker.GetSummary (realType),
-          new MemberReportGenerator (realType, involvedType, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).GenerateXml (),
-          new InterfaceReferenceReportGenerator (
-              involvedType, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml (),
-          new AttributeReferenceReportGenerator (
-              realType, _attributeIdentifierGenerator, _remotionReflector).GenerateXml (),
-          new MixinReferenceReportGenerator (
-              involvedType,
-              _assemblyIdentifierGenerator,
-              _involvedTypeIdentifierGenerator,
-              _interfaceIdentifierGenerator,
-              _attributeIdentifierGenerator,
-              _remotionReflector,
-              _outputFormatter).GenerateXml (),
-          new TargetReferenceReportGenerator (
-              involvedType, _involvedTypeIdentifierGenerator).GenerateXml ()
-          );
+      var element = new XElement(
+        "InvolvedType",
+        new XAttribute("id", _involvedTypeIdentifierGenerator.GetIdentifier(realType)),
+        new XAttribute("metadataToken", realType.MetadataToken),
+        new XAttribute("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier(realType.Assembly)),
+        new XAttribute("namespace", realType.Namespace),
+        new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(realType)),
+        new XAttribute("base", GetCSharpLikeNameForBaseType(realType)),
+        new XAttribute("base-ref", GetBaseReference(realType)),
+        new XAttribute("is-target", involvedType.IsTarget),
+        new XAttribute("is-mixin", involvedType.IsMixin),
+        new XAttribute("is-unusedmixin",
+                       !involvedType.IsTarget && !involvedType.IsMixin &&
+                       _remotionReflector.IsInheritedFromMixin(involvedType.Type) &&
+                       !_remotionReflector.IsInfrastructureType(involvedType.Type)),
+        new XAttribute("is-generic-definition", realType.IsGenericTypeDefinition),
+        new XAttribute("is-interface", realType.IsInterface),
+        _outputFormatter.CreateModifierMarkup(GetAlphabeticOrderingAttribute(involvedType),
+                                              _typeModifierUtility.GetTypeModifiers(realType)),
+        _summaryPicker.GetSummary(realType),
+        new MemberReportGenerator(realType, involvedType, _involvedTypeIdentifierGenerator, _memberIdentifierGenerator,
+                                  _outputFormatter).GenerateXml(),
+        new InterfaceReferenceReportGenerator(
+          involvedType, _interfaceIdentifierGenerator, _remotionReflector).GenerateXml(),
+        new AttributeReferenceReportGenerator(
+          realType, _attributeIdentifierGenerator, _remotionReflector).GenerateXml(),
+        new MixinReferenceReportGenerator(
+          involvedType,
+          _assemblyIdentifierGenerator,
+          _involvedTypeIdentifierGenerator,
+          _interfaceIdentifierGenerator,
+          _attributeIdentifierGenerator,
+          _remotionReflector,
+          _outputFormatter).GenerateXml(),
+        new TargetReferenceReportGenerator(
+          involvedType, _involvedTypeIdentifierGenerator).GenerateXml()
+        );
 
       if (realType.IsGenericType && !realType.IsGenericTypeDefinition)
         element.Add (new XAttribute ("generic-definition-ref",
