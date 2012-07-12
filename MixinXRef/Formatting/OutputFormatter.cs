@@ -17,7 +17,7 @@ namespace MixinXRef.Formatting
       var name = BuildUnnestedTypeName (type);
 
       if (type.IsNested)
-        name = GetShortFormattedTypeName (type.DeclaringType) + "." + name;
+        name = GetShortFormattedTypeName (type.DeclaringType) + "+" + name;
 
       return name;
     }
