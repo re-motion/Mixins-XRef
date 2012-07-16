@@ -9,9 +9,12 @@ namespace MixinXRef.Reflection
 
     public string Component { get; private set; }
 
-    public ReflectorSupportAttribute (string component, string minVersion)
+    public string[] RequiredAssemblies { get; private set; }
+
+    public ReflectorSupportAttribute (string component, string minVersion, params string[] requiredAssemblies)
     {
       Component = component;
+      RequiredAssemblies = requiredAssemblies;
       MinVersion = new Version (minVersion);
     }
   }

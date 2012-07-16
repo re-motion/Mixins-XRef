@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -13,7 +14,7 @@ namespace MixinXRef.Reflection
     private readonly string _component;
     private readonly Version _version;
     private readonly string _assemblyDirectory;
-    private readonly IEnumerable<Type> _reflectors;
+    private readonly IEnumerable<Type> _reflectorTypes;
     private readonly IDictionary<MethodBase, IRemotionReflector> _reflectorInstances = new Dictionary<MethodBase, IRemotionReflector> ();
 
     protected ReflectorProvider (string component, Version version, IEnumerable<_Assembly> assemblies, string assemblyDirectory)
@@ -21,10 +22,22 @@ namespace MixinXRef.Reflection
       _component = component;
       _version = version;
       _assemblyDirectory = assemblyDirectory;
-      _reflectors = assemblies.SelectMany (a => a.GetExportedTypes ()).Where (IsValidReflector);
 
-      if (!_reflectors.Any ())
+      _reflectorTypes =
+        assemblies.SelectMany(a => a.GetExportedTypes()).Where(IsValidReflector);
+
+      if (!_reflectorTypes.Any ())
         throw new ArgumentException ("There are no valid reflectors in the given assemblies", "assemblies");
+
+      CheckAssemblyRequirements(_reflectorTypes.OrderByDescending(
+        t => t.GetAttribute<ReflectorSupportAttribute>().MinVersion).First(), assemblyDirectory);
+    }
+
+    private void CheckAssemblyRequirements(Type reflectorType, string assemblyDirectory)
+    {
+      foreach (var requiredAssembly in reflectorType.GetAttribute<ReflectorSupportAttribute> ().RequiredAssemblies)
+        if (!File.Exists (Path.Combine (assemblyDirectory, requiredAssembly)))
+          throw new MissingRequirementException(requiredAssembly);
     }
 
     protected IRemotionReflector GetCompatibleReflector (MethodBase methodBase)
@@ -48,7 +61,7 @@ namespace MixinXRef.Reflection
     private IRemotionReflector FindCompatibleReflector (MethodBase methodBase)
     {
       var parameterTypes = methodBase.GetParameters ().Select (p => p.ParameterType).ToArray ();
-      var methods = _reflectors
+      var methods = _reflectorTypes
         .Select (
           t =>
           t.GetMethod (methodBase.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly, null, parameterTypes, null))

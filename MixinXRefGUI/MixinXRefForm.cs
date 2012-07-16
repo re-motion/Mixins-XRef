@@ -46,7 +46,7 @@ namespace MixinXRefGUI
       UpdateEnabledStatusOfShowResultButton ();
       _xrefWorker = new BackgroundWorker ();
       _xrefWorker.DoWork += (sender, args) => RunXRef ((XRefArguments) args.Argument);
-      _xrefWorker.RunWorkerCompleted += (sender, args) => OnXRefFinished ();
+      _xrefWorker.RunWorkerCompleted += (sender, args) => OnXRefFinished (args);
     }
 
     protected override void OnClosing (CancelEventArgs e)
@@ -95,8 +95,11 @@ namespace MixinXRefGUI
       TalkBackInvoke.Action (sender => XRef.Run (options, sender), message => AppendTextToLogTextBoxAsync (message.Text));
     }
 
-    private void OnXRefFinished ()
+    private void OnXRefFinished (RunWorkerCompletedEventArgs args)
     {
+      if (args.Error != null)
+        throw args.Error;
+
       SetStartMixinRefButtonEnabled (true);
 
       if (File.Exists (GetResultFilePath ()))

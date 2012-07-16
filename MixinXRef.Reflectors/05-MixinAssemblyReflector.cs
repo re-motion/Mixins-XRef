@@ -7,7 +7,7 @@ using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
-  [ReflectorSupport ("Remotion", "1.13.141")]
+  [ReflectorSupport ("Remotion", "1.13.141", "Remotion.Mixins.dll")]
   public class MixinAssemblyReflector : RemotionReflectorBase
   {
     private Assembly _mixinsAssembly;

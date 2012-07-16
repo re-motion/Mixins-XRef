@@ -37,14 +37,14 @@ namespace MixinXRef
       {
         var success = false;
         s_log = logger;
-        //try
-        //{
+        try
+        {
           success = InternalRun (arguments);
-        //}
-        //catch (Exception ex)
-        //{
-        //  Log.SendError (ex.ToString ());
-        //}
+        }
+        catch (Exception ex)
+        {
+          Log.SendError (ex.ToString ());
+        }
         s_log = null;
         return success;
       }
@@ -57,27 +57,37 @@ namespace MixinXRef
         return false;
 
       IRemotionReflector reflector = null;
-      switch (arguments.ReflectorSource)
+
+      try
       {
-        case ReflectorSource.ReflectorAssembly:
-          reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, arguments.ReflectorPath);
-          break;
-        case ReflectorSource.CustomReflector:
-          var customReflector = Type.GetType (arguments.CustomReflectorAssemblyQualifiedTypeName);
-          if (customReflector == null)
-          {
-            Log.SendError ("Custom reflector can not be found");
-            return false;
-          }
-          if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
-          {
-            Log.SendError ("Specified custom reflector {0} does not implement {1}", customReflector, typeof (IRemotionReflector).FullName);
-            return false;
-          }
-          reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, customReflector);
-          break;
-        case ReflectorSource.Unspecified:
-          throw new IndexOutOfRangeException ("Reflector source is unspecified");
+        switch (arguments.ReflectorSource)
+        {
+          case ReflectorSource.ReflectorAssembly:
+            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, arguments.ReflectorPath);
+            break;
+          case ReflectorSource.CustomReflector:
+            var customReflector = Type.GetType (arguments.CustomReflectorAssemblyQualifiedTypeName);
+            if (customReflector == null)
+            {
+              Log.SendError ("Custom reflector can not be found");
+              return false;
+            }
+            if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
+            {
+              Log.SendError ("Specified custom reflector {0} does not implement {1}", customReflector,
+                            typeof (IRemotionReflector).FullName);
+              return false;
+            }
+            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, customReflector);
+            break;
+          case ReflectorSource.Unspecified:
+            throw new IndexOutOfRangeException ("Reflector source is unspecified");
+        }
+      }
+      catch (Exception ex)
+      {
+        Log.SendError("Error while initializing the reflector: {0}", ex.Message);
+        return false;
       }
 
       var assemblies = new AssemblyBuilder (arguments.AssemblyDirectory, arguments.IgnoredAssemblies)
@@ -141,6 +151,12 @@ namespace MixinXRef
       if (string.IsNullOrEmpty (arguments.AssemblyDirectory))
       {
         Log.SendError ("Input directory missing");
+        return false;
+      }
+
+      if (!File.Exists (Path.Combine (arguments.AssemblyDirectory, "Remotion.dll")))
+      {
+        Log.SendError("The input directory doesn't contain the remotion assembly.");
         return false;
       }
 
