@@ -5,6 +5,11 @@ namespace MixinXRef.Reflection.RemotionReflector
 {
   public abstract class RemotionReflectorBase : IRemotionReflector
   {
+    public virtual IRemotionReflector Initialize(string assemblyDirectory)
+    {
+      return this;
+    }
+
     public virtual bool IsRelevantAssemblyForConfiguration (Assembly assembly)
     {
       throw new NotSupportedException ();

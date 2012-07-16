@@ -20,7 +20,7 @@ namespace MixinXRef.UnitTests.Reflection
       assembly1.Stub (a => a.GetExportedTypes ())
         .Return (new[] { typeof (ClassImplementingRemotionReflectorV1_13_32), typeof (ClassImplementingRemotionReflectorV1_13_141) });
 
-      var reflector = new RemotionReflectorStub ("Remotion", new Version (1, 13, 150), new[] { assembly1 }, new[] { "." });
+      var reflector = new RemotionReflectorStub ("Remotion", new Version (1, 13, 150), new[] { assembly1 }, ".");
       reflector.CallMethod (typeof (IRemotionReflector).GetMethod ("IsInfrastructureType", new[] { typeof (Type) }));
 
       Assert.That (reflector.ReceivedReflector, Is.InstanceOfType (typeof (ClassImplementingRemotionReflectorV1_13_141)));
@@ -34,7 +34,7 @@ namespace MixinXRef.UnitTests.Reflection
 
       try
       {
-        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, new[] { "." });
+        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, ".");
         remotionReflector.IsInheritedFromMixin (typeof (int));
 
         Assert.Fail ("Expected exception {0} was not thrown", typeof (NotSupportedException));
@@ -51,7 +51,7 @@ namespace MixinXRef.UnitTests.Reflection
 
       try
       {
-        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, new[] { "." });
+        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, ".");
         remotionReflector.IsInheritedFromMixin (typeof (int));
 
         Assert.Fail ("Expected exception {0} was not thrown", typeof (NotSupportedException));
@@ -68,7 +68,7 @@ namespace MixinXRef.UnitTests.Reflection
 
       try
       {
-        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 11, 20), new[] { assembly1 }, new[] { "." });
+        var remotionReflector = new RemotionReflector ("Remotion", new Version (1, 11, 20), new[] { assembly1 }, ".");
         remotionReflector.IsInfrastructureType (typeof (int));
 
         Assert.Fail ("Expected exception {0} was not thrown", typeof (AmbiguousMatchException));
@@ -83,7 +83,7 @@ namespace MixinXRef.UnitTests.Reflection
       var assembly1 = MockRepository.GenerateStub<_Assembly> ();
       assembly1.Stub (a => a.GetExportedTypes ()).Return (new[] { typeof (ClassImplementingRemotionReflectorV1_13_32), typeof (ClassWithAmbiguousMethod1), typeof (ClassWithAmbiguousMethod2) });
 
-      var reflector = new RemotionReflectorStub ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, new[] { "." });
+      var reflector = new RemotionReflectorStub ("Remotion", new Version (1, 13, 32), new[] { assembly1 }, ".");
       reflector.CallMethod (typeof (IRemotionReflector).GetMethod ("IsInfrastructureType", new[] { typeof (Type) }));
 
       Assert.That (reflector.ReceivedReflector, Is.InstanceOfType (typeof (ClassImplementingRemotionReflectorV1_13_32)));

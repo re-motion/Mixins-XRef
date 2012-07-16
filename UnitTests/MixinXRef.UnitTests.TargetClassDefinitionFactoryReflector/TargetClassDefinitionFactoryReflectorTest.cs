@@ -18,7 +18,7 @@ namespace MixinXRef.UnitTests.TargetClassDefinitionFactoryReflector
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new Reflectors.TargetClassDefinitionFactoryReflector (".");
+      _remotionReflector = new Reflectors.TargetClassDefinitionFactoryReflector().Initialize (".");
     }
 
     [Test]

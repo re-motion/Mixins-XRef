@@ -10,7 +10,7 @@ namespace MixinXRef.UnitTests.Helpers
     public static IRemotionReflector GetRemotionReflection ()
     {
       // TODO Replace with mock if possible
-      return new RemotionReflector ("Remotion", new Version ("1.11.20"), new[] { Assembly.LoadFile (Path.GetFullPath ("MixinXRef.Reflectors.dll")) }, new[] { "." });
+      return new RemotionReflector ("Remotion", new Version ("1.11.20"), new[] { Assembly.LoadFile (Path.GetFullPath ("MixinXRef.Reflectors.dll")) }, ".");
     }
   }
 }

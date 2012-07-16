@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -8,9 +7,14 @@ namespace MixinXRef.Reflection.RemotionReflector
 {
   public class RemotionReflector : ReflectorProvider, IRemotionReflector
   {
-    public RemotionReflector (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
-      : base (component, version, assemblies, constructParameters)
+    public RemotionReflector (string component, Version version, IEnumerable<_Assembly> assemblies, string assemblyDirectory)
+      : base (component, version, assemblies, assemblyDirectory)
     { }
+
+    public IRemotionReflector Initialize (string assemblyDirectory)
+    {
+      return this;
+    }
 
     public bool IsRelevantAssemblyForConfiguration (Assembly assembly)
     {

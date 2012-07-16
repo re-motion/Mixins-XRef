@@ -9,8 +9,8 @@ namespace MixinXRef.UnitTests.Stub
 {
   public class RemotionReflectorStub : ReflectorProvider
   {
-    public RemotionReflectorStub (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
-      : base (component, version, assemblies, constructParameters)
+    public RemotionReflectorStub (string component, Version version, IEnumerable<_Assembly> assemblies, string assemblyDirectory)
+      : base (component, version, assemblies, assemblyDirectory)
     { }
 
     public void CallMethod (MethodBase method)

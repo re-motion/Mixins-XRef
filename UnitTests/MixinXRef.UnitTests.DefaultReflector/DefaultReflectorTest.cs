@@ -19,7 +19,7 @@ namespace MixinXRef.UnitTests.DefaultReflector
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new Reflectors.DefaultReflector (".");
+      _remotionReflector = new Reflectors.DefaultReflector ().Initialize(".");
     }
 
     [Test]

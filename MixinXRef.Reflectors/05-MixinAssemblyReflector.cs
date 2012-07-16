@@ -10,11 +10,15 @@ namespace MixinXRef.Reflectors
   [ReflectorSupport ("Remotion", "1.13.141")]
   public class MixinAssemblyReflector : RemotionReflectorBase
   {
-    private readonly Assembly _mixinsAssembly;
+    private Assembly _mixinsAssembly;
 
-    public MixinAssemblyReflector (string assemblyDirectory)
+    public override IRemotionReflector Initialize (string assemblyDirectory)
     {
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
+
       _mixinsAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Mixins.dll");
+
+      return this;
     }
 
     public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)

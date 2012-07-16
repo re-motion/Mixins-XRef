@@ -21,12 +21,12 @@ namespace MixinXRef
       if (!assemblies.Any ())
         throw new ArgumentException ("There are no assemblies matching the given reflector source", "reflectorSource");
 
-      return new RemotionReflector ("Remotion", DetectVersion (assemblyDirectory), assemblies, new[] { assemblyDirectory });
+      return new RemotionReflector ("Remotion", DetectVersion (assemblyDirectory), assemblies, assemblyDirectory);
     }
 
     public static IRemotionReflector Create (string assemblyDirectory, Type customReflector)
     {
-      return (IRemotionReflector) Activator.CreateInstance (customReflector, assemblyDirectory);
+      return ((IRemotionReflector) Activator.CreateInstance(customReflector, assemblyDirectory)).Initialize(assemblyDirectory);
     }
 
     private static Version DetectVersion (string assemblyDirectory)

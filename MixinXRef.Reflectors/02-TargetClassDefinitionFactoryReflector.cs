@@ -10,12 +10,15 @@ namespace MixinXRef.Reflectors
   [ReflectorSupport ("Remotion", "1.13.23")]
   public class TargetClassDefinitionFactoryReflector : RemotionReflectorBase
   {
-    private readonly Assembly _remotionAssembly;
+    private Assembly _remotionAssembly;
 
-    public TargetClassDefinitionFactoryReflector (string assemblyDirectory)
+    public override IRemotionReflector Initialize (string assemblyDirectory)
     {
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
+
       _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
-      AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");
+
+      return this;
     }
 
     public override ReflectedObject GetTargetClassDefinition (Type targetType, ReflectedObject mixinConfiguration, ReflectedObject classContext)

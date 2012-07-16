@@ -10,15 +10,17 @@ namespace MixinXRef.Reflectors
   [ReflectorSupport ("Remotion", "1.11.20")]
   public class DefaultReflector : RemotionReflectorBase
   {
-    private readonly Assembly _remotionAssembly;
-    private readonly Assembly _remotionInterfaceAssembly;
+    private Assembly _remotionAssembly;
+    private Assembly _remotionInterfaceAssembly;
 
-    public DefaultReflector (string assemblyDirectory)
+    public override IRemotionReflector Initialize (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
       _remotionAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.dll");
       _remotionInterfaceAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Interfaces.dll");
+
+      return this;
     }
 
     public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)

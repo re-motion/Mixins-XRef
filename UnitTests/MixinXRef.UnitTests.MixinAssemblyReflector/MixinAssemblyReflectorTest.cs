@@ -21,7 +21,7 @@ namespace MixinXRef.UnitTests.MixinAssemblyReflector
     [SetUp]
     public void SetUp ()
     {
-      _remotionReflector = new Reflectors.MixinAssemblyReflector (".");
+      _remotionReflector = new Reflectors.MixinAssemblyReflector().Initialize (".");
     }
 
     [Test]

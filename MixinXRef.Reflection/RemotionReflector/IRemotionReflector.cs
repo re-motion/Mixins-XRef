@@ -1,11 +1,12 @@
 using System;
 using System.Reflection;
-using MixinXRef.Reflection.Utility;
 
 namespace MixinXRef.Reflection.RemotionReflector
 {
   public interface IRemotionReflector
   {
+    IRemotionReflector Initialize(string assemblyDirectory);
+
     bool IsRelevantAssemblyForConfiguration (Assembly assembly);
     bool IsNonApplicationAssembly (Assembly assembly);
     bool IsConfigurationException (Exception exception);

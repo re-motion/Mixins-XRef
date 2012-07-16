@@ -11,16 +11,8 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 {
   public class CustomRemotionReflector : IRemotionReflector
   {
-    private readonly Assembly _remotionAssembly;
-    private readonly Assembly _remotionInterfaceAssembly;
-
-    public CustomRemotionReflector (string assemblyDirectory)
-    {
-      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
-
-      _remotionAssembly = LoadFile (assemblyDirectory, "Remotion.dll");
-      _remotionInterfaceAssembly = LoadFile (assemblyDirectory, "Remotion.Interfaces.dll");
-    }
+    private Assembly _remotionAssembly;
+    private Assembly _remotionInterfaceAssembly;
 
     private Assembly LoadFile (string assemblyDirectory, string assemblyFileName)
     {
@@ -35,6 +27,16 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     public void LoadRemotionAssemblies ()
     {
       
+    }
+
+    public IRemotionReflector Initialize(string assemblyDirectory)
+    {
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
+
+      _remotionAssembly = LoadFile (assemblyDirectory, "Remotion.dll");
+      _remotionInterfaceAssembly = LoadFile (assemblyDirectory, "Remotion.Interfaces.dll");
+
+      return this;
     }
 
     public bool IsRelevantAssemblyForConfiguration(Assembly assembly)

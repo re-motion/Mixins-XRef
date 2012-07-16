@@ -12,15 +12,15 @@ namespace MixinXRef.Reflection
   {
     private readonly string _component;
     private readonly Version _version;
-    private readonly IEnumerable<object> _constructParameters;
+    private readonly string _assemblyDirectory;
     private readonly IEnumerable<Type> _reflectors;
     private readonly IDictionary<MethodBase, IRemotionReflector> _reflectorInstances = new Dictionary<MethodBase, IRemotionReflector> ();
 
-    protected ReflectorProvider (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
+    protected ReflectorProvider (string component, Version version, IEnumerable<_Assembly> assemblies, string assemblyDirectory)
     {
       _component = component;
       _version = version;
-      _constructParameters = constructParameters;
+      _assemblyDirectory = assemblyDirectory;
       _reflectors = assemblies.SelectMany (a => a.GetExportedTypes ()).Where (IsValidReflector);
 
       if (!_reflectors.Any ())
@@ -67,19 +67,12 @@ namespace MixinXRef.Reflection
                         methods[0].DeclaringType.GetAttribute<ReflectorSupportAttribute> ().MinVersion));
 
       var reflector = methods[0].DeclaringType;
-      return CreateInstanceOf (reflector, _constructParameters);
+      return CreateInstanceOf (reflector, _assemblyDirectory);
     }
 
-    private static IRemotionReflector CreateInstanceOf (Type type, IEnumerable<object> parameters)
+    private static IRemotionReflector CreateInstanceOf (Type type, string assemblyDirectory)
     {
-      try
-      {
-        return (IRemotionReflector) Activator.CreateInstance (type, parameters.ToArray ());
-      }
-      catch (MissingMethodException)
-      {
-        return (IRemotionReflector) Activator.CreateInstance (type);
-      }
+      return ((IRemotionReflector) Activator.CreateInstance(type)).Initialize(assemblyDirectory);
     }
   }
 }
