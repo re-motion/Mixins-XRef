@@ -97,7 +97,7 @@ namespace MixinXRef.UnitTests.Report
               new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -141,7 +141,7 @@ namespace MixinXRef.UnitTests.Report
               new TargetReferenceReportGenerator (involvedType1, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -288,7 +288,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -361,7 +361,7 @@ namespace MixinXRef.UnitTests.Report
               new TargetReferenceReportGenerator (involvedType2, _readOnlyInvolvedTypeIdentifierGenerator).GenerateXml ()
               ));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]

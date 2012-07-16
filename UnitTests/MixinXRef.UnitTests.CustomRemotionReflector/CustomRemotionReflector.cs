@@ -34,12 +34,12 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 
     public void LoadRemotionAssemblies ()
     {
-      throw new NotImplementedException();
+      
     }
 
     public bool IsRelevantAssemblyForConfiguration(Assembly assembly)
     {
-      throw new NotImplementedException();
+      return true;
     }
 
     public virtual bool IsNonApplicationAssembly (Assembly assembly)
@@ -106,12 +106,12 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
 
     public ReflectedObject GetTargetCallDependencies(ReflectedObject mixinDefinition)
     {
-      throw new NotImplementedException();
+      return mixinDefinition;
     }
 
     public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)
     {
-      throw new NotImplementedException();
+      return mixinDefinition;
     }
   }
 }

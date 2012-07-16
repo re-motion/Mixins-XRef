@@ -59,14 +59,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Remotion, Version=1.11.20.13, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MixinXRef.UnitTests\lib\Remotion.dll</HintPath>
+    <Reference Include="Remotion">
+      <HintPath>..\Remotion\1.11.20\Remotion.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -78,6 +78,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TalkBack, Version=0.7.2.0, Culture=neutral, PublicKeyToken=5aa5282d352f0130, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\TalkBack.0.7.2\lib\net35\TalkBack.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRemotionReflector.cs" />
@@ -92,6 +95,10 @@
     <ProjectReference Include="..\..\MixinXRef.Utility\MixinXRef.Utility.csproj">
       <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
       <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixinXRefConsole\MixinXRefConsole.csproj">
+      <Project>{FFDD0510-463C-4EF6-A9EC-576B99E2A949}</Project>
+      <Name>MixinXRefConsole</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MixinXRef\MixinXRef.csproj">
       <Project>{3D9AAC2C-20FB-45C0-B8BB-77B3ADB95D9F}</Project>

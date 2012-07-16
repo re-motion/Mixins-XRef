@@ -87,7 +87,7 @@ namespace MixinXRef.Report
           attributes.Append ("OverrideTarget ");
 
         overridesElement = CreateOverridesElement (member);
-        overriddenElement = CreateOverriddenElement (memberInfo);
+        overriddenElement = CreateOverriddenElement (member.MemberInfo);
       }
 
       if (memberInfo.DeclaringType != _type &&

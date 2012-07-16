@@ -94,7 +94,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "CompleteInterfacesTestClass.ICMyMixinTargetMyMixin"),
+              new XAttribute ("name", "CompleteInterfacesTestClass+ICMyMixinTargetMyMixin"),
               new XAttribute ("is-complete-interface", true),
               memberReportGenerator.GenerateXml (),
               new XElement (

@@ -76,7 +76,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("id", "0"),
               new XAttribute ("assembly-ref", "0"),
               new XAttribute ("namespace", "MixinXRef.UnitTests.TestDomain"),
-              new XAttribute ("name", "ClassWithNestedAttribute.NestedAttribute"),
+              new XAttribute ("name", "ClassWithNestedAttribute+NestedAttribute"),
               new XElement (
                   "AppliedTo",
                   new XElement (

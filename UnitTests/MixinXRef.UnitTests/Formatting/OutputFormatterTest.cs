@@ -75,7 +75,7 @@ namespace MixinXRef.UnitTests.Formatting
 
       var output = _outputFormatter.GetShortFormattedTypeName (weirdType);
 
-      Assert.That (output, Is.EqualTo ("OutputFormatterTest.G<T>"));
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest+G<T>"));
     }
 
     [Test]
@@ -83,7 +83,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance));
 
-      Assert.That (output, Is.EqualTo ("MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance"));
+      Assert.That (output, Is.EqualTo ("MemberSignatureTestClass+NestedClassWithInterfaceAndInheritance"));
     }
 
     class Nested
@@ -96,7 +96,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (Nested.VeryNested));
 
-      Assert.That (output, Is.EqualTo ("OutputFormatterTest.Nested.VeryNested"));
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest+Nested+VeryNested"));
     }
 
     class Nested<T>
@@ -109,7 +109,7 @@ namespace MixinXRef.UnitTests.Formatting
     {
       var output = _outputFormatter.GetShortFormattedTypeName (typeof (Nested<>.WithGenerics<>));
 
-      Assert.That (output, Is.EqualTo ("OutputFormatterTest.Nested<T>.WithGenerics<X>"));
+      Assert.That (output, Is.EqualTo ("OutputFormatterTest+Nested<T>+WithGenerics<X>"));
     }
 
     [Test]

@@ -6,6 +6,7 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Utility;
 using MixinXRef.Report;
+using MixinXRef.UnitTests.Helpers;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -55,7 +56,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -79,49 +80,64 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
-    public void GenerateXml_PropertyWithoutGetAndSet_Overridden ()
+    public void GenerateXml_PropertyWithGetAndSet_Overridden ()
     {
       var reportGenerator = CreateMemberReportGenerator (typeof (ClassWithProperty), new InvolvedType (typeof (ClassWithProperty)));
-
+      var property = typeof (ClassWithProperty).GetProperty("PropertyName");
       var output = reportGenerator.GenerateXml ();
 
-      // MemberReportGenerator removes get_* and set_* functions of properties
-      var expectedOutput = new XElement (
-          "Members",
-          new XElement (
-              "Member",
-              new XAttribute ("id", "0"),
-              new XAttribute ("type", MemberTypes.Constructor),
-              new XAttribute ("name", ".ctor"),
-              new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public"),
-              _outputFormatter.CreateConstructorMarkup ("ClassWithProperty", new ParameterInfo[0])
-              ),
-          new XElement (
-              "Member",
-              new XAttribute ("id", "1"),
-              new XAttribute ("type", MemberTypes.Method),
-              new XAttribute ("name", "DoSomething"),
-              new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public override"),
-              _outputFormatter.CreateMethodMarkup ("DoSomething", typeof (void), new ParameterInfo[0])
-              ),
-          new XElement (
-              "Member",
-              new XAttribute ("id", "2"),
-              new XAttribute ("type", MemberTypes.Property),
-              new XAttribute ("name", "PropertyName"),
-              new XAttribute ("is-declared-by-this-class", true),
-              _outputFormatter.CreateModifierMarkup ("", "public override"),
-              _outputFormatter.CreatePropertyMarkup ("PropertyName", typeof (string))
-              )
-          );
+      var expectedOutput = new XElement(
+        "Members",
+        new XElement(
+          "Member",
+          new XAttribute("id", "0"),
+          new XAttribute("type", MemberTypes.Constructor),
+          new XAttribute("name", ".ctor"),
+          new XAttribute("is-declared-by-this-class", true),
+          _outputFormatter.CreateModifierMarkup("", "public"),
+          _outputFormatter.CreateConstructorMarkup("ClassWithProperty", new ParameterInfo[0])
+          ),
+        new XElement(
+          "Member",
+          new XAttribute("id", "1"),
+          new XAttribute("type", MemberTypes.Method),
+          new XAttribute("name", "DoSomething"),
+          new XAttribute("is-declared-by-this-class", true),
+          _outputFormatter.CreateModifierMarkup("", "public override"),
+          _outputFormatter.CreateMethodMarkup("DoSomething", typeof (void), new ParameterInfo[0])
+          ),
+        new XElement(
+          "Member",
+          new XAttribute("id", "2"),
+          new XAttribute("type", MemberTypes.Property),
+          new XAttribute("name", "PropertyName"),
+          new XAttribute("is-declared-by-this-class", true),
+          _outputFormatter.CreateModifierMarkup("", "public override"),
+          _outputFormatter.CreatePropertyMarkup("PropertyName", typeof (string)),
+          new XElement(
+            "SubMember",
+            new XAttribute("id", "3"),
+            new XAttribute("type", MemberTypes.Method),
+            new XAttribute("name", "get_PropertyName"),
+            _outputFormatter.CreateModifierMarkup("", "public override"),
+            _outputFormatter.CreateMethodMarkup("get_PropertyName", typeof (string), new ParameterInfo[0])
+            ),
+          new XElement(
+            "SubMember",
+            new XAttribute("id", "4"),
+            new XAttribute("type", MemberTypes.Method),
+            new XAttribute("name", "set_PropertyName"),
+            _outputFormatter.CreateModifierMarkup("", "public override"),
+            _outputFormatter.CreateMethodMarkup("set_PropertyName", typeof (void), property.GetSetMethod().GetParameters())
+            )
+          )
+        );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -179,7 +195,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -221,7 +237,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     private XElement GenerateOverrides (string referenceTagName, string referenceID, string instanceName)
@@ -274,7 +290,7 @@ namespace MixinXRef.UnitTests.Report
               new XAttribute ("is-declared-by-this-class", true),
               _outputFormatter.CreateModifierMarkup ("", "public virtual"),
               _outputFormatter.CreateMethodMarkup ("OverriddenMethod", typeof (void), new ParameterInfo[0]),
-              GenerateOverrides ("Mixin-Reference", "0", "MemberOverrideTestClass.Mixin1")
+              GenerateOverrides ("Mixin-Reference", "0", "MemberOverrideTestClass+Mixin1")
               ),
           new XElement (
               "Member",
@@ -288,7 +304,7 @@ namespace MixinXRef.UnitTests.Report
               )
           );
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
 
     [Test]
@@ -404,7 +420,7 @@ namespace MixinXRef.UnitTests.Report
               new XElement (
                   "Mixin-Reference",
                   new XAttribute ("ref", 0),
-                  new XAttribute ("instance-name", "MemberOverrideTestClass.Mixin1")
+                  new XAttribute ("instance-name", "MemberOverrideTestClass+Mixin1")
                   ));
 
       Assert.That (output.XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Overrides").ToString (), Is.EqualTo (expectedOutput.ToString ()));
@@ -435,7 +451,7 @@ namespace MixinXRef.UnitTests.Report
               new XElement (
                   "Mixin-Reference",
                   new XAttribute ("ref", 0),
-                  new XAttribute ("instance-name", "BaseMemberOverrideTestClass.Mixin1")
+                  new XAttribute ("instance-name", "BaseMemberOverrideTestClass+Mixin1")
                   ));
 
       Assert.That (output.XPathSelectElement ("Member[@name='OverriddenMethod']").Element ("Overrides").ToString (), Is.EqualTo (expectedOutput.ToString ()));

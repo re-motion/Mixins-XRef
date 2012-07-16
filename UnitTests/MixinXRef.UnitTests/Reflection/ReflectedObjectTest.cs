@@ -259,7 +259,7 @@ namespace MixinXRef.UnitTests.Reflection
       var reflectedObject1 = new ReflectedObject ("string");
       var reflectedObject2 = new ReflectedObject ("string");
 
-      Assert.That (reflectedObject1, Is.EqualTo (reflectedObject2));
+      Assert.True(reflectedObject1.Equals(reflectedObject2));
     }
 
     [Test]
@@ -268,7 +268,7 @@ namespace MixinXRef.UnitTests.Reflection
       var reflectedObject1 = new ReflectedObject ("string");
       var reflectedObject2 = new ReflectedObject ("anotherString");
 
-      Assert.That (reflectedObject1, Is.Not.EqualTo (reflectedObject2));
+      Assert.False (reflectedObject1.Equals (reflectedObject2));
     }
 
     [Test]

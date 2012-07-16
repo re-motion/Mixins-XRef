@@ -58,11 +58,11 @@ namespace MixinXRef.UnitTests.Report
           new XElement (
               "AdditionalDependency",
               new XAttribute ("ref", "0"),
-              new XAttribute ("instance-name", "AdditionalDependenciesTest.Mixin1")),
+              new XAttribute ("instance-name", "AdditionalDependenciesTest+Mixin1")),
           new XElement (
               "AdditionalDependency",
               new XAttribute ("ref", "1"),
-              new XAttribute ("instance-name", "AdditionalDependenciesTest.Mixin2"))
+              new XAttribute ("instance-name", "AdditionalDependenciesTest+Mixin2"))
           );
 
       Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));

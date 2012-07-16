@@ -68,6 +68,7 @@
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -80,6 +81,7 @@
     <Compile Include="Helpers\RemotionReflectorFactory.cs" />
     <Compile Include="Helpers\ReportBuilder.cs" />
     <Compile Include="Helpers\StubFactory.cs" />
+    <Compile Include="Helpers\XElementComparisonHelper.cs" />
     <Compile Include="Reflection\FastMemberInvokerCacheTest.cs" />
     <Compile Include="Reflection\FastMemberInvokerGeneratorTest.cs" />
     <Compile Include="Reflection\MemberInfoEqualityUtilityTest.cs" />
@@ -261,7 +263,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\nunit.framework.dll" />
     <Content Include="TestDomain\fullReportGeneratorExpectedOutput.xml" />
     <Content Include="TestDomain\MixinXRef.UnitTests.NonApplicationAssembly.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

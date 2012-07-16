@@ -8,6 +8,7 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
+using MixinXRef.UnitTests.Helpers;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
 using NUnit.Framework;
@@ -54,7 +55,7 @@ namespace MixinXRef.UnitTests.Report
                                                      new XAttribute ("is-added-by-mixin", false),
                                                      new XAttribute ("is-implemented-dynamically", false)));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare(output, expectedOutput);
     }
 
     [Test]
@@ -83,7 +84,7 @@ namespace MixinXRef.UnitTests.Report
                                                      new XAttribute ("is-added-by-mixin", false),
                                                      new XAttribute ("is-implemented-dynamically", true)));
 
-      Assert.That (output.ToString (), Is.EqualTo (expectedOutput.ToString ()));
+      XElementComparisonHelper.Compare (output, expectedOutput);
     }
   }
 }
