@@ -53,12 +53,5 @@ namespace MixinXRef.Reflectors
       var targetClassDefinitionFactoryType = _mixinsAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
-
-    public override ReflectedObject GetValidationLogFromValidationException (Exception validationException)
-    {
-      ArgumentUtility.CheckNotNull ("validationException", validationException);
-
-      return new ReflectedObject (validationException).GetProperty ("ValidationLogData");
-    }
   }
 }

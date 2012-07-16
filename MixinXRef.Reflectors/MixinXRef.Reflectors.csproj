@@ -42,9 +42,10 @@
   <ItemGroup>
     <Compile Include="00-DefaultReflector.cs" />
     <Compile Include="02-TargetClassDefinitionFactoryReflector.cs" />
-    <Compile Include="04-MixinAssemblyReflector.cs" />
+    <Compile Include="05-MixinAssemblyReflector.cs" />
     <Compile Include="01-OldMixinDependenciesReflector.cs" />
     <Compile Include="03-NewMixinDependenciesReflector.cs" />
+    <Compile Include="04-ValidationLogDataReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
