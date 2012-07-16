@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
 
 namespace MixinXRef.Reflection
 {
-  public abstract class ReflectorProvider<T>
+  public abstract class ReflectorProvider
   {
     private readonly string _component;
     private readonly Version _version;
     private readonly IEnumerable<object> _constructParameters;
     private readonly IEnumerable<Type> _reflectors;
-    private readonly IDictionary<MethodBase, T> _reflectorInstances = new Dictionary<MethodBase, T> ();
+    private readonly IDictionary<MethodBase, IRemotionReflector> _reflectorInstances = new Dictionary<MethodBase, IRemotionReflector> ();
 
     protected ReflectorProvider (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
     {
@@ -26,9 +27,9 @@ namespace MixinXRef.Reflection
         throw new ArgumentException ("There are no valid reflectors in the given assemblies", "assemblies");
     }
 
-    protected T GetCompatibleReflector (MethodBase methodBase)
+    protected IRemotionReflector GetCompatibleReflector (MethodBase methodBase)
     {
-      T reflector;
+      IRemotionReflector reflector;
       if (!_reflectorInstances.TryGetValue (methodBase, out reflector))
         _reflectorInstances.Add (methodBase, reflector = FindCompatibleReflector (methodBase));
 
@@ -39,12 +40,12 @@ namespace MixinXRef.Reflection
     {
       var attribute = type.GetAttribute<ReflectorSupportAttribute> ();
       return attribute != null &&
-             typeof (T).IsAssignableFrom (type) &&
+             typeof (IRemotionReflector).IsAssignableFrom (type) &&
              attribute.Component == _component &&
              _version >= attribute.MinVersion;
     }
 
-    private T FindCompatibleReflector (MethodBase methodBase)
+    private IRemotionReflector FindCompatibleReflector (MethodBase methodBase)
     {
       var parameterTypes = methodBase.GetParameters ().Select (p => p.ParameterType).ToArray ();
       var methods = _reflectors
@@ -69,15 +70,15 @@ namespace MixinXRef.Reflection
       return CreateInstanceOf (reflector, _constructParameters);
     }
 
-    private static T CreateInstanceOf (Type type, IEnumerable<object> parameters)
+    private static IRemotionReflector CreateInstanceOf (Type type, IEnumerable<object> parameters)
     {
       try
       {
-        return (T) Activator.CreateInstance (type, parameters.ToArray ());
+        return (IRemotionReflector) Activator.CreateInstance (type, parameters.ToArray ());
       }
       catch (MissingMethodException)
       {
-        return (T) Activator.CreateInstance (type);
+        return (IRemotionReflector) Activator.CreateInstance (type);
       }
     }
   }

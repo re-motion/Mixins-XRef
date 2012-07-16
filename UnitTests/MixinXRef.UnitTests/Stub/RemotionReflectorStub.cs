@@ -7,7 +7,7 @@ using MixinXRef.Reflection.RemotionReflector;
 
 namespace MixinXRef.UnitTests.Stub
 {
-  public class RemotionReflectorStub : ReflectorProvider<IRemotionReflector>
+  public class RemotionReflectorStub : ReflectorProvider
   {
     public RemotionReflectorStub (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
       : base (component, version, assemblies, constructParameters)

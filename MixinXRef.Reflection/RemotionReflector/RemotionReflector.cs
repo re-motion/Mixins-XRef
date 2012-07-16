@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace MixinXRef.Reflection.RemotionReflector
 {
-  public class RemotionReflector : ReflectorProvider<IRemotionReflector>, IRemotionReflector
+  public class RemotionReflector : ReflectorProvider, IRemotionReflector
   {
     public RemotionReflector (string component, Version version, IEnumerable<_Assembly> assemblies, IEnumerable<object> constructParameters)
       : base (component, version, assemblies, constructParameters)
