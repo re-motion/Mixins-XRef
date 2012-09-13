@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
@@ -10,20 +11,26 @@ namespace MixinXRef.Reflectors
   [ReflectorSupport ("Remotion", "1.13.141", "Remotion.Mixins.dll")]
   public class MixinAssemblyReflector : RemotionReflectorBase
   {
+    private string _assemblyDirectory;
     private Assembly _mixinsAssembly;
+
+    private Assembly RemotionAssembly
+    {
+      get { return _mixinsAssembly ?? (_mixinsAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (_assemblyDirectory, "Remotion.Mixins.dll")))); }
+    }
 
     public override IRemotionReflector Initialize (string assemblyDirectory)
     {
       ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
 
-      _mixinsAssembly = AssemblyHelper.LoadFileOrNull (assemblyDirectory, "Remotion.Mixins.dll");
+      _assemblyDirectory = assemblyDirectory;
 
       return this;
     }
 
     public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)
     {
-      return assembly.GetReferencedAssemblies ().Any (r => r.FullName == _mixinsAssembly.GetName ().FullName);
+      return assembly.GetReferencedAssemblies ().Any (r => r.FullName == RemotionAssembly.GetName ().FullName);
     }
 
     public override bool IsInfrastructureType (Type type)
@@ -37,7 +44,7 @@ namespace MixinXRef.Reflectors
     {
       ArgumentUtility.CheckNotNull ("type", type);
 
-      var mixinBaseType = _mixinsAssembly.GetType ("Remotion.Mixins.IInitializableMixin", true);
+      var mixinBaseType = RemotionAssembly.GetType ("Remotion.Mixins.IInitializableMixin", true);
       return mixinBaseType.IsAssignableFrom (type);
     }
 
@@ -45,7 +52,7 @@ namespace MixinXRef.Reflectors
     {
       ArgumentUtility.CheckNotNull ("assemblies", assemblies);
 
-      var declarativeConfigurationBuilderType = _mixinsAssembly.GetType ("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
+      var declarativeConfigurationBuilderType = RemotionAssembly.GetType ("Remotion.Mixins.Context.DeclarativeConfigurationBuilder", true);
       return ReflectedObject.CallMethod (declarativeConfigurationBuilderType, "BuildConfigurationFromAssemblies", new object[] { assemblies });
     }
 
@@ -54,7 +61,7 @@ namespace MixinXRef.Reflectors
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
 
-      var targetClassDefinitionFactoryType = _mixinsAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
+      var targetClassDefinitionFactoryType = RemotionAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateTargetClassDefinition", classContext);
     }
 
