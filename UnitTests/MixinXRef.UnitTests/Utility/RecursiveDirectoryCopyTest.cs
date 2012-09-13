@@ -74,6 +74,7 @@ namespace MixinXRef.UnitTests.Utility
       var lastWriteTime1 = File.GetLastWriteTime (destinationFilePath);
 
       // last write time of the copied file is 'inherited' from source file, so we have to update it
+      System.Threading.Thread.Sleep(10);
       File.Create (sourceFilePath).Close ();
 
       Assert.That (Directory.Exists (destinationDirectoryPath), Is.True);
