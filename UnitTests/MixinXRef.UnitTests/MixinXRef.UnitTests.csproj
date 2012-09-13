@@ -201,6 +201,7 @@
     <Compile Include="TestDomain\TypeModifierTestClass.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TestDomain\UnusedMixin.cs" />
     <Compile Include="TestDomain\UselessObject.cs">
       <SubType>Code</SubType>
     </Compile>

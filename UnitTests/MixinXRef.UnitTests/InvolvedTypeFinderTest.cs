@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MixinXRef.Reflection;
+using MixinXRef.UnitTests.AssemblyNotReferencingMixins;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.UnitTests.Helpers;
 using MixinXRef.Utility;
@@ -135,6 +136,18 @@ namespace MixinXRef.UnitTests
 
 
       Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2, expectedType3)));
+    }
+
+    [Test]
+    public void FindInvolvedTypes_UnusedMixin ()
+    {
+      var mixinConfiguration = MixinConfiguration.BuildNew ()
+         .BuildConfiguration ();
+      var involvedTypeFinder = CreateInvolvedTypeFinder (mixinConfiguration, new[] { typeof (UnusedMixin).Assembly });
+
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes ();
+
+      Assert.That (involvedTypes, Contains.Item (new InvolvedType (typeof (UnusedMixin))));
     }
 
     [Test]
