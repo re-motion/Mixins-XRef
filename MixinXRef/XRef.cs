@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -104,13 +106,23 @@ namespace MixinXRef
                                    ? arguments.XMLOutputFileName
                                    : "MixinXRef.xml");
 
-      var relevantAssemblies = Array.FindAll (assemblies, a => !arguments.IgnoredAssemblies.Contains (a.GetName ().Name) && reflector.IsRelevantAssemblyForConfiguration (a));
-      var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (relevantAssemblies);
+      var refAssemblyNames = assemblies.SelectMany (assembly => assembly.GetReferencedAssemblies()).DistinctBy(assemblyName => assemblyName.FullName);
+      var alreadyLoadedAssemblyName = assemblies.Select (assembly => assembly.GetName()).ToArray();
+      
+      // Load referenced assemblies
+      var assemblyNamesToLoad = refAssemblyNames
+          .Except (alreadyLoadedAssemblyName)
+          .Where (assemblyName => !arguments.IgnoredAssemblies.Contains (assemblyName.Name));
+      var addtionalReferencedAssemblies = LoadAdditionalReferencedAssemblies(assemblyNamesToLoad);
+
+      var allAssemblies = assemblies.Concat (addtionalReferencedAssemblies).DistinctBy (assemblyName => assemblyName.FullName).ToArray ();
+
+      var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (allAssemblies);
       var outputFormatter = new OutputFormatter ();
       var configurationErrors = new ErrorAggregator<Exception> ();
       var validationErrors = new ErrorAggregator<Exception> ();
 
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, assemblies, configurationErrors, validationErrors, reflector).FindInvolvedTypes ();
+      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, allAssemblies, configurationErrors, validationErrors, reflector).FindInvolvedTypes ();
       var reportGenerator = new FullReportGenerator (involvedTypes, configurationErrors, validationErrors, reflector, outputFormatter);
       var outputDocument = reportGenerator.GenerateXmlDocument ();
 
@@ -146,6 +158,26 @@ namespace MixinXRef
       return true;
     }
 
+    private static IEnumerable<Assembly> LoadAdditionalReferencedAssemblies (IEnumerable<AssemblyName> assemblyNamesToLoad)
+    {
+      foreach (var assemblyName in assemblyNamesToLoad)
+      {
+        Assembly assembly = null;
+
+        try
+        {
+          assembly = Assembly.Load (assemblyName);
+        }
+        catch (FileNotFoundException ex)
+        {
+          Log.SendWarning ("Could not load assembly '{0}' due to '{1}'.", ex.FileName, ex.Message);
+        }
+
+        if(assembly != null)
+          yield return assembly;
+      }
+    }
+
     private static bool CheckArguments (XRefArguments arguments)
     {
       if (string.IsNullOrEmpty (arguments.AssemblyDirectory))
@@ -156,7 +188,7 @@ namespace MixinXRef
 
       if (!File.Exists (Path.Combine (arguments.AssemblyDirectory, "Remotion.dll")))
       {
-        Log.SendError("The input directory doesn't contain the remotion assembly.");
+        Log.SendError("The input directory '" + arguments.AssemblyDirectory + "' doesn't contain the remotion assembly.");
         return false;
       }
 
@@ -174,7 +206,7 @@ namespace MixinXRef
 
       if (!Directory.Exists (arguments.AssemblyDirectory))
       {
-        Log.SendError ("Input directory does not exist");
+        Log.SendError ("Input directory '" + arguments.AssemblyDirectory + "' does not exist");
         return false;
       }
 
