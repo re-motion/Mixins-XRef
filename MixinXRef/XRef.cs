@@ -172,6 +172,10 @@ namespace MixinXRef
         {
           Log.SendWarning ("Could not load assembly '{0}' due to '{1}'.", ex.FileName, ex.Message);
         }
+        catch (FileLoadException ex)
+        {
+          Log.SendError ("Could not load assembly '{0}' due to '{1}'.", assemblyName, ex.Message);
+        }
 
         if(assembly != null)
           yield return assembly;
