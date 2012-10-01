@@ -1,0 +1,65 @@
+**
+**  NOTICE file corresponding to the section 4 (4) of the Apache License, 
+**  Version 2.0.
+**
+
+MixinXRef
+https://svn.re-motion.org/svn/Remotion-Contrib/MixinXRef/
+Copyright (c) rubicon IT GmbH, www.rubicon.eu
+
+This software includes the following libraries:
+
+NDesk.Options
+Copyright: Novell
+License: MIT License
+Original software available from: http://www.ndesk.org/Options
+Usage: Program argument parsing
+Additional information: Source included within DependDB, no assembly dependency.
+
+NUnit
+Copyright: 2002-2012 Charlie Poole
+		   2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov
+		   2000-2002 Philip A. Craig
+License: NUnit License
+Original software available from: http://www.nunit.org
+Usage: Unit-Testing
+
+Rhino Mocks
+Copyright: Hibernating Rhinos
+License: BSD License
+Original software available from:
+	http://hibernatingrhinos.com/open-source/rhino-mocks
+Usage: Mocking
+
+TalkBack
+(included via NuGet package management)
+Copyright: rubicon IT  GmbH
+License: Apache Software License, Version 2.0
+Original software available from: http://talkback.codeplex.com/
+Usage: Inter-process communication
+
+Assemblies used to test the output of MixinXRef on given assemblies:
+
+Castle.Core.dll
+Castle.DynamicProxy.dll
+log4net.dll
+Microsoft.Practices.ServiceLocation.dll
+nunit.framework.dll
+Remotion.dll
+Remotion.Interfaces.dll
+Remotion.Mixins.dll
+Rhino.Mocks.dll
+
+Licenses:
+
+Apache Software License, Version 2.0
+http://www.apache.org/licenses/LICENSE-2.0.html
+
+BSD License
+http://opensource.org/licenses/bsd-license.php
+
+MIT License
+http://opensource.org/licenses/mit-license.php
+
+NUnit License
+http://nunit.org/index.php?p=license&r=2.6.1
