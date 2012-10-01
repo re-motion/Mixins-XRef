@@ -1,4 +1,5 @@
-﻿namespace MixinXRefGUI
+﻿
+namespace MixinXRefGUI
 {
   partial class MixinXRefForm
   {

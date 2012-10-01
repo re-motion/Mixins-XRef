@@ -333,6 +333,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\MixinXRef.licenseheader">
+      <Link>MixinXRef.licenseheader</Link>
+    </None>
     <None Include="MixinXRef.cd" />
     <None Include="packages.config" />
     <None Include="xml_utilities\resources\images\Sorting icons.psd">
