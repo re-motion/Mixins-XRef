@@ -107,6 +107,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MixinXRef.licenseheader = MixinXRef.licenseheader
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{26F59F87-6047-44A7-A8B3-AB9473D985C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWithWebConfigTest", "IntegrationTests\WebAppWithWebConfigTest\WebAppWithWebConfigTest.csproj", "{409BA07A-E7A8-45D7-97CF-E05537632141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -257,6 +261,16 @@ Global
 		{A89D03F1-E773-450D-A4B5-9959484270F9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A89D03F1-E773-450D-A4B5-9959484270F9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A89D03F1-E773-450D-A4B5-9959484270F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -275,5 +289,6 @@ Global
 		{E92C9C0E-7745-4D9A-B80A-15EF21883FA8} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{2A316855-8CAA-44C9-85D1-29E30C51C91C} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{24FE1F98-54C3-4507-BC29-B1DD6848A3B6} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{409BA07A-E7A8-45D7-97CF-E05537632141} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 	EndGlobalSection
 EndGlobal
