@@ -33,7 +33,7 @@ namespace MixinXRef
   public sealed class XRefArguments : ISerializable
   {
     private static XRefArguments s_instance;
-    public static XRefArguments Instance { get { return s_instance ?? (s_instance = new XRefArguments ()); } }
+    public static XRefArguments Instance { get { return s_instance ?? (s_instance = new XRefArguments ()); } set { s_instance = value; } }
 
     public string AssemblyDirectory { get; set; }
     public string OutputDirectory { get; set; }
@@ -44,6 +44,9 @@ namespace MixinXRef
     public string ReflectorPath { get; set; }
     public string CustomReflectorAssemblyQualifiedTypeName { get; set; }
     public IEnumerable<string> IgnoredAssemblies { get; set; }
+
+    public string AppConfigFile { get; set; }
+    public string AppBaseDirectory { get; set; }
 
     public XRefArguments ()
     {
@@ -61,6 +64,8 @@ namespace MixinXRef
       ReflectorPath = info.GetString ("ReflectorPath");
       CustomReflectorAssemblyQualifiedTypeName = info.GetString ("CustomReflectorAssemblyQualifiedTypeName");
       IgnoredAssemblies = (List<string>) info.GetValue ("IgnoredAssemblies", typeof (List<string>));
+      AppConfigFile = info.GetString ("AppConfigFile");
+      AppBaseDirectory = info.GetString ("AppBaseDirectory");
     }
 
     public void GetObjectData (SerializationInfo info, StreamingContext context)
@@ -74,6 +79,8 @@ namespace MixinXRef
       info.AddValue ("ReflectorPath", ReflectorPath);
       info.AddValue ("CustomReflectorAssemblyQualifiedTypeName", CustomReflectorAssemblyQualifiedTypeName);
       info.AddValue ("IgnoredAssemblies", IgnoredAssemblies.ToList ());
+      info.AddValue ("AppConfigFile", AppConfigFile);
+      info.AddValue ("AppBaseDirectory", AppBaseDirectory);
     }
   }
 }

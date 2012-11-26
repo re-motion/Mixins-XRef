@@ -16,6 +16,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 using System;
+using System.IO;
 using System.Linq;
 using MixinXRef;
 using MixinXRef.Reflection.RemotionReflector;
@@ -28,8 +29,6 @@ namespace MixinXRefConsole
   {
     private static int Main (string[] args)
     {
-      args = TalkBackChannel.Initialize (args);
-
       var cmdLineArgs = XRefArguments.Instance;
       var showOptionsHelp = false;
 
@@ -80,6 +79,14 @@ namespace MixinXRefConsole
                         {
                           "h|?|help", "Show this help page",
                           v => showOptionsHelp = true
+                        },
+                        {
+                          "app-config-file=", "Application configuration file for analyzed assemblies. ",
+                          v => cmdLineArgs.AppConfigFile = v
+                        },
+                        {
+                          "app-base-directory=", "Application base directory. ",
+                          v => cmdLineArgs.AppBaseDirectory = v
                         }
                       };
 
@@ -110,7 +117,30 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      return TalkBackInvoke.Action (sender => XRef.Run (cmdLineArgs, sender), MessageReceived) ? 0 : 1;
+      // Create new application domain and run cross referencer
+      var appDomain = AppDomain.CurrentDomain;
+      var setupInformation = appDomain.SetupInformation;
+      if(cmdLineArgs.AppBaseDirectory != null)
+      {
+        setupInformation.ApplicationBase = cmdLineArgs.AppBaseDirectory;
+
+        if(cmdLineArgs.AssemblyDirectory.StartsWith(cmdLineArgs.AppBaseDirectory))
+        {
+          // does cutting work?
+          var relativeSearchPath = cmdLineArgs.AssemblyDirectory.Remove (0, cmdLineArgs.AppBaseDirectory.Length);
+          // is privatebinpath empty?
+          setupInformation.PrivateBinPath = "." + relativeSearchPath;
+        }
+      }
+      if(cmdLineArgs.AppConfigFile != null)
+        setupInformation.ConfigurationFile = cmdLineArgs.AppConfigFile;
+
+      var newAppDomain = AppDomain.CreateDomain ("XRefAppDomain", null, setupInformation);
+
+      var crossAppDomainCommunicatorType = typeof (CrossAppDomainCommunicator);
+      var proxy = (CrossAppDomainCommunicator) newAppDomain.CreateInstanceFromAndUnwrap (crossAppDomainCommunicatorType.Assembly.Location, crossAppDomainCommunicatorType.FullName);
+
+      return proxy.Run (args, cmdLineArgs);
     }
 
     private static void MessageReceived (Message message)
