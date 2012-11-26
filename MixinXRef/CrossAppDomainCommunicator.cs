@@ -17,7 +17,8 @@ namespace MixinXRef
 
     public int Run (string[] talkbackArgs, XRefArguments cmdLineArgs)
     {
-      TalkBackChannel.Initialize (talkbackArgs);
+      if(talkbackArgs != null)
+        TalkBackChannel.Initialize (talkbackArgs);
 
       XRefArguments.Instance = cmdLineArgs;
       
