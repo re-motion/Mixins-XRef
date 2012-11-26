@@ -1,0 +1,5 @@
+Remotion local build:
+-i "C:\Development\Remotion\trunk\build\BuildOutput\temp\Binaries\net-3.5\bin\debug" -o "C:\Development\Remotion\trunk\build\BuildOutput\temp\Binaries\net-3.5\bin\debug" -f -s -r "MixinXRef.Reflectors*.dll"
+
+WebAppWithWebConfigTest:
+-i "C:\Development\MixinXRef\IntegrationTests\WebAppWithWebConfigTest\bin" -o "C:\Development\MixinXRef\IntegrationTests\WebAppWithWebConfigTest\bin" -f -s -r "MixinXRef.Reflectors*.dll" -app-config-file Web.config -app-base-directory "C:\Development\MixinXRef\IntegrationTests\WebAppWithWebConfigTest"
