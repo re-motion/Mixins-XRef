@@ -143,25 +143,6 @@ namespace MixinXRefConsole
       return proxy.Run (args, cmdLineArgs);
     }
 
-    private static void MessageReceived (Message message)
-    {
-      if (TalkBackChannel.Out != null)
-        TalkBackChannel.Out.SendMessage (message);
-
-      switch (message.Severity)
-      {
-        case MessageSeverity.Error:
-          Console.Error.WriteLine ("ERROR: {0}", message.Text);
-          break;
-        case MessageSeverity.Warning:
-          Console.WriteLine ("WARNING: {0}", message.Text);
-          break;
-        default:
-          Console.WriteLine (message.Text);
-          break;
-      }
-    }
-
     private static void PrintUsage (OptionSet optionSet)
     {
       optionSet.WriteOptionDescriptions (Console.Out);
