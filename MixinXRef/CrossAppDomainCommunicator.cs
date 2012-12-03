@@ -10,9 +10,19 @@ namespace MixinXRef
 {
   public class CrossAppDomainCommunicator : MarshalByRefObject
   {
+    public delegate void MessageReceivedDelegate (MessageSeverity severity, string message);
+
+    private MessageReceivedDelegate _messageReceived;
+
     public CrossAppDomainCommunicator()
     {
       AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+      _messageReceived = DefaultMessageReceived;
+    }
+
+    public void SetMessageReceivedDelegate (MessageReceivedDelegate messageReceived)
+    {
+      _messageReceived = messageReceived;
     }
 
     public int Run (string[] talkbackArgs, XRefArguments cmdLineArgs)
@@ -25,21 +35,26 @@ namespace MixinXRef
       return TalkBackInvoke.Action (sender => XRef.Run (cmdLineArgs, sender), MessageReceived) ? 0 : 1;
     }
 
-    private static void MessageReceived (Message message)
+    private void MessageReceived (Message message)
     {
       if (TalkBackChannel.Out != null)
         TalkBackChannel.Out.SendMessage (message);
 
-      switch (message.Severity)
+      _messageReceived (message.Severity, message.Text);
+    }
+
+    private static void DefaultMessageReceived (MessageSeverity severity, string message)
+    {
+      switch (severity)
       {
         case MessageSeverity.Error:
-          Console.Error.WriteLine ("ERROR: {0}", message.Text);
+          Console.Error.WriteLine ("ERROR: {0}", message);
           break;
         case MessageSeverity.Warning:
-          Console.WriteLine ("WARNING: {0}", message.Text);
+          Console.WriteLine ("WARNING: {0}", message);
           break;
         default:
-          Console.WriteLine (message.Text);
+          Console.WriteLine (message);
           break;
       }
     }
@@ -56,7 +71,14 @@ namespace MixinXRef
       }
       catch (Exception)
       {
-        return null;
+        try
+        {
+          return Assembly.LoadFrom (Path.ChangeExtension(assemblyPath, ".exe"));
+        }
+        catch (Exception)
+        {
+          return null;
+        }
       }
     }
   }

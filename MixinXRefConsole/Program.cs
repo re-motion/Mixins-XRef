@@ -117,30 +117,7 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      // Create new application domain and run cross referencer
-      var appDomain = AppDomain.CurrentDomain;
-      var setupInformation = appDomain.SetupInformation;
-      if(cmdLineArgs.AppBaseDirectory != null)
-      {
-        setupInformation.ApplicationBase = cmdLineArgs.AppBaseDirectory;
-
-        if(cmdLineArgs.AssemblyDirectory.StartsWith(cmdLineArgs.AppBaseDirectory))
-        {
-          // does cutting work?
-          var relativeSearchPath = cmdLineArgs.AssemblyDirectory.Remove (0, cmdLineArgs.AppBaseDirectory.Length);
-          // is privatebinpath empty?
-          setupInformation.PrivateBinPath = "." + relativeSearchPath;
-        }
-      }
-      if(cmdLineArgs.AppConfigFile != null)
-        setupInformation.ConfigurationFile = cmdLineArgs.AppConfigFile;
-
-      var newAppDomain = AppDomain.CreateDomain ("XRefAppDomain", null, setupInformation);
-
-      var crossAppDomainCommunicatorType = typeof (CrossAppDomainCommunicator);
-      var proxy = (CrossAppDomainCommunicator) newAppDomain.CreateInstanceFromAndUnwrap (crossAppDomainCommunicatorType.Assembly.Location, crossAppDomainCommunicatorType.FullName);
-
-      return proxy.Run (args, cmdLineArgs);
+      return new XRefInAppDomainRunner().Run (cmdLineArgs);
     }
 
     private static void PrintUsage (OptionSet optionSet)

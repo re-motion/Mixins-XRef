@@ -57,7 +57,9 @@ namespace MixinXRefGUI
                                     ReflectorPath = "MixinXRef.Reflectors*.dll",
                                     CustomReflectorAssemblyQualifiedTypeName = "",
                                     SkipHTMLGeneration = false,
-                                    IgnoredAssemblies = Enumerable.Empty<string> ()
+                                    IgnoredAssemblies = Enumerable.Empty<string> (),
+                                    AppBaseDirectory = null,
+                                    AppConfigFile = null
                                   });
 
       UpdateEnabledStatusOfShowResultButton ();
@@ -80,6 +82,8 @@ namespace MixinXRefGUI
       customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
       forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
       ignoreAssembliesTextBox.Text = string.Join (Environment.NewLine, settings.IgnoredAssemblies.ToArray ());
+      appBaseDirectory.Text = settings.AppBaseDirectory;
+      appConfigFile.Text = settings.AppConfigFile;
 
       switch (settings.ReflectorSource)
       {
@@ -102,14 +106,17 @@ namespace MixinXRefGUI
         CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
         OverwriteExistingFiles = forceOverrideCheckBox.Checked,
         ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly,
-        IgnoredAssemblies = ignoreAssembliesTextBox.Text.Split (new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+        IgnoredAssemblies = ignoreAssembliesTextBox.Text.Split (new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
+        AppBaseDirectory = appBaseDirectory.Text,
+        AppConfigFile = appConfigFile.Text
       };
     }
 
     private void RunXRef (XRefArguments options)
     {
       AppendTextToLogTextBoxAsync ("Running MixinXRef...");
-      TalkBackInvoke.Action (sender => XRef.Run (options, sender), message => AppendTextToLogTextBoxAsync (message.Text));
+      CrossAppDomainCommunicator.MessageReceivedDelegate onMessageReceived = new GUIMessageReceiver (this).MessageReceived;
+      new XRefInAppDomainRunner ().Run(options, onMessageReceived);
     }
 
     private void OnXRefFinished (RunWorkerCompletedEventArgs args)
@@ -155,6 +162,22 @@ namespace MixinXRefGUI
       }
     }
 
+    private void ShowAndSetFileBrowserDialogForTextBox (string description, TextBox pathTextBox, string basePath, string basePathNonExistentMessage)
+    {
+      if (string.IsNullOrEmpty (basePath) || !new DirectoryInfo (basePath).Exists)
+      {
+        MessageBox.Show (this, basePathNonExistentMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+
+      using (var fileBrowserDialog = new OpenFileDialog { Title = description })
+      {
+        var objResult = fileBrowserDialog.ShowDialog (this);
+        if (objResult == DialogResult.OK)
+          pathTextBox.Text = fileBrowserDialog.SafeFileName;
+      }
+    }
+
     private void StartMixinXRefButton_Click (object sender, EventArgs e)
     {
       var remotionAssembly = Path.Combine (GetSettings ().AssemblyDirectory, "Remotion.dll");
@@ -176,7 +199,7 @@ namespace MixinXRefGUI
       }
     }
 
-    private void AppendTextToLogTextBoxAsync (string message)
+    public void AppendTextToLogTextBoxAsync (string message)
     {
       if (logTextBox.InvokeRequired)
         logTextBox.Invoke (new AppendTextToLogTextBoxAsyncDelegate (AppendTextToLogTextBoxAsync), new object[] { message });
@@ -241,6 +264,16 @@ namespace MixinXRefGUI
         customReflectorTextBox.Enabled = true;
         reflectorAssemblyTextBox.Enabled = false;
       }
+    }
+
+    private void browseAppBaseDirectory_Click (object sender, EventArgs e)
+    {
+      ShowAndSetFolderBrowserDialogForTextBox ("Select application base directory", appBaseDirectory);
+    }
+
+    private void browseConfigFile_Click (object sender, EventArgs e)
+    {
+      ShowAndSetFileBrowserDialogForTextBox ("Select configuration file", appConfigFile, appBaseDirectory.Text, "Select an application base directory first!");
     }
   }
 }

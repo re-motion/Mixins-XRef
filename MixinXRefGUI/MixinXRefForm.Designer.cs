@@ -52,9 +52,17 @@ namespace MixinXRefGUI
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.ignoreAssembliesTextBox = new System.Windows.Forms.TextBox();
       this.label3 = new System.Windows.Forms.Label();
+      this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.browseConfigFile = new System.Windows.Forms.Button();
+      this.browseAppBaseDirectory = new System.Windows.Forms.Button();
+      this.appBaseDirectory = new System.Windows.Forms.TextBox();
+      this.label5 = new System.Windows.Forms.Label();
+      this.label4 = new System.Windows.Forms.Label();
+      this.appConfigFile = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.groupBox1.SuspendLayout();
       this.groupBox2.SuspendLayout();
+      this.groupBox3.SuspendLayout();
       this.SuspendLayout();
       // 
       // forceOverrideCheckBox
@@ -148,9 +156,10 @@ namespace MixinXRefGUI
       // 
       // startMixinXRefButton
       // 
-      this.startMixinXRefButton.Location = new System.Drawing.Point(18, 252);
+      this.startMixinXRefButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.startMixinXRefButton.Location = new System.Drawing.Point(446, 263);
       this.startMixinXRefButton.Name = "startMixinXRefButton";
-      this.startMixinXRefButton.Size = new System.Drawing.Size(154, 30);
+      this.startMixinXRefButton.Size = new System.Drawing.Size(160, 43);
       this.startMixinXRefButton.TabIndex = 9;
       this.startMixinXRefButton.Text = "Start Mixin-Cross-Referencer";
       this.startMixinXRefButton.UseVisualStyleBackColor = true;
@@ -161,12 +170,12 @@ namespace MixinXRefGUI
       this.logTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.logTextBox.Location = new System.Drawing.Point(15, 305);
+      this.logTextBox.Location = new System.Drawing.Point(15, 371);
       this.logTextBox.Multiline = true;
       this.logTextBox.Name = "logTextBox";
       this.logTextBox.ReadOnly = true;
       this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.logTextBox.Size = new System.Drawing.Size(591, 193);
+      this.logTextBox.Size = new System.Drawing.Size(591, 282);
       this.logTextBox.TabIndex = 10;
       this.logTextBox.WordWrap = false;
       // 
@@ -187,9 +196,9 @@ namespace MixinXRefGUI
       // showResultsButton
       // 
       this.showResultsButton.Enabled = false;
-      this.showResultsButton.Location = new System.Drawing.Point(178, 252);
+      this.showResultsButton.Location = new System.Drawing.Point(446, 312);
       this.showResultsButton.Name = "showResultsButton";
-      this.showResultsButton.Size = new System.Drawing.Size(154, 30);
+      this.showResultsButton.Size = new System.Drawing.Size(160, 30);
       this.showResultsButton.TabIndex = 11;
       this.showResultsButton.Text = "Show results";
       this.showResultsButton.UseVisualStyleBackColor = true;
@@ -260,17 +269,87 @@ namespace MixinXRefGUI
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(13, 289);
+      this.label3.Location = new System.Drawing.Point(12, 355);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(58, 13);
       this.label3.TabIndex = 12;
       this.label3.Text = "Log output";
       // 
+      // groupBox3
+      // 
+      this.groupBox3.Controls.Add(this.browseConfigFile);
+      this.groupBox3.Controls.Add(this.browseAppBaseDirectory);
+      this.groupBox3.Controls.Add(this.appBaseDirectory);
+      this.groupBox3.Controls.Add(this.label5);
+      this.groupBox3.Controls.Add(this.label4);
+      this.groupBox3.Controls.Add(this.appConfigFile);
+      this.groupBox3.Location = new System.Drawing.Point(12, 252);
+      this.groupBox3.Name = "groupBox3";
+      this.groupBox3.Size = new System.Drawing.Size(428, 100);
+      this.groupBox3.TabIndex = 13;
+      this.groupBox3.TabStop = false;
+      this.groupBox3.Text = "Special application configuration (optional)";
+      // 
+      // browseConfigFile
+      // 
+      this.browseConfigFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.browseConfigFile.Location = new System.Drawing.Point(368, 76);
+      this.browseConfigFile.Name = "browseConfigFile";
+      this.browseConfigFile.Size = new System.Drawing.Size(54, 20);
+      this.browseConfigFile.TabIndex = 5;
+      this.browseConfigFile.Text = "Browse";
+      this.browseConfigFile.UseVisualStyleBackColor = true;
+      this.browseConfigFile.Click += new System.EventHandler(this.browseConfigFile_Click);
+      // 
+      // browseAppBaseDirectory
+      // 
+      this.browseAppBaseDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.browseAppBaseDirectory.Location = new System.Drawing.Point(368, 36);
+      this.browseAppBaseDirectory.Name = "browseAppBaseDirectory";
+      this.browseAppBaseDirectory.Size = new System.Drawing.Size(54, 20);
+      this.browseAppBaseDirectory.TabIndex = 4;
+      this.browseAppBaseDirectory.Text = "Browse";
+      this.browseAppBaseDirectory.UseVisualStyleBackColor = true;
+      this.browseAppBaseDirectory.Click += new System.EventHandler(this.browseAppBaseDirectory_Click);
+      // 
+      // appBaseDirectory
+      // 
+      this.appBaseDirectory.Location = new System.Drawing.Point(7, 37);
+      this.appBaseDirectory.Name = "appBaseDirectory";
+      this.appBaseDirectory.Size = new System.Drawing.Size(355, 20);
+      this.appBaseDirectory.TabIndex = 3;
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Location = new System.Drawing.Point(7, 20);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(358, 13);
+      this.label5.TabIndex = 2;
+      this.label5.Text = "Application base directory (if given, input directory must be a sub-directory):";
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(6, 60);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(175, 13);
+      this.label4.TabIndex = 1;
+      this.label4.Text = "App/Web.config file (filename only):";
+      // 
+      // appConfigFile
+      // 
+      this.appConfigFile.Location = new System.Drawing.Point(6, 76);
+      this.appConfigFile.Name = "appConfigFile";
+      this.appConfigFile.Size = new System.Drawing.Size(356, 20);
+      this.appConfigFile.TabIndex = 0;
+      // 
       // MixinXRefForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(618, 510);
+      this.ClientSize = new System.Drawing.Size(618, 665);
+      this.Controls.Add(this.groupBox3);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.startMixinXRefButton);
       this.Controls.Add(this.groupBox2);
@@ -294,6 +373,8 @@ namespace MixinXRefGUI
       this.groupBox1.PerformLayout();
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();
+      this.groupBox3.ResumeLayout(false);
+      this.groupBox3.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -322,6 +403,13 @@ namespace MixinXRefGUI
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.TextBox ignoreAssembliesTextBox;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.GroupBox groupBox3;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.TextBox appConfigFile;
+    private System.Windows.Forms.Button browseAppBaseDirectory;
+    private System.Windows.Forms.TextBox appBaseDirectory;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.Button browseConfigFile;
   }
 }
 

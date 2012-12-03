@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUIMessageReceiver.cs" />
     <Compile Include="MixinXRefForm.cs">
       <SubType>Form</SubType>
     </Compile>
