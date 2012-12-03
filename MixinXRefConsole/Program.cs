@@ -117,7 +117,7 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      return new XRefInAppDomainRunner().Run (cmdLineArgs);
+      return new XRefInAppDomainRunner().Run (args, cmdLineArgs);
     }
 
     private static void PrintUsage (OptionSet optionSet)

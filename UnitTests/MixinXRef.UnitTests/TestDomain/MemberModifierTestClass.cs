@@ -34,7 +34,7 @@ namespace MixinXRef.UnitTests.TestDomain
 
     protected internal event ChangedEventHandler ProtectedInternalEvent;
 
-    internal string InternalField;
+    internal string InternalField = null;
 
     private string _privateField;
 

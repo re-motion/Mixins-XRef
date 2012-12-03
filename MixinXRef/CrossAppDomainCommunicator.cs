@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using TalkBack;
 
 namespace MixinXRef
@@ -11,7 +9,6 @@ namespace MixinXRef
   public class CrossAppDomainCommunicator : MarshalByRefObject
   {
     public delegate void MessageReceivedDelegate (MessageSeverity severity, string message);
-
     private MessageReceivedDelegate _messageReceived;
 
     public CrossAppDomainCommunicator()
@@ -62,24 +59,17 @@ namespace MixinXRef
     private Assembly AssemblyResolve (object sender, ResolveEventArgs args)
     {
       var assemblyName = new AssemblyName (args.Name);
-      var assemblyFileName = assemblyName.Name + ".dll";
-      var assemblyPath = Path.Combine (Path.GetDirectoryName(typeof(CrossAppDomainCommunicator).Assembly.Location), assemblyFileName);
+      return TryLoadAssemblyFromOriginalDirectory (assemblyName, ".dll") ?? TryLoadAssemblyFromOriginalDirectory (assemblyName, ".exe");
+    }
 
-      try
-      {
-        return Assembly.LoadFrom (assemblyPath);
-      }
-      catch (Exception)
-      {
-        try
-        {
-          return Assembly.LoadFrom (Path.ChangeExtension(assemblyPath, ".exe"));
-        }
-        catch (Exception)
-        {
-          return null;
-        }
-      }
+    private static Assembly TryLoadAssemblyFromOriginalDirectory (AssemblyName assemblyName, string extension)
+    {
+      var assemblyFileName = assemblyName.Name + extension;
+      var directoryName = Path.GetDirectoryName (typeof (CrossAppDomainCommunicator).Assembly.Location);
+      Trace.Assert (directoryName != null);
+      var assemblyPath = Path.Combine (directoryName, assemblyFileName);
+
+      return File.Exists (assemblyPath) ? Assembly.LoadFrom (assemblyPath) : null;
     }
   }
 }

@@ -114,9 +114,17 @@ namespace MixinXRefGUI
 
     private void RunXRef (XRefArguments options)
     {
-      AppendTextToLogTextBoxAsync ("Running MixinXRef...");
-      CrossAppDomainCommunicator.MessageReceivedDelegate onMessageReceived = new GUIMessageReceiver (this).MessageReceived;
-      new XRefInAppDomainRunner ().Run(options, onMessageReceived);
+      try
+      {
+        AppendTextToLogTextBoxAsync ("Running MixinXRef...");
+        CrossAppDomainCommunicator.MessageReceivedDelegate onMessageReceived = (severity, message) => AppendTextToLogTextBoxAsync (message);
+        new XRefInAppDomainRunner ().Run(null, options, onMessageReceived);
+      }
+      catch (ArgumentException ex)
+      {
+        Action messageBoxDisplayer = () => MessageBox.Show (this, ex.Message, "Configuration error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        BeginInvoke(messageBoxDisplayer);
+      }
     }
 
     private void OnXRefFinished (RunWorkerCompletedEventArgs args)

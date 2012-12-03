@@ -68,8 +68,6 @@ namespace MixinXRef.UnitTests
       var expectedType2 = new InvolvedType (typeof (Mixin1));
       expectedType2.TargetTypes.Add (expectedType1, expectedType1.TargetClassDefinition.CallMethod ("GetMixinByConfiguredType", typeof (Mixin1)));
 
-      var c = involvedTypes.Except (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2));
-      int i = 0;
       Assert.That (involvedTypes, Is.EquivalentTo (GetAdditonalAssemblyInvolvedTypes (expectedType1, expectedType2)));
     }
 

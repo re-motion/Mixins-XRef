@@ -20,7 +20,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
 using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
@@ -28,7 +27,6 @@ namespace MixinXRef.Report
 {
   public class FullReportGenerator
   {
-    private readonly Assembly[] _assemblies;
     private readonly InvolvedType[] _involvedTypes;
     private readonly ErrorAggregator<Exception> _configurationErrors;
     private readonly ErrorAggregator<Exception> _validationErrors;
