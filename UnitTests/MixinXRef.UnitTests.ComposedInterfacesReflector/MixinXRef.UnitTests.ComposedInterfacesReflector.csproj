@@ -5,13 +5,15 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</ProjectGuid>
+    <ProjectGuid>{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixinXRef.Reflectors</RootNamespace>
-    <AssemblyName>MixinXRef.Reflectors</AssemblyName>
+    <RootNamespace>MixinXRef.UnitTests.ComposedInterfacesReflector</RootNamespace>
+    <AssemblyName>MixinXRef.UnitTests.ComposedInterfacesReflector</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,6 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion">
+      <HintPath>..\Remotion\1.13.182.0\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Mixins">
+      <HintPath>..\Remotion\1.13.182.0\Remotion.Mixins.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,32 +54,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="00-DefaultReflector.cs" />
-    <Compile Include="02-TargetClassDefinitionFactoryReflector.cs" />
-    <Compile Include="05-MixinAssemblyReflector.cs" />
-    <Compile Include="01-OldMixinDependenciesReflector.cs" />
-    <Compile Include="03-NewMixinDependenciesReflector.cs" />
-    <Compile Include="04-ValidationLogDataReflector.cs" />
-    <Compile Include="06-CreateAndValidateReflector.cs" />
-    <Compile Include="07-ComposedInterfacesReflector.cs" />
+    <Compile Include="ComposedInterfacesReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
+    <None Include="..\..\MixinXRef.licenseheader">
+      <Link>MixinXRef.licenseheader</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
       <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
       <Name>MixinXRef.Reflection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
-      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
-      <Name>MixinXRef.Utility</Name>
+    <ProjectReference Include="..\..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
+      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
+      <Name>MixinXRef.Reflectors</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\MixinXRef.licenseheader">
-      <Link>MixinXRef.licenseheader</Link>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

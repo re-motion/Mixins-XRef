@@ -16,6 +16,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -118,6 +119,11 @@ namespace MixinXRef.Reflectors
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
       return new ReflectedObject (validationException).GetProperty ("ValidationLog");
+    }
+
+    public override ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)
+    {
+      return classContext.GetProperty ("CompleteInterfaces").To<ICollection<Type>>();
     }
   }
 }

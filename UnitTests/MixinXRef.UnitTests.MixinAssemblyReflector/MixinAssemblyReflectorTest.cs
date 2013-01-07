@@ -24,7 +24,7 @@ using Remotion.Mixins;
 using Remotion.Mixins.Context;
 using Remotion.Mixins.Definitions;
 using Remotion.Mixins.Validation;
-using CompleteInterfacesTestClass = MixinXRef.UnitTests.MixinAssemblyReflector.TestDomain.CompleteInterfacesTestClass;
+using ComposedInterfacesTestClass = MixinXRef.UnitTests.MixinAssemblyReflector.TestDomain.ComposedInterfacesTestClass;
 using Mixin1 = MixinXRef.UnitTests.MixinAssemblyReflector.TestDomain.Mixin1;
 using TargetClass1 = MixinXRef.UnitTests.MixinAssemblyReflector.TestDomain.TargetClass1;
 
@@ -70,7 +70,7 @@ namespace MixinXRef.UnitTests.MixinAssemblyReflector
       // Mixin<,> inherits from Mixin<>
       var outputTrue2 = _remotionReflector.IsInheritedFromMixin (typeof (Mixin<,>));
       // MemberOverrideWithInheritanceTest.CustomMixin inherits from Mixin<>
-      var outputTrue3 = _remotionReflector.IsInheritedFromMixin (typeof (CompleteInterfacesTestClass.MyMixin));
+      var outputTrue3 = _remotionReflector.IsInheritedFromMixin (typeof (ComposedInterfacesTestClass.MyMixin));
       var outputFalse = _remotionReflector.IsInheritedFromMixin (typeof (object));
 
       Assert.True (outputTrue1);
@@ -100,7 +100,7 @@ namespace MixinXRef.UnitTests.MixinAssemblyReflector
       var reflectedOutput = _remotionReflector.GetTargetClassDefinition (typeof (TargetClass1), new ReflectedObject (mixinConfiguration), new ReflectedObject (mixinConfiguration.ClassContexts.GetWithInheritance (typeof (TargetClass1))));
       var expectedOutput = TargetClassDefinitionFactory.CreateTargetClassDefinition (mixinConfiguration.ClassContexts.First ());
 
-      Assert.That (reflectedOutput.To<TargetClassDefinition> (), Is.InstanceOfType (typeof (TargetClassDefinition)));
+      Assert.That (reflectedOutput.To<TargetClassDefinition> (), Is.InstanceOf (typeof (TargetClassDefinition)));
       Assert.That (reflectedOutput.To<TargetClassDefinition> ().FullName, Is.EqualTo (expectedOutput.FullName));
     }
 

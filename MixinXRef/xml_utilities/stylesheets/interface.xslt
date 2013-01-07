@@ -40,8 +40,8 @@
 		</xsl:call-template>
 	</div>
 
-  <xsl:if test="@is-complete-interface = true()">
-    <div>This interface is a complete interface.</div>
+  <xsl:if test="@is-composed-interface = true()">
+    <div>This interface is a composed interface.</div>
   </xsl:if>
 
   <xsl:call-template name="memberList">

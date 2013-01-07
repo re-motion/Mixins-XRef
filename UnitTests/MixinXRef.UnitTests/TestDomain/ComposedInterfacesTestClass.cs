@@ -18,9 +18,9 @@
 using System;
 using Remotion.Mixins;
 
-namespace MixinXRef.UnitTests.NewMixinDependenciesReflector.TestDomain
+namespace MixinXRef.UnitTests.TestDomain
 {
-  public class CompleteInterfacesTestClass
+  public class ComposedInterfacesTestClass
   {
     public class MyMixinTarget
     {

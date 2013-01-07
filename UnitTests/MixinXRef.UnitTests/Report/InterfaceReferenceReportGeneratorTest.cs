@@ -61,17 +61,17 @@ namespace MixinXRef.UnitTests.Report
     }
 
     [Test]
-    public void GenerateXml_WithCompleteInterface ()
+    public void GenerateXml_WithComposedInterface ()
     {
       var mixinConfiguration = MixinConfiguration.BuildNew()
-          .ForClass<CompleteInterfacesTestClass.MyMixinTarget>()
-          .AddCompleteInterface<CompleteInterfacesTestClass.ICMyMixinTargetMyMixin>()
-          .AddMixin<CompleteInterfacesTestClass.MyMixin>()
+          .ForClass<ComposedInterfacesTestClass.MyMixinTarget>()
+          .AddCompleteInterface<ComposedInterfacesTestClass.ICMyMixinTargetMyMixin>()
+          .AddMixin<ComposedInterfacesTestClass.MyMixin>()
           .BuildConfiguration();
 
-      // MyMixinTarget does not implement any interfaces! (but ICMyMixinTargetMyMixin is added to class context as a complete interface)
-      var involvedType = new InvolvedType (typeof (CompleteInterfacesTestClass.MyMixinTarget));
-      var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (CompleteInterfacesTestClass.MyMixinTarget));
+      // MyMixinTarget does not implement any interfaces! (but ICMyMixinTargetMyMixin is added to class context as a composed interface)
+      var involvedType = new InvolvedType (typeof (ComposedInterfacesTestClass.MyMixinTarget));
+      var classContext = mixinConfiguration.ClassContexts.GetWithInheritance (typeof (ComposedInterfacesTestClass.MyMixinTarget));
       involvedType.ClassContext = new ReflectedObject (classContext);
 
       var reportGenerator = new InterfaceReferenceReportGenerator (involvedType, new IdentifierGenerator<Type>(), Helpers.RemotionReflectorFactory.GetRemotionReflection ());

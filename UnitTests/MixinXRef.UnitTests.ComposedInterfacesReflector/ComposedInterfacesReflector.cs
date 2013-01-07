@@ -1,4 +1,4 @@
-// This file is part of the MixinXRef project
+﻿// This file is part of the MixinXRef project
 // Copyright (c) rubicon IT GmbH, www.rubicon.eu
 // 
 // This library is free software; you can redistribute it and/or
@@ -15,33 +15,34 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
+
 using System;
-using Remotion.Mixins;
+using MixinXRef.Reflection;
+using MixinXRef.Reflection.RemotionReflector;
+using NUnit.Framework;
+using Remotion.Mixins.Context;
 
-namespace MixinXRef.UnitTests.DefaultReflector.TestDomain
+namespace MixinXRef.UnitTests.ComposedInterfacesReflector
 {
-  public class CompleteInterfacesTestClass
+  [TestFixture]
+  public class ComposedInterfacesReflectorTest
   {
-    public class MyMixinTarget
+    private IRemotionReflector _remotionReflector;
+
+    [SetUp]
+    public void SetUp ()
     {
-      public void A ()
-      {
-        Console.WriteLine ("A");
-      }
+      _remotionReflector = new Reflectors.ComposedInterfacesReflector ();
     }
 
-    public class MyMixin : Mixin<MyMixinTarget>
+    [Test]
+    public void GetComposedInterfaces ()
     {
-      public void B ()
-      {
-        Console.WriteLine ("B");
-      }
-    }
+      var classContext = new ReflectedObject (new ClassContext (typeof (object), new MixinContext[0], new[] { typeof (int), typeof (double) }));
 
-    public interface ICMyMixinTargetMyMixin
-    {
-      void A ();
-      void B ();
+      var result = _remotionReflector.GetComposedInterfaces (classContext);
+
+      Assert.That (result, Is.EqualTo (new[] { typeof (int), typeof (double) }));
     }
   }
 }

@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="NewMixinDependenciesReflectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestDomain\CompleteInterfacesTestClass.cs" />
+    <Compile Include="TestDomain\ComposedInterfacesTestClass.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
   </ItemGroup>

@@ -128,6 +128,11 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       return mixinDefinition;
     }
 
+    public ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)
+    {
+      return new Type[0];
+    }
+
     public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)
     {
       return mixinDefinition;

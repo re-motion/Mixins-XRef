@@ -111,6 +111,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWithWebConfigTest", "IntegrationTests\WebAppWithWebConfigTest\WebAppWithWebConfigTest.csproj", "{409BA07A-E7A8-45D7-97CF-E05537632141}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.ComposedInterfacesReflector", "UnitTests\MixinXRef.UnitTests.ComposedInterfacesReflector\MixinXRef.UnitTests.ComposedInterfacesReflector.csproj", "{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -271,6 +273,16 @@ Global
 		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{409BA07A-E7A8-45D7-97CF-E05537632141}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -286,9 +298,13 @@ Global
 		{B42BD371-65D9-440A-AF96-B0DDD9F47D09} = {634FFE58-BE0A-4C69-A02A-D3DCB0FB38CD}
 		{CF288F75-80A7-44A0-90A6-5DC2C4353353} = {634FFE58-BE0A-4C69-A02A-D3DCB0FB38CD}
 		{A89D03F1-E773-450D-A4B5-9959484270F9} = {634FFE58-BE0A-4C69-A02A-D3DCB0FB38CD}
+		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3} = {634FFE58-BE0A-4C69-A02A-D3DCB0FB38CD}
 		{E92C9C0E-7745-4D9A-B80A-15EF21883FA8} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{2A316855-8CAA-44C9-85D1-29E30C51C91C} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{24FE1F98-54C3-4507-BC29-B1DD6848A3B6} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{409BA07A-E7A8-45D7-97CF-E05537632141} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal

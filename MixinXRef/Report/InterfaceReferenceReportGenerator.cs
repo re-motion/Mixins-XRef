@@ -67,8 +67,8 @@ namespace MixinXRef.Report
 
       if (_involvedType.IsTarget)
       {
-        foreach (var completeInterface in _involvedType.ClassContext.GetProperty ("CompleteInterfaces"))
-          allInterfaces.Add (completeInterface.To<Type>());
+        foreach (var composedInterface in _remotionReflector.GetComposedInterfaces (_involvedType.ClassContext))
+          allInterfaces.Add (composedInterface);
       }
 
       return allInterfaces;

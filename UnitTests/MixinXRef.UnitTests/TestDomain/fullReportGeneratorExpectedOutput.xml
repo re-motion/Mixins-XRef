@@ -269,7 +269,7 @@
         <Target ref="13" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixin" base="Mixin&lt;CompleteInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false" is-interface="false">
+    <InvolvedType id="6" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ComposedInterfacesTestClass.MyMixin" base="Mixin&lt;ComposedInterfacesTestClass.MyMixinTarget&gt;" base-ref="none" is-target="false" is-mixin="true" is-generic-definition="false" is-interface="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -280,7 +280,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <ExplicitInterfaceName>ComposedInterfacesTestClass</ExplicitInterfaceName>
             <Text>.</Text>
             <Name>MyMixin</Name>
             <Text>(</Text>
@@ -305,7 +305,7 @@
         <Target ref="7" />
       </Targets>
     </InvolvedType>
-    <InvolvedType id="7" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false" is-interface="false">
+    <InvolvedType id="7" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ComposedInterfacesTestClass.MyMixinTarget" base="Object" base-ref="none" is-target="true" is-mixin="false" is-generic-definition="false" is-interface="false">
       <Modifiers>
         <Keyword>public</Keyword>
       </Modifiers>
@@ -316,7 +316,7 @@
             <Keyword>public</Keyword>
           </Modifiers>
           <Signature>
-            <ExplicitInterfaceName>CompleteInterfacesTestClass</ExplicitInterfaceName>
+            <ExplicitInterfaceName>ComposedInterfacesTestClass</ExplicitInterfaceName>
             <Text>.</Text>
             <Name>MyMixinTarget</Name>
             <Text>(</Text>
@@ -340,7 +340,7 @@
       </ImplementedInterfaces>
       <HasAttributes />
       <Mixins>
-        <Mixin ref="6" index="n/a" relation="Extends" instance-name="CompleteInterfacesTestClass.MyMixin" introduced-member-visibility="private">
+        <Mixin ref="6" index="n/a" relation="Extends" instance-name="ComposedInterfacesTestClass.MyMixin" introduced-member-visibility="private">
           <AdditionalDependencies />
         </Mixin>
       </Mixins>
@@ -958,7 +958,7 @@
     </InvolvedType>
   </InvolvedTypes>
   <Interfaces>
-    <Interface id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.IAlgorithm" is-complete-interface="false">
+    <Interface id="0" assembly-ref="3" namespace="MixinXRef.UnitTests.Explore" name="MemberOverrideWithInheritanceTest.IAlgorithm" is-composed-interface="false">
       <Members>
         <Member type="Method" name="AlgorithmMethod" is-declared-by-this-class="true">
           <Modifiers>
@@ -977,7 +977,7 @@
         <InvolvedType-Reference ref="0" />
       </ImplementedBy>
     </Interface>
-    <Interface id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="CompleteInterfacesTestClass.ICMyMixinTargetMyMixin" is-complete-interface="true">
+    <Interface id="1" assembly-ref="3" namespace="MixinXRef.UnitTests.TestDomain" name="ComposedInterfacesTestClass.ICMyMixinTargetMyMixin" is-composed-interface="true">
       <Members>
         <Member type="Method" name="A" is-declared-by-this-class="true">
           <Modifiers>
@@ -1008,7 +1008,7 @@
         <InvolvedType-Reference ref="7" />
       </ImplementedBy>
     </Interface>
-    <Interface id="2" assembly-ref="none" namespace="System" name="IDisposable" is-complete-interface="false">
+    <Interface id="2" assembly-ref="none" namespace="System" name="IDisposable" is-composed-interface="false">
       <Members>
         <Member type="Method" name="Dispose" is-declared-by-this-class="true">
           <Modifiers>
@@ -1046,7 +1046,7 @@
   </Attributes>
   <ConfigurationErrors>
     <Exception type="Remotion.Mixins.ConfigurationException">
-      <Message><![CDATA[The dependency ICMyMixinTargetMyMixin (mixins  applied to class MixinXRef.UnitTests.TestDomain.CompleteInterfacesTestClass+MyMixinTarget) is not fulfilled - public or protected method B could not be found on the base class.]]></Message>
+      <Message><![CDATA[The dependency ICMyMixinTargetMyMixin (mixins  applied to class MixinXRef.UnitTests.TestDomain.ComposedInterfacesTestClass+MyMixinTarget) is not fulfilled - public or protected method B could not be found on the base class.]]></Message>
       <StackTrace>
         <![CDATA[   at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.ConstructExceptionOnMemberNotFound(RequirementDefinitionBase requirement, String memberString) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 202
    at Remotion.Mixins.Definitions.Building.RequiredMethodDefinitionBuilder.FindMethod(RequirementDefinitionBase requirement, MethodInfo interfaceMethod, UniqueDefinitionCollection`2 methods) in C:\Development\remotion\trunk\Remotion\Core\Core\Mixins\Definitions\Building\RequiredMethodDefinitionBuilder.cs:line 164

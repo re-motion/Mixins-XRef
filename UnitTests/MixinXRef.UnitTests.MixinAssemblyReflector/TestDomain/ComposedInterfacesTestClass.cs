@@ -20,7 +20,7 @@ using Remotion.Mixins;
 
 namespace MixinXRef.UnitTests.MixinAssemblyReflector.TestDomain
 {
-  public class CompleteInterfacesTestClass
+  public class ComposedInterfacesTestClass
   {
     public class MyMixinTarget
     {

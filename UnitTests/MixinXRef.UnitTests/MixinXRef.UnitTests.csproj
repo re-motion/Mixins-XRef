@@ -117,7 +117,7 @@
     <Compile Include="TestDomain\ClassWithProperty.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestDomain\CompleteInterfacesTestClass.cs">
+    <Compile Include="TestDomain\ComposedInterfacesTestClass.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestDomain\FastMethodInvoker\ClassWithMethods.cs" />

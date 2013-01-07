@@ -140,8 +140,8 @@
 		<xsl:with-param name="dir" select="concat($dir, '/interfaces/')"/>
 	</xsl:call-template>
 
-  <xsl:if test="@is-complete-interface = true()">
-    <span class="complete-interface-annotation">[CI]</span>
+  <xsl:if test="@is-composed-interface = true()">
+    <span class="composed-interface-annotation">[CI]</span>
   </xsl:if>
 </xsl:template>
 

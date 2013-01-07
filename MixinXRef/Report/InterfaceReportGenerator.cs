@@ -21,7 +21,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using MixinXRef.Formatting;
-using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility;
 using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionReflector;
 
@@ -67,31 +66,31 @@ namespace MixinXRef.Report
     public XElement GenerateXml ()
     {
       var allInterfaces = GetAllInterfaces();
-      var completeInterfaces = GetCompleteInterfaces();
+      var composedInterfaces = GetComposedInterfaces();
 
       return new XElement (
           "Interfaces",
           from usedInterface in allInterfaces.Keys
           where !_remotionReflector.IsInfrastructureType (usedInterface)
-          select GenerateInterfaceElement (usedInterface, allInterfaces, completeInterfaces.Contains(usedInterface))
+          select GenerateInterfaceElement (usedInterface, allInterfaces, composedInterfaces.Contains(usedInterface))
           );
     }
 
-    public HashSet<Type> GetCompleteInterfaces ()
+    public HashSet<Type> GetComposedInterfaces ()
     {
-      var allCompleteInterfaces = new HashSet<Type> ();
+      var allComposedInterfaces = new HashSet<Type> ();
 
       foreach (var involvedType in _involvedTypes)
       {
         if (!involvedType.IsTarget) continue;
 
-        foreach (var completeInterface in involvedType.ClassContext.GetProperty ("CompleteInterfaces"))
+        foreach (var composedInterface in _remotionReflector.GetComposedInterfaces (involvedType.ClassContext))
         {
-          allCompleteInterfaces.Add (completeInterface.To<Type>());
+          allComposedInterfaces.Add (composedInterface);
         }
       }
 
-      return allCompleteInterfaces;
+      return allComposedInterfaces;
     }
 
 
@@ -111,13 +110,12 @@ namespace MixinXRef.Report
 
         if (involvedType.IsTarget)
         {
-          foreach (var completeInterface in involvedType.ClassContext.GetProperty ("CompleteInterfaces"))
+          foreach (var composedInterface in _remotionReflector.GetComposedInterfaces (involvedType.ClassContext))
           {
-            var completeInterfaceType = completeInterface.To<Type>();
-            if (!allInterfaces.ContainsKey (completeInterfaceType))
-              allInterfaces.Add (completeInterfaceType, new List<Type>());
+            if (!allInterfaces.ContainsKey (composedInterface))
+              allInterfaces.Add (composedInterface, new List<Type>());
 
-            allInterfaces[completeInterfaceType].Add (involvedType.Type);
+            allInterfaces[composedInterface].Add (involvedType.Type);
           }
         }
       }
@@ -125,7 +123,7 @@ namespace MixinXRef.Report
       return allInterfaces;
     }
 
-    private XElement GenerateInterfaceElement (Type usedInterface, Dictionary<Type, List<Type>> allInterfaces, bool isCompleteInterface)
+    private XElement GenerateInterfaceElement (Type usedInterface, Dictionary<Type, List<Type>> allInterfaces, bool isComposedInterface)
     {
       return new XElement (
           "Interface",
@@ -133,7 +131,7 @@ namespace MixinXRef.Report
           new XAttribute ("assembly-ref", _assemblyIdentifierGenerator.GetIdentifier (usedInterface.Assembly)),
           new XAttribute ("namespace", usedInterface.Namespace),
           new XAttribute("name", _outputFormatter.GetShortFormattedTypeName(usedInterface)),
-          new XAttribute ("is-complete-interface", isCompleteInterface),
+          new XAttribute ("is-composed-interface", isComposedInterface),
           new MemberReportGenerator (usedInterface, new InvolvedType (usedInterface), _involvedTypeIdentifierGenerator, _memberIdentifierGenerator, _outputFormatter).GenerateXml (),
           new XElement (
               "ImplementedBy",

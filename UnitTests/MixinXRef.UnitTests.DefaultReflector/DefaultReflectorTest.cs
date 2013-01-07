@@ -110,7 +110,7 @@ namespace MixinXRef.UnitTests.DefaultReflector
       // Mixin<,> inherits from Mixin<>
       var outputTrue2 = _remotionReflector.IsInheritedFromMixin (typeof (Mixin<,>));
       // MemberOverrideWithInheritanceTest.CustomMixin inherits from Mixin<>
-      var outputTrue3 = _remotionReflector.IsInheritedFromMixin (typeof (CompleteInterfacesTestClass.MyMixin));
+      var outputTrue3 = _remotionReflector.IsInheritedFromMixin (typeof (ComposedInterfacesTestClass.MyMixin));
       var outputFalse = _remotionReflector.IsInheritedFromMixin (typeof (object));
 
       Assert.That (outputTrue1, Is.True);
@@ -155,6 +155,16 @@ namespace MixinXRef.UnitTests.DefaultReflector
       var result = reflectedValidationLog.To<DefaultValidationLog> ();
 
       Assert.That (result, Is.SameAs (validationLogData));
+    }
+
+    [Test]
+    public void GetComposedInterfaces ()
+    {
+      var classContext = new ReflectedObject (new ClassContext (typeof (object), new MixinContext[0], new[] { typeof (int), typeof (double) }));
+
+      var result = _remotionReflector.GetComposedInterfaces (classContext);
+
+      Assert.That (result, Is.EqualTo (new[] { typeof (int), typeof (double) }));
     }
   }
 }

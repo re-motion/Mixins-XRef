@@ -16,6 +16,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MixinXRef.Reflection.RemotionReflector
@@ -75,6 +76,11 @@ namespace MixinXRef.Reflection.RemotionReflector
     public virtual ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition)
     {
       throw new NotSupportedException ();
+    }
+
+    public virtual ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)
+    {
+      throw new NotSupportedException();
     }
 
     public virtual ReflectedObject GetNextCallDependencies (ReflectedObject mixinDefinition)
