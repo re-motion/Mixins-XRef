@@ -120,7 +120,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)..\Remotion\1.13.174.0\*.* $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)..\Remotion\1.13.174.0\*.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
