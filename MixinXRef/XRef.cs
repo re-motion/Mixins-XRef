@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
@@ -138,6 +139,37 @@ namespace MixinXRef
               .Where (assembly => assembly != null);
 
       var allAssemblies = assemblies.Concat (addtionalReferencedAssemblies).DistinctBy (assemblyName => assemblyName.FullName).ToArray ();
+
+      // Try to load all types in order to find Reflection problems as fast as possible.
+
+      foreach (var assembly in allAssemblies)
+      {
+        try
+        {
+          assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+          var messageBuilder = new StringBuilder();
+          messageBuilder.AppendFormat("Error loading the types from assembly '{0}'.", assembly.Location);
+          messageBuilder.AppendLine();
+          foreach (var loaderException in ex.LoaderExceptions.DistinctBy(exception => exception.Message))
+          {
+            var fileNotFoundException = loaderException as FileNotFoundException;
+            if (fileNotFoundException != null)
+            {
+              messageBuilder.AppendFormat("  Reference not found: '{0}'", fileNotFoundException.FileName);
+            }
+            else
+            {
+              messageBuilder.Append("  ");
+              messageBuilder.Append(loaderException.Message);
+            }
+            messageBuilder.AppendLine();
+          }
+          Log.SendError(messageBuilder.ToString());
+        }
+      }
 
       var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (allAssemblies);
       var outputFormatter = new OutputFormatter ();
