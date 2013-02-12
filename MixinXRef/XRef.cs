@@ -123,14 +123,19 @@ namespace MixinXRef
                                    ? arguments.XMLOutputFileName
                                    : "MixinXRef.xml");
 
-      var refAssemblyNames = assemblies.SelectMany (assembly => assembly.GetReferencedAssemblies()).DistinctBy(assemblyName => assemblyName.FullName);
-      var alreadyLoadedAssemblyName = assemblies.Select (assembly => assembly.GetName()).ToArray();
+      var refAssemblyNames = assemblies
+          .SelectMany (assembly => assembly.GetReferencedAssemblies(), (referencing, referenced) => new { referencing, referenced })
+          .DistinctBy (t => t.referenced.FullName);
+      var alreadyLoadedAssemblyName = new HashSet<AssemblyName> (assemblies.Select (assembly => assembly.GetName()));
       
       // Load referenced assemblies
       var assemblyNamesToLoad = refAssemblyNames
-          .Except (alreadyLoadedAssemblyName)
-          .Where (assemblyName => !arguments.IgnoredAssemblies.Contains (assemblyName.Name));
-      var addtionalReferencedAssemblies = LoadAdditionalReferencedAssemblies(assemblyNamesToLoad);
+          .Where (t => !alreadyLoadedAssemblyName.Contains (t.referenced))
+          .Where (t => !arguments.IgnoredAssemblies.Contains (t.referenced.Name));
+      var addtionalReferencedAssemblies =
+          assemblyNamesToLoad
+              .Select (t => LoadAdditionalReferencedAssembly (t.referenced, t.referencing))
+              .Where (assembly => assembly != null);
 
       var allAssemblies = assemblies.Concat (addtionalReferencedAssemblies).DistinctBy (assemblyName => assemblyName.FullName).ToArray ();
 
@@ -175,28 +180,41 @@ namespace MixinXRef
       return true;
     }
 
-    private static IEnumerable<Assembly> LoadAdditionalReferencedAssemblies (IEnumerable<AssemblyName> assemblyNamesToLoad)
+    private static Assembly LoadAdditionalReferencedAssembly (AssemblyName assemblyName, Assembly referencingAssembly)
     {
-      foreach (var assemblyName in assemblyNamesToLoad)
+      Assembly assembly = null;
+
+      try
       {
-        Assembly assembly = null;
-
-        try
-        {
-          assembly = Assembly.Load (assemblyName);
-        }
-        catch (FileNotFoundException ex)
-        {
-          Log.SendWarning ("Could not load assembly '{0}' due to '{1}'.", ex.FileName, ex.Message);
-        }
-        catch (FileLoadException ex)
-        {
-          Log.SendError ("Could not load assembly '{0}' due to '{1}'.", assemblyName, ex.Message);
-        }
-
-        if(assembly != null)
-          yield return assembly;
+        assembly = Assembly.Load (assemblyName);
       }
+      catch (FileNotFoundException ex)
+      {
+        Log.SendWarning (
+            "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.",
+            assemblyName,
+            referencingAssembly.Location,
+            ex.Message);
+      }
+      catch (FileLoadException ex)
+      {
+        Log.SendError (
+            "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.",
+            assemblyName,
+            referencingAssembly.Location,
+            ex.Message);
+      }
+      catch(Exception ex)
+      {
+        Log.SendError(
+          "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.\n{3}",
+            assemblyName,
+            referencingAssembly.Location,
+            ex.Message,
+            ex.ToString());
+      }
+
+      return assembly;
     }
 
     private static bool CheckArguments (XRefArguments arguments)
