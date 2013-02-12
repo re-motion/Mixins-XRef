@@ -35,9 +35,9 @@ namespace MixinXRef
     private void MessageReceived (Message message)
     {
       if (TalkBackChannel.Out != null)
-        TalkBackChannel.Out.SendMessage (message);
-
-      _messageReceived (message.Severity, message.Text);
+        TalkBackChannel.Out.SendMessage(message);
+      else
+        _messageReceived(message.Severity, message.Text);
     }
 
     private static void DefaultMessageReceived (MessageSeverity severity, string message)
