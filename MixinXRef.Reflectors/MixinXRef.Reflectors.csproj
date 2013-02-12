@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoShared.cs">
+      <Link>Properties\AssemblyInfoShared.cs</Link>
+    </Compile>
     <Compile Include="00-DefaultReflector.cs" />
     <Compile Include="02-TargetClassDefinitionFactoryReflector.cs" />
     <Compile Include="05-MixinAssemblyReflector.cs" />
