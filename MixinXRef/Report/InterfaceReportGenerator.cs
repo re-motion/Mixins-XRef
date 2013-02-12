@@ -84,7 +84,8 @@ namespace MixinXRef.Report
       {
         if (!involvedType.IsTarget) continue;
 
-        foreach (var composedInterface in _remotionReflector.GetComposedInterfaces (involvedType.ClassContext))
+        var composedInterfaces = _remotionReflector.GetComposedInterfaces (involvedType.ClassContext);
+        foreach (var composedInterface in composedInterfaces)
         {
           allComposedInterfaces.Add (composedInterface);
         }
@@ -110,7 +111,8 @@ namespace MixinXRef.Report
 
         if (involvedType.IsTarget)
         {
-          foreach (var composedInterface in _remotionReflector.GetComposedInterfaces (involvedType.ClassContext))
+          var composedInterfaces = _remotionReflector.GetComposedInterfaces (involvedType.ClassContext);
+          foreach (var composedInterface in composedInterfaces)
           {
             if (!allInterfaces.ContainsKey (composedInterface))
               allInterfaces.Add (composedInterface, new List<Type>());

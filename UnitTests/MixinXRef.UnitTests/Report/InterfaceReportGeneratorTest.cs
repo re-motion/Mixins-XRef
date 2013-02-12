@@ -22,6 +22,7 @@ using MixinXRef.Formatting;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Reflection.Utility;
+using MixinXRef.Reflectors;
 using MixinXRef.Report;
 using MixinXRef.UnitTests.TestDomain;
 using MixinXRef.Utility;
@@ -43,7 +44,7 @@ namespace MixinXRef.UnitTests.Report
     public void SetUp ()
     {
       _outputFormatter = new OutputFormatter ();
-      _remotionReflector = MockRepository.GenerateStub<IRemotionReflector> ();
+      _remotionReflector = new DefaultReflector();
     }
 
     [Test]
