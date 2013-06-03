@@ -177,6 +177,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.15.0.1", "1.15.0.1", "{8E
 		UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.xml = UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net2_0SilverlightClassLibrary", "IntegrationTests\Net2_0SilverlightClassLibrary\Net2_0SilverlightClassLibrary.csproj", "{6D12D73B-F178-4C24-ACDC-9130FF458770}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -367,6 +369,16 @@ Global
 		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6D12D73B-F178-4C24-ACDC-9130FF458770}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -392,6 +404,7 @@ Global
 		{409BA07A-E7A8-45D7-97CF-E05537632141} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 		{02CFC542-A322-4B14-A2D6-25A724FEEE70} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
+		{6D12D73B-F178-4C24-ACDC-9130FF458770} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
