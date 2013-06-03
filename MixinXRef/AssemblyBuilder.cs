@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Versioning;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -121,6 +122,7 @@ namespace MixinXRef
       {
         var mscorlibAssembly = typeof (object).Assembly;
         var mscorlibReference = loadedAssembly.GetReferencedAssemblies ().FirstOrDefault (a => a.Name == mscorlibAssembly.GetName ().Name);
+
         if (mscorlibReference == null)
         {
           XRef.Log.SendWarning (
@@ -130,19 +132,27 @@ namespace MixinXRef
             mscorlibAssembly.FullName);
           return null;
         }
-        else if (mscorlibReference.Version != mscorlibAssembly.GetName ().Version)
+        else if (IsSilverlightAssembly(loadedAssembly, mscorlibReference))
         {
           XRef.Log.SendWarning (
-            "Assembly '{0}' in '{1}' references a core library '{2}', but this tool only works with references to core library '{3}'.",
+            "Assembly '{0}' in '{1}' references a core library '{2}', and is most likely a silverlight assembly. This tool does not support silverlight.",
             loadedAssembly.FullName,
             loadedAssembly.Location,
-            mscorlibReference,
-            mscorlibAssembly.FullName);
+            mscorlibReference);
           return null;
         }
       }
 
       return loadedAssembly;
+    }
+
+    private bool IsSilverlightAssembly (Assembly loadedAssembly, AssemblyName mscorlibReference)
+    {
+      var supportedMscorlibVersions = new[] { new Version (2, 0, 0, 0), new Version (4, 0, 0, 0) };
+      var targetFrameworkAttribute = loadedAssembly.CustomAttributes.OfType<TargetFrameworkAttribute>().SingleOrDefault();
+      var isPortableAssembly = targetFrameworkAttribute != null && targetFrameworkAttribute.FrameworkName.Contains (".NETPortable");
+
+      return supportedMscorlibVersions.All (v => v != mscorlibReference.Version) && !isPortableAssembly;
     }
   }
 }

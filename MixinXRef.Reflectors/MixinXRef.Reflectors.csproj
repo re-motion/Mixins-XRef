@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MixinXRef.Reflectors</RootNamespace>
     <AssemblyName>MixinXRef.Reflectors</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -51,6 +51,8 @@
     <Compile Include="04-ValidationLogDataReflector.cs" />
     <Compile Include="06-CreateAndValidateReflector.cs" />
     <Compile Include="07-ComposedInterfacesReflector.cs" />
+    <Compile Include="08-Net2_0SupportReflector.cs" />
+    <Compile Include="09-Net4_5SupportReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
