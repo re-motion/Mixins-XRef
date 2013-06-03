@@ -114,6 +114,69 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWithWebConfigTest", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.ComposedInterfacesReflector", "UnitTests\MixinXRef.UnitTests.ComposedInterfacesReflector\MixinXRef.UnitTests.ComposedInterfacesReflector.csproj", "{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.13.182.0", "1.13.182.0", "{D23DF82C-54C6-4D34-9212-298D76DFC3B4}"
+	ProjectSection(SolutionItems) = preProject
+		UnitTests\Remotion\1.13.182.0\Castle.Core.dll = UnitTests\Remotion\1.13.182.0\Castle.Core.dll
+		UnitTests\Remotion\1.13.182.0\Castle.Core.pdb = UnitTests\Remotion\1.13.182.0\Castle.Core.pdb
+		UnitTests\Remotion\1.13.182.0\Castle.Core.xml = UnitTests\Remotion\1.13.182.0\Castle.Core.xml
+		UnitTests\Remotion\1.13.182.0\log4net.dll = UnitTests\Remotion\1.13.182.0\log4net.dll
+		UnitTests\Remotion\1.13.182.0\log4net.xml = UnitTests\Remotion\1.13.182.0\log4net.xml
+		UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.dll
+		UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.xml
+		UnitTests\Remotion\1.13.182.0\Remotion.dll = UnitTests\Remotion\1.13.182.0\Remotion.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.dll = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.pdb = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.XML = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.XML
+		UnitTests\Remotion\1.13.182.0\Remotion.pdb = UnitTests\Remotion\1.13.182.0\Remotion.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.dll = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.pdb = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.xml = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.xml
+		UnitTests\Remotion\1.13.182.0\Remotion.xml = UnitTests\Remotion\1.13.182.0\Remotion.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.13.201", "1.13.201", "{DAA114F3-31FF-45F4-BAE5-9B62EB2491CE}"
+	ProjectSection(SolutionItems) = preProject
+		UnitTests\Remotion\1.13.201\Castle.Core.dll = UnitTests\Remotion\1.13.201\Castle.Core.dll
+		UnitTests\Remotion\1.13.201\Castle.Core.pdb = UnitTests\Remotion\1.13.201\Castle.Core.pdb
+		UnitTests\Remotion\1.13.201\Castle.Core.xml = UnitTests\Remotion\1.13.201\Castle.Core.xml
+		UnitTests\Remotion\1.13.201\log4net.dll = UnitTests\Remotion\1.13.201\log4net.dll
+		UnitTests\Remotion\1.13.201\log4net.xml = UnitTests\Remotion\1.13.201\log4net.xml
+		UnitTests\Remotion\1.13.201\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\1.13.201\Microsoft.Practices.ServiceLocation.dll
+		UnitTests\Remotion\1.13.201\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\1.13.201\Microsoft.Practices.ServiceLocation.xml
+		UnitTests\Remotion\1.13.201\Remotion.dll = UnitTests\Remotion\1.13.201\Remotion.dll
+		UnitTests\Remotion\1.13.201\Remotion.Mixins.dll = UnitTests\Remotion\1.13.201\Remotion.Mixins.dll
+		UnitTests\Remotion\1.13.201\Remotion.Mixins.pdb = UnitTests\Remotion\1.13.201\Remotion.Mixins.pdb
+		UnitTests\Remotion\1.13.201\Remotion.Mixins.XML = UnitTests\Remotion\1.13.201\Remotion.Mixins.XML
+		UnitTests\Remotion\1.13.201\Remotion.pdb = UnitTests\Remotion\1.13.201\Remotion.pdb
+		UnitTests\Remotion\1.13.201\Remotion.TypePipe.dll = UnitTests\Remotion\1.13.201\Remotion.TypePipe.dll
+		UnitTests\Remotion\1.13.201\Remotion.TypePipe.pdb = UnitTests\Remotion\1.13.201\Remotion.TypePipe.pdb
+		UnitTests\Remotion\1.13.201\Remotion.TypePipe.xml = UnitTests\Remotion\1.13.201\Remotion.TypePipe.xml
+		UnitTests\Remotion\1.13.201\Remotion.xml = UnitTests\Remotion\1.13.201\Remotion.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net4_5RemotionAssembly", "IntegrationTests\Net4_5RemotionAssembly\Net4_5RemotionAssembly.csproj", "{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net2_0RemotionAssembly", "IntegrationTests\Net2_0RemotionAssembly\Net2_0RemotionAssembly.csproj", "{02CFC542-A322-4B14-A2D6-25A724FEEE70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.15.0.1", "1.15.0.1", "{8E3CE190-AC81-4355-8606-0BCA6D796C51}"
+	ProjectSection(SolutionItems) = preProject
+		UnitTests\Remotion\1.15.0.1\Castle.Core.dll = UnitTests\Remotion\1.15.0.1\Castle.Core.dll
+		UnitTests\Remotion\1.15.0.1\Castle.Core.pdb = UnitTests\Remotion\1.15.0.1\Castle.Core.pdb
+		UnitTests\Remotion\1.15.0.1\Castle.Core.xml = UnitTests\Remotion\1.15.0.1\Castle.Core.xml
+		UnitTests\Remotion\1.15.0.1\log4net.dll = UnitTests\Remotion\1.15.0.1\log4net.dll
+		UnitTests\Remotion\1.15.0.1\log4net.xml = UnitTests\Remotion\1.15.0.1\log4net.xml
+		UnitTests\Remotion\1.15.0.1\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\1.15.0.1\Microsoft.Practices.ServiceLocation.dll
+		UnitTests\Remotion\1.15.0.1\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\1.15.0.1\Microsoft.Practices.ServiceLocation.xml
+		UnitTests\Remotion\1.15.0.1\Remotion.dll = UnitTests\Remotion\1.15.0.1\Remotion.dll
+		UnitTests\Remotion\1.15.0.1\Remotion.Mixins.dll = UnitTests\Remotion\1.15.0.1\Remotion.Mixins.dll
+		UnitTests\Remotion\1.15.0.1\Remotion.Mixins.pdb = UnitTests\Remotion\1.15.0.1\Remotion.Mixins.pdb
+		UnitTests\Remotion\1.15.0.1\Remotion.Mixins.XML = UnitTests\Remotion\1.15.0.1\Remotion.Mixins.XML
+		UnitTests\Remotion\1.15.0.1\Remotion.pdb = UnitTests\Remotion\1.15.0.1\Remotion.pdb
+		UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.dll = UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.dll
+		UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.pdb = UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.pdb
+		UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.xml = UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -284,6 +347,26 @@ Global
 		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}.Release|x86.ActiveCfg = Release|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -303,7 +386,12 @@ Global
 		{E92C9C0E-7745-4D9A-B80A-15EF21883FA8} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{2A316855-8CAA-44C9-85D1-29E30C51C91C} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{24FE1F98-54C3-4507-BC29-B1DD6848A3B6} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{D23DF82C-54C6-4D34-9212-298D76DFC3B4} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{DAA114F3-31FF-45F4-BAE5-9B62EB2491CE} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{8E3CE190-AC81-4355-8606-0BCA6D796C51} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{409BA07A-E7A8-45D7-97CF-E05537632141} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
+		{2ADEBA13-A7A3-422F-B10A-840E357AF8C3} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
+		{02CFC542-A322-4B14-A2D6-25A724FEEE70} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .

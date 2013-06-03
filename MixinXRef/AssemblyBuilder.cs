@@ -132,13 +132,12 @@ namespace MixinXRef
         }
         else if (mscorlibReference.Version != mscorlibAssembly.GetName ().Version)
         {
-          XRef.Log.SendWarning (
+          XRef.Log.SendInfo (
             "Assembly '{0}' in '{1}' references a core library '{2}', but this tool only works with references to core library '{3}'.",
             loadedAssembly.FullName,
             loadedAssembly.Location,
             mscorlibReference,
             mscorlibAssembly.FullName);
-          return null;
         }
       }
 

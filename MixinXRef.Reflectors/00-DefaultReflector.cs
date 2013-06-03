@@ -37,7 +37,7 @@ namespace MixinXRef.Reflectors
     {
       get { return _remotionAssembly ?? (_remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (_assemblyDirectory, "Remotion.dll")))); }
     }
-
+     
     private Assembly RemotionInterfaceAssembly
     {
       get

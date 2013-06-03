@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</ProjectGuid>
+    <ProjectGuid>{2ADEBA13-A7A3-422F-B10A-840E357AF8C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixinXRef.Reflectors</RootNamespace>
-    <AssemblyName>MixinXRef.Reflectors</AssemblyName>
+    <RootNamespace>Net4_5RemotionAssembly</RootNamespace>
+    <AssemblyName>Net4_5RemotionAssembly</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -22,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,8 +30,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Remotion">
+      <HintPath>..\..\UnitTests\Remotion\1.15.0.1\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Mixins">
+      <HintPath>..\..\UnitTests\Remotion\1.15.0.1\Remotion.Mixins.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.TypePipe">
+      <HintPath>..\..\UnitTests\Remotion\1.15.0.1\Remotion.TypePipe.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,35 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoShared.cs">
-      <Link>Properties\AssemblyInfoShared.cs</Link>
-    </Compile>
-    <Compile Include="00-DefaultReflector.cs" />
-    <Compile Include="02-TargetClassDefinitionFactoryReflector.cs" />
-    <Compile Include="05-MixinAssemblyReflector.cs" />
-    <Compile Include="01-OldMixinDependenciesReflector.cs" />
-    <Compile Include="03-NewMixinDependenciesReflector.cs" />
-    <Compile Include="04-ValidationLogDataReflector.cs" />
-    <Compile Include="06-CreateAndValidateReflector.cs" />
-    <Compile Include="07-ComposedInterfacesReflector.cs" />
-    <Compile Include="08-Net2_0SupportReflector.cs" />
-    <Compile Include="09-Net4_5SupportReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
-      <Project>{95D102DD-2321-44C8-9BDC-543B4394650F}</Project>
-      <Name>MixinXRef.Reflection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">
-      <Project>{831D6258-9202-4D48-B167-C9AEE9E8172F}</Project>
-      <Name>MixinXRef.Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\MixinXRef.licenseheader">
-      <Link>MixinXRef.licenseheader</Link>
-    </None>
+    <Compile Include="TestClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
