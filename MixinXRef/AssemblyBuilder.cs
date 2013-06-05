@@ -148,11 +148,15 @@ namespace MixinXRef
 
     private bool IsSilverlightAssembly (Assembly loadedAssembly, AssemblyName mscorlibReference)
     {
-      var supportedMscorlibVersions = new[] { new Version (2, 0, 0, 0), new Version (4, 0, 0, 0) };
-      var targetFrameworkAttribute = loadedAssembly.CustomAttributes.OfType<TargetFrameworkAttribute>().SingleOrDefault();
-      var isPortableAssembly = targetFrameworkAttribute != null && targetFrameworkAttribute.FrameworkName.Contains (".NETPortable");
+      var silverlightMscorlibVersion = new Version (2, 0, 5, 0);
+      if (mscorlibReference.Version == silverlightMscorlibVersion)
+      {
+        var targetFrameworkAttribute = loadedAssembly.CustomAttributes.OfType<TargetFrameworkAttribute>().SingleOrDefault();
+        var isPortableAssembly = targetFrameworkAttribute != null && targetFrameworkAttribute.FrameworkName.Contains (".NETPortable");
 
-      return supportedMscorlibVersions.All (v => v != mscorlibReference.Version) && !isPortableAssembly;
+        return !isPortableAssembly;
+      }
+      return false;
     }
   }
 }

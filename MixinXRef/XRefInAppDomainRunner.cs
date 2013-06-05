@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Security;
+using System.Security.Permissions;
+using System.Security.Policy;
 using TalkBack;
 
 namespace MixinXRef
@@ -37,8 +41,7 @@ namespace MixinXRef
       if(xRefArgs.AppConfigFile != null)
         setupInformation.ConfigurationFile = xRefArgs.AppConfigFile;
 
-      var newAppDomain = AppDomain.CreateDomain ("XRefAppDomain", appDomain.Evidence, setupInformation);
-
+      var newAppDomain = AppDomain.CreateDomain ("XRefAppDomain", appDomain.Evidence, setupInformation, new PermissionSet(PermissionState.Unrestricted));
       var crossAppDomainCommunicatorType = typeof (CrossAppDomainCommunicator);
       var proxy = (CrossAppDomainCommunicator) newAppDomain.CreateInstanceFromAndUnwrap (crossAppDomainCommunicatorType.Assembly.Location, crossAppDomainCommunicatorType.FullName);
       if(onMessageReceived != null)
