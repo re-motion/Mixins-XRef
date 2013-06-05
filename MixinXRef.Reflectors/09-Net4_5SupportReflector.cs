@@ -25,9 +25,9 @@ using MixinXRef.Reflection.RemotionReflector;
 namespace MixinXRef.Reflectors
 {
   /// <summary>
-  /// restores support for assemblies using re-motion > 1.15.0 by delegating to the apporopriate reflectors
+  /// restores support for assemblies using re-motion >= 1.15.0 by delegating to the apporopriate reflectors
   /// </summary>
-  [ReflectorSupport ("Remotion", "1.15.0.1", "Remotion.Mixins.dll")]
+  [ReflectorSupport ("Remotion", "1.15.0.0", "Remotion.Mixins.dll")]
   public class Net4_5SupportReflector : RemotionReflectorBase
   {
     private readonly ComposedInterfacesReflector _composedInterfacesReflector;
