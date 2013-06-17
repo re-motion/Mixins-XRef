@@ -91,7 +91,11 @@ namespace MixinXRef.Report
     private string RecursiveToString (Type argumentType, object argumentValue)
     {
       if (!argumentType.IsArray)
+      {
+        if (argumentValue == null)
+          return "";
         return argumentValue.ToString();
+      }
 
       var valueCollection = (ReadOnlyCollection<CustomAttributeTypedArgument>) argumentValue;
 
