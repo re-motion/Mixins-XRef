@@ -16,6 +16,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -106,7 +107,22 @@ namespace MixinXRef
       foreach (var additionalType in additionalTypesCollector.AdditionalTypes)
         involvedTypes.GetOrCreateValue (additionalType);
 
+      AddGenericDefinitionsRecursively(involvedTypes);
+
       return involvedTypes.ToArray ();
+    }
+
+    private void AddGenericDefinitionsRecursively(InvolvedTypeStore involvedTypes)
+    {
+      foreach (var type in involvedTypes.Where(t => t.Type.IsGenericType))
+      {
+        var genericType = type.Type;
+        while (genericType.IsGenericType && genericType.GetGenericTypeDefinition() != genericType) 
+        {
+          var genericTypeDefinition = genericType.GetGenericTypeDefinition();
+          genericType = involvedTypes.GetOrCreateValue(genericTypeDefinition).Type;
+        }
+      }
     }
 
     private ReflectedObject GetMixinDefiniton (Type mixinType, ReflectedObject targetClassDefinition)
