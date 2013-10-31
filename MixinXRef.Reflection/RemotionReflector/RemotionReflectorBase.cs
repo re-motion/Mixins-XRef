@@ -28,6 +28,11 @@ namespace MixinXRef.Reflection.RemotionReflector
       return this;
     }
 
+    public virtual void InitializeLogging (string assemblyDirectory)
+    {
+      throw new NotSupportedException ();
+    }
+
     public virtual bool IsRelevantAssemblyForConfiguration (Assembly assembly)
     {
       throw new NotSupportedException ();

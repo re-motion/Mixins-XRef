@@ -110,6 +110,8 @@ namespace MixinXRef
         return false;
       }
 
+      reflector.InitializeLogging (arguments.AssemblyDirectory);
+
       var assemblies = new AssemblyBuilder (arguments.AssemblyDirectory, arguments.IgnoredAssemblies)
         .GetAssemblies (a => !reflector.IsRelevantAssemblyForConfiguration (a) || !reflector.IsNonApplicationAssembly (a));
 

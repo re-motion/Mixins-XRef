@@ -94,7 +94,7 @@
       <Name>MixinXRef.Reflection</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixinXRef.Reflectors\MixinXRef.Reflectors.csproj">
-      <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
+      <Project>{396be3b3-62f6-4caa-b55d-7d4ef44e35d9}</Project>
       <Name>MixinXRef.Reflectors</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixinXRef.Utility\MixinXRef.Utility.csproj">

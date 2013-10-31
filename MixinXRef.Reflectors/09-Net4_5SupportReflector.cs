@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
@@ -25,7 +26,7 @@ using MixinXRef.Reflection.RemotionReflector;
 namespace MixinXRef.Reflectors
 {
   /// <summary>
-  /// restores support for assemblies using re-motion >= 1.15.0 by delegating to the apporopriate reflectors
+  ///   restores support for assemblies using re-motion >= 1.15.0 by delegating to the apporopriate reflectors
   /// </summary>
   [ReflectorSupport ("Remotion", "1.15.0.0", "Remotion.Mixins.dll")]
   public class Net4_5SupportReflector : RemotionReflectorBase
@@ -36,7 +37,9 @@ namespace MixinXRef.Reflectors
     private readonly MixinAssemblyReflector _mixinAssemblyReflector;
     private readonly NewMixinDependenciesReflector _newMixinDependenciesReflector;
     private readonly OldMixinDependenciesReflector _oldMixinDependenciesReflector;
+
     private readonly TargetClassDefinitionFactoryReflector _targetClassDefinitionFactoryReflector;
+
     private readonly ValidationLogDataReflector _validationLogDataReflector;
 
     public Net4_5SupportReflector ()
@@ -51,6 +54,7 @@ namespace MixinXRef.Reflectors
       _composedInterfacesReflector = new ComposedInterfacesReflector();
     }
 
+ 
     public override IRemotionReflector Initialize (string assemblyDirectory)
     {
       _defaultReflector.Initialize (assemblyDirectory);
@@ -63,6 +67,16 @@ namespace MixinXRef.Reflectors
       _composedInterfacesReflector.Initialize (assemblyDirectory);
 
       return this;
+    }
+
+    public override void InitializeLogging (string assemblyDirectory)
+    {
+      var remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
+      var getLoggerMethod = remotionAssembly.GetType ("Remotion.Logging.LogManager", true)
+          .GetMethod ("GetLogger", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof (string) }, null);
+      object logger = getLoggerMethod.Invoke (null, new object[] { "Remotion" });
+      if (logger == null)
+        throw new InvalidOperationException ("Failed to initialize log4net.");
     }
 
     public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)

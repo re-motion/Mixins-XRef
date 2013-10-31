@@ -97,6 +97,11 @@ namespace MixinXRef.Reflection.RemotionReflector
       return GetCompatibleReflector (MethodBase.GetCurrentMethod ()).GetComposedInterfaces (classContext);
     }
 
+    public void InitializeLogging (string assemblyDirectory)
+    {
+      GetCompatibleReflector (MethodBase.GetCurrentMethod ()).InitializeLogging (assemblyDirectory);
+    }
+
     public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)
     {
       return GetCompatibleReflector(MethodBase.GetCurrentMethod()).GetNextCallDependencies(mixinDefinition);

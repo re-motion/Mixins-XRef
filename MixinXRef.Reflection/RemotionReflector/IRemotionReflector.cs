@@ -39,5 +39,6 @@ namespace MixinXRef.Reflection.RemotionReflector
     ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition);
 
     ICollection<Type> GetComposedInterfaces (ReflectedObject classContext);
+    void InitializeLogging (string assemblyDirectory);
   }
 }
