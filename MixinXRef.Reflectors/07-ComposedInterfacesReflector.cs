@@ -17,6 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
 
@@ -28,6 +30,16 @@ namespace MixinXRef.Reflectors
     public override ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)
     {
       return classContext.GetProperty ("ComposedInterfaces").To<ICollection<Type>>();
+    }
+    
+    public override void InitializeLogging (string assemblyDirectory)
+    {
+      var remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
+      var getLoggerMethod = remotionAssembly.GetType ("Remotion.Logging.LogManager", true)
+          .GetMethod ("GetLogger", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof (string) }, null);
+      object logger = getLoggerMethod.Invoke (null, new object[] { "Remotion" });
+      if (logger == null)
+        throw new InvalidOperationException ("Failed to initialize log4net.");
     }
   }
 }

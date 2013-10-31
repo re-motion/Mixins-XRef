@@ -133,6 +133,10 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       return new Type[0];
     }
 
+    public void InitializeLogging (string assemblyDirectory)
+    {
+    }
+
     public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)
     {
       return mixinDefinition;
