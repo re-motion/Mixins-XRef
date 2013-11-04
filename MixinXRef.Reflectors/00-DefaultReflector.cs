@@ -125,5 +125,12 @@ namespace MixinXRef.Reflectors
     {
       return classContext.GetProperty ("CompleteInterfaces").To<ICollection<Type>>();
     }
+
+    public override void InitializeLogging (string assemblyDirectory)
+    {
+      var getLoggerMethod = RemotionAssembly.GetType ("Remotion.Logging.LogManager", true)
+          .GetMethod ("GetLogger", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof (string) }, null);
+      getLoggerMethod.Invoke (null, new object[] { "Remotion" });
+    }
   }
 }
