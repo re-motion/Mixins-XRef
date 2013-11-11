@@ -118,7 +118,7 @@ namespace MixinXRef.Reflectors
     {
       ArgumentUtility.CheckNotNull ("validationException", validationException);
 
-      return new ReflectedObject (validationException).GetProperty ("ValidationLog");
+      return new ReflectedObject (new ValidationLogNullObject());
     }
 
     public override ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)

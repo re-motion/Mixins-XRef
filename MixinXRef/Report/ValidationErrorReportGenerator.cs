@@ -49,12 +49,11 @@ namespace MixinXRef.Report
         topLevelExceptionElement.Add (
             new XElement (
                 "ValidationLog",
-                new XAttribute("number-of-rules-executed", validationLog.CallMethod("GetNumberOfRulesExecuted")),
-                new XAttribute("number-of-failures", validationLog.CallMethod("GetNumberOfFailures")),
-                new XAttribute("number-of-unexpected-exceptions", validationLog.CallMethod("GetNumberOfUnexpectedExceptions")),
-                new XAttribute("number-of-warnings", validationLog.CallMethod("GetNumberOfWarnings")),
-                new XAttribute("number-of-successes", validationLog.CallMethod("GetNumberOfSuccesses"))
-                )
+                new XAttribute("number-of-rules-executed", validationLog.GetProperty("NumberOfRulesExecuted")),
+                new XAttribute("number-of-failures", validationLog.GetProperty("NumberOfFailures")),
+                new XAttribute("number-of-unexpected-exceptions", validationLog.GetProperty("NumberOfUnexpectedExceptions")),
+                new XAttribute("number-of-warnings", validationLog.GetProperty("NumberOfWarnings")),
+                new XAttribute("number-of-successes", validationLog.GetProperty("NumberOfSuccesses")))
             );
         validationErrors.Add (topLevelExceptionElement);
       }

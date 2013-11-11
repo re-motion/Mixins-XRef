@@ -15,29 +15,40 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
+
 using System;
-using System.Reflection;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyCompany ("rubicon IT GmbH")]
-[assembly: AssemblyProduct ("MixinXRef")]
-[assembly: AssemblyCopyright ("(c) rubicon IT GmbH, www.rubicon.eu - Licensed under GNU Lesser General Public License")]
-[assembly: AssemblyTrademark ("")]
+namespace MixinXRef.Utility
+{
+  public class ValidationLogNullObject
+  {
+    public ValidationLogNullObject ()
+    {
+    }
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
+    public int NumberOfRulesExecuted
+    {
+      get { return 0; }
+    }
 
-[assembly: AssemblyVersion ("1.9.4.0")]
-[assembly: AssemblyFileVersion ("1.9.4.0")]
+    public int NumberOfUnexpectedExceptions
+    {
+      get { return 0; }
+    }
 
+    public int NumberOfFailures
+    {
+      get { return 0; }
+    }
 
+    public int NumberOfWarnings
+    {
+      get { return 0; }
+    }
 
+    public int NumberOfSuccesses
+    {
+      get { return 0; }
+    }
+  }
+}

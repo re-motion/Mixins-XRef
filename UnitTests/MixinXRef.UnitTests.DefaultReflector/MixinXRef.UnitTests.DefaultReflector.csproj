@@ -70,6 +70,10 @@
       <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
       <Name>MixinXRef.Reflectors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831d6258-9202-4d48-b167-c9aee9e8172f}</Project>
+      <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">
       <Project>{4D5710EA-E79A-484A-A9A2-2572571274D7}</Project>
       <Name>MixinXRef.UnitTests.NonApplicationAssembly</Name>
