@@ -22,6 +22,7 @@ using System.IO;
 using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
@@ -37,10 +38,7 @@ namespace MixinXRef.Reflectors
     private readonly MixinAssemblyReflector _mixinAssemblyReflector;
     private readonly NewMixinDependenciesReflector _newMixinDependenciesReflector;
     private readonly OldMixinDependenciesReflector _oldMixinDependenciesReflector;
-
     private readonly TargetClassDefinitionFactoryReflector _targetClassDefinitionFactoryReflector;
-
-    private readonly ValidationLogDataReflector _validationLogDataReflector;
 
     public Net4_5SupportReflector ()
     {
@@ -48,7 +46,6 @@ namespace MixinXRef.Reflectors
       _oldMixinDependenciesReflector = new OldMixinDependenciesReflector();
       _targetClassDefinitionFactoryReflector = new TargetClassDefinitionFactoryReflector();
       _newMixinDependenciesReflector = new NewMixinDependenciesReflector();
-      _validationLogDataReflector = new ValidationLogDataReflector();
       _mixinAssemblyReflector = new MixinAssemblyReflector();
       _createAndValidateReflector = new CreateAndValidateReflector();
       _composedInterfacesReflector = new ComposedInterfacesReflector();
@@ -61,7 +58,6 @@ namespace MixinXRef.Reflectors
       _oldMixinDependenciesReflector.Initialize (assemblyDirectory);
       _targetClassDefinitionFactoryReflector.Initialize (assemblyDirectory);
       _newMixinDependenciesReflector.Initialize (assemblyDirectory);
-      _validationLogDataReflector.Initialize (assemblyDirectory);
       _mixinAssemblyReflector.Initialize (assemblyDirectory);
       _createAndValidateReflector.Initialize (assemblyDirectory);
       _composedInterfacesReflector.Initialize (assemblyDirectory);
@@ -121,7 +117,7 @@ namespace MixinXRef.Reflectors
 
     public override ReflectedObject GetValidationLogFromValidationException (Exception validationException)
     {
-      return _mixinAssemblyReflector.GetValidationLogFromValidationException (validationException);
+      return new ReflectedObject (new ValidationLogNullObject());
     }
 
     public override ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition)

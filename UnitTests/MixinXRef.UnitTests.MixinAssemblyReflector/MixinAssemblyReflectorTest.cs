@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
@@ -102,18 +103,6 @@ namespace MixinXRef.UnitTests.MixinAssemblyReflector
 
       Assert.That (reflectedOutput.To<TargetClassDefinition> (), Is.InstanceOf (typeof (TargetClassDefinition)));
       Assert.That (reflectedOutput.To<TargetClassDefinition> ().FullName, Is.EqualTo (expectedOutput.FullName));
-    }
-
-    [Test]
-    public void GetValidationLogFromValidationException ()
-    {
-      var validationLogData = new ValidationLogData ();
-      var validationException = new ValidationException (validationLogData);
-
-      var reflectedValidationLog = _remotionReflector.GetValidationLogFromValidationException (validationException);
-      var result = reflectedValidationLog.To<ValidationLogData> ();
-
-      Assert.That (result, Is.SameAs (validationLogData));
     }
   }
 }

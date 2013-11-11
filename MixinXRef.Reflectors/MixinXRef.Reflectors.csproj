@@ -48,11 +48,11 @@
     <Compile Include="05-MixinAssemblyReflector.cs" />
     <Compile Include="01-OldMixinDependenciesReflector.cs" />
     <Compile Include="03-NewMixinDependenciesReflector.cs" />
-    <Compile Include="04-ValidationLogDataReflector.cs" />
     <Compile Include="06-CreateAndValidateReflector.cs" />
     <Compile Include="07-ComposedInterfacesReflector.cs" />
     <Compile Include="08-Net2_0SupportReflector.cs" />
     <Compile Include="09-Net4_5SupportReflector.cs" />
+    <Compile Include="10-ValidationLogReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

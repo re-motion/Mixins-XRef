@@ -20,6 +20,7 @@ using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.UnitTests.DefaultReflector.TestDomain;
 using MixinXRef.UnitTests.NonApplicationAssembly;
+using MixinXRef.Utility;
 using NUnit.Framework;
 using Remotion.Mixins;
 using Remotion.Mixins.Context;
@@ -152,9 +153,8 @@ namespace MixinXRef.UnitTests.DefaultReflector
       var validationException = new ValidationException (validationLogData);
 
       var reflectedValidationLog = _remotionReflector.GetValidationLogFromValidationException (validationException);
-      var result = reflectedValidationLog.To<DefaultValidationLog> ();
-
-      Assert.That (result, Is.SameAs (validationLogData));
+      var result = reflectedValidationLog.To<ValidationLogNullObject> ();
+      Assert.That (result, Is.Not.Null);
     }
 
     [Test]

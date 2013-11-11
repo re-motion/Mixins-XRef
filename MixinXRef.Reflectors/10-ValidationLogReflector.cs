@@ -15,19 +15,30 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
+
+using System;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.RemotionReflector;
-using MixinXRef.Utility;
 
 namespace MixinXRef.Reflectors
 {
-  [ReflectorSupport ("Remotion", "1.13.133")]
-  public class ValidationLogDataReflector : RemotionReflectorBase
+  /// <summary>
+  ///  restores the validationException.ValidationLogData property reflection call.
+  /// </summary>
+  [ReflectorSupport ("Remotion", "1.15.6.0", "Remotion.Mixins.dll")]
+  public class ValidationLogReflector : RemotionReflectorBase
   {
-    public override ReflectedObject GetValidationLogFromValidationException (System.Exception validationException)
+    public ValidationLogReflector ()
     {
-      ArgumentUtility.CheckNotNull ("validationException", validationException);
+    }
 
+    public override IRemotionReflector Initialize (string assemblyDirectory)
+    {
+      return this;
+    }
+
+    public override ReflectedObject GetValidationLogFromValidationException (Exception validationException)
+    {
       return new ReflectedObject (validationException).GetProperty ("ValidationLogData");
     }
   }

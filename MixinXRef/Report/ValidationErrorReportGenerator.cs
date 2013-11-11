@@ -44,16 +44,16 @@ namespace MixinXRef.Report
       foreach (var exception in _errorAggregator.Exceptions)
       {
         var topLevelExceptionElement = new RecursiveExceptionReportGenerator (exception).GenerateXml();
+        var validationLog = _remotionReflector.GetValidationLogFromValidationException(exception);
 
         topLevelExceptionElement.Add (
             new XElement (
                 "ValidationLog",
-                new XAttribute("number-of-rules-executed", 0),
-                new XAttribute("number-of-failures", 0),
-                new XAttribute("number-of-unexpected-exceptions", 0),
-                new XAttribute("number-of-warnings", 0),
-                new XAttribute("number-of-successes", 0)
-                )
+                new XAttribute("number-of-rules-executed", validationLog.GetProperty("NumberOfRulesExecuted")),
+                new XAttribute("number-of-failures", validationLog.GetProperty("NumberOfFailures")),
+                new XAttribute("number-of-unexpected-exceptions", validationLog.GetProperty("NumberOfUnexpectedExceptions")),
+                new XAttribute("number-of-warnings", validationLog.GetProperty("NumberOfWarnings")),
+                new XAttribute("number-of-successes", validationLog.GetProperty("NumberOfSuccesses")))
             );
         validationErrors.Add (topLevelExceptionElement);
       }
