@@ -30,8 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Remotion.Mixins">
-      <HintPath>..\..\UnitTests\Remotion\1.15.0.1\Remotion.Mixins.dll</HintPath>
+    <Reference Include="Remotion, Version=1.15.0.1, Culture=neutral, PublicKeyToken=b0e01305454aa59a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\UnitTests\Remotion\Current\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Mixins, Version=1.15.0.1, Culture=neutral, PublicKeyToken=b0e01305454aa59a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\UnitTests\Remotion\Current\Remotion.Mixins.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +49,9 @@
     <Compile Include="TargetClassA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsedMixinB.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Test.Settings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

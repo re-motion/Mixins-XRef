@@ -182,6 +182,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinSampleAssembly", "IntegrationTests\MixinSampleAssembly\MixinSampleAssembly.csproj", "{EE08CA29-C7F0-40C8-8841-35FF0BDA17B6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Current", "Current", "{92B88019-905F-4C05-A598-858A8BA827F0}"
+	ProjectSection(SolutionItems) = preProject
+		UnitTests\Remotion\Current\Castle.Core.dll = UnitTests\Remotion\Current\Castle.Core.dll
+		UnitTests\Remotion\Current\Castle.Core.pdb = UnitTests\Remotion\Current\Castle.Core.pdb
+		UnitTests\Remotion\Current\log4net.dll = UnitTests\Remotion\Current\log4net.dll
+		UnitTests\Remotion\Current\log4net.xml = UnitTests\Remotion\Current\log4net.xml
+		UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.dll
+		UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.xml
+		UnitTests\Remotion\Current\Remotion.dll = UnitTests\Remotion\Current\Remotion.dll
+		UnitTests\Remotion\Current\Remotion.Mixins.dll = UnitTests\Remotion\Current\Remotion.Mixins.dll
+		UnitTests\Remotion\Current\Remotion.Mixins.pdb = UnitTests\Remotion\Current\Remotion.Mixins.pdb
+		UnitTests\Remotion\Current\Remotion.Mixins.XML = UnitTests\Remotion\Current\Remotion.Mixins.XML
+		UnitTests\Remotion\Current\Remotion.pdb = UnitTests\Remotion\Current\Remotion.pdb
+		UnitTests\Remotion\Current\Remotion.TypePipe.dll = UnitTests\Remotion\Current\Remotion.TypePipe.dll
+		UnitTests\Remotion\Current\Remotion.TypePipe.pdb = UnitTests\Remotion\Current\Remotion.TypePipe.pdb
+		UnitTests\Remotion\Current\Remotion.TypePipe.xml = UnitTests\Remotion\Current\Remotion.TypePipe.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
