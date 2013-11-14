@@ -5,8 +5,8 @@
 	<SvnRevision>0</SvnRevision>
 	<Configuration></Configuration>
 	<BuildType></BuildType>
-	<MSBuildExtensionPackPath>$(MSBuildProjectDirectory)\prereq\MSBuildExtensionPack\</MSBuildExtensionPackPath>
-	<SharedAssemblyInfoFileName>$(MSBuildProjectDirectory)AssemblyInfoShared.cs</SharedAssemblyInfoFileName>
+	<MSBuildExtensionPackPath>$(SolutionDirectory)prereq\MSBuildExtensionPack\</MSBuildExtensionPackPath>
+	<SharedAssemblyInfoFileName>$(SolutionDirectory)AssemblyInfoShared.cs</SharedAssemblyInfoFileName>
   </PropertyGroup>
 
   <UsingTask AssemblyFile="$(MSBuildExtensionPackPath)MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo" />
