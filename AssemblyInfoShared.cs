@@ -38,6 +38,7 @@ using System.Reflection;
 
 [assembly: AssemblyVersion ("2.0.5.0")]
 [assembly: AssemblyFileVersion ("2.0.5.0")]
-
+[assembly: AssemblyConfiguration ("")]
+[assembly: AssemblyInformationalVersion ("")]
 
 

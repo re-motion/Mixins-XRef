@@ -1,0 +1,48 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Version>0.0.0.0</Version>
+	<SvnRevision>0</SvnRevision>
+	<Configuration></Configuration>
+	<BuildType></BuildType>
+	<MSBuildExtensionPackPath>$(MSBuildProjectDirectory)\prereq\MSBuildExtensionPack\</MSBuildExtensionPackPath>
+	<SharedAssemblyInfoFileName>$(MSBuildProjectDirectory)AssemblyInfoShared.cs</SharedAssemblyInfoFileName>
+  </PropertyGroup>
+
+  <UsingTask AssemblyFile="$(MSBuildExtensionPackPath)MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo" />
+
+  <ItemGroup>
+    <AllConfigurations Include="Debug"/>
+    <AllConfigurations Include="Release"/>
+  </ItemGroup>
+ 
+  <Target Name="UpdateAssemblyInfos">
+    <Error Text="The property 'SolutionDirectory' is not set." Condition="'$(SolutionDirectory)' == ''" />
+    <Error Text="The property 'Configuration' is not set." Condition="'$(Configuration)' == ''" />
+    <Error Text="The property 'Version' is not set." Condition="'$(Version)' == ''" />
+
+    <Message Text="Updating assembly infos, Configuration=$(Configuration)" Importance="High"/>
+
+    <ItemGroup>
+      <_assemblyInfos Remove="@(_assemblyInfoFiles)"/>
+      <_assemblyInfos Include="$(SharedAssemblyInfoFileName)"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_configuration>.NET Framework: net-4.5, build type: $(Configuration)</_configuration>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_assemblyInformationalVersion>$(Version) $(ReleaseType) $(Configuration); SVNRevision=$(SvnRevision); BuildType=$(BuildType)</_assemblyInformationalVersion>
+    </PropertyGroup>
+
+    <MSBuild.ExtensionPack.Framework.AssemblyInfo AssemblyInfoFiles="%(_assemblyInfos.Identity)"
+                                                  AssemblyVersion="$(Version)"
+                                                  AssemblyFileVersion="$(Version)"
+                                                  AssemblyConfiguration="$(_configuration)"
+                                                  AssemblyInformationalVersion="$(_assemblyInformationalVersion)"
+                                                  UpdateAssemblyInformationalVersion="True" />
+
+    <Message Text="Done updating assembly infos, Configuration=$(Configuration)" Importance="High"/>
+  </Target>    
+  
+</Project>
