@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle ("MixinXRef.UnitTests")]
 [assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Microsoft")]
 [assembly: AssemblyProduct ("MixinXRef.UnitTests")]
 [assembly: AssemblyCopyright ("Copyright © Microsoft 2009")]

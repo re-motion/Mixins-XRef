@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle ("Net2_0RemotionAssembly")]
 [assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("Net2_0RemotionAssembly")]
 [assembly: AssemblyCopyright ("Copyright ©  2013")]
