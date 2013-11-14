@@ -23,7 +23,6 @@
     <Message Text="Updating assembly infos, Configuration=$(Configuration)" Importance="High"/>
 
     <ItemGroup>
-      <_assemblyInfos Remove="@(_assemblyInfoFiles)"/>
       <_assemblyInfos Include="$(SharedAssemblyInfoFileName)"/>
     </ItemGroup>
 
