@@ -7,11 +7,6 @@
 	<BuildType></BuildType>
 	<MSBuildExtensionPackPath>$(SolutionDirectory)prereq\MSBuildExtensionPack\</MSBuildExtensionPackPath>
 	<SharedAssemblyInfoFileName>$(SolutionDirectory)AssemblyInfoShared.cs</SharedAssemblyInfoFileName>
-	<DependDBUploadEnabled>false</DependDBUploadEnabled>
-	<DependDBSvnUrl></DependDBSvnUrl>
-	<DependDBOutputPath></DependDBOutputPath>
-	<DependDBProjectBranch></DependDBProjectBranch>
-	<SolutionFileName></SolutionFileName>
   </PropertyGroup>
 
   <UsingTask AssemblyFile="$(MSBuildExtensionPackPath)MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo" />
@@ -49,27 +44,5 @@
 
     <Message Text="Done updating assembly infos, Configuration=$(Configuration)" Importance="High"/>
   </Target>    
-  
-  <Target Name="PackageForDependDB" Condition="$(Configuration) == 'Debug' And $(DependDBUploadEnabled) == 'true'">
-    <Message Text="Packaging for DependDB" Importance="High"/>
-
-    <Error Text="The property 'DependDBSvnUrl' is not set." Condition="'$(DependDBSvnUrl)' == ''" />
-	<Error Text="The property 'DependDBOutputPath' is not set." Condition="'$(DependDBOutputPath)' == ''" />
-	<Error Text="The property 'DependDBProjectBranch' is not set." Condition="'$(DependDBProjectBranch)' == ''" />
-
-    <PropertyGroup>
-      <_solutionFileName>$([System.IO.Path]::GetFileName($(SolutionFileName)))</_solutionFileName>
-      <_buildProcessorTempDirectory>$(SolutionDirectory)_temp\DependDB</_buildProcessorTempDirectory>
-	  <_buildProcessorConfigFileName>BuildProcessorConfiguration.xml</_buildProcessorConfigFileName>
-      <_configBuilderArgs>"/projectName:Staging Transport" "/sourceSolution:$(_solutionFilename)" "/repoFile:Repository.xml" "/tempDirectory:$(_buildProcessorTempDirectory)" "/buildDirectory:$(SolutionDirectory)_app/DependDB" "/outputPath:$(DependDBOutputPath)" "/configFileName:$(_buildProcessorConfigFileName)" "/projectBranch:$(DependDBProjectBranch)" "/retentionTime:15" "/sourceFileDirectory:$([System.IO.Path]::GetDirectoryName($(SolutionDirectory)))" "/xrefVersion:XReferencer45" "/svnTemplateUrl:$(DependDBSvnUrl)" "/version:$(version)" "/analyzerTrackedReferenceInclude:Remotion*,Rubicon*" "/ignoreAssembly:Autofac.Integration.Web,Castle.Windsor,Fit,PegasusImaging.WinForms.ScanFix5,Remotion.Silverlight,Remotion.Web.RelationViewer.DataTransfer.Silverlight,Remotion.Web.RelationViewer.Silverlight.Controls,System.ComponentModel.Composition,System.Web.Mvc" "/notificationAddress:dependdb@rubicon.eu"</_configBuilderArgs>
-	  <_buildProcessorArgs>$(_buildProcessorTempDirectory)\$(_buildProcessorConfigFileName)</_buildProcessorArgs>
-    </PropertyGroup>
-
-    <Exec Command="$(DeployRepositoryDependDBFileName)" />
-    <Exec Command="$(DependDBIntegrationDirectory)PackagingBasedDependDBConfigBuilder.exe $(_configBuilderArgs)"/>
-    <Exec Command="$(DependDBIntegrationDirectory)DependDB\DependDB.BuildProcessor.exe $(_buildProcessorArgs)"/>
-
-    <Message Text="Done packaging for DependDB" Importance="High"/>
-  </Target>
   
 </Project>
