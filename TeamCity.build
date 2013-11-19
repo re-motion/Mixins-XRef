@@ -7,6 +7,9 @@
 	<BuildType></BuildType>
 	<MSBuildExtensionPackPath>$(SolutionDirectory)prereq\MSBuildExtensionPack\</MSBuildExtensionPackPath>
 	<SharedAssemblyInfoFileName>$(SolutionDirectory)AssemblyInfoShared.cs</SharedAssemblyInfoFileName>
+	<DependDBUploadEnabled>false</DependDBUploadEnabled>
+	<DependDBSvnUrl></DependDBSvnUrl>
+	<SolutionFileName></SolutionFileName>
   </PropertyGroup>
 
   <UsingTask AssemblyFile="$(MSBuildExtensionPackPath)MSBuild.ExtensionPack.dll" TaskName="MSBuild.ExtensionPack.Framework.AssemblyInfo" />
@@ -44,5 +47,25 @@
 
     <Message Text="Done updating assembly infos, Configuration=$(Configuration)" Importance="High"/>
   </Target>    
+  
+  <Target Name="PackageForDependDB" Condition="$(Configuration) == 'Debug' And $(DependDBUploadEnabled) == 'true'">
+    <Message Text="Packaging for DependDB" Importance="High"/>
+
+    <Error Text="The property 'DependDBSvnUrl' is not set." Condition="'$(DependDBSvnUrl)' == ''" />
+	<Error Text="The property 'SvnRevision' is not set." Condition="'$(SvnRevision)' == '0'" />
+
+    <PropertyGroup>
+      <_solutionFileName>$([System.IO.Path]::GetFileName($(SolutionFileName)))</_solutionFileName>
+      <_buildProcessorTempDirectory>$(SolutionDirectory)_temp\DependDB</_buildProcessorTempDirectory>
+	  <_configFileName>$(SolutionDirectory)DependDB.config.xml</_configFileName>
+	  <_solutionDirectory>$([System.IO.Path]::GetDirectoryName($(SolutionDirectory)))</_solutionDirectory>
+   	  <_dependDBIntegrationDirectory>$(SolutionDirectory)_dep\DependDB\</_dependDBIntegrationDirectory>
+	  <_commandLineArgs>"$(_dependDBIntegrationDirectory)runbp.ps1 -config '$(_configFileName)' -version $(Version) -svnRevision $(SvnRevision) -svnTemplateUrl '$(DependDBSvnUrl)' -tempDirectory '$(_buildProcessorTempDirectory)' -buildDirectory '$(_solutionDirectory)' -sourceFileDirectory '$(_solutionDirectory)' -ownSubDirs 'MixinXRef.ReMotionApiUsageAssembly\bin\Debug' -refSubDirs 'packages,prereq' -deleteFiles ''</_commandLineArgs>
+    </PropertyGroup>
+
+    <Exec Command="powershell.exe &quot;$(_commandLineArgs)&quot;"/>
+    
+    <Message Text="Done packaging for DependDB" Importance="High"/>
+  </Target>
   
 </Project>

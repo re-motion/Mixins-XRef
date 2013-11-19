@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BuildProcessorConfiguration xsi:schemaLocation="http://rubicon.eu/BuildProcessorConfiguration" xmlns="http://rubicon.eu/BuildProcessorConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Settings>
+    <ProjectName>Xref</ProjectName>
+    <ProjectBranch>Trunk</ProjectBranch>
+    <ProjectVersion/><!-- as console parameter -->
+    <RetentionTime>2</RetentionTime>
+    <SourceDirectoryRoot></SourceDirectoryRoot><!-- copied from PDB file -->
+    <SourceControlUrlTemplate/><!-- as console parameter -->
+    <ProjectAssemblyFiles/><!-- as console parameter -->
+    <ReferencedAssemblyDirectories/><!-- as console parameter -->
+    <NotificationAddresses>
+      <To>dependdb@rubicon.eu</To>
+    </NotificationAddresses>
+  </Settings>
+  <ReportGenerators>
+    <ReportGenerator name="Analyzer">
+      <ComplexParameter name="trackedReferenceFilter">
+        <TrackedReferenceFilter>
+          <Include filter="MixinXRef.ReMotionApiUsageAssembly" />
+        </TrackedReferenceFilter>
+      </ComplexParameter>
+    </ReportGenerator>
+    <ReportGenerator name="XReferencer45">
+      <StringParameter name="reflector" value="MixinXRef.Reflectors.dll" />
+      <ComplexParameter name="ignoredAssemblies">
+        <IgnoredAssemblies>
+          <!--<IgnoredAssembly name="Autofac.Integration.Web" />-->
+        </IgnoredAssemblies>
+      </ComplexParameter>
+    </ReportGenerator>
+  </ReportGenerators>
+  <Senders>
+    <Sender name="FileSender">
+      <BoolParameter name="compress" value="false" />
+      <StringParameter name="outputPath" value="c:\temp\dependDbImport" />
+    </Sender>
+  </Senders>
+</BuildProcessorConfiguration>
