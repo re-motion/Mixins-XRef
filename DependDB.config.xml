@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BuildProcessorConfiguration xsi:schemaLocation="http://rubicon.eu/BuildProcessorConfiguration" xmlns="http://rubicon.eu/BuildProcessorConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Settings>
+    <ProjectName>Xref</ProjectName>
+    <ProjectBranch>1.9</ProjectBranch>
+    <ProjectVersion/><!-- as console parameter -->
+    <RetentionTime>2</RetentionTime>
+    <SourceDirectoryRoot></SourceDirectoryRoot><!-- copied from PDB file -->
+    <SourceControlUrlTemplate/><!-- as console parameter -->
+    <ProjectAssemblyFiles/><!-- as console parameter -->
+    <ReferencedAssemblyDirectories/><!-- as console parameter -->
+    <NotificationAddresses>
+      <To>dependdb@rubicon.eu</To>
+    </NotificationAddresses>
+  </Settings>
+  <ReportGenerators>
+    <ReportGenerator name="Analyzer">
+      <ComplexParameter name="trackedReferenceFilter">
+        <TrackedReferenceFilter>
+      <Include filter="Remotion*" />
+          <Include filter="MixinXRef.ReMotionApiUsageAssembly" />
+        </TrackedReferenceFilter>
+      </ComplexParameter>
+    </ReportGenerator>
+  </ReportGenerators>
+  <Senders>
+    <Sender name="FileSender">
+      <BoolParameter name="compress" value="false" />
+      <StringParameter name="outputPath" value="\\dependdb\Import" />
+    </Sender>
+  </Senders>
+</BuildProcessorConfiguration>

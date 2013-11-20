@@ -27,7 +27,6 @@ using Remotion.Reflection.TypeDiscovery;
 
 [assembly: AssemblyTitle ("MixinXRef.UnitTests.NonApplicationAssembly")]
 [assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Microsoft")]
 [assembly: AssemblyProduct ("MixinXRef.UnitTests.NonApplicationAssembly")]
 [assembly: AssemblyCopyright ("Copyright © Microsoft 2009")]

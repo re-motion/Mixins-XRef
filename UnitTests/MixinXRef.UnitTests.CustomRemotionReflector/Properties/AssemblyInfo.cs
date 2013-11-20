@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle ("MixinXRef.UnitTests.CustomRemotionReflector")]
 [assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Microsoft")]
 [assembly: AssemblyProduct ("MixinXRef.UnitTests.CustomRemotionReflector")]
 [assembly: AssemblyCopyright ("Copyright © Microsoft 2009")]

@@ -24,7 +24,6 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle ("MixinXRef.UnitTests.ComposedInterfacesReflector")]
 [assembly: AssemblyDescription ("")]
-[assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("MixinXRef.UnitTests.ComposedInterfacesReflector")]
 [assembly: AssemblyCopyright ("Copyright ©  2012")]
