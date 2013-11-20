@@ -17,16 +17,9 @@
     <ReportGenerator name="Analyzer">
       <ComplexParameter name="trackedReferenceFilter">
         <TrackedReferenceFilter>
+		  <Include filter="Remotion*" />
           <Include filter="MixinXRef.ReMotionApiUsageAssembly" />
         </TrackedReferenceFilter>
-      </ComplexParameter>
-    </ReportGenerator>
-    <ReportGenerator name="XReferencer45">
-      <StringParameter name="reflector" value="MixinXRef.Reflectors.dll" />
-      <ComplexParameter name="ignoredAssemblies">
-        <IgnoredAssemblies>
-          <!--<IgnoredAssembly name="Autofac.Integration.Web" />-->
-        </IgnoredAssemblies>
       </ComplexParameter>
     </ReportGenerator>
   </ReportGenerators>
