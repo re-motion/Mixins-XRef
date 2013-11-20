@@ -17,7 +17,7 @@
     <ReportGenerator name="Analyzer">
       <ComplexParameter name="trackedReferenceFilter">
         <TrackedReferenceFilter>
-		  <Include filter="Remotion*" />
+      <Include filter="Remotion*" />
           <Include filter="MixinXRef.ReMotionApiUsageAssembly" />
         </TrackedReferenceFilter>
       </ComplexParameter>
@@ -26,7 +26,7 @@
   <Senders>
     <Sender name="FileSender">
       <BoolParameter name="compress" value="false" />
-      <StringParameter name="outputPath" value="c:\temp\dependDbImport" />
+      <StringParameter name="outputPath" value="\\dependdb\Import" />
     </Sender>
   </Senders>
 </BuildProcessorConfiguration>
