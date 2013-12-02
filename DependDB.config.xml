@@ -17,7 +17,6 @@
     <ReportGenerator name="Analyzer">
       <ComplexParameter name="trackedReferenceFilter">
         <TrackedReferenceFilter>
-      <Include filter="Remotion*" />
           <Include filter="MixinXRef.ReMotionApiUsageAssembly" />
         </TrackedReferenceFilter>
       </ComplexParameter>
