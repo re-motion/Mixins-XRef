@@ -91,11 +91,30 @@ namespace MixinXRef
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
     {
+
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
-      var assembly = AppDomain.CurrentDomain.GetAssemblies ().SingleOrDefault (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName ()));
-      return assembly;
+      var matchingAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName())).ToList();
+      if (matchingAssemblies.Count > 1)
+      {
+        var specificVersion = assemblyName.Version;
+
+        var requestedAssembly = matchingAssemblies.First (a => a.GetName().Version == specificVersion);
+        if (requestedAssembly == null)
+          throw new InvalidOperationException (
+              string.Format (
+                  "Could not resolve assemlby '{0}'. Multiple loaded assemblies with the same name were found. The requested version is '{1}', the loaded versions are '{2}'.",
+                  args.Name,
+                  specificVersion,
+                  string.Join (", ", matchingAssemblies.Select (a => a.GetName().Version))));
+
+        return requestedAssembly;
+      }
+      if (!matchingAssemblies.Any())
+        return null;
+
+      return matchingAssemblies.First();
     }
 
     private Assembly LoadAssembly (string assemblyFile)
