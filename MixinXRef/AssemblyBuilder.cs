@@ -45,7 +45,7 @@ namespace MixinXRef
     {
       var assemblies = new List<Assembly> ();
 
-      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll"))
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll", SearchOption.AllDirectories))
       {
         if (!IsIgnoredAssembly (assemblyFile))
         {
@@ -59,7 +59,7 @@ namespace MixinXRef
         }
       }
 
-      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe"))
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe", SearchOption.AllDirectories))
       {
         if (!IsIgnoredAssembly (assemblyFile))
         {
@@ -91,7 +91,6 @@ namespace MixinXRef
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
     {
-
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
