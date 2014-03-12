@@ -99,7 +99,14 @@ namespace MixinXRef
       AssemblyName privateAssemblyName;
       if (_assembliesInPrivateBinPath.TryGetValue (args.Name, out privateAssemblyName))
         return Assembly.Load (privateAssemblyName);
-      return null;
+
+      // Simulate assembly binding redirects to the latest version.
+      // This is only a fallback if the requested assembly of a different version is already loaded into the AppDomain.
+      var assemblyName = new AssemblyName (args.Name);
+      return AppDomain.CurrentDomain.GetAssemblies()
+          .Where (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName()))
+          .OrderByDescending (a => a.GetName().Version)
+          .FirstOrDefault();
     }
 
     private Assembly LoadAssembly (string assemblyFile)
