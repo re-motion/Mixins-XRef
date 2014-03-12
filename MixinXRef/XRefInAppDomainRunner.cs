@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
+using System.IO;
 using System.Security;
 using System.Security.Permissions;
-using System.Security.Policy;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using TalkBack;
 
 namespace MixinXRef
@@ -38,8 +40,20 @@ namespace MixinXRef
           throw new ArgumentException ("Input directory is not a sub directory of application base directory!");
         }
       }
-      if(xRefArgs.AppConfigFile != null)
+      if (!string.IsNullOrEmpty (xRefArgs.AppConfigFile) && File.Exists (xRefArgs.AppConfigFile))
+      {
         setupInformation.ConfigurationFile = xRefArgs.AppConfigFile;
+
+        // The PrivateBinPath needs to be read manually from the config because for some reason it does not via automatic setup.
+        var privateBinPath = GetPrivateBinPathFromConfig (xRefArgs.AppConfigFile);
+        if (!string.IsNullOrEmpty (privateBinPath))
+        {
+          if (string.IsNullOrEmpty (setupInformation.PrivateBinPath))
+            setupInformation.PrivateBinPath = privateBinPath;
+          else
+            setupInformation.PrivateBinPath = setupInformation.PrivateBinPath + ";" + privateBinPath;
+        }
+      }
 
       var newAppDomain = AppDomain.CreateDomain ("XRefAppDomain", appDomain.Evidence, setupInformation, new PermissionSet(PermissionState.Unrestricted));
       var crossAppDomainCommunicatorType = typeof (CrossAppDomainCommunicator);
@@ -47,6 +61,18 @@ namespace MixinXRef
       if(onMessageReceived != null)
         proxy.SetMessageReceivedDelegate(new MessageReceivedDelegateWrapper(onMessageReceived).OnMessageReceived);
       return proxy.Run (talkBackArgs, xRefArgs);
+    }
+
+    private string GetPrivateBinPathFromConfig (string appConfigFile)
+    {
+
+      var configXml = XDocument.Load (appConfigFile);
+      var xmlNamespaceManager = new XmlNamespaceManager (new NameTable());
+      xmlNamespaceManager.AddNamespace ("asm", "urn:schemas-microsoft-com:asm.v1");
+      var probing = configXml.XPathSelectElement ("/configuration/runtime/asm:assemblyBinding/asm:probing", xmlNamespaceManager);
+      if (probing == null)
+        return null;
+      return probing.Attribute ("privatePath").Value;
     }
 
     private class MessageReceivedDelegateWrapper : MarshalByRefObject

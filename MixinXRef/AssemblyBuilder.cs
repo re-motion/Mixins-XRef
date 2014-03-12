@@ -17,10 +17,12 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
+using System.Xml.Linq;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -29,6 +31,7 @@ namespace MixinXRef
   {
     private readonly IEnumerable<string> _ignore;
     private readonly string _assemblyDirectory;
+    private Dictionary<string, AssemblyName> _assembliesInPrivateBinPath;
 
     public AssemblyBuilder (string assemblyDirectory, IEnumerable<string> ignore = null)
     {
@@ -36,6 +39,8 @@ namespace MixinXRef
 
       _ignore = ignore ?? Enumerable.Empty<string> ();
       _assemblyDirectory = Path.GetFullPath (assemblyDirectory);
+
+      _assembliesInPrivateBinPath = GetAssembliesInPrivateBinPath();
 
       // register assembly reference resolver
       AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;
@@ -91,6 +96,10 @@ namespace MixinXRef
 
     private Assembly CurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
     {
+      AssemblyName privateAssemblyName;
+      if (_assembliesInPrivateBinPath.TryGetValue (args.Name, out privateAssemblyName))
+        return Assembly.Load (privateAssemblyName);
+
       // All assemblies in the target directory have already been loaded.
       // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
       var assemblyName = new AssemblyName (args.Name);
@@ -99,7 +108,7 @@ namespace MixinXRef
       {
         var specificVersion = assemblyName.Version;
 
-        var requestedAssembly = matchingAssemblies.First (a => a.GetName().Version == specificVersion);
+        var requestedAssembly = matchingAssemblies.FirstOrDefault (a => a.GetName().Version == specificVersion);
         if (requestedAssembly == null)
           throw new InvalidOperationException (
               string.Format (
@@ -110,10 +119,8 @@ namespace MixinXRef
 
         return requestedAssembly;
       }
-      if (!matchingAssemblies.Any())
-        return null;
 
-      return matchingAssemblies.First();
+      return matchingAssemblies.SingleOrDefault();
     }
 
     private Assembly LoadAssembly (string assemblyFile)
@@ -175,6 +182,45 @@ namespace MixinXRef
         return !isPortableAssembly;
       }
       return false;
+    }
+
+    private Dictionary<string,AssemblyName> GetAssembliesInPrivateBinPath ()
+    {
+      var privateBinPaths = (AppDomain.CurrentDomain.RelativeSearchPath ?? "")
+          .Split (new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+          .Select (p => Path.Combine (AppDomain.CurrentDomain.BaseDirectory, p))
+          .Where (Directory.Exists)
+          .Select (p => new DirectoryInfo (p))
+          .ToArray();
+
+      return privateBinPaths
+          .SelectMany (d => d.EnumerateFileSystemInfos ("*.dll").Concat (d.EnumerateFileSystemInfos ("*.exe")))
+          .Select (GetAssemblyNameOrNull)
+          .Where (a => a != null)
+          .ToDictionary (a => a.FullName, a => a);
+    }
+
+    private AssemblyName GetAssemblyNameOrNull (FileSystemInfo file)
+    {
+      try
+      {
+        return AssemblyName.GetAssemblyName (file.FullName);
+      }
+      catch (FileNotFoundException fileNotFoundException)
+      {
+        XRef.Log.SendInfo (fileNotFoundException.Message);
+        return null;
+      }
+      catch (FileLoadException fileLoadException)
+      {
+        XRef.Log.SendInfo (fileLoadException.Message);
+        return null;
+      }
+      catch (BadImageFormatException badImageFormatException)
+      {
+        XRef.Log.SendInfo (badImageFormatException.Message);
+        return null;
+      }
     }
   }
 }
