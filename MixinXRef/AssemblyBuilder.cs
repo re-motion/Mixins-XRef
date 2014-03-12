@@ -50,7 +50,7 @@ namespace MixinXRef
     {
       var assemblies = new List<Assembly> ();
 
-      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll", SearchOption.AllDirectories))
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.dll"))
       {
         if (!IsIgnoredAssembly (assemblyFile))
         {
@@ -64,7 +64,7 @@ namespace MixinXRef
         }
       }
 
-      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe", SearchOption.AllDirectories))
+      foreach (var assemblyFile in Directory.GetFiles (_assemblyDirectory, "*.exe"))
       {
         if (!IsIgnoredAssembly (assemblyFile))
         {
@@ -99,28 +99,7 @@ namespace MixinXRef
       AssemblyName privateAssemblyName;
       if (_assembliesInPrivateBinPath.TryGetValue (args.Name, out privateAssemblyName))
         return Assembly.Load (privateAssemblyName);
-
-      // All assemblies in the target directory have already been loaded.
-      // Therefore, we can be sure that the referenced assembly has already been loaded if it is in the right directory.
-      var assemblyName = new AssemblyName (args.Name);
-      var matchingAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where (a => AssemblyName.ReferenceMatchesDefinition (assemblyName, a.GetName())).ToList();
-      if (matchingAssemblies.Count > 1)
-      {
-        var specificVersion = assemblyName.Version;
-
-        var requestedAssembly = matchingAssemblies.FirstOrDefault (a => a.GetName().Version == specificVersion);
-        if (requestedAssembly == null)
-          throw new InvalidOperationException (
-              string.Format (
-                  "Could not resolve assemlby '{0}'. Multiple loaded assemblies with the same name were found. The requested version is '{1}', the loaded versions are '{2}'.",
-                  args.Name,
-                  specificVersion,
-                  string.Join (", ", matchingAssemblies.Select (a => a.GetName().Version))));
-
-        return requestedAssembly;
-      }
-
-      return matchingAssemblies.SingleOrDefault();
+      return null;
     }
 
     private Assembly LoadAssembly (string assemblyFile)
