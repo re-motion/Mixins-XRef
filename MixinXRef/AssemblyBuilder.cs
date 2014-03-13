@@ -17,12 +17,10 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
-using System.Xml.Linq;
 using MixinXRef.Utility;
 
 namespace MixinXRef
@@ -31,7 +29,7 @@ namespace MixinXRef
   {
     private readonly IEnumerable<string> _ignore;
     private readonly string _assemblyDirectory;
-    private Dictionary<string, AssemblyName> _assembliesInPrivateBinPath;
+    private readonly Dictionary<string, AssemblyName> _assembliesInPrivateBinPath;
 
     public AssemblyBuilder (string assemblyDirectory, IEnumerable<string> ignore = null)
     {

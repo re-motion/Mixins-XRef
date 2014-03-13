@@ -40,8 +40,11 @@ namespace MixinXRef
           throw new ArgumentException ("Input directory is not a sub directory of application base directory!");
         }
       }
-      if (!string.IsNullOrEmpty (xRefArgs.AppConfigFile) && File.Exists (xRefArgs.AppConfigFile))
+      if (!string.IsNullOrEmpty (xRefArgs.AppConfigFile))
       {
+        if (!File.Exists (xRefArgs.AppConfigFile))
+          throw new ArgumentException (string.Format ("Supplied app-config file '{0}' does not exist.", xRefArgs.AppConfigFile));
+
         setupInformation.ConfigurationFile = xRefArgs.AppConfigFile;
 
         // The PrivateBinPath needs to be read manually from the config because for some reason it does not via automatic setup.
