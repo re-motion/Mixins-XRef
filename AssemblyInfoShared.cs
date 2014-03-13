@@ -39,7 +39,7 @@ using System.Reflection;
 
 //major and minor version for official releases are configured in the team city build parameters:
 
-[assembly: AssemblyVersion ("2.3.0.0")]
-[assembly: AssemblyFileVersion ("2.3.0.0")]
+[assembly: AssemblyVersion ("2.3.4.0")]
+[assembly: AssemblyFileVersion ("2.3.4.0")]
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyInformationalVersion ("")]
