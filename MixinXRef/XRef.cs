@@ -76,39 +76,9 @@ namespace MixinXRef
       if (!argsOk)
         return false;
 
-      IRemotionReflector reflector = null;
-
-      try
-      {
-        switch (arguments.ReflectorSource)
-        {
-          case ReflectorSource.ReflectorAssembly:
-            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, arguments.ReflectorPath);
-            break;
-          case ReflectorSource.CustomReflector:
-            var customReflector = Type.GetType (arguments.CustomReflectorAssemblyQualifiedTypeName);
-            if (customReflector == null)
-            {
-              Log.SendError ("Custom reflector can not be found");
-              return false;
-            }
-            if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
-            {
-              Log.SendError ("Specified custom reflector {0} does not implement {1}", customReflector,
-                            typeof (IRemotionReflector).FullName);
-              return false;
-            }
-            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, customReflector);
-            break;
-          case ReflectorSource.Unspecified:
-            throw new IndexOutOfRangeException ("Reflector source is unspecified");
-        }
-      }
-      catch (Exception ex)
-      {
-        Log.SendError("Error while initializing the reflector: {0}", ex.Message);
+      IRemotionReflector reflector;
+      if (!CreateReflector(arguments, out reflector))
         return false;
-      }
 
       reflector.InitializeLogging (arguments.AssemblyDirectory);
 
@@ -212,6 +182,47 @@ namespace MixinXRef
       }
 
       return true;
+    }
+
+    private static bool CreateReflector (XRefArguments arguments, out IRemotionReflector reflector)
+    {
+      try
+      {
+        switch (arguments.ReflectorSource)
+        {
+          case ReflectorSource.ReflectorAssembly:
+            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, arguments.ReflectorPath);
+            return true;
+          case ReflectorSource.CustomReflector:
+            var customReflector = Type.GetType (arguments.CustomReflectorAssemblyQualifiedTypeName);
+            if (customReflector == null)
+            {
+              Log.SendError ("Custom reflector can not be found");
+              reflector = null;
+              return false;
+            }
+            if (!typeof (IRemotionReflector).IsAssignableFrom (customReflector))
+            {
+              Log.SendError (
+                  "Specified custom reflector {0} does not implement {1}",
+                  customReflector,
+                  typeof (IRemotionReflector).FullName);
+              reflector = null;
+              return false;
+            }
+            reflector = RemotionReflectorFactory.Create (arguments.AssemblyDirectory, customReflector);
+            return true;
+          case ReflectorSource.Unspecified:
+            throw new IndexOutOfRangeException ("Reflector source is unspecified");
+        }
+      }
+      catch (Exception ex)
+      {
+        Log.SendError ("Error while initializing the reflector: {0}", ex.Message);
+        reflector = null;
+        return false;
+      }
+      throw new InvalidOperationException ("Unreachable codepath reached.");
     }
 
     private static Assembly LoadAdditionalReferencedAssembly (AssemblyName assemblyName, Assembly referencingAssembly)
