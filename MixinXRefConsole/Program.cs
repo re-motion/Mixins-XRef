@@ -73,21 +73,21 @@ namespace MixinXRefConsole
                             }
                         }, 
                         {
-                          "w=|ignore-warning=", "A list of assembly names to ignore. Names must be separated by a semicolon. ",
-                          v => cmdLineArgs.IgnoredAssemblies = v.Split (';').Select (n => n.Trim ())
-                        },
-                        {
-                          "h|?|help", "Show this help page",
-                          v => showOptionsHelp = true
-                        },
-                        {
                           "app-config-file=", "Application configuration file for analyzed assemblies. ",
                           v => cmdLineArgs.AppConfigFile = v
                         },
                         {
                           "app-base-directory=", "Application base directory. ",
                           v => cmdLineArgs.AppBaseDirectory = v
-                        }
+                        },
+                        {
+                          "h|?|help", "Show this help page",
+                          v => showOptionsHelp = true
+                        },
+                        {
+                          "w=|ignore-warning=", "Parameter is no longer supported. ",
+                          v => cmdLineArgs.IgnoredAssemblies = v
+                        },
                       };
 
       try
@@ -142,6 +142,12 @@ namespace MixinXRefConsole
       if (cmdLineArgs.ReflectorSource == ReflectorSource.Unspecified)
       {
         Console.Error.WriteLine ("Reflector is missing. Either provide a reflector assembly or a custom reflector.");
+        return 1;
+      }
+
+      if (!string.IsNullOrEmpty (cmdLineArgs.IgnoredAssemblies))
+      {
+        Console.Error.WriteLine (@"IgnoredAssemblies parameter is obsolete. You will need to specify the ignore-list using the ""remotion.typeDiscovery""-element in the app.config file for the analyzed assemblies.");
         return 1;
       }
 

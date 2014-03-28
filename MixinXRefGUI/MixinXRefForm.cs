@@ -57,7 +57,6 @@ namespace MixinXRefGUI
                                     ReflectorPath = "MixinXRef.Reflectors*.dll",
                                     CustomReflectorAssemblyQualifiedTypeName = "",
                                     SkipHTMLGeneration = false,
-                                    IgnoredAssemblies = Enumerable.Empty<string> (),
                                     AppBaseDirectory = null,
                                     AppConfigFile = null
                                   });
@@ -81,7 +80,6 @@ namespace MixinXRefGUI
       reflectorAssemblyTextBox.Text = settings.ReflectorPath;
       customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
       forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
-      ignoreAssembliesTextBox.Text = string.Join (Environment.NewLine, settings.IgnoredAssemblies.ToArray ());
       appBaseDirectory.Text = settings.AppBaseDirectory;
       appConfigFile.Text = settings.AppConfigFile;
 
@@ -106,7 +104,6 @@ namespace MixinXRefGUI
         CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
         OverwriteExistingFiles = forceOverrideCheckBox.Checked,
         ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly,
-        IgnoredAssemblies = ignoreAssembliesTextBox.Text.Split (new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries),
         AppBaseDirectory = appBaseDirectory.Text,
         AppConfigFile = appConfigFile.Text
       };

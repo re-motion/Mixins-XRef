@@ -43,14 +43,13 @@ namespace MixinXRef
     public ReflectorSource ReflectorSource { get; set; }
     public string ReflectorPath { get; set; }
     public string CustomReflectorAssemblyQualifiedTypeName { get; set; }
-    public IEnumerable<string> IgnoredAssemblies { get; set; }
+    public string IgnoredAssemblies { get; set; }
 
     public string AppConfigFile { get; set; }
     public string AppBaseDirectory { get; set; }
 
     public XRefArguments ()
     {
-      IgnoredAssemblies = Enumerable.Empty<string> ();
     }
 
     private XRefArguments (SerializationInfo info, StreamingContext context)
@@ -63,7 +62,6 @@ namespace MixinXRef
       ReflectorSource = (ReflectorSource) info.GetInt32 ("ReflectorSource");
       ReflectorPath = info.GetString ("ReflectorPath");
       CustomReflectorAssemblyQualifiedTypeName = info.GetString ("CustomReflectorAssemblyQualifiedTypeName");
-      IgnoredAssemblies = (List<string>) info.GetValue ("IgnoredAssemblies", typeof (List<string>));
       AppConfigFile = info.GetString ("AppConfigFile");
       AppBaseDirectory = info.GetString ("AppBaseDirectory");
     }
@@ -78,7 +76,6 @@ namespace MixinXRef
       info.AddValue ("ReflectorSource", (int) ReflectorSource);
       info.AddValue ("ReflectorPath", ReflectorPath);
       info.AddValue ("CustomReflectorAssemblyQualifiedTypeName", CustomReflectorAssemblyQualifiedTypeName);
-      info.AddValue ("IgnoredAssemblies", IgnoredAssemblies.ToList ());
       info.AddValue ("AppConfigFile", AppConfigFile);
       info.AddValue ("AppBaseDirectory", AppBaseDirectory);
     }

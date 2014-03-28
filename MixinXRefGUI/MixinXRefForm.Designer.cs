@@ -49,8 +49,6 @@ namespace MixinXRefGUI
       this.reflectorAssemblyRadioButton = new System.Windows.Forms.RadioButton();
       this.customReflectorRadioButton = new System.Windows.Forms.RadioButton();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.groupBox2 = new System.Windows.Forms.GroupBox();
-      this.ignoreAssembliesTextBox = new System.Windows.Forms.TextBox();
       this.label3 = new System.Windows.Forms.Label();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.browseConfigFile = new System.Windows.Forms.Button();
@@ -61,7 +59,6 @@ namespace MixinXRefGUI
       this.appConfigFile = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.groupBox1.SuspendLayout();
-      this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -132,7 +129,7 @@ namespace MixinXRefGUI
       this.customReflectorTextBox.Enabled = false;
       this.customReflectorTextBox.Location = new System.Drawing.Point(19, 91);
       this.customReflectorTextBox.Name = "customReflectorTextBox";
-      this.customReflectorTextBox.Size = new System.Drawing.Size(256, 20);
+      this.customReflectorTextBox.Size = new System.Drawing.Size(555, 20);
       this.customReflectorTextBox.TabIndex = 7;
       this.toolTip1.SetToolTip(this.customReflectorTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
       // 
@@ -189,7 +186,7 @@ namespace MixinXRefGUI
             | System.Windows.Forms.AnchorStyles.Right)));
       this.reflectorAssemblyTextBox.Location = new System.Drawing.Point(19, 42);
       this.reflectorAssemblyTextBox.Name = "reflectorAssemblyTextBox";
-      this.reflectorAssemblyTextBox.Size = new System.Drawing.Size(256, 20);
+      this.reflectorAssemblyTextBox.Size = new System.Drawing.Size(555, 20);
       this.reflectorAssemblyTextBox.TabIndex = 14;
       this.toolTip1.SetToolTip(this.reflectorAssemblyTextBox, "FullQualifiedClassName, FullQualifiedAssemblyName");
       // 
@@ -236,35 +233,10 @@ namespace MixinXRefGUI
       this.groupBox1.Controls.Add(this.customReflectorTextBox);
       this.groupBox1.Location = new System.Drawing.Point(12, 125);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(295, 121);
+      this.groupBox1.Size = new System.Drawing.Size(594, 121);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Remotion reflector source";
-      // 
-      // groupBox2
-      // 
-      this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.groupBox2.Controls.Add(this.ignoreAssembliesTextBox);
-      this.groupBox2.Location = new System.Drawing.Point(313, 125);
-      this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(293, 121);
-      this.groupBox2.TabIndex = 0;
-      this.groupBox2.TabStop = false;
-      this.groupBox2.Text = "Assemblies to ignore (one simple assembly name per line)";
-      // 
-      // ignoreAssembliesTextBox
-      // 
-      this.ignoreAssembliesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.ignoreAssembliesTextBox.Location = new System.Drawing.Point(7, 20);
-      this.ignoreAssembliesTextBox.Multiline = true;
-      this.ignoreAssembliesTextBox.Name = "ignoreAssembliesTextBox";
-      this.ignoreAssembliesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.ignoreAssembliesTextBox.Size = new System.Drawing.Size(280, 95);
-      this.ignoreAssembliesTextBox.TabIndex = 0;
-      this.ignoreAssembliesTextBox.WordWrap = false;
       // 
       // label3
       // 
@@ -352,7 +324,6 @@ namespace MixinXRefGUI
       this.Controls.Add(this.groupBox3);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.startMixinXRefButton);
-      this.Controls.Add(this.groupBox2);
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.showResultsButton);
       this.Controls.Add(this.logTextBox);
@@ -371,8 +342,6 @@ namespace MixinXRefGUI
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
-      this.groupBox2.ResumeLayout(false);
-      this.groupBox2.PerformLayout();
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
       this.ResumeLayout(false);
@@ -400,8 +369,6 @@ namespace MixinXRefGUI
     private System.Windows.Forms.RadioButton customReflectorRadioButton;
     private System.Windows.Forms.TextBox reflectorAssemblyTextBox;
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
-    private System.Windows.Forms.TextBox ignoreAssembliesTextBox;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.GroupBox groupBox3;
     private System.Windows.Forms.Label label4;

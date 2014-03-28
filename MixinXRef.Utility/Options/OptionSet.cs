@@ -49,6 +49,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -157,6 +158,10 @@ namespace MixinXRef.Utility.Options
         if (!Parse (argument, c))
           Unprocessed (unprocessed, def, c, argument);
       }
+
+      if (unprocessed.Any())
+        throw new OptionException (string.Format ("Error: Found unknown option \"{0}\"", unprocessed.First()), null);
+
       if (c.Option != null)
         c.Option.Invoke (c);
     }
