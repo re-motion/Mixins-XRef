@@ -20,8 +20,8 @@ using System.IO;
 using System.Linq;
 using MixinXRef;
 using MixinXRef.Reflection.RemotionReflector;
+using MixinXRef.Utility;
 using MixinXRef.Utility.Options;
-using TalkBack;
 
 namespace MixinXRefConsole
 {
@@ -29,6 +29,8 @@ namespace MixinXRefConsole
   {
     private static int Main (string[] args)
     {
+      var remainingArgs = args.SkipWhile (a=>a.StartsWith ("__tb:")); //TalkBackChannel.Initialize (args);
+
       var cmdLineArgs = XRefArguments.Instance;
       var showOptionsHelp = false;
 
@@ -92,7 +94,7 @@ namespace MixinXRefConsole
 
       try
       {
-        options.Parse (args);
+        options.Parse (remainingArgs);
       }
       catch (OptionException e)
       {
@@ -117,6 +119,7 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
+      var logger = new RemotingLogger();
       return new XRefInAppDomainRunner().Run (args, cmdLineArgs);
     }
 

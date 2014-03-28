@@ -92,7 +92,7 @@ namespace MixinXRef
       }
       catch (Exception ex)
       {
-        Log.SendError (ex.Message);
+        Log.SendError (ex.ToString());
         return false;
       }
 
