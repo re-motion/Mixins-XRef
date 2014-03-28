@@ -60,7 +60,7 @@
 	  <_configFileName>$(SolutionDirectory)DependDB.config.xml</_configFileName>
 	  <_solutionDirectory>$([System.IO.Path]::GetDirectoryName($(SolutionDirectory)))</_solutionDirectory>
    	  <_dependDBIntegrationDirectory>$(SolutionDirectory)_dep\DependDB\</_dependDBIntegrationDirectory>
-	  <_commandLineArgs>$(_dependDBIntegrationDirectory)runbp.ps1 -config '$(_configFileName)' -version $(Version) -svnRevision $(SvnRevision) -svnTemplateUrl '$(DependDBSvnUrl)' -tempDirectory '$(_buildProcessorTempDirectory)' -buildDirectory '$(_solutionDirectory)' -sourceFileDirectory '$(_solutionDirectory)' -ownSubDirs 'MixinXRef.ReMotionApiUsageAssembly\bin\Debug' -refSubDirs 'packages,prereq' -deleteFiles ''</_commandLineArgs>
+	  <_commandLineArgs>$(_dependDBIntegrationDirectory)runbp.ps1 -config '$(_configFileName)' -version $(Version) -svnRevision $(SvnRevision) -svnTemplateUrl '$(DependDBSvnUrl)' -tempDirectory '$(_buildProcessorTempDirectory)' -buildDirectory '$(_solutionDirectory)' -sourceFileDirectory '$(_solutionDirectory)' -ownSubDirs 'MixinXRef.ReMotionApiUsageAssembly\bin\Debug' -refSubDirs 'UnitTests\Remotion\Current' -deleteFiles ''</_commandLineArgs>
     </PropertyGroup>
 
     <Exec Command="powershell.exe &quot;$(_commandLineArgs)&quot;"/>
