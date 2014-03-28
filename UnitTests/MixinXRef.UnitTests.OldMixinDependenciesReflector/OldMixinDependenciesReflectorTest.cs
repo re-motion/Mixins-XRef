@@ -26,7 +26,7 @@ using Remotion.Mixins.Definitions;
 namespace MixinXRef.UnitTests.OldMixinDependenciesReflector
 {
   [TestFixture]
-  public class OldMixinDependenciesReflector
+  public class OldMixinDependenciesReflectorTest
   {
     private IRemotionReflector _remotionReflector;
     private TargetClassDefinition _targetClassDefinition;

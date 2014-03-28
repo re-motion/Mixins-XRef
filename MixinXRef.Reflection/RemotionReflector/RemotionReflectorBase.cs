@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Reflection;
 
 namespace MixinXRef.Reflection.RemotionReflector
@@ -28,7 +29,12 @@ namespace MixinXRef.Reflection.RemotionReflector
       return this;
     }
 
-    public virtual void InitializeLogging (string assemblyDirectory)
+    public virtual void InitializeLogging ()
+    {
+      throw new NotSupportedException ();
+    }
+
+    public virtual  ITypeDiscoveryService GetTypeDiscoveryService ()
     {
       throw new NotSupportedException ();
     }

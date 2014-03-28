@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Reflection;
 
 namespace MixinXRef.Reflection.RemotionReflector
@@ -39,6 +40,7 @@ namespace MixinXRef.Reflection.RemotionReflector
     ReflectedObject GetTargetCallDependencies (ReflectedObject mixinDefinition);
 
     ICollection<Type> GetComposedInterfaces (ReflectedObject classContext);
-    void InitializeLogging (string assemblyDirectory);
+    void InitializeLogging ();
+    ITypeDiscoveryService GetTypeDiscoveryService ();
   }
 }

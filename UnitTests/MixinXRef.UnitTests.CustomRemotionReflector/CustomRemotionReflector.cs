@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -54,6 +55,17 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
       _remotionInterfaceAssembly = LoadFile (assemblyDirectory, "Remotion.Interfaces.dll");
 
       return this;
+    }
+
+    public void InitializeLogging ()
+    {
+      
+    }
+
+    public ITypeDiscoveryService GetTypeDiscoveryService ()
+    {
+      var type = _remotionInterfaceAssembly.GetType ("Remotion.Reflection.TypeDiscovery.ContextAwareTypeDiscoveryUtility", true);
+      return ReflectedObject.CallMethod (type, "GetInstance").To<ITypeDiscoveryService>();
     }
 
     public bool IsRelevantAssemblyForConfiguration(Assembly assembly)
@@ -131,11 +143,6 @@ namespace MixinXRef.UnitTests.CustomRemotionReflector
     public ICollection<Type> GetComposedInterfaces (ReflectedObject classContext)
     {
       return new Type[0];
-    }
-
-    public void InitializeLogging (string assemblyDirectory)
-    {
-      
     }
 
     public ReflectedObject GetNextCallDependencies(ReflectedObject mixinDefinition)

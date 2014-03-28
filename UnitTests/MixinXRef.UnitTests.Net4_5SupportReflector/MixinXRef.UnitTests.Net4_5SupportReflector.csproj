@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{36B65F7D-0004-49D8-AA09-4A339D0B47D9}</ProjectGuid>
+    <ProjectGuid>{A3213D53-150C-4CB2-9645-C6607E5B73B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixinXRef.UnitTests.OldMixinDependenciesReflector</RootNamespace>
-    <AssemblyName>MixinXRef.UnitTests.OldMixinDependenciesReflector</AssemblyName>
+    <RootNamespace>MixinXRef.UnitTests.Net4_5SupportReflector</RootNamespace>
+    <AssemblyName>MixinXRef.UnitTests.Net4_5SupportReflector</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -34,14 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Remotion">
-      <HintPath>..\Remotion\1.11.20\Remotion.dll</HintPath>
+      <HintPath>..\Remotion\1.15.0.1\Remotion.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Interfaces">
-      <HintPath>..\Remotion\1.11.20\Remotion.Interfaces.dll</HintPath>
+      <HintPath>..\Remotion\1.15.0.1\Remotion.Mixins.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
@@ -54,17 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OldMixinDependenciesReflectorTest.cs" />
+    <Compile Include="Net4_5SupportReflectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDomain\ComposedInterfacesTestClass.cs" />
     <Compile Include="TestDomain\Mixin1.cs" />
     <Compile Include="TestDomain\TargetClass1.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\MixinXRef.licenseheader">
-      <Link>MixinXRef.licenseheader</Link>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MixinXRef.Reflection\MixinXRef.Reflection.csproj">
@@ -75,6 +70,20 @@
       <Project>{396BE3B3-62F6-4CAA-B55D-7D4EF44E35D9}</Project>
       <Name>MixinXRef.Reflectors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MixinXRef.Utility\MixinXRef.Utility.csproj">
+      <Project>{831d6258-9202-4d48-b167-c9aee9e8172f}</Project>
+      <Name>MixinXRef.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixinXRef.UnitTests.NonApplicationAssembly\MixinXRef.UnitTests.NonApplicationAssembly.csproj">
+      <Project>{4D5710EA-E79A-484A-A9A2-2572571274D7}</Project>
+      <Name>MixinXRef.UnitTests.NonApplicationAssembly</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\MixinXRef.licenseheader">
+      <Link>MixinXRef.licenseheader</Link>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

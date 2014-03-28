@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -80,67 +81,30 @@ namespace MixinXRef
       if (!CreateReflector(arguments, out reflector))
         return false;
 
-      reflector.InitializeLogging (arguments.AssemblyDirectory);
+      reflector.InitializeLogging ();
 
-      var assemblies = new AssemblyBuilder (arguments.AssemblyDirectory, arguments.IgnoredAssemblies)
-        .GetAssemblies (a => !reflector.IsRelevantAssemblyForConfiguration (a) || !reflector.IsNonApplicationAssembly (a));
+      var typeDiscoveryService = reflector.GetTypeDiscoveryService();
 
-      if (!assemblies.Any ())
+      ICollection allTypes;
+      try
       {
-        Log.SendError ("\"{0}\" contains no assemblies or only assemblies on the ignore list", arguments.AssemblyDirectory);
+        allTypes = typeDiscoveryService.GetTypes (null, true);
+      }
+      catch (Exception ex)
+      {
+        Log.SendError (ex.Message);
         return false;
       }
 
-      var xmlFile = Path.Combine (arguments.OutputDirectory,
-                                 !string.IsNullOrEmpty (arguments.XMLOutputFileName)
-                                   ? arguments.XMLOutputFileName
-                                   : "MixinXRef.xml");
+      var allAssemblies = allTypes.Cast<Type>().Select (t => t.Assembly)
+          .Distinct()
+          .Where (a => !reflector.IsRelevantAssemblyForConfiguration (a) || !reflector.IsNonApplicationAssembly (a))
+          .ToArray();
 
-      var refAssemblyNames = assemblies
-          .SelectMany (assembly => assembly.GetReferencedAssemblies(), (referencing, referenced) => new { referencing, referenced })
-          .DistinctBy (t => t.referenced.FullName);
-      var alreadyLoadedAssemblyName = new HashSet<AssemblyName> (assemblies.Select (assembly => assembly.GetName()));
-      
-      // Load referenced assemblies
-      var assemblyNamesToLoad = refAssemblyNames
-          .Where (t => !alreadyLoadedAssemblyName.Contains (t.referenced))
-          .Where (t => !arguments.IgnoredAssemblies.Contains (t.referenced.Name));
-      var addtionalReferencedAssemblies =
-          assemblyNamesToLoad
-              .Select (t => LoadAdditionalReferencedAssembly (t.referenced, t.referencing))
-              .Where (assembly => assembly != null);
-
-      var allAssemblies = assemblies.Concat (addtionalReferencedAssemblies).DistinctBy (assemblyName => assemblyName.FullName).ToArray ();
-
-      // Try to load all types in order to find Reflection problems as fast as possible.
-
-      foreach (var assembly in allAssemblies)
+      if (!allAssemblies.Any())
       {
-        try
-        {
-          assembly.GetTypes();
-        }
-        catch (ReflectionTypeLoadException ex)
-        {
-          var messageBuilder = new StringBuilder();
-          messageBuilder.AppendFormat("Error loading the types from assembly '{0}'.", assembly.Location);
-          messageBuilder.AppendLine();
-          foreach (var loaderException in ex.LoaderExceptions.DistinctBy(exception => exception.Message))
-          {
-            var fileNotFoundException = loaderException as FileNotFoundException;
-            if (fileNotFoundException != null)
-            {
-              messageBuilder.AppendFormat("  Reference not found: '{0}'", fileNotFoundException.FileName);
-            }
-            else
-            {
-              messageBuilder.Append("  ");
-              messageBuilder.Append(loaderException.Message);
-            }
-            messageBuilder.AppendLine();
-          }
-          Log.SendError(messageBuilder.ToString());
-        }
+        Log.SendError ("\"{0}\" contains no assemblies or only assemblies on the ignore list", arguments.AssemblyDirectory);
+        return false;
       }
 
       var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (allAssemblies);
@@ -152,12 +116,17 @@ namespace MixinXRef
       var reportGenerator = new FullReportGenerator (involvedTypes, configurationErrors, validationErrors, reflector, outputFormatter);
       var outputDocument = reportGenerator.GenerateXmlDocument ();
 
+      var xmlFile = Path.Combine (arguments.OutputDirectory,
+                                 !string.IsNullOrEmpty (arguments.XMLOutputFileName)
+                                   ? arguments.XMLOutputFileName
+                                   : "MixinXRef.xml");
+
       outputDocument.Save (xmlFile);
 
       reportGenerator = null;
       GC.Collect ();
 
-      assemblies = null;
+      allAssemblies = null;
       GC.Collect ();
       GC.WaitForPendingFinalizers ();
 

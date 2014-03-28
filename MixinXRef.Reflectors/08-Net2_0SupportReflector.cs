@@ -41,7 +41,7 @@ namespace MixinXRef.Reflectors
       return this;
     }
 
-    public override void InitializeLogging (string assemblyDirectory)
+    public override void InitializeLogging ()
     {
       throw CreateException();
     }

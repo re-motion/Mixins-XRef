@@ -31,7 +31,7 @@ namespace MixinXRef.Reflectors
     private string _assemblyDirectory;
     private Assembly _mixinsAssembly;
     
-    private Assembly RemotionAssembly
+    private Assembly RemotionMixinsAssembly
     {
       get { return _mixinsAssembly ?? (_mixinsAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (_assemblyDirectory, "Remotion.Mixins.dll")))); }
     }
@@ -50,7 +50,7 @@ namespace MixinXRef.Reflectors
       ArgumentUtility.CheckNotNull ("targetType", targetType);
       ArgumentUtility.CheckNotNull ("mixinConfiguration", mixinConfiguration);
 
-      var targetClassDefinitionFactoryType = RemotionAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
+      var targetClassDefinitionFactoryType = RemotionMixinsAssembly.GetType ("Remotion.Mixins.Definitions.TargetClassDefinitionFactory", true);
       return ReflectedObject.CallMethod (targetClassDefinitionFactoryType, "CreateAndValidate", classContext);
     }
   }

@@ -31,7 +31,7 @@ namespace MixinXRef.Reflection
     private readonly string _component;
     private readonly Version _version;
     private readonly string _assemblyDirectory;
-    private readonly IEnumerable<Type> _reflectorTypes;
+    private readonly IReadOnlyCollection<Type> _reflectorTypes;
     private readonly IDictionary<MethodBase, IRemotionReflector> _reflectorInstances = new Dictionary<MethodBase, IRemotionReflector> ();
 
     protected ReflectorProvider (string component, Version version, IEnumerable<_Assembly> assemblies, string assemblyDirectory)
@@ -40,14 +40,14 @@ namespace MixinXRef.Reflection
       _version = version;
       _assemblyDirectory = assemblyDirectory;
 
-      _reflectorTypes =
-        assemblies.SelectMany(a => a.GetExportedTypes()).Where(IsValidReflector);
+      _reflectorTypes = assemblies.SelectMany (a => a.GetExportedTypes()).Where (IsValidReflector).ToArray();
 
-      if (!_reflectorTypes.Any ())
+      if (!_reflectorTypes.Any())
         throw new ArgumentException ("There are no valid reflectors in the given assemblies", "assemblies");
 
-      CheckAssemblyRequirements(_reflectorTypes.OrderByDescending(
-        t => t.GetAttribute<ReflectorSupportAttribute>().MinVersion).First(), assemblyDirectory);
+      CheckAssemblyRequirements (
+          _reflectorTypes.OrderByDescending (t => t.GetAttribute<ReflectorSupportAttribute>().MinVersion).First(),
+          assemblyDirectory);
     }
 
     private void CheckAssemblyRequirements(Type reflectorType, string assemblyDirectory)

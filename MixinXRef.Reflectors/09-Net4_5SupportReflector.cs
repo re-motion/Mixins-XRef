@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Reflection;
 using MixinXRef.Reflection;
@@ -32,6 +33,8 @@ namespace MixinXRef.Reflectors
   [ReflectorSupport ("Remotion", "1.15.0.0", "Remotion.Mixins.dll")]
   public class Net4_5SupportReflector : RemotionReflectorBase
   {
+    private string _assemblyDirectory;
+    private Assembly _remotionAssembly;
     private readonly ComposedInterfacesReflector _composedInterfacesReflector;
     private readonly CreateAndValidateReflector _createAndValidateReflector;
     private readonly DefaultReflector _defaultReflector;
@@ -51,9 +54,17 @@ namespace MixinXRef.Reflectors
       _composedInterfacesReflector = new ComposedInterfacesReflector();
     }
 
- 
+    private Assembly RemotionAssembly
+    {
+      get { return _remotionAssembly ?? (_remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (_assemblyDirectory, "Remotion.dll")))); }
+    }
+
     public override IRemotionReflector Initialize (string assemblyDirectory)
     {
+      ArgumentUtility.CheckNotNull ("assemblyDirectory", assemblyDirectory);
+
+      _assemblyDirectory = assemblyDirectory;
+
       _defaultReflector.Initialize (assemblyDirectory);
       _oldMixinDependenciesReflector.Initialize (assemblyDirectory);
       _targetClassDefinitionFactoryReflector.Initialize (assemblyDirectory);
@@ -65,14 +76,18 @@ namespace MixinXRef.Reflectors
       return this;
     }
 
-    public override void InitializeLogging (string assemblyDirectory)
+    public override void InitializeLogging ()
     {
-      var remotionAssembly = Assembly.LoadFile (Path.GetFullPath (Path.Combine (assemblyDirectory, "Remotion.dll")));
-      var getLoggerMethod = remotionAssembly.GetType ("Remotion.Logging.LogManager", true)
-          .GetMethod ("GetLogger", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof (string) }, null);
-      object logger = getLoggerMethod.Invoke (null, new object[] { "Remotion" });
+      var type = RemotionAssembly.GetType ("Remotion.Logging.LogManager", true);
+      object logger = ReflectedObject.CallMethod (type, "GetLogger", "LoggerName");
       if (logger == null)
         throw new InvalidOperationException ("Failed to initialize log4net.");
+    }
+
+    public override ITypeDiscoveryService GetTypeDiscoveryService ()
+    {
+      var type = RemotionAssembly.GetType ("Remotion.Reflection.TypeDiscovery.ContextAwareTypeDiscoveryUtility", true);
+      return ReflectedObject.CallMethod (type, "GetTypeDiscoveryService").To<ITypeDiscoveryService>();
     }
 
     public override bool IsRelevantAssemblyForConfiguration (Assembly assembly)
