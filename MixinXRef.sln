@@ -79,6 +79,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F746EC4A-D5B4-471D-9480-C045EF98D3B1}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfoShared.cs = AssemblyInfoShared.cs
+		DependDB.config.xml = DependDB.config.xml
 		MixinXRef.licenseheader = MixinXRef.licenseheader
 		TeamCity.build = TeamCity.build
 	EndProjectSection
