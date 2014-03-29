@@ -174,7 +174,7 @@ namespace MixinXRef.UnitTests.Formatting
           new XElement ("Type", "System.String", new XAttribute ("languageType", "Keyword")),
           new XElement ("ParameterName", "stringParam"),
           new XElement ("Text", ","),
-          new XElement ("Type", "MixinXRef.AssemblyBuilder", new XAttribute ("languageType", "Type")),
+          new XElement ("Type", "MixinXRef.AssemblyResolver", new XAttribute ("languageType", "Type")),
           new XElement ("ParameterName", "assemblyBuilderParam"),
           new XElement ("Text", ")")
           );
