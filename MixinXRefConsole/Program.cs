@@ -119,7 +119,6 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
-      var logger = new RemotingLogger();
       return new XRefInAppDomainRunner().Run (args, cmdLineArgs);
     }
 
