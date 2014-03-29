@@ -81,6 +81,9 @@ namespace MixinXRef
       if (!CreateReflector(arguments, out reflector))
         return false;
 
+      var assemblyResolver = AssemblyResolver.Create();
+      AppDomain.CurrentDomain.AssemblyResolve += assemblyResolver.HandleAssemblyResolve;
+
       reflector.InitializeLogging ();
 
       var typeDiscoveryService = reflector.GetTypeDiscoveryService();
@@ -192,43 +195,6 @@ namespace MixinXRef
         return false;
       }
       throw new InvalidOperationException ("Unreachable codepath reached.");
-    }
-
-    private static Assembly LoadAdditionalReferencedAssembly (AssemblyName assemblyName, Assembly referencingAssembly)
-    {
-      Assembly assembly = null;
-
-      try
-      {
-        assembly = Assembly.Load (assemblyName);
-      }
-      catch (FileNotFoundException ex)
-      {
-        Log.SendWarning (
-            "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.",
-            assemblyName,
-            referencingAssembly.Location,
-            ex.Message);
-      }
-      catch (FileLoadException ex)
-      {
-        Log.SendError (
-            "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.",
-            assemblyName,
-            referencingAssembly.Location,
-            ex.Message);
-      }
-      catch(Exception ex)
-      {
-        Log.SendError(
-          "Could not load assembly '{0}' (referenced by '{1}') due to '{2}'.\n{3}",
-            assemblyName,
-            referencingAssembly.Location,
-            ex.Message,
-            ex.ToString());
-      }
-
-      return assembly;
     }
 
     private static bool CheckArguments (XRefArguments arguments)

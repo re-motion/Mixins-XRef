@@ -93,7 +93,7 @@
     <Compile Include="InvolvedTypeStore.cs" />
     <Compile Include="RemotionReflectorFactory.cs" />
     <Compile Include="Report\AdditionalDependencyReportGenerator.cs" />
-    <Compile Include="AssemblyBuilder.cs" />
+    <Compile Include="AssemblyResolver.cs" />
     <Compile Include="Report\AssemblyReportGenerator.cs" />
     <Compile Include="Report\AttributeIntroductionReportGenerator.cs" />
     <Compile Include="Report\AttributeReferenceReportGenerator.cs" />

@@ -72,7 +72,7 @@ namespace MixinXRef.UnitTests.TestDomain
       throw new NotImplementedException();
     }
 
-    public long MethodWithParams (int intParam, string stringParam, AssemblyBuilder assemblyBuilderParam) { return 0; }
+    public long MethodWithParams (int intParam, string stringParam, AssemblyResolver assemblyBuilderParam) { return 0; }
     protected MultiDictionary<string, int> _dictionary;
 
     public interface INestedExplicitInterface : IExplicitInterface

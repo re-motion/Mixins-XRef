@@ -207,7 +207,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\ArgumentUtilityTest.cs" />
-    <Compile Include="AssemblyBuilderTest.cs" />
     <Compile Include="Report\AttributeReferenceReportGeneratorTest.cs" />
     <Compile Include="Report\AttributeReportGeneratorTest.cs" />
     <Compile Include="Report\ConfigurationErrorReportGeneratorTest.cs" />
