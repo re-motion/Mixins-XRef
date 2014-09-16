@@ -114,6 +114,8 @@
     <Compile Include="TestDomain\ClassWithNestedAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TestDomain\ClassWithNonPublicEvent.cs" />
+    <Compile Include="TestDomain\ClassWithNonPublicProperty.cs" />
     <Compile Include="TestDomain\ClassWithProperty.cs">
       <SubType>Code</SubType>
     </Compile>

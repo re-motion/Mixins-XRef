@@ -14,6 +14,5 @@ namespace MixinSampleAssembly
     public virtual void Foo2 ()
     {
     }
-
   }
 }

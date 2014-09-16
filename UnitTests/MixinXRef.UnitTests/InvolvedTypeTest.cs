@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Linq;
+using System.Reflection;
 using MixinXRef.Reflection;
 using MixinXRef.Reflection.Utility;
 using MixinXRef.UnitTests.TestDomain;
@@ -188,6 +189,32 @@ namespace MixinXRef.UnitTests
 
       Assert.That (type1.IsMixin, Is.True);
       Assert.That (type1.TargetTypes.Count, Is.GreaterThan (0));
+    }
+
+    [Test]
+    public void GetMembers_ForClassWithNonPublicProperty ()
+    {
+      var type = new InvolvedType (typeof (ClassWithNonPublicProperty));
+
+      var member = type.Members.FirstOrDefault (m => ((MemberInfo) m.MemberInfo).Name == "PropertyName");
+      Assert.That (member, Is.Not.Null);
+      var subMemberInfos = member.SubMemberInfos.ToArray();
+      Assert.That (subMemberInfos.Length, Is.EqualTo (2));
+      Assert.That ((MemberInfo) (subMemberInfos[0]), Is.Not.Null);
+      Assert.That ((MemberInfo) (subMemberInfos[1]), Is.Not.Null);
+    }
+
+    [Test]
+    public void GetMembers_ForClassWithNonPublicEvent ()
+    {
+      var type = new InvolvedType (typeof (ClassWithNonPublicEvent));
+
+      var member = type.Members.FirstOrDefault (m => ((MemberInfo) m.MemberInfo).Name == "EventName");
+      Assert.That (member, Is.Not.Null);
+      var subMemberInfos = member.SubMemberInfos.ToArray();
+      Assert.That (subMemberInfos.Length, Is.EqualTo (2));
+      Assert.That ((MemberInfo) (subMemberInfos[0]), Is.Not.Null);
+      Assert.That ((MemberInfo) (subMemberInfos[1]), Is.Not.Null);
     }
   }
 }

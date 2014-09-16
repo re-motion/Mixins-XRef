@@ -101,17 +101,17 @@ namespace MixinXRef
       AddOverriddenMember(baseMember.GetProperty ("MemberInfo").To<MemberInfo> (), OverridingMemberInfo.OverrideType.Mixin);
     }
 
-    private void AddSubMemberInfos(MemberInfo memberInfo)
+    private void AddSubMemberInfos (MemberInfo memberInfo)
     {
       if (memberInfo.MemberType == MemberTypes.Property)
       {
         var propInfo = ((PropertyInfo) memberInfo);
 
-        var getMethod = propInfo.GetGetMethod ();
+        var getMethod = propInfo.GetGetMethod (nonPublic: true);
         if (getMethod != null)
-          _subMemberInfos.Add(SubMemberType.PropertyGet, new OverridingMemberInfo(getMethod));
+          _subMemberInfos.Add (SubMemberType.PropertyGet, new OverridingMemberInfo (getMethod));
 
-        var setMethod = propInfo.GetSetMethod ();
+        var setMethod = propInfo.GetSetMethod (nonPublic: true);
         if (setMethod != null)
           _subMemberInfos.Add (SubMemberType.PropertySet, new OverridingMemberInfo (setMethod));
       }
@@ -120,8 +120,13 @@ namespace MixinXRef
       {
         var eventInfo = ((EventInfo) memberInfo);
 
-        _subMemberInfos.Add (SubMemberType.EventAdd, new OverridingMemberInfo (eventInfo.GetAddMethod()));
-        _subMemberInfos.Add (SubMemberType.EventRemove, new OverridingMemberInfo (eventInfo.GetRemoveMethod()));
+        var addMethod = eventInfo.GetAddMethod (nonPublic: true);
+        if (addMethod != null)
+          _subMemberInfos.Add (SubMemberType.EventAdd, new OverridingMemberInfo (addMethod));
+
+        var removeMethod = eventInfo.GetRemoveMethod (nonPublic: true);
+        if (removeMethod != null)
+          _subMemberInfos.Add (SubMemberType.EventRemove, new OverridingMemberInfo (removeMethod));
       }
     }
 

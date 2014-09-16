@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixinXRef.Utility;
 
 namespace MixinXRef
 {
@@ -37,6 +38,7 @@ namespace MixinXRef
     public IEnumerable<MemberInfo> OverriddenMixinMembers { get { return _overriddenMixinMembers; } }
     public OverridingMemberInfo(MemberInfo memberInfo)
     {
+      ArgumentUtility.CheckNotNull ("memberInfo", memberInfo);
       _memberInfo = memberInfo;
     }
 
