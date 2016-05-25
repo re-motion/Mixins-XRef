@@ -65,6 +65,11 @@ namespace MixinXRef
         catch (Exception ex)
         {
           Log.SendError (ex.ToString ());
+          if (ex is ReflectionTypeLoadException)
+          {
+            foreach (var loaderException in ((ReflectionTypeLoadException) ex).LoaderExceptions)
+              Log.SendError (loaderException.ToString());
+          }
         }
         s_log = null;
         return success;
