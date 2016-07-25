@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$id$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <description>This package contains the binaries for ChromeDriver and IEDriverServer as distributed via 'https://www.nuget.org/packages/WebDriver.ChromeDriver.win32/' and 'https://www.nuget.org/packages/WebDriver.IEDriverServer.win32/' respectively.</description>
+    <copyright>$copyright$</copyright>
+  </metadata>
+</package>

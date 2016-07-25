@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.Reflectors\MixinXRef.Reflectors.csproj" />
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefConsole\MixinXRefConsole.csproj" />
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefGUI\MixinXRefGUI.csproj" />
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.ReMotionApiUsageAssembly\MixinXRef.ReMotionApiUsageAssembly.csproj" />
+
+    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests\MixinXRef.UnitTests.csproj">
+      <ExecutionRuntime>net-3.5</ExecutionRuntime>
+    </UnitTestProjectFiles>
+    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests.*\*.csproj">
+      <ExecutionRuntime>net-3.5</ExecutionRuntime>
+    </UnitTestProjectFiles>
+
+    <!--
+    <IntegrationTestProjectFiles Include="$(SolutionDirectory)IntegrationTests\IntegrationTests.csproj">
+      <TestingSetupBuildFile>$(SolutionDirectory)Build\TestingSetup.build</TestingSetupBuildFile>
+      <ExecutionRuntime>net-4.5</ExecutionRuntime>
+    </IntegrationTestProjectFiles>
+    -->
+  </ItemGroup>
+</Project>
