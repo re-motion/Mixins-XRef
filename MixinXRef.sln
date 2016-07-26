@@ -118,29 +118,71 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWithWebConfigTest", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.ComposedInterfacesReflector", "UnitTests\MixinXRef.UnitTests.ComposedInterfacesReflector\MixinXRef.UnitTests.ComposedInterfacesReflector.csproj", "{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Current", "Current", "{92B88019-905F-4C05-A598-858A8BA827F0}"
-	ProjectSection(SolutionItems) = preProject
-		UnitTests\Remotion\Current\Castle.Core.dll = UnitTests\Remotion\Current\Castle.Core.dll
-		UnitTests\Remotion\Current\Castle.Core.pdb = UnitTests\Remotion\Current\Castle.Core.pdb
-		UnitTests\Remotion\Current\log4net.dll = UnitTests\Remotion\Current\log4net.dll
-		UnitTests\Remotion\Current\log4net.xml = UnitTests\Remotion\Current\log4net.xml
-		UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.dll
-		UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\Current\Microsoft.Practices.ServiceLocation.xml
-		UnitTests\Remotion\Current\Remotion.dll = UnitTests\Remotion\Current\Remotion.dll
-		UnitTests\Remotion\Current\Remotion.Mixins.dll = UnitTests\Remotion\Current\Remotion.Mixins.dll
-		UnitTests\Remotion\Current\Remotion.Mixins.pdb = UnitTests\Remotion\Current\Remotion.Mixins.pdb
-		UnitTests\Remotion\Current\Remotion.Mixins.XML = UnitTests\Remotion\Current\Remotion.Mixins.XML
-		UnitTests\Remotion\Current\Remotion.pdb = UnitTests\Remotion\Current\Remotion.pdb
-		UnitTests\Remotion\Current\Remotion.TypePipe.dll = UnitTests\Remotion\Current\Remotion.TypePipe.dll
-		UnitTests\Remotion\Current\Remotion.TypePipe.pdb = UnitTests\Remotion\Current\Remotion.TypePipe.pdb
-		UnitTests\Remotion\Current\Remotion.TypePipe.xml = UnitTests\Remotion\Current\Remotion.TypePipe.xml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.ReMotionApiUsageAssembly", "MixinXRef.ReMotionApiUsageAssembly\MixinXRef.ReMotionApiUsageAssembly.csproj", "{AD4AB82E-5D07-4BBC-A8EB-6D128A7BC591}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinSampleAssembly", "IntegrationTests\MixinSampleAssembly\MixinSampleAssembly.csproj", "{EE08CA29-C7F0-40C8-8841-35FF0BDA17B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{D7C28391-1FC6-4207-A2BB-4D7B75EF404F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.13.173", "1.13.173", "{D5CD0030-1919-4DA1-8047-FF15BB5E13BE}"
+	ProjectSection(SolutionItems) = preProject
+		IntegrationTests\Remotion\1.13.173\Castle.Core.dll = IntegrationTests\Remotion\1.13.173\Castle.Core.dll
+		IntegrationTests\Remotion\1.13.173\Castle.Core.pdb = IntegrationTests\Remotion\1.13.173\Castle.Core.pdb
+		IntegrationTests\Remotion\1.13.173\Castle.Core.xml = IntegrationTests\Remotion\1.13.173\Castle.Core.xml
+		IntegrationTests\Remotion\1.13.173\log4net.dll = IntegrationTests\Remotion\1.13.173\log4net.dll
+		IntegrationTests\Remotion\1.13.173\log4net.xml = IntegrationTests\Remotion\1.13.173\log4net.xml
+		IntegrationTests\Remotion\1.13.173\Microsoft.Practices.ServiceLocation.dll = IntegrationTests\Remotion\1.13.173\Microsoft.Practices.ServiceLocation.dll
+		IntegrationTests\Remotion\1.13.173\Microsoft.Practices.ServiceLocation.xml = IntegrationTests\Remotion\1.13.173\Microsoft.Practices.ServiceLocation.xml
+		IntegrationTests\Remotion\1.13.173\Remotion.dll = IntegrationTests\Remotion\1.13.173\Remotion.dll
+		IntegrationTests\Remotion\1.13.173\Remotion.Mixins.dll = IntegrationTests\Remotion\1.13.173\Remotion.Mixins.dll
+		IntegrationTests\Remotion\1.13.173\Remotion.Mixins.pdb = IntegrationTests\Remotion\1.13.173\Remotion.Mixins.pdb
+		IntegrationTests\Remotion\1.13.173\Remotion.Mixins.XML = IntegrationTests\Remotion\1.13.173\Remotion.Mixins.XML
+		IntegrationTests\Remotion\1.13.173\Remotion.pdb = IntegrationTests\Remotion\1.13.173\Remotion.pdb
+		IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.dll = IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.dll
+		IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.pdb = IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.pdb
+		IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.xml = IntegrationTests\Remotion\1.13.173\Remotion.TypePipe.xml
+		IntegrationTests\Remotion\1.13.173\Remotion.XML = IntegrationTests\Remotion\1.13.173\Remotion.XML
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.13.174.0", "1.13.174.0", "{3C597E06-895C-4352-8AB2-D157D4E25BA8}"
+	ProjectSection(SolutionItems) = preProject
+		IntegrationTests\Remotion\1.13.174.0\Castle.Core.dll = IntegrationTests\Remotion\1.13.174.0\Castle.Core.dll
+		IntegrationTests\Remotion\1.13.174.0\Castle.Core.pdb = IntegrationTests\Remotion\1.13.174.0\Castle.Core.pdb
+		IntegrationTests\Remotion\1.13.174.0\Castle.Core.xml = IntegrationTests\Remotion\1.13.174.0\Castle.Core.xml
+		IntegrationTests\Remotion\1.13.174.0\log4net.dll = IntegrationTests\Remotion\1.13.174.0\log4net.dll
+		IntegrationTests\Remotion\1.13.174.0\log4net.xml = IntegrationTests\Remotion\1.13.174.0\log4net.xml
+		IntegrationTests\Remotion\1.13.174.0\Microsoft.Practices.ServiceLocation.dll = IntegrationTests\Remotion\1.13.174.0\Microsoft.Practices.ServiceLocation.dll
+		IntegrationTests\Remotion\1.13.174.0\Microsoft.Practices.ServiceLocation.xml = IntegrationTests\Remotion\1.13.174.0\Microsoft.Practices.ServiceLocation.xml
+		IntegrationTests\Remotion\1.13.174.0\Remotion.dll = IntegrationTests\Remotion\1.13.174.0\Remotion.dll
+		IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.dll = IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.dll
+		IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.pdb = IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.pdb
+		IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.XML = IntegrationTests\Remotion\1.13.174.0\Remotion.Mixins.XML
+		IntegrationTests\Remotion\1.13.174.0\Remotion.pdb = IntegrationTests\Remotion\1.13.174.0\Remotion.pdb
+		IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.dll = IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.dll
+		IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.pdb = IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.pdb
+		IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.xml = IntegrationTests\Remotion\1.13.174.0\Remotion.TypePipe.xml
+		IntegrationTests\Remotion\1.13.174.0\Remotion.XML = IntegrationTests\Remotion\1.13.174.0\Remotion.XML
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.13.182.0", "1.13.182.0", "{71C1B7BC-E2F6-470E-AD2C-D3E7E9CA2204}"
+	ProjectSection(SolutionItems) = preProject
+		UnitTests\Remotion\1.13.182.0\Castle.Core.dll = UnitTests\Remotion\1.13.182.0\Castle.Core.dll
+		UnitTests\Remotion\1.13.182.0\Castle.Core.pdb = UnitTests\Remotion\1.13.182.0\Castle.Core.pdb
+		UnitTests\Remotion\1.13.182.0\Castle.Core.xml = UnitTests\Remotion\1.13.182.0\Castle.Core.xml
+		UnitTests\Remotion\1.13.182.0\log4net.dll = UnitTests\Remotion\1.13.182.0\log4net.dll
+		UnitTests\Remotion\1.13.182.0\log4net.xml = UnitTests\Remotion\1.13.182.0\log4net.xml
+		UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.dll = UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.dll
+		UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.xml = UnitTests\Remotion\1.13.182.0\Microsoft.Practices.ServiceLocation.xml
+		UnitTests\Remotion\1.13.182.0\Remotion.dll = UnitTests\Remotion\1.13.182.0\Remotion.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.dll = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.pdb = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.Mixins.XML = UnitTests\Remotion\1.13.182.0\Remotion.Mixins.XML
+		UnitTests\Remotion\1.13.182.0\Remotion.pdb = UnitTests\Remotion\1.13.182.0\Remotion.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.dll = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.dll
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.pdb = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.pdb
+		UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.xml = UnitTests\Remotion\1.13.182.0\Remotion.TypePipe.xml
+		UnitTests\Remotion\1.13.182.0\Remotion.xml = UnitTests\Remotion\1.13.182.0\Remotion.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -364,8 +406,10 @@ Global
 		{24FE1F98-54C3-4507-BC29-B1DD6848A3B6} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{409BA07A-E7A8-45D7-97CF-E05537632141} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
 		{3C87F5F0-C867-4CEC-8DF9-B6405C2CCAF3} = {634FFE58-BE0A-4C69-A02A-D3DCB0FB38CD}
-		{92B88019-905F-4C05-A598-858A8BA827F0} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 		{EE08CA29-C7F0-40C8-8841-35FF0BDA17B6} = {26F59F87-6047-44A7-A8B3-AB9473D985C3}
+		{D5CD0030-1919-4DA1-8047-FF15BB5E13BE} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{3C597E06-895C-4352-8AB2-D157D4E25BA8} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
+		{71C1B7BC-E2F6-470E-AD2C-D3E7E9CA2204} = {86816A4F-ABE3-4DFC-8578-974145FC5FB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
