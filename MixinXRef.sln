@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{82C4272B-258D-4CC8-8B6A-71144CDBD448}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
+		packages\repositories.config = packages\repositories.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{5B8E6172-64C2-4ABD-BF06-D4214C1DBFF4}"
@@ -204,6 +205,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRef.UnitTests.Net4_5SupportReflector", "UnitTests\MixinXRef.UnitTests.Net4_5SupportReflector\MixinXRef.UnitTests.Net4_5SupportReflector.csproj", "{A3213D53-150C-4CB2-9645-C6607E5B73B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{D7C28391-1FC6-4207-A2BB-4D7B75EF404F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixinXRefAnalyzer", "MixinXRefAnalyzer\MixinXRefAnalyzer.csproj", "{0E7D1470-AF21-4A6D-BACA-A972D18BB337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -433,6 +436,16 @@ Global
 		{D7C28391-1FC6-4207-A2BB-4D7B75EF404F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7C28391-1FC6-4207-A2BB-4D7B75EF404F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D7C28391-1FC6-4207-A2BB-4D7B75EF404F}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0E7D1470-AF21-4A6D-BACA-A972D18BB337}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
