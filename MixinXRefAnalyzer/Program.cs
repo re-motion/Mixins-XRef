@@ -15,18 +15,22 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
+
 using System;
+using System.IO;
 using System.Linq;
 using MixinXRef;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Utility.Options;
 
-namespace MixinXRefConsole
+namespace MixinXRefAnalyzer
 {
   public class Program
   {
     private static int Main (string[] args)
     {
+      var remainingArgs = args.SkipWhile (a=>a.StartsWith ("__tb:")); //TalkBackChannel.Initialize (args);
+
       var cmdLineArgs = XRefArguments.Instance;
       var showOptionsHelp = false;
 
@@ -37,21 +41,9 @@ namespace MixinXRefConsole
                           v => cmdLineArgs.AssemblyDirectory = v
                         }, 
                         {
-                          "o=|output-directory=", "Output directory. Execution is stopped if this directory exists. Force overwrite with -f.",
-                          v => cmdLineArgs.OutputDirectory = v
-                        }, 
-                        {
                           "x=|xml-outputfile=", "File path to a custom output file for the generated XML",
                           v => cmdLineArgs.XMLOutputFileName = v
                         }, 
-                        {
-                          "f|force-overwrite", "Forces all existing files to be overwritten", 
-                          v => cmdLineArgs.OverwriteExistingFiles = true
-                        }, 
-                        {
-                          "s|skip-html", "Skip generation of HTML documentation",
-                          v => cmdLineArgs.SkipHTMLGeneration = true
-                        },
                         {
                           "r|reflector-assembly=", "File path to an assembly that contains one or more reflectors. " + 
                                                    "You can specify more that one assembly by using wildcards (e.g. MixinXRef.Reflectors*.dll).",
@@ -71,26 +63,26 @@ namespace MixinXRefConsole
                             }
                         }, 
                         {
-                          "w=|ignore-warning=", "A list of assembly names to ignore. Names must be separated by a semicolon. ",
-                          v => cmdLineArgs.IgnoredAssemblies = v.Split (';').Select (n => n.Trim ())
-                        },
-                        {
-                          "h|?|help", "Show this help page",
-                          v => showOptionsHelp = true
-                        },
-                        {
                           "app-config-file=", "Application configuration file for analyzed assemblies. ",
                           v => cmdLineArgs.AppConfigFile = v
                         },
                         {
                           "app-base-directory=", "Application base directory. ",
                           v => cmdLineArgs.AppBaseDirectory = v
+                        },
+                        {
+                          "w=|ignore-warning=", "A list of assembly names to ignore. Names must be separated by a semicolon. ",
+                          v => cmdLineArgs.IgnoredAssemblies = v.Split (';').Select (n => n.Trim ())
+                        },
+                        {
+                          "h|?|help", "Show this help page",
+                          v => showOptionsHelp = true
                         }
                       };
 
       try
       {
-        options.Parse (args);
+        options.Parse (remainingArgs);
       }
       catch (OptionException e)
       {
@@ -115,6 +107,10 @@ namespace MixinXRefConsole
         return argsExitCode;
       }
 
+      cmdLineArgs.SkipHTMLGeneration = true;
+      cmdLineArgs.OverwriteExistingFiles = true;
+      cmdLineArgs.OutputDirectory = Path.GetDirectoryName (cmdLineArgs.XMLOutputFileName);
+
       return new XRefInAppDomainRunner().Run (args, cmdLineArgs);
     }
 
@@ -131,9 +127,9 @@ namespace MixinXRefConsole
         return 1;
       }
 
-      if (string.IsNullOrEmpty (cmdLineArgs.OutputDirectory))
+      if (string.IsNullOrEmpty (cmdLineArgs.XMLOutputFileName))
       {
-        Console.Error.WriteLine ("Output directory missing");
+        Console.Error.WriteLine ("Output file missing");
         return 1;
       }
 

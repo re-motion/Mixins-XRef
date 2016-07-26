@@ -126,216 +126,216 @@
     <Compile Include="XRefTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="xml_utilities\main.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\css\jquery-ui-1.7.2.custom.css">
+    <None Include="xml_utilities\main.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\css\jquery-ui-1.7.2.simple.css">
+    </None>
+    <None Include="xml_utilities\resources\css\jquery-ui-1.7.2.custom.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\css\table_jui.css">
+    </None>
+    <None Include="xml_utilities\resources\css\jquery-ui-1.7.2.simple.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\asc.gif">
+    </None>
+    <None Include="xml_utilities\resources\css\table_jui.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\back_disabled.jpg">
+    </None>
+    <None Include="xml_utilities\resources\images\asc.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\back_enabled.jpg">
+    </None>
+    <None Include="xml_utilities\resources\images\back_disabled.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\bg.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\back_enabled.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\desc.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\bg.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\favicon.ico">
+    </None>
+    <None Include="xml_utilities\resources\images\desc.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\first.png">
+    </None>
+    <None Include="xml_utilities\resources\images\favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\forward_disabled.jpg">
+    </None>
+    <None Include="xml_utilities\resources\images\first.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\forward_enabled.jpg">
+    </None>
+    <None Include="xml_utilities\resources\images\forward_disabled.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\last.png">
+    </None>
+    <None Include="xml_utilities\resources\images\forward_enabled.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\minus.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\last.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\next.png">
+    </None>
+    <None Include="xml_utilities\resources\images\minus.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\plus.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\next.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\prev.png">
+    </None>
+    <None Include="xml_utilities\resources\images\plus.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\sort_asc.png">
+    </None>
+    <None Include="xml_utilities\resources\images\prev.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\sort_asc_disabled.png">
+    </None>
+    <None Include="xml_utilities\resources\images\sort_asc.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\sort_both.png">
+    </None>
+    <None Include="xml_utilities\resources\images\sort_asc_disabled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\sort_desc.png">
+    </None>
+    <None Include="xml_utilities\resources\images\sort_both.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\sort_desc_disabled.png">
+    </None>
+    <None Include="xml_utilities\resources\images\sort_desc.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\treeview-default-line.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\sort_desc_disabled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\treeview-default.gif">
+    </None>
+    <None Include="xml_utilities\resources\images\treeview-default-line.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_flat_0_aaaaaa_40x100.png">
+    </None>
+    <None Include="xml_utilities\resources\images\treeview-default.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_flat_75_ffffff_40x100.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_flat_0_aaaaaa_40x100.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_glass_55_fbf9ee_1x400.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_flat_75_ffffff_40x100.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_glass_65_ffffff_1x400.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_glass_55_fbf9ee_1x400.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_glass_75_dadada_1x400.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_glass_65_ffffff_1x400.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_glass_75_e6e6e6_1x400.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_glass_75_dadada_1x400.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_glass_95_fef1ec_1x400.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_glass_75_e6e6e6_1x400.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-bg_highlight-soft_75_cccccc_1x100.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_glass_95_fef1ec_1x400.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-icons_222222_256x240.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-bg_highlight-soft_75_cccccc_1x100.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-icons_2e83ff_256x240.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-icons_222222_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-icons_454545_256x240.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-icons_2e83ff_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-icons_888888_256x240.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-icons_454545_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\images\ui-icons_cd0a0a_256x240.png">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-icons_888888_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\init.js">
+    </None>
+    <None Include="xml_utilities\resources\images\ui-icons_cd0a0a_256x240.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery-1.4.2.min.js">
+    </None>
+    <None Include="xml_utilities\resources\init.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.color.js">
+    </None>
+    <None Include="xml_utilities\resources\javascript\jquery-1.4.2.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.cookie.js">
+    </None>
+    <None Include="xml_utilities\resources\javascript\jquery.color.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.dataTables.min.js">
+    </None>
+    <None Include="xml_utilities\resources\javascript\jquery.cookie.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\javascript\jquery.treeview.js">
+    </None>
+    <None Include="xml_utilities\resources\javascript\jquery.dataTables.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\resources\style.css">
+    </None>
+    <None Include="xml_utilities\resources\javascript\jquery.treeview.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.OpenJDK.Charsets.dll">
+    </None>
+    <None Include="xml_utilities\resources\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.OpenJDK.Core.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.OpenJDK.Charsets.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.OpenJDK.Text.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.OpenJDK.Core.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.OpenJDK.Util.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.OpenJDK.Text.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.OpenJDK.XML.API.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.OpenJDK.Util.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\IKVM.Runtime.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.OpenJDK.XML.API.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\saxon9he.dll">
+    </None>
+    <None Include="xml_utilities\saxon\IKVM.Runtime.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\saxon\Transform.exe">
+    </None>
+    <None Include="xml_utilities\saxon\saxon9he.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\assembly.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\attribute.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\attributeList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\attributeRefList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\errorList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\index.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\interface.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\interfaceList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\involvedType.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\saxon\Transform.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\assembly.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\attribute.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\attributeList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\attributeRefList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\errorList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\index.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\interface.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\interfaceList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\involvedType.xslt">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\involvedTypeList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\mixinList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\memberList.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\involvedTypeList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\mixinList.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\memberList.xslt">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\tableTemplate.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\template.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\treeBuilder.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\tableTemplate.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\template.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\treeBuilder.xslt">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="xml_utilities\stylesheets\utility.xslt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="xml_utilities\stylesheets\utility.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MixinXRef.licenseheader">

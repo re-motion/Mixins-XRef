@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>2.4.14-x-009-160726-100730</version>
+    <title>$id$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\MixinXref*.pdb" target="lib\net35-Client" />
+  </files>
+</package>
