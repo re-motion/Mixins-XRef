@@ -16,12 +16,14 @@
 
     <PropertyGroup>
       <PackageBinariesTarget Condition="'$(SkipNuGet)' != 'True'">CreateBinariesPackage</PackageBinariesTarget>
+      <DeleteHelperNuGetPackagesTarget Condition="'$(SkipNuGet)' != 'True'">DeleteHelperNuGetPackages</DeleteHelperNuGetPackagesTarget>
     </PropertyGroup>
 
     <PropertyGroup>
       <FullBuildTargets>
         $(FullBuildTargets)
         $(PackageBinariesTarget);
+        $(DeleteHelperNuGetPackagesTarget);
       </FullBuildTargets>
     </PropertyGroup>
   </Target>
@@ -59,5 +61,18 @@
         ZipFileName="$(_zipFileName)" />
 
     <Message Text="Done packaging binaries, ConfigurationID=$(ConfigurationID)" Importance="High"/>
+  </Target>
+
+  <Target Name="DeleteHelperNuGetPackages">
+    <Message Text="Deleting helper NuGet packages, ConfigurationID=$(ConfigurationID)" Importance="High"/>
+
+  <Error Text="The property 'NuGetWithDebugSymbolsOutputDirectory' is not set." Condition="'$(NuGetWithDebugSymbolsOutputDirectory)' == ''" />
+    <ItemGroup>
+      <_helperNuGetPackages Remove="@(_helperNuGetPackages)" />
+      <_helperNuGetPackages Include="$(NuGetWithDebugSymbolsOutputDirectory)MixinXRef.ReMotionApiUsageAssembly*.nupkg" />
+    </ItemGroup>
+    <Delete Files="@(_helperNuGetPackages)" />
+
+    <Message Text="Done deleting helper NuGet packages, ConfigurationID=$(ConfigurationID)" Importance="High"/>
   </Target>
 </Project>
