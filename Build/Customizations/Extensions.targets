@@ -1,8 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <BinariesOutputDirectory>$(OutputDirectory)Binaries\$(ConfigurationID)\</BinariesOutputDirectory>
+  </PropertyGroup>
+
   <Target Name="Before_ProcessForDependDBInternal" BeforeTargets="ProcessForDependDBInternal">
     <PropertyGroup>
       <_preProcessorParameters>$(_preProcessorParameters) --xref-version=""</_preProcessorParameters>
     </PropertyGroup>
+  </Target>
+
+  <Target Name="After_PrepareBuildTargets" AfterTargets="PrepareBuildTargets">
+    <Error Text="The property 'FullBuildTargets' is not set." Condition="'$(FullBuildTargets)' == ''" />
+
+    <PropertyGroup>
+      <PackageBinariesTarget Condition="'$(SkipNuGet)' != 'True'">CreateBinariesPackage</PackageBinariesTarget>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <FullBuildTargets>
+        $(FullBuildTargets)
+        $(PackageBinariesTarget);
+      </FullBuildTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CreateBinariesPackage">
+    <Message Text="Packaging binaries, ConfigurationID=$(ConfigurationID)" Importance="High"/>
+
+    <Error Text="The property 'ConfigurationID' is not set." Condition="'$(ConfigurationID)' == ''" />
+    <Error Text="The property 'Version' is not set." Condition="'$(Version)' == ''" />
+    <Error Text="The property 'Version' is not set." Condition="'$(Version)' == ''" />
+
+    <PropertyGroup>
+      <_zipFileName>$(BinariesOutputDirectory)MixinXRef-$(Version).zip</_zipFileName>
+    </PropertyGroup>
+    
+    <MakeDir Directories="$(BinariesOutputDirectory)"/>
+
+    <ItemGroup>
+      <_binariesConsole Remove="@(_binariesConsole)" />
+      <_binariesConsole Include="$(SolutionDirectory)MixinXRefConsole\bin\$(ConfigurationID)\**\*"/>
+      <_binariesGui Remove="@(_binariesGui)" />
+      <_binariesGui Include="$(SolutionDirectory)MixinXRefGUI\bin\$(ConfigurationID)\**\*"/>
+    </ItemGroup>
+
+    <MSBuild.ExtensionPack.Compression.Zip 
+        TaskAction="Create"
+        CompressFiles="@(_binariesConsole)"
+        RemoveRoot="$(SolutionDirectory)MixinXRefConsole\bin\$(ConfigurationID)"
+        ZipFileName="$(_zipFileName)" />
+
+    <MSBuild.ExtensionPack.Compression.Zip 
+        TaskAction="AddFiles"
+        CompressFiles="@(_binariesGui)"
+        RemoveRoot="$(SolutionDirectory)MixinXRefGUI\bin\$(ConfigurationID)"
+        ZipFileName="$(_zipFileName)" />
+
+    <Message Text="Done packaging binaries, ConfigurationID=$(ConfigurationID)" Importance="High"/>
   </Target>
 </Project>
