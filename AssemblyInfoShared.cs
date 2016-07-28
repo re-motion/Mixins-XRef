@@ -23,6 +23,6 @@ using System.Reflection;
 [assembly: AssemblyCopyright ("Copyright (c) rubicon IT GmbH, www.rubicon.eu - Licensed under GNU LGPL 2.1 (or later)")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyVersion ("2.4.0.0")]
-[assembly: AssemblyFileVersion ("2.4.14.30000")]
+[assembly: AssemblyFileVersion ("2.4.15.30000")]
 [assembly: AssemblyConfiguration ("Build type: Debug")]
-[assembly: AssemblyInformationalVersion ("2.4.14+Debug")]
+[assembly: AssemblyInformationalVersion ("2.4.15+Debug")]
