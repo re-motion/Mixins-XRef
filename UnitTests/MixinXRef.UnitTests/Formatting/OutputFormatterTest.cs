@@ -183,6 +183,44 @@ namespace MixinXRef.UnitTests.Formatting
     }
 
     [Test]
+    public void AddParameterMarkup_WithNestedTypeAsParameterType ()
+    {
+      var output = new XElement ("Signature");
+      var parameterInfos = typeof (MemberSignatureTestClass).GetMethod ("MethodWithNestedType").GetParameters();
+
+      // MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance param
+      _outputFormatter.AddParameterMarkup (parameterInfos, output);
+      var expectedOutput = new XElement (
+          "Signature",
+          new XElement ("Text", "("),
+          new XElement ("Type", "MixinXRef.UnitTests.TestDomain.MemberSignatureTestClass+NestedClassWithInterfaceAndInheritance", new XAttribute ("languageType", "Type")),
+          new XElement ("ParameterName", "param"),
+          new XElement ("Text", ")")
+          );
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
+    public void AddParameterMarkup_WithNestedGenericTypeAsParameterType ()
+    {
+      var output = new XElement ("Signature");
+      var parameterInfos = typeof (MemberSignatureTestClass).GetMethod ("MethodWithNestedGenericType").GetParameters();
+
+      // MemberSignatureTestClass.NestedGenericType<MemberSignatureTestClass.NestedClassWithInterfaceAndInheritance> param
+      _outputFormatter.AddParameterMarkup (parameterInfos, output);
+      var expectedOutput = new XElement (
+          "Signature",
+          new XElement ("Text", "("),
+          new XElement ("Type", "MixinXRef.UnitTests.TestDomain.MemberSignatureTestClass+NestedGenericType<MixinXRef.UnitTests.TestDomain.MemberSignatureTestClass+NestedClassWithInterfaceAndInheritance>", new XAttribute ("languageType", "Type")),
+          new XElement ("ParameterName", "param"),
+          new XElement ("Text", ")")
+          );
+
+      Assert.That (output.ToString(), Is.EqualTo (expectedOutput.ToString()));
+    }
+
+    [Test]
     public void CreateMethodMarkup ()
     {
       var output = _outputFormatter.CreateMethodMarkup ("MethodName", typeof (string), new ParameterInfo[0]);

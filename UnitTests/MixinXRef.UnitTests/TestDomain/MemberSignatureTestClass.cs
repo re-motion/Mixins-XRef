@@ -16,6 +16,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 // 
 using System;
+using MixinXRef.UnitTests.Formatting;
 using Remotion.Collections;
 
 namespace MixinXRef.UnitTests.TestDomain
@@ -73,7 +74,16 @@ namespace MixinXRef.UnitTests.TestDomain
     }
 
     public long MethodWithParams (int intParam, string stringParam, AssemblyResolver assemblyBuilderParam) { return 0; }
+
+    public long MethodWithNestedType (NestedClassWithInterfaceAndInheritance param) { return 0; }
+
+    public long MethodWithNestedGenericType (NestedGenericType<NestedClassWithInterfaceAndInheritance> param) { return 0; }
+
     protected MultiDictionary<string, int> _dictionary;
+
+    public class NestedGenericType<T>
+    {
+    }
 
     public interface INestedExplicitInterface : IExplicitInterface
     {
