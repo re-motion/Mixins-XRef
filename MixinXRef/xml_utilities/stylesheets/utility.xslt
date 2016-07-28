@@ -24,26 +24,40 @@
 
 <!-- type name format functions -->
 <xsl:function name="ru:GetPrettyTypeName">
-	<xsl:param name="fullname" />
-	
-	<xsl:choose>
-		<xsl:when test="$fullname = 'System.Boolean'"><xsl:text>bool</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Int16'"><xsl:text>short</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Int32'"><xsl:text>int</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Int64'"><xsl:text>long</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Single'"><xsl:text>float</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.UInt16'"><xsl:text>ushort</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.UInt32'"><xsl:text>uint</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.UInt64'"><xsl:text>ulong</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Byte'"><xsl:text>byte</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Char'"><xsl:text>char</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Decimal'"><xsl:text>decimal</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Double'"><xsl:text>double</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.SByte'"><xsl:text>sbyte</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.String'"><xsl:text>string</xsl:text></xsl:when>
-		<xsl:when test="$fullname = 'System.Void'"><xsl:text>void</xsl:text></xsl:when>
-		<xsl:otherwise><xsl:value-of select="replace($fullname, '^.+\.([^\.]+?)$', '$1')" /></xsl:otherwise>
-	</xsl:choose>
+  <xsl:param name="fullname" />
+
+  <xsl:choose>
+    <xsl:when test="$fullname = 'System.Boolean'"><xsl:text>bool</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Int16'"><xsl:text>short</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Int32'"><xsl:text>int</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Int64'"><xsl:text>long</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Single'"><xsl:text>float</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.UInt16'"><xsl:text>ushort</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.UInt32'"><xsl:text>uint</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.UInt64'"><xsl:text>ulong</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Byte'"><xsl:text>byte</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Char'"><xsl:text>char</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Decimal'"><xsl:text>decimal</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Double'"><xsl:text>double</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.SByte'"><xsl:text>sbyte</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.String'"><xsl:text>string</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Object'"><xsl:text>object</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Void'"><xsl:text>void</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Boolean&gt;'"><xsl:text>bool?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Int16&gt;'"><xsl:text>short?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Int32&gt;'"><xsl:text>int?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Int64&gt;'"><xsl:text>long?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Single&gt;'"><xsl:text>float?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.UInt16&gt;'"><xsl:text>ushort?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.UInt32&gt;'"><xsl:text>uint?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.UInt64&gt;'"><xsl:text>ulong?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Byte&gt;'"><xsl:text>byte?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Char&gt;'"><xsl:text>char?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Decimal&gt;'"><xsl:text>decimal?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.Double&gt;'"><xsl:text>double?</xsl:text></xsl:when>
+    <xsl:when test="$fullname = 'System.Nullable&lt;System.SByte&gt;'"><xsl:text>sbyte?</xsl:text></xsl:when>
+    <xsl:otherwise><xsl:value-of select="$fullname" /></xsl:otherwise>
+  </xsl:choose>
 </xsl:function>
 
 <!-- overall count functions -->
