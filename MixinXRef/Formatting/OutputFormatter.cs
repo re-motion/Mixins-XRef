@@ -45,7 +45,7 @@ namespace MixinXRef.Formatting
 
       var name = BuildUnnestedTypeName (type);
 
-      return type.IsNested ? string.Format ("{0}.{1}.{2}", type.DeclaringType.Namespace, GetShortFormattedTypeName (type.DeclaringType), name)
+      return type.IsNested ? string.Format ("{0}.{1}+{2}", type.DeclaringType.Namespace, GetShortFormattedTypeName (type.DeclaringType), name)
                            : string.Format ("{0}.{1}", type.Namespace, name);
     }
 
