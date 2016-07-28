@@ -239,13 +239,13 @@
 
   <xsl:template match="Keyword | Type | Text | Name | ParameterName | ExplicitInterfaceName" >
     <span class="{if (@languageType) then @languageType else name(.)}">
-    <xsl:choose>
-		<xsl:when test="name(.) = 'Type'"><xsl:value-of select="ru:GetPrettyTypeName(./text())" /></xsl:when>
-		<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-	</xsl:choose>
-	<xsl:if test=". != '.' and . != '(' and . != '[' and . != '&lt;' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']' and following-sibling::*[1] !=  '&gt;'">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
+  <xsl:choose>
+    <xsl:when test="name(.) = 'Type'"><xsl:value-of select="ru:GetPrettyTypeName(./text())" /></xsl:when>
+    <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+  </xsl:choose>
+  <xsl:if test=". != '.' and . != '(' and . != '[' and . != '&lt;' and name(.) != 'ParameterName' and name(.) != 'ExplicitInterfaceName' and following-sibling::*[1] !=  ',' and following-sibling::*[1] !=  ']' and following-sibling::*[1] !=  '&gt;'">
+    <xsl:text> </xsl:text>
+  </xsl:if>
     </span>
   </xsl:template>
 
