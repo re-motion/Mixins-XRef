@@ -83,6 +83,8 @@
     <Compile Include="AdditionalTypesCollector.cs" />
     <Compile Include="CrossAppDomainCommunicator.cs" />
     <Compile Include="OverridingMemberInfo.cs" />
+    <Compile Include="Report\ErrorReportGenerator.cs" />
+    <Compile Include="Report\IXmlReportGenerator.cs" />
     <Compile Include="XRef.cs" />
     <Compile Include="XRefArguments.cs" />
     <Compile Include="Formatting\MemberModifierUtility.cs" />

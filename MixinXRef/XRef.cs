@@ -17,12 +17,9 @@
 // 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using MixinXRef.Formatting;
 using MixinXRef.Reflection.RemotionReflector;
 using MixinXRef.Report;
@@ -37,6 +34,7 @@ namespace MixinXRef
   {
     private static readonly object s_locker = new object ();
     private static readonly MessageSender s_defaultChannel = new DelegateMessageBroker (LogToConsole);
+    public const string DefaultXmlOutputFileName = "MixinXRef.xml";
 
     private static IMessageSender s_log;
     internal static IMessageSender Log
@@ -116,48 +114,76 @@ namespace MixinXRef
       }
 
       var mixinConfiguration = reflector.BuildConfigurationFromAssemblies (allAssemblies);
-      var outputFormatter = new OutputFormatter ();
       var configurationErrors = new ErrorAggregator<Exception> ();
       var validationErrors = new ErrorAggregator<Exception> ();
 
-      var involvedTypes = new InvolvedTypeFinder (mixinConfiguration, allAssemblies, configurationErrors, validationErrors, reflector).FindInvolvedTypes ();
-      var reportGenerator = new FullReportGenerator (involvedTypes, configurationErrors, validationErrors, reflector, outputFormatter);
-      var outputDocument = reportGenerator.GenerateXmlDocument ();
+      var involvedTypeFinder = new InvolvedTypeFinder (mixinConfiguration, allAssemblies, configurationErrors, validationErrors, reflector);
+      var involvedTypes = involvedTypeFinder.FindInvolvedTypes();
+      
+      var reportGenerator = GetReportGenerator (arguments, involvedTypes, configurationErrors, validationErrors, reflector);
+      var outputDocument = reportGenerator.GenerateXmlDocument();
 
       var xmlFile = Path.Combine (arguments.OutputDirectory,
                                  !string.IsNullOrEmpty (arguments.XMLOutputFileName)
                                    ? arguments.XMLOutputFileName
-                                   : "MixinXRef.xml");
-
+                                   : DefaultXmlOutputFileName);
       outputDocument.Save (xmlFile);
 
+      Log.SendInfo ("XML Report successfully generated to '{0}'.", arguments.OutputDirectory);
+
+      var success = ProcessOutputDocument (arguments, xmlFile);
+
+      mixinConfiguration = null;
+      involvedTypeFinder = null;
+      involvedTypes = null;
       reportGenerator = null;
+      outputDocument = null;
       GC.Collect ();
 
       allAssemblies = null;
       GC.Collect ();
       GC.WaitForPendingFinalizers ();
 
-      if (!arguments.SkipHTMLGeneration)
+      Log.SendInfo ("MixinXRef has finished.");
+
+      return success;
+    }
+
+    private static IXmlReportGenerator GetReportGenerator (
+        XRefArguments arguments,
+        InvolvedType[] involvedTypes,
+        ErrorAggregator<Exception> configurationErrors,
+        ErrorAggregator<Exception> validationErrors,
+        IRemotionReflector reflector)
+    {
+      return arguments.GenerateOnlyErrorReport
+          ? (IXmlReportGenerator) new ErrorReportGenerator (configurationErrors, validationErrors, reflector)
+          : new FullReportGenerator (involvedTypes, configurationErrors, validationErrors, reflector, new OutputFormatter());
+    }
+
+    private static bool ProcessOutputDocument(XRefArguments arguments, string xmlFile)
+    {
+      if (arguments.GenerateOnlyErrorReport || arguments.SkipHTMLGeneration)
       {
-        var transformerExitCode = new XRefTransformer (xmlFile, arguments.OutputDirectory).GenerateHtmlFromXml ();
-        if (transformerExitCode != 0)
-        {
-          Log.SendError ("Error applying XSLT (code {0})", transformerExitCode);
-          return false;
-        }
-
-        // copy resources folder
-        var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
-        new DirectoryInfo (Path.Combine (xRefPath, @"xml_utilities\resources")).CopyTo (Path.Combine (arguments.OutputDirectory, "resources"));
-
-        Log.SendInfo ("Mixin Documentation successfully generated to '{0}'.", arguments.OutputDirectory);
+        Log.SendInfo("  Skipping HTML generation");
+        return true;
       }
-      else
+
+      Log.SendInfo("Starting HTML generation");
+      var transformerExitCode = new XRefTransformer(xmlFile, arguments.OutputDirectory).GenerateHtmlFromXml();
+      if (transformerExitCode != 0)
       {
-        Log.SendInfo ("  Skipping HTML generation");
+        Log.SendError("Error applying XSLT (code {0})", transformerExitCode);
+        return false;
       }
 
+      // copy resources folder
+      var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly().Location);
+      var directoryInfo = new DirectoryInfo (Path.Combine (xRefPath, @"xml_utilities\resources"));
+      var resourcesPath = Path.Combine (arguments.OutputDirectory, "resources");
+      directoryInfo.CopyTo (resourcesPath);
+
+      Log.SendInfo("Mixin Documentation successfully generated to '{0}'.", arguments.OutputDirectory);
       return true;
     }
 

@@ -52,6 +52,10 @@ namespace MixinXRefConsole
                           v => cmdLineArgs.SkipHTMLGeneration = true
                         },
                         {
+                          "e|error-report-only", "Generate only error report",
+                          v => cmdLineArgs.GenerateOnlyErrorReport = true
+                        },
+                        {
                           "r|reflector-assembly=", "File path to an assembly that contains one or more reflectors. " + 
                                                    "You can specify more that one assembly by using wildcards (e.g. MixinXRef.Reflectors*.dll).",
                           v =>
