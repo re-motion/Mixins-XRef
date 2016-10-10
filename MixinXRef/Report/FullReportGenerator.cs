@@ -25,7 +25,7 @@ using IRemotionReflector = MixinXRef.Reflection.RemotionReflector.IRemotionRefle
 
 namespace MixinXRef.Report
 {
-  public class FullReportGenerator
+  public class FullReportGenerator : IXmlReportGenerator
   {
     private readonly InvolvedType[] _involvedTypes;
     private readonly ErrorAggregator<Exception> _configurationErrors;

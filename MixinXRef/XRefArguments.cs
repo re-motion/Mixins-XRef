@@ -40,6 +40,7 @@ namespace MixinXRef
     public string XMLOutputFileName { get; set; }
     public bool OverwriteExistingFiles { get; set; }
     public bool SkipHTMLGeneration { get; set; }
+    public bool GenerateOnlyErrorReport { get; set; }
     public ReflectorSource ReflectorSource { get; set; }
     public string ReflectorPath { get; set; }
     public string CustomReflectorAssemblyQualifiedTypeName { get; set; }
@@ -59,6 +60,7 @@ namespace MixinXRef
       XMLOutputFileName = info.GetString ("XMLOutputFileName");
       OverwriteExistingFiles = info.GetBoolean ("OverwriteExistingFiles");
       SkipHTMLGeneration = info.GetBoolean ("SkipHTMLGeneration");
+      GenerateOnlyErrorReport = info.GetBoolean ("GenerateOnlyErrorReport");
       ReflectorSource = (ReflectorSource) info.GetInt32 ("ReflectorSource");
       ReflectorPath = info.GetString ("ReflectorPath");
       CustomReflectorAssemblyQualifiedTypeName = info.GetString ("CustomReflectorAssemblyQualifiedTypeName");
@@ -73,6 +75,7 @@ namespace MixinXRef
       info.AddValue ("XMLOutputFileName", XMLOutputFileName);
       info.AddValue ("OverwriteExistingFiles", OverwriteExistingFiles);
       info.AddValue ("SkipHTMLGeneration", SkipHTMLGeneration);
+      info.AddValue ("GenerateOnlyErrorReport", GenerateOnlyErrorReport);
       info.AddValue ("ReflectorSource", (int) ReflectorSource);
       info.AddValue ("ReflectorPath", ReflectorPath);
       info.AddValue ("CustomReflectorAssemblyQualifiedTypeName", CustomReflectorAssemblyQualifiedTypeName);

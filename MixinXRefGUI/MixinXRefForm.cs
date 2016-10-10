@@ -32,7 +32,6 @@ namespace MixinXRefGUI
 
     private delegate void SetStartMixinRefButtonEnabledDelegate (bool enabled);
 
-    private readonly string _persistentSettingsFile;
     private readonly Settings _settings;
 
     private readonly BackgroundWorker _xrefWorker;
@@ -42,9 +41,9 @@ namespace MixinXRefGUI
       InitializeComponent ();
 
       var baseDir = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "MixinXRef");
-      _persistentSettingsFile = Path.Combine (baseDir, "MixinXRefGUI.dat");
+      var persistentSettingsFile = Path.Combine (baseDir, "MixinXRefGUI.dat");
 
-      _settings = new Settings (_persistentSettingsFile,
+      _settings = new Settings (persistentSettingsFile,
                                 ApplySettings,
                                 GetSettings,
                                 new XRefArguments
@@ -57,6 +56,7 @@ namespace MixinXRefGUI
                                     ReflectorPath = "MixinXRef.Reflectors*.dll",
                                     CustomReflectorAssemblyQualifiedTypeName = "",
                                     SkipHTMLGeneration = false,
+                                    GenerateOnlyErrorReport = generateErrorReportsOnlyCheckBox.Checked,
                                     AppBaseDirectory = null,
                                     AppConfigFile = null
                                   });
@@ -65,6 +65,11 @@ namespace MixinXRefGUI
       _xrefWorker = new BackgroundWorker ();
       _xrefWorker.DoWork += (sender, args) => RunXRef ((XRefArguments) args.Argument);
       _xrefWorker.RunWorkerCompleted += (sender, args) => OnXRefFinished (args);
+    }
+
+    private string AffectedFileName
+    {
+      get { return generateErrorReportsOnlyCheckBox.Checked ? XRef.DefaultXmlOutputFileName : "index.html"; }
     }
 
     protected override void OnClosing (CancelEventArgs e)
@@ -80,6 +85,7 @@ namespace MixinXRefGUI
       reflectorAssemblyTextBox.Text = settings.ReflectorPath;
       customReflectorTextBox.Text = settings.CustomReflectorAssemblyQualifiedTypeName;
       forceOverrideCheckBox.Checked = settings.OverwriteExistingFiles;
+      generateErrorReportsOnlyCheckBox.Checked = settings.GenerateOnlyErrorReport;
       appBaseDirectory.Text = settings.AppBaseDirectory;
       appConfigFile.Text = settings.AppConfigFile;
 
@@ -103,6 +109,7 @@ namespace MixinXRefGUI
         ReflectorPath = reflectorAssemblyTextBox.Text,
         CustomReflectorAssemblyQualifiedTypeName = customReflectorTextBox.Text,
         OverwriteExistingFiles = forceOverrideCheckBox.Checked,
+        GenerateOnlyErrorReport = generateErrorReportsOnlyCheckBox.Checked,
         ReflectorSource = customReflectorRadioButton.Checked ? ReflectorSource.CustomReflector : ReflectorSource.ReflectorAssembly,
         AppBaseDirectory = appBaseDirectory.Text,
         AppConfigFile = appConfigFile.Text
@@ -131,13 +138,13 @@ namespace MixinXRefGUI
 
       SetStartMixinRefButtonEnabled (true);
 
-      if (File.Exists (GetResultFilePath ()))
+      if (File.Exists (GetResultFilePath (AffectedFileName)))
         SetShowResultsButtonEnabled (true);
     }
 
     private void UpdateEnabledStatusOfShowResultButton ()
     {
-      showResultsButton.Enabled = File.Exists (GetResultFilePath ());
+      showResultsButton.Enabled = File.Exists (GetResultFilePath (AffectedFileName));
     }
 
     private void BrowseAssemblyPath_Click (object sender, EventArgs e)
@@ -239,18 +246,48 @@ namespace MixinXRefGUI
 
     private void ShowResultsButton_Click (object sender, EventArgs e)
     {
-      var uriString = GetResultFilePath ();
+      ShowResultFile (AffectedFileName);
+    }
+
+    private void ShowResultFile (string filename)
+    {
+      var uriString = GetResultFilePath (filename);
       if (!File.Exists (uriString))
         return;
+
+      var npp = @"C:\Program Files (x86)\Notepad++\notepad++.exe";
+      if (generateErrorReportsOnlyCheckBox.Checked && File.Exists (npp))
+      {
+        var startInfo = new ProcessStartInfo();
+        startInfo.CreateNoWindow = false;
+        startInfo.UseShellExecute = false;
+        startInfo.FileName = npp;
+        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        startInfo.Arguments = uriString;
+        try
+        {
+          // Start the process with the info we specified.
+          // Call WaitForExit and then the using statement will close.
+          using (var exeProcess = Process.Start (startInfo))
+          {
+            exeProcess.WaitForInputIdle(100);
+          }
+        }
+        catch
+        {
+          // Log error.
+        }
+        return;
+      }
 
       var uri = new Uri (uriString);
       var converted = uri.AbsoluteUri;
       Process.Start (converted);
     }
 
-    private string GetResultFilePath ()
+    private string GetResultFilePath (string filename)
     {
-      return Path.GetFullPath (Path.Combine (_settings.Arguments.OutputDirectory, "index.html"));
+      return _settings == null ? null : Path.GetFullPath (Path.Combine (_settings.Arguments.OutputDirectory, filename));
     }
 
     private void ReflectorAssemblyRadioButtonCheckedChanged (object sender, EventArgs e)
@@ -279,6 +316,11 @@ namespace MixinXRefGUI
     private void browseConfigFile_Click (object sender, EventArgs e)
     {
       ShowAndSetFileBrowserDialogForTextBox ("Select configuration file", appConfigFile, appBaseDirectory.Text, "Select an application base directory first!");
+    }
+
+    private void generateErrorReportsOnlyCheckBox_CheckedChanged (object sender, EventArgs e)
+    {
+      UpdateEnabledStatusOfShowResultButton();
     }
   }
 }
