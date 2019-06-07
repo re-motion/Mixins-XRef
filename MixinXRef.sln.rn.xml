@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CustomizeVSWindowTitle>
+  <SettingsSet
+    AppendedString=" "
+    PatternIfRunningMode="MixinXRef - [gitBranchName] (Running)"
+    PatternIfBreakMode="MixinXRef - [gitBranchName] (Debugging)"
+    PatternIfDesignMode="MixinXRef - [gitBranchName]" />
+</CustomizeVSWindowTitle>
