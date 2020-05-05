@@ -1,10 +1,18 @@
 @echo off
 pushd %~dp0
-set msbuild="C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"
+
+set program-path=%ProgramFiles(x86)%
+if not exist "%program-path%" set program-path=%ProgramFiles%
+set msbuild="%program-path%\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe"
+if not exist %msbuild% set msbuild="%program-path%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
+if not exist %msbuild% set msbuild="%program-path%\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
+if not exist %msbuild% set msbuild="%program-path%\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe"
+
+
 set log-dir=build\BuildOutput\log
 set nuget-bin=build\BuildOutput\temp\nuget-bin
 set nuget=%nuget-bin%\nuget.exe
-set nuget-download=powershell.exe -NoProfile -Command "& {(New-Object System.Net.WebClient).DownloadFile('https://www.nuget.org/nuget.exe','%nuget%')}"
+set nuget-download=powershell.exe -NoProfile -Command "& {(New-Object System.Net.WebClient).DownloadFile('https://dist.nuget.org/win-x86-commandline/latest/nuget.exe','%nuget%')}"
 set solutionFile=MixinXRef.sln
 
 rem if not exist remotion.snk goto nosnk

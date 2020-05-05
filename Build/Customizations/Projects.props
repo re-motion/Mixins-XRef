@@ -1,14 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.Reflectors\MixinXRef.Reflectors.csproj" />
-    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefAnalyzer\MixinXRefAnalyzer.csproj" />
-    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefConsole\MixinXRefConsole.csproj" />
-    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefGUI\MixinXRefGUI.csproj" />
-    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.ReMotionApiUsageAssembly\MixinXRef.ReMotionApiUsageAssembly.csproj" />
+  <PropertyGroup>
+    <NormalTestConfiguration Condition="'$(NormalTestConfiguration)' == ''">
+      EnforcedLocalMachine + NET48 + NoBrowser + NoDB + Debug + x86; <!-- Win_NET48 once Saxon is updated -->
+      EnforcedLocalMachine + NET48 + NoBrowser + NoDB + Release + x86; <!-- Win_NET48 once Saxon is updated -->
+      EnforcedLocalMachine + NET48 + NoBrowser + NoDB + Debug + x64; <!-- Win_NET48 once Saxon is updated -->
+      EnforcedLocalMachine + NET48 + NoBrowser + NoDB + Release + x64; <!-- Win_NET48 once Saxon is updated -->
 
-    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests\MixinXRef.UnitTests.csproj" />
-    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests.*\*.csproj" />
+      <!-- Local-->
+      LocalMachine + NET48 + NoBrowser + NoDB + Debug + x86;
+      LocalMachine + NET48 + NoBrowser + NoDB + Release + x86;
+      LocalMachine + NET48 + NoBrowser + NoDB + Debug + x64;
+      LocalMachine + NET48 + NoBrowser + NoDB + Release + x64;
+
+      <!-- Exercise compatibility between installed .NET version, target framework and SQL Server -->
+      EnforcedLocalMachine + NET472 + NoBrowser + NoDB + Release + x64; <!-- Win_NET48 once Saxon is updated -->
+      EnforcedLocalMachine + NET462 + NoBrowser + NoDB + Release + x64; <!-- Win_NET48 once Saxon is updated -->
+      <!-- Win_NET472 + NET472 + NoBrowser + NoDB + Release + x64; once Saxon is updated -->
+      <!-- Win_NET472 + NET462 + NoBrowser + NoDB + Release + x64; once Saxon is updated -->
+      <!-- Win_NET462 + NET462 + NoBrowser + NoDB + Release + x64; once Saxon is updated -->
+    </NormalTestConfiguration>
+  </PropertyGroup>
+  <ItemGroup>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.Reflectors\MixinXRef.Reflectors.csproj"/>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefAnalyzer\MixinXRefAnalyzer.csproj"/>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefConsole\MixinXRefConsole.csproj"/>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRefGUI\MixinXRefGUI.csproj"/>
+    <ReleaseProjectFiles Include="$(SolutionDirectory)MixinXRef.ReMotionApiUsageAssembly\MixinXRef.ReMotionApiUsageAssembly.csproj"/>
+
+    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests\MixinXRef.UnitTests.csproj">
+      <TestConfiguration>$(NormalTestConfiguration)</TestConfiguration>
+    </UnitTestProjectFiles>
+    <UnitTestProjectFiles Include="$(SolutionDirectory)UnitTests\MixinXRef.UnitTests.*\*.csproj">
+      <TestConfiguration>$(NormalTestConfiguration)</TestConfiguration>
+    </UnitTestProjectFiles>
 
     <!--
     <IntegrationTestProjectFiles Include="$(SolutionDirectory)IntegrationTests\IntegrationTests.csproj">
