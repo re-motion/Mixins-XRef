@@ -41,11 +41,26 @@ namespace MixinXRef
     {
       var xRefPath = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location);
 
+      if (!File.Exists(xRefPath))
+      {
+        Console.WriteLine ($"The path {xRefPath} does not exist!");
+      }
+
       // stylesheet path
       var xsltStyleSheetPath = Path.Combine (xRefPath, @"xml_utilities\main.xslt");
 
+      if (!File.Exists(xsltStyleSheetPath))
+      {
+        Console.WriteLine ($"The path {xsltStyleSheetPath} does not exist!");
+      }
+
       // xslt processor path      
       var xsltProcessorPath = Path.Combine (xRefPath, @"xml_utilities\saxon\Transform.exe");
+
+      if (!File.Exists(xsltProcessorPath))
+      {
+        Console.WriteLine ($"The path {xsltProcessorPath} does not exist!");
+      }
 
       // dummy output file - will not be created, just to trick saxon
       var mainOutputFile = Path.Combine (_outputDirectory, "dummy.html");
