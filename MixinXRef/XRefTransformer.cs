@@ -43,7 +43,7 @@ namespace MixinXRef
 
       if (!File.Exists(xRefPath))
       {
-        Console.WriteLine ($"The path {xRefPath} does not exist!");
+        Console.WriteLine ("The path " + xRefPath + "does not exist!");
       }
 
       // stylesheet path
@@ -51,7 +51,7 @@ namespace MixinXRef
 
       if (!File.Exists(xsltStyleSheetPath))
       {
-        Console.WriteLine ($"The path {xsltStyleSheetPath} does not exist!");
+        Console.WriteLine ("The path " + xsltStyleSheetPath + " does not exist!");
       }
 
       // xslt processor path      
@@ -59,7 +59,7 @@ namespace MixinXRef
 
       if (!File.Exists(xsltProcessorPath))
       {
-        Console.WriteLine ($"The path {xsltProcessorPath} does not exist!");
+        Console.WriteLine ("The path " + xsltProcessorPath + " does not exist!");
       }
 
       // dummy output file - will not be created, just to trick saxon
